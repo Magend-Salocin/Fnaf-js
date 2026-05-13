@@ -1,0 +1,22 @@
+body {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  background-color: #222;
+  color: white;
+}
+
+canvas {
+  border: 2px solid white;
+  margin: 10px auto;
+  display: block;
+}
+
+#cameraButtons {
+  margin: 10px auto;
+  text-align: center;
+}
+
+#cameraButtons button {
+  margin: 0 5px;
+  padding: 5px 10px;
+}
