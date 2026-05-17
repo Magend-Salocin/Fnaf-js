@@ -3,13 +3,28 @@ const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
 
 
-const cameras = [
-  { name: "Caméra 1", view: { x: 0, y: 0, width: 800, height: 400 }, maxUsageTime: 5, remainingTime: 0, isAvailable: true },
-  { name: "Caméra 2", view: { x: 200, y: 0, width: 400, height: 200 }, maxUsageTime: 3, remainingTime: 0, isAvailable: true },
-  { name: "Caméra 3", view: { x: 0, y: 100, width: 600, height: 300 }, maxUsageTime: 4, remainingTime: 0, isAvailable: true },
+const rooms = [
+  { id: 0, name: "Entrée", x: 0, y: 0, width: 200, height: 200, connectedTo: [{ roomId: 1, doorId: 0 }] },
+  { id: 1, name: "Couloir", x: 200, y: 0, width: 200, height: 200, connectedTo: [{ roomId: 0, doorId: 0 }, { roomId: 2, doorId: 1 }] },
+  { id: 2, name: "Cuisine", x: 400, y: 0, width: 200, height: 200, connectedTo: [{ roomId: 1, doorId: 1 }] },
+  { id: 3, name: "Salle de jeu", x: 0, y: 200, width: 200, height: 200, connectedTo: [{ roomId: 4, doorId: null }] },
+  { id: 4, name: "Scène", x: 200, y: 200, width: 200, height: 200, connectedTo: [{ roomId: 3, doorId: null }] },
 ];
 
+const cameras = [
+  { name: "Caméra 1", roomId: 0, maxUsageTime: 5, remainingTime: 0, isAvailable: true },
+  { name: "Caméra 2", roomId: 1, maxUsageTime: 3, remainingTime: 0, isAvailable: true },
+  { name: "Caméra 3", roomId: 3, maxUsageTime: 4, remainingTime: 0, isAvailable: true },
+];
+
+const doors = [
+  { id: 0, name: "Porte 1", roomA: 0, roomB: 1, isClosed: false },
+  { id: 1, name: "Porte 2", roomA: 1, roomB: 2, isClosed: false },
+];
+
+let activeView = 'office'; // 'office' ou 'camera'
 let activeCamera = 0;
+
 let cameraUsageTimer = 0;
 let isUsingCamera = false;
 
@@ -66,59 +81,135 @@ function drawStaticEffect(ctx, camera) {
   ctx.restore();
 }
 
-function drawWithCamera(ctx, camera) {
-  ctx.save();
-  ctx.beginPath();
-  ctx.rect(camera.view.x, camera.view.y, camera.view.width, camera.view.height);
-  ctx.clip();
+function toggleDoor(doorId) {
+  const door = doors.find(d => d.id === doorId);
+  if (door) {
+    door.isClosed = !door.isClosed;
+    // Met à jour le style du bouton
+    const button = document.getElementById(`door${doorId + 1}`);
+    if (button) {
+      button.classList.toggle('closed', door.isClosed);
+      button.textContent = `${door.name} (${door.isClosed ? 'Fermée' : 'Ouverte'})`;
+    }
+  }
+}
 
-  // Dessine le fond
+function drawOfficeView(ctx) {
   ctx.fillStyle = 'darkgray';
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-  // Dessine l'animatronic
-  freddy.draw(ctx);
+  // Dessine toutes les salles en miniature
+  rooms.forEach(room => {
+    ctx.strokeStyle = 'white';
+    ctx.strokeRect(room.x / 2, room.y / 2, room.width / 2, room.height / 2);
+    ctx.fillStyle = 'white';
+    ctx.fillText(room.name, room.x / 2 + 10, room.y / 2 + 20);
+  });
 
-  ctx.restore();
+  // Dessine les portes
+  drawDoors(ctx);
 
-  // Affiche le nom de la caméra active
-  ctx.fillStyle = 'white';
-  ctx.font = '24px Arial';
-  ctx.fillText(`Caméra active : ${camera.name}`, 10, 30);
+  // Dessine l'animatronic dans sa salle actuelle
+  const currentRoom = rooms.find(room => room.id === freddy.currentRoomId);
+  if (currentRoom) {
+    ctx.fillStyle = 'red';
+    ctx.fillRect(currentRoom.x / 2 + 25, currentRoom.y / 2 + 25, freddy.width / 2, freddy.height / 2);
+  }
 }
 
-// Classe pour l'animatronic
+function drawWithCamera(ctx, camera) {
+  const room = rooms.find(r => r.id === camera.roomId);
+  if (room) {
+    ctx.save();
+    ctx.beginPath();
+    ctx.rect(0, 0, canvas.width, canvas.height);
+    ctx.clip();
+
+    // Dessine la salle
+    drawRoom(ctx, room);
+
+    // Dessine l'animatronic s'il est dans cette salle
+    if (freddy.currentRoomId === room.id) {
+      freddy.draw(ctx);
+    }
+
+    ctx.restore();
+  }
+}
+
+function drawDoors(ctx) {
+  doors.forEach(door => {
+    const roomA = rooms.find(room => room.id === door.roomA);
+    const roomB = rooms.find(room => room.id === door.roomB);
+    if (roomA && roomB) {
+      // Position de la porte (au milieu entre les deux salles)
+      const x = Math.max(roomA.x, roomB.x) - 5;
+      const y = Math.min(roomA.y, roomB.y) + 100;
+      const width = 10;
+      const height = 40;
+
+      // Dessine la porte
+      ctx.fillStyle = door.isClosed ? 'red' : 'green';
+      ctx.fillRect(x, y, width, height);
+    }
+  });
+}
+
+function drawRoom(ctx, room) {
+  ctx.strokeStyle = 'white';
+  ctx.strokeRect(room.x, room.y, room.width, room.height);
+  ctx.fillStyle = 'white';
+  ctx.fillText(room.name, room.x + 10, room.y + 20);
+}
+
 class Animatronic {
-  constructor(name, x, y) {
+constructor(name, x, y, currentRoomId) {
     this.name = name;
     this.x = x;
     this.y = y;
+    this.currentRoomId = currentRoomId;
+    this.startRoomId = currentRoomId;
     this.speed = 1;
-    this.width = 50;
-    this.height = 50;
+    this.width = 30;
+    this.height = 30;
+    this.moveCounter = 0; // Compteur pour ralentir le déplacement
   }
 
-  // Méthode pour déplacer l'animatronic
   move() {
-    this.x += this.speed;
+    this.moveCounter++;
+    if (this.moveCounter < 60) return; // Déplace 1 fois toutes les 60 frames (~1 seconde)
+    this.moveCounter = 0;
+
+    const currentRoom = rooms.find(room => room.id === this.currentRoomId);
+    if (currentRoom) {
+      const possibleConnections = currentRoom.connectedTo.filter(connection => {
+        const door = doors.find(d => d.id === connection.doorId);
+        return !door || !door.isClosed;
+      });
+
+      if (possibleConnections.length > 0) {
+        const randomConnection = possibleConnections[Math.floor(Math.random() * possibleConnections.length)];
+        this.currentRoomId = randomConnection.roomId;
+      } else {
+        this.currentRoomId = this.startRoomId;
+      }
+    }
   }
 
-  // Méthode pour dessiner l'animatronic
   draw(ctx) {
-    ctx.fillStyle = 'red';
-    ctx.fillRect(this.x, this.y, this.width, this.height);
-    ctx.fillStyle = 'white';
-    ctx.fillText(this.name, this.x + 5, this.y + 20);
-  }
-
-  // Méthode pour repousser l'animatronic
-  pushBack() {
-    this.x = 0;
+    const currentRoom = rooms.find(room => room.id === this.currentRoomId);
+    if (currentRoom) {
+      ctx.fillStyle = 'red';
+      ctx.fillRect(currentRoom.x + 50, currentRoom.y + 50, this.width, this.height);
+      ctx.fillStyle = 'white';
+      ctx.fillText(this.name, currentRoom.x + 50, currentRoom.y + 40);
+    }
   }
 }
 
-// Crée un animatronic
-const freddy = new Animatronic('Freddy', 0, 150);
+// Crée un animatronic dans la salle d'entrée
+const freddy = new Animatronic('Freddy', 0, 0, 0);
+
 
 // Écoute l'appui sur la touche Espace
 document.addEventListener('keydown', (e) => {
@@ -126,69 +217,58 @@ document.addEventListener('keydown', (e) => {
     freddy.pushBack();
   }
 });
+
 function gameLoop() {
   // Efface le canvas
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  // Gestion du temps d'utilisation des caméras
-  if (isUsingCamera) {
-    cameraUsageTimer -= 1/60; // Décrémente le temps (60 FPS)
-    if (cameraUsageTimer <= 0) {
-      isUsingCamera = false;
-      cameras[activeCamera].isAvailable = false;
-      cameras[activeCamera].remainingTime = 5; // Temps de recharge (en secondes)
-    }
-  }
+  // Affiche/masque les boutons des portes
+  document.getElementById('doorButtons').style.display = (activeView === 'office') ? 'block' : 'none';
 
-  // Recharge des caméras
-  cameras.forEach(camera => {
-    if (!camera.isAvailable && camera.remainingTime > 0) {
-      camera.remainingTime -= 1/60;
-      if (camera.remainingTime <= 0) {
-        camera.isAvailable = true;
-      }
-    }
-  });
-
-  // Dessine selon la caméra active
-  const currentCamera = cameras[activeCamera];
-  if (currentCamera.isAvailable || isUsingCamera) {
-    drawWithCamera(ctx, currentCamera);
+  // Dessine selon la vue active
+  if (activeView === 'office') {
+    drawOfficeView(ctx);
   } else {
-    // Si la caméra est en recharge, affiche l'effet de statique
-    drawStaticEffect(ctx, currentCamera);
+    const camera = cameras[activeCamera];
+    if (camera.isAvailable) {
+      drawWithCamera(ctx, camera);
+    } else {
+      drawStaticEffect(ctx, camera);
+    }
   }
-
-  // Affiche le temps restant pour la caméra active
-  if (isUsingCamera) {
-    ctx.fillStyle = 'white';
-    ctx.font = '20px Arial';
-    ctx.fillText(`Temps restant : ${Math.ceil(cameraUsageTimer)}s`, 10, 60);
-  }
-
-  // Affiche l'état des caméras (disponible ou en recharge)
-  cameras.forEach((camera, index) => {
-    ctx.fillStyle = camera.isAvailable ? 'green' : 'red';
-    ctx.fillText(`${camera.name} : ${camera.isAvailable ? 'Disponible' : `Recharge (${Math.ceil(camera.remainingTime)}s)`}`, 10, 90 + index * 30);
-  });
 
   // Met à jour l'animatronic
   freddy.move();
 
-  // Vérifie si l'animatronic a atteint la fin
-  if (freddy.x + freddy.width > canvas.width) {
-    ctx.fillStyle = 'white';
-    ctx.font = '48px Arial';
-    ctx.fillText('GAME OVER', canvas.width / 2 - 120, canvas.height / 2);
-    return;
-  }
-
   // Relance la boucle
   requestAnimationFrame(gameLoop);
 }
-document.getElementById('cam1').addEventListener('click', () => activateCamera(0));
-document.getElementById('cam2').addEventListener('click', () => activateCamera(1));
-document.getElementById('cam3').addEventListener('click', () => activateCamera(2));
+
+document.getElementById('cam1').addEventListener('click', () => {
+  if (cameras[0].isAvailable) {
+    activeView = 'camera';
+    activeCamera = 0;
+  }
+});
+document.getElementById('cam2').addEventListener('click', () => {
+  if (cameras[1].isAvailable) {
+    activeView = 'camera';
+    activeCamera = 1;
+  }
+});
+document.getElementById('cam3').addEventListener('click', () => {
+  if (cameras[2].isAvailable) {
+    activeView = 'camera';
+    activeCamera = 2;
+  }
+});
+document.getElementById('officeView').addEventListener('click', () => {
+  activeView = 'office';
+});
+
+
+document.getElementById('door1').addEventListener('click', () => toggleDoor(0));
+document.getElementById('door2').addEventListener('click', () => toggleDoor(1));
 
 // Démarre la boucle de jeu
 gameLoop();
