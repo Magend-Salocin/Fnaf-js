@@ -3,23 +3,26 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FNAF-like Game</title>
+  <title>FNAF-like Game - Nicolas Berger</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <h1>FNAF-like Game</h1>
-  <div id="cameraButtons">
-    <button id="cam1">Caméra 1</button>
-    <button id="cam2">Caméra 2</button>
-    <button id="cam3">Caméra 3</button>
-    <button id="officeView">Bureau</button>
+  <div id="controls">
+    <div id="cameraButtons">
+      <button id="cam1">Caméra 1 (Entrée)</button>
+      <button id="cam2">Caméra 2 (Couloir)</button>
+      <button id="cam3">Caméra 3 (Scène)</button>
+      <button id="cam4">Caméra 4 (Cuisine)</button>
+      <button id="officeView">Bureau</button>
+    </div>
+    <div id="doorButtons" style="display: none;">
+      <button id="door1">Porte Gauche (Fermée)</button>
+      <button id="door2">Porte Droite (Fermée)</button>
+    </div>
   </div>
-  <div id="doorButtons" style="display: none;">
-    <button id="door1">Porte 1 (Entrée ↔ Couloir)</button>
-    <button id="door2">Porte 2 (Couloir ↔ Cuisine)</button>
-  </div>
-  <canvas id="gameCanvas" width="800" height="400"></canvas>
-  <p>Appuie sur <strong>Espace</strong> pour repousser l'animatronic !</p>
+  <canvas id="gameCanvas" width="800" height="500"></canvas>
+  <p>Appuie sur <strong>Espace</strong> pour activer les lumières !</p>
   <script src="script.js"></script>
 </body>
 </html>
