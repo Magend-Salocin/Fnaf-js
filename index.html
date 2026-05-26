@@ -3,26 +3,49 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FNAF-like Game - Nicolas Berger</title>
-  <link rel="stylesheet" href="style.css">
+  <title>FNAF 1 - Nicolas Berger</title>
+  <link rel="stylesheet" href="style/style.css">
+  <link rel="stylesheet" href="style/camera.css">
 </head>
 <body>
-  <h1>FNAF-like Game</h1>
+  <h1>Five Nights at Freddy's 1</h1>
   <div id="controls">
     <div id="cameraButtons">
-      <button id="cam1">Caméra 1 (Entrée)</button>
-      <button id="cam2">Caméra 2 (Couloir)</button>
-      <button id="cam3">Caméra 3 (Scène)</button>
-      <button id="cam4">Caméra 4 (Cuisine)</button>
-      <button id="officeView">Bureau</button>
-    </div>
-    <div id="doorButtons" style="display: none;">
-      <button id="door1">Porte Gauche (Fermée)</button>
-      <button id="door2">Porte Droite (Fermée)</button>
+    <button id="toggleCameraLayout">CAM</button>
+  </div>
+
+  <div id="cameraLayout">
+    <div id="camLayoutContainer">
+      <div class="camera-box" id="cam1A">CAM<br>1A</div>
+      <div class="camera-box" id="cam1B">CAM<br>1B</div>
+      <div class="camera-box" id="cam1C">CAM<br>1C</div>
+      <div class="camera-box" id="cam2A">CAM<br>2A</div>
+      <div class="camera-box" id="cam2B">CAM<br>2B</div>
+      <div class="camera-box" id="cam3">CAM<br>3</div>
+      <div class="camera-box" id="cam4A">CAM<br>4A</div>
+      <div class="camera-box" id="cam4B">CAM<br>4B</div>
+      <div class="camera-box" id="cam5">CAM<br>5</div>
+      <div class="camera-box" id="cam6">CAM<br>6</div>
+      <div class="camera-box" id="cam7">CAM<br>7</div>
+      <div class="camera-box" id="you">YOU</div>
     </div>
   </div>
-  <canvas id="gameCanvas" width="800" height="500"></canvas>
-  <p>Appuie sur <strong>Espace</strong> pour activer les lumières !</p>
-  <script src="script.js"></script>
+  
+
+    <div id="doorButtons" style="display: block;">
+      <button id="leftDoor">Porte Gauche (Fermée)</button>
+      <button id="rightDoor">Porte Droite (Fermée)</button>
+      <button id="leftLight">Lumière Gauche (OFF)</button>
+      <button id="rightLight">Lumière Droite (OFF)</button>
+    </div>
+  </div>
+  <canvas id="gameCanvas" width="800" height="600"></canvas>
+  <div id="powerUsage">Puissance : 100%</div>
+  <div id="gameOver" style="display: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: red; font-size: 48px;">GAME OVER</div>
+	<script src="script/data.js"></script>
+	<script src="script/animatronic.js"></script>
+	<script src="script/render.js"></script>
+	<script src="script/game.js"></script>
+	<script src="script/main.js"></script>
 </body>
 </html>

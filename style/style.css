@@ -9,6 +9,9 @@ body {
 
 #controls {
   margin: 10px auto;
+  background-color: #222;
+  padding: 10px;
+  border-radius: 5px;
 }
 
 button {
@@ -33,5 +36,17 @@ canvas {
   border: 2px solid white;
   margin: 10px auto;
   display: block;
-  background-color: #222;
+  background-color: #000;
+}
+
+#powerUsage {
+  font-size: 18px;
+  margin: 10px;
+  color: yellow;
+}
+
+#gameOver {
+  z-index: 100;
+  background-color: black;
+  padding: 20px;
 }
