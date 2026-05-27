@@ -1,3 +1,5 @@
+//game.js
+
 // Variables globales
 let activeView = 'office';
 let activeCamera = 0;
@@ -8,8 +10,29 @@ let rightLightOn = false;
 let gameLoopInterval;
 let isUsingCamera = false;
 
+let isPanningLeft = false;
+let isPanningRight = false;
+const panSpeed = 5; // Vitesse de déplacement (pixels par frame)
+let autoPanDirection = 1;
+
+// Variable pour suivre les événements en cours
+const activeEvents = {};
+
 const toggleButton = document.getElementById('toggleCameraLayout');
 const cameraLayout = document.getElementById('cameraLayout');
+
+
+document.addEventListener('keydown', (e) => {
+  if (activeView === 'camera') {
+    if (e.key === 'ArrowLeft') isPanningLeft = true;
+    if (e.key === 'ArrowRight') isPanningRight = true;
+  }
+});
+
+document.addEventListener('keyup', (e) => {
+  if (e.key === 'ArrowLeft') isPanningLeft = false;
+  if (e.key === 'ArrowRight') isPanningRight = false;
+});
 
 toggleButton.addEventListener('click', () => {
   cameraLayout.style.display = cameraLayout.style.display === 'block' ? 'none' : 'block';
@@ -34,6 +57,28 @@ function activateCamera(cameraId) {
     power -= 1;
     updatePowerDisplay();
     isUsingCamera = true; // La caméra est en cours d'utilisation
+  }
+}
+
+// Dans la boucle gameLoop, ajoute :
+function triggerRandomEvents() {
+  // Exemple : Déclencher un événement aléatoire dans l'entrée (room.id === 1)
+  if (Math.random() < 0.002) { // 0.2% de chance par frame
+    activeEvents[1] = {
+      type: 'event',
+      frameCount: 120, // 2 secondes à 60 FPS
+      currentFrame: 0,
+      imageIndex: Math.floor(Math.random() * loadedRoomImages[1].events.length)
+    };
+  }
+
+  // Gestion des événements en cours
+  for (const roomId in activeEvents) {
+    const event = activeEvents[roomId];
+    event.currentFrame++;
+    if (event.currentFrame >= event.frameCount) {
+      delete activeEvents[roomId];
+    }
   }
 }
 
@@ -99,29 +144,37 @@ function setupEventListeners() {
   document.getElementById('rightLight').addEventListener('click', () => toggleLight('right'));
 }
 
+
 // Boucle de jeu
 function gameLoop() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-	// Gestion du temps d'utilisation des caméras
-	if (activeView === 'camera') {
-	  if (isUsingCamera) {
-		cameraUsageTimer -= 1/60; // Décrémente le temps (60 FPS)
-		if (cameraUsageTimer <= 0) {
-		  cameras[activeCamera].isAvailable = false; // Désactive la caméra
-		  cameras[activeCamera].remainingTime = 5; // Temps de recharge
-		  isUsingCamera = false; // Passe en mode recharge
-		}
-	  } else {
-		// Pendant la recharge, décrémente le temps restant
-		cameras[activeCamera].remainingTime -= 1/60;
-		if (cameras[activeCamera].remainingTime <= 0) {
-		  cameras[activeCamera].isAvailable = true; // Réactive la caméra
-		  cameraUsageTimer = cameras[activeCamera].maxUsageTime; // Réinitialise le temps d'utilisation
-		  isUsingCamera = true; // Reprend l'utilisation normale
-		}
-	  }
-	}
+
+   // Animation automatique de panoramique
+if (activeView === 'camera') {
+    const room = rooms.find(r => r.id === cameras[activeCamera].roomId);
+    if (isPanningLeft && room.cameraOffset > 0) room.cameraOffset -= panSpeed;
+    if (isPanningRight && room.cameraOffset < room.maxCameraOffset) room.cameraOffset += panSpeed;
+
+    room.cameraOffset += autoPanDirection * 1;
+    if (room.cameraOffset <= 0 || room.cameraOffset >= room.maxCameraOffset) autoPanDirection *= -1;
+
+    if (isUsingCamera) {
+      cameraUsageTimer -= 1/60;
+      if (cameraUsageTimer <= 0) {
+        cameras[activeCamera].isAvailable = false;
+        cameras[activeCamera].remainingTime = 5;
+        isUsingCamera = false;
+      }
+    } else {
+      cameras[activeCamera].remainingTime -= 1/60;
+      if (cameras[activeCamera].remainingTime <= 0) {
+        cameras[activeCamera].isAvailable = true;
+        cameraUsageTimer = cameras[activeCamera].maxUsageTime;
+        isUsingCamera = true;
+      }
+    }
+  }
 
 	// Affichage selon la vue active
 	if (activeView === 'office') {
