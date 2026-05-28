@@ -125,19 +125,19 @@ function updatePowerDisplay() {
 // Écouteurs d'événements
 function setupEventListeners() {
 	
-  document.getElementById('cam1A').addEventListener('click', () => activateCamera(0));
-  document.getElementById('cam1B').addEventListener('click', () => activateCamera(1));
-  document.getElementById('cam1C').addEventListener('click', () => activateCamera(2));
-  document.getElementById('cam2A').addEventListener('click', () => activateCamera(3));
-  document.getElementById('cam2B').addEventListener('click', () => activateCamera(4));
-  document.getElementById('cam3').addEventListener('click', () => activateCamera(5));
-  document.getElementById('cam4A').addEventListener('click', () => activateCamera(6));
-  document.getElementById('cam4B').addEventListener('click', () => activateCamera(7));
-  document.getElementById('cam5').addEventListener('click', () => activateCamera(8));
-  document.getElementById('cam6').addEventListener('click', () => activateCamera(9));
-  document.getElementById('cam7').addEventListener('click', () => activateCamera(10));
+  document.getElementById('cam1a').addEventListener('click', () => activateCamera("1a"));
+  document.getElementById('cam1b').addEventListener('click', () => activateCamera("1b"));
+  document.getElementById('cam1c').addEventListener('click', () => activateCamera("1c"));
+  document.getElementById('cam2a').addEventListener('click', () => activateCamera("2a"));
+  document.getElementById('cam2b').addEventListener('click', () => activateCamera("2b"));
+  document.getElementById('cam3').addEventListener('click', () => activateCamera("3"));
+  document.getElementById('cam4a').addEventListener('click', () => activateCamera("4a"));
+  document.getElementById('cam4b').addEventListener('click', () => activateCamera("4b"));
+  document.getElementById('cam5').addEventListener('click', () => activateCamera("5"));
+  document.getElementById('cam6').addEventListener('click', () => activateCamera("6"));
+  document.getElementById('cam7').addEventListener('click', () => activateCamera("7"));
   
-  //document.getElementById('officeView').addEventListener('click', () => { activeView = 'office'; });
+  document.getElementById('you').addEventListener('click', () => { activeView = 'office'; });
   document.getElementById('leftDoor').addEventListener('click', () => toggleDoor(0));
   document.getElementById('rightDoor').addEventListener('click', () => toggleDoor(1));
   document.getElementById('leftLight').addEventListener('click', () => toggleLight('left'));
@@ -151,26 +151,32 @@ function gameLoop() {
 
 
    // Animation automatique de panoramique
+ 
 if (activeView === 'camera') {
-    const room = rooms.find(r => r.id === cameras[activeCamera].roomId);
+    const camera = cameras.find(c => c.id === activeCamera);
+    const room = rooms.find(r => r.id === camera.roomId);
+
+    // Mise à jour du cameraOffset pour le panoramique automatique
     if (isPanningLeft && room.cameraOffset > 0) room.cameraOffset -= panSpeed;
     if (isPanningRight && room.cameraOffset < room.maxCameraOffset) room.cameraOffset += panSpeed;
 
+    // Panoramique automatique (va-et-vient)
     room.cameraOffset += autoPanDirection * 1;
+
     if (room.cameraOffset <= 0 || room.cameraOffset >= room.maxCameraOffset) autoPanDirection *= -1;
 
     if (isUsingCamera) {
       cameraUsageTimer -= 1/60;
       if (cameraUsageTimer <= 0) {
-        cameras[activeCamera].isAvailable = false;
-        cameras[activeCamera].remainingTime = 5;
+        cameras[camera].isAvailable = false;
+        cameras[camera].remainingTime = 5;
         isUsingCamera = false;
       }
     } else {
-      cameras[activeCamera].remainingTime -= 1/60;
-      if (cameras[activeCamera].remainingTime <= 0) {
-        cameras[activeCamera].isAvailable = true;
-        cameraUsageTimer = cameras[activeCamera].maxUsageTime;
+      cameras[camera].remainingTime -= 1/60;
+      if (cameras[camera].remainingTime <= 0) {
+        cameras[camera].isAvailable = true;
+        cameraUsageTimer = cameras[camera].maxUsageTime;
         isUsingCamera = true;
       }
     }
@@ -180,7 +186,7 @@ if (activeView === 'camera') {
 	if (activeView === 'office') {
 	  drawOfficeView(ctx);
 	} else {
-	  const camera = cameras[activeCamera];
+	  const camera = cameras.find(cam => cam.id === activeCamera);
 	  if (isUsingCamera) {
 		drawWithCamera(ctx, camera); // Affiche la caméra normalement
 	  } else {
