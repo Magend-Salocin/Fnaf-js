@@ -31,10 +31,15 @@ function drawRoom(ctx, room, cameraOffset = 0) {
 
 // Dessine la vue d'une caméra
 function drawWithCamera(ctx, camera) {
-  const room = rooms.find(r => r.id === camera.roomId);
-  if (room) {
+    const roomKey = camera.id;
+    const roomData = rooms[roomKey];
+    if (!roomData) return;
+
     ctx.fillStyle = 'black';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    const room = roomsArray.find(r => r.cameraId === roomKey);
+    if (!room) return;
 
     const scale = 1.5;
     const offsetX = (canvas.width - room.width * scale) / 2;
@@ -44,10 +49,14 @@ function drawWithCamera(ctx, camera) {
     ctx.translate(offsetX, offsetY);
     ctx.scale(scale, scale);
 
-    // Passe l'offset de caméra pour le panoramique
-    drawRoom(ctx, room, room.cameraOffset);
+    // Charge l'image en fonction de l'état de la pièce
+    const imageKey = `${roomKey}_b${roomData.b}_c${roomData.c}_f${roomData.f}`;
+    const camPicture = loadedCameraImages[roomKey]?.[imageKey];
 
-    //drawDoors(ctx);
+    if (camPicture && camPicture.complete) {
+        ctx.drawImage(camPicture, 0, 0, room.width, room.height);
+    }
+
     ctx.restore();
 
     // Affiche le nom de la caméra et le temps restant
@@ -57,8 +66,7 @@ function drawWithCamera(ctx, camera) {
     ctx.fillStyle = 'red';
     ctx.font = '24px Arial';
     ctx.fillText(`Temps restant : ${Math.ceil(cameraUsageTimer)}s`, 20, 60);
-  }
-} 
+}
 
 
 // Effet de statique pour les caméras en recharge
@@ -82,7 +90,17 @@ function drawStaticEffect(ctx, camera) {
 function drawOfficeView(ctx) {
   ctx.fillStyle = 'darkgray';
   ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = 'darkgray';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
 
+    // Utilise roomsArray pour trouver la pièce "The Office"
+    const office = roomsArray.find(r => r.isOffice);
+    if (office) {
+        drawRoom(ctx, office, 0);
+        ctx.fillStyle = 'white';
+        ctx.fillText("Bureau - Appuie sur Espace pour les lumières", office.x + 10, office.y + 40);
+    }
+/*
   const office = rooms.find(r => r.isOffice);
   if (office) {
 	activeCamera = 0;
@@ -99,5 +117,5 @@ function drawOfficeView(ctx) {
   ctx.fillStyle = leftLightOn ? 'yellow' : 'gray';
   ctx.fillText(`Lumière Gauche : ${leftLightOn ? 'ON' : 'OFF'}`, 20, 160);
   ctx.fillStyle = rightLightOn ? 'yellow' : 'gray';
-  ctx.fillText(`Lumière Droite : ${rightLightOn ? 'ON' : 'OFF'}`, 20, 190);
+  ctx.fillText(`Lumière Droite : ${rightLightOn ? 'ON' : 'OFF'}`, 20, 190);*/
 }

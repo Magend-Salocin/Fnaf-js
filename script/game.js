@@ -153,8 +153,13 @@ function gameLoop() {
    // Animation automatique de panoramique
  
 if (activeView === 'camera') {
+
     const camera = cameras.find(c => c.id === activeCamera);
-    const room = rooms.find(r => r.id === camera.roomId);
+    if (!camera) return;
+
+    // Utilise roomsArray pour trouver la pièce associée à la caméra
+    const room = roomsArray.find(r => r.id === camera.roomId);
+    if (!room) return;
 
     // Mise à jour du cameraOffset pour le panoramique automatique
     if (isPanningLeft && room.cameraOffset > 0) room.cameraOffset -= panSpeed;
