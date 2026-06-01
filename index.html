@@ -1,52 +1,50 @@
-<!DOCTYPE html>
-<html lang="fr">
+﻿<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FNAF 1 - Nicolas Berger</title>
-  <link rel="stylesheet" href="style/style.css">
-  <link rel="stylesheet" href="style/camera.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Five Night at Freddy's</title>
+    <link href="https://fonts.googleapis.com/css?family=Press+Start+2P&subset=latin,greek" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="style/start-screen.css">
 </head>
 <body>
-  <h1>Five Nights at Freddy's 1</h1>
-  <div id="controls">
-    <div id="cameraButtons">
-    <button id="toggleCameraLayout">CAM</button>
-  </div>
-
-  <div id="cameraLayout">
-    <div id="camLayoutContainer">
-      <div class="camera-box" id="cam1A">CAM<br>1A</div>
-      <div class="camera-box" id="cam1B">CAM<br>1B</div>
-      <div class="camera-box" id="cam1C">CAM<br>1C</div>
-      <div class="camera-box" id="cam2A">CAM<br>2A</div>
-      <div class="camera-box" id="cam2B">CAM<br>2B</div>
-      <div class="camera-box" id="cam3">CAM<br>3</div>
-      <div class="camera-box" id="cam4A">CAM<br>4A</div>
-      <div class="camera-box" id="cam4B">CAM<br>4B</div>
-      <div class="camera-box" id="cam5">CAM<br>5</div>
-      <div class="camera-box" id="cam6">CAM<br>6</div>
-      <div class="camera-box" id="cam7">CAM<br>7</div>
-      <div class="camera-box" id="you">YOU</div>
+    <div class="container" id="start-screen">
+        <div class="static"></div>
+        <div class="start">
+            <audio preload="auto" id="menu-start" src="audio/darkness_music.wav" loop="loop"></audio>
+            <aside class="menu">
+                <h1>Five<br> Night <br>at<br> Freddy's</h1>
+                <a href="main.html" id="start-game" onclick="javascript:night=1;">Start Game</a>
+                
+            </aside>
+        </div>
     </div>
-  </div>
-  
 
-    <div id="doorButtons" style="display: block;">
-      <button id="leftDoor">Porte Gauche (Fermée)</button>
-      <button id="rightDoor">Porte Droite (Fermée)</button>
-      <button id="leftLight">Lumière Gauche (OFF)</button>
-      <button id="rightLight">Lumière Droite (OFF)</button>
-    </div>
-  </div>
-  <canvas id="gameCanvas" width="800" height="600"></canvas>
-  <div id="powerUsage">Puissance : 100%</div>
-  <div id="gameOver" style="display: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: red; font-size: 48px;">GAME OVER</div>
-	<script src="script/data.js"></script>
-	<script src="script/assets.js"></script>
-	<script src="script/animatronic.js"></script>
-	<script src="script/render.js"></script>
-	<script src="script/game.js"></script>
-	<script src="script/main.js"></script>
+
+
+    <script>
+        // Chargement des scripts dans l'ordre
+document.addEventListener('click', function() {
+    const menuStart = document.querySelector('#menu-start');
+    if (menuStart) {
+        menuStart.play().catch(e => console.error("Erreur de lecture :", e));
+    }
+    // Supprimer l'événement après la première interaction
+    document.removeEventListener('click', arguments.callee);
+}, { once: true });
+
+/*
+    <a href="main.html" id="continue-game" class="display-0">Continue <p>Night <span id="night-no">2</span></p></a>
+    
+    // show continue?
+    var getNight = localStorage.getItem('night');
+    var getTimesPlayed = localStorage.getItem('timesPlayed');
+
+    if (parseInt(getTimesPlayed) > 0) {
+        $('#night-no').html(getNight);
+        $('#continue-game').removeClass('display-0');
+    }
+*/
+    </script>
 </body>
 </html>

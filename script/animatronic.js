@@ -12,7 +12,8 @@ class Animatronic {
 
     move() {
         this.moveCounter++;
-        const moveInterval = 60 - this.aggression * 2;
+        const moveInterval = 20 - this.aggression * 2;
+   
         if (this.moveCounter < moveInterval) return;
         this.moveCounter = 0;
 
@@ -23,13 +24,19 @@ class Animatronic {
             // Sinon, utilise l'ancienne logique de déplacement aléatoire
             this.moveRandomly();
         }
+        this.draw();
+        
     }
 
     // Déplacement selon un chemin prédéfini
     moveAlongPath() {
         // Met à jour l'ancienne pièce
         const oldRoomKey = this.getRoomKey(this.currentRoomId);
-        if (oldRoomKey) rooms[oldRoomKey][this.getKey()] = 0;
+        if (oldRoomKey) {
+            rooms[oldRoomKey][this.getKey()] = 0;
+
+            document.getElementById('cam'+oldRoomKey).style.background='#555';
+        }
 
         // Passe à la pièce suivante dans le chemin
         this.currentPathIndex++;
@@ -51,7 +58,12 @@ class Animatronic {
     moveRandomly() {
         // Met à jour l'ancienne pièce
         const oldRoomKey = this.getRoomKey(this.currentRoomId);
-        if (oldRoomKey) rooms[oldRoomKey][this.getKey()] = 0;
+        if (oldRoomKey){
+             rooms[oldRoomKey][this.getKey()] = 0;
+
+        document.getElementById('cam'+oldRoomKey).style.background='#555';
+        }
+        
 
         // Trouve une pièce accessible aléatoirement
         const newRoomKey = this.findAccessibleRoom();
@@ -108,16 +120,15 @@ class Animatronic {
     }
 
     // Dessine l'animatronic
-    draw(ctx) {
-        const currentRoom = roomsArray.find(room => room.id === this.currentRoomId);
-        if (currentRoom) {
-            ctx.fillStyle = this.name === 'Freddy' ? 'brown' :
-                            this.name === 'Bonnie' ? 'blue' :
-                            this.name === 'Chica' ? 'yellow' : 'purple';
-            ctx.fillRect(currentRoom.x + 20, currentRoom.y + 20, 30, 30);
-            ctx.fillStyle = 'white';
-            ctx.fillText(this.name, currentRoom.x + 20, currentRoom.y + 15);
-        }
+    draw() {
+        const Room = this.getRoomKey(this.currentRoomId);
+        console.log("deplacement de "+this.name+" room : "+Room) ;
+
+
+        const color = this.name === 'Freddy' ? 'brown' :
+                        this.name === 'Bonnie' ? 'blue' :
+                        this.name === 'Chica' ? 'yellow' : 'purple';
+        document.getElementById('cam'+ Room).style.background= color;
     }
 }
 
@@ -126,8 +137,8 @@ class Animatronic {
 // Crée les animatronics
 const freddy 	= new Animatronic('Freddy'	, '1a'	, 5, ['1a']);
 const bonnie 	= new Animatronic('Bonnie'	, '1a'	, 7, ['1a', '1b', '3', '6', '5', '2b', 'safe']  );
-const chica 	= new Animatronic('Chica'	, '1a'	, 6, ['1a', '1b', '7', '6', '4a', '4b', 'safe'] );
-const foxy 		= new Animatronic('Foxy'	, '7'	, 9,  ['7']);
+const chica 	= new Animatronic('Chica'	, '1a'	, 5, ['1a', '1b', '7', '6', '4a', '4b', 'safe'] );
+const foxy 		= new Animatronic('Foxy'	, '1c'	, 5,  ['1c']);
 
 const animatronics = [freddy, bonnie, chica, foxy];
 

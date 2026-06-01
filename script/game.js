@@ -1,8 +1,21 @@
 //game.js
 
+// Variables pour la gestion du temps (heures:minutes)
+let gameTime = { hours: 0, minutes: 0 }; // Temps actuel dans le jeu (00:00 à 23:59)
+const TICKS_PER_MINUTE = 60; // 60 ticks = 1 minute (1 tick = 1/60s)
+const MINUTES_PER_HOUR = 60; // 60 minutes = 1 heure
+let ticksSinceLastMinute = 0; // Compteur de ticks depuis la dernière minute
+
+
+// Variables pour les tours de jeu (toutes les 5 minutes in-game)
+const MINUTES_PER_TURN = 5; // Un tour toutes les 5 minutes
+let minutesSinceLastTurn = 0; // Compteur de minutes depuis le dernier tour
+let currentTurn = 1; // Numéro du tour actuel
+
 // Variables globales
 let activeView = 'office';
-let activeCamera = 0;
+let activeCamera = '0';
+let lastActiveCamera = '1a';
 let cameraUsageTimer = 0;
 let power = 100;
 let leftLightOn = false;
@@ -20,6 +33,12 @@ const activeEvents = {};
 
 const toggleButton = document.getElementById('toggleCameraLayout');
 const cameraLayout = document.getElementById('cameraLayout');
+const startButton = document.getElementById('start');
+
+
+startButton.addEventListener('click', () => {
+  startAmbientSounds();
+});
 
 
 document.addEventListener('keydown', (e) => {
@@ -35,7 +54,23 @@ document.addEventListener('keyup', (e) => {
 });
 
 toggleButton.addEventListener('click', () => {
+  // Jouer le son de "put down" lorsque les caméras sont masquées
+  cameraPutDownSound.currentTime = 0;
+  cameraPutDownSound.play().catch(error => {
+    console.error("Erreur lors de la lecture du son :", error);
+  });
+
   cameraLayout.style.display = cameraLayout.style.display === 'block' ? 'none' : 'block';
+  if(cameraLayout.style.display=='none'){
+    cameraDown();
+    activeView = 'office';
+    lastActiveCamera = activeCamera;
+    activeCamera = 0;
+    stopSound(cameraToggleSound);
+  }else{
+    cameraUp();
+
+  }
 });
 
 
@@ -47,12 +82,14 @@ function initButtons() {
   });
 }
 
+
 // Activer une caméra
 function activateCamera(cameraId) {
   const camera = cameras.find(c => c.id === cameraId);
   if (camera && camera.isAvailable && power > 0) {
     activeView = 'camera';
     activeCamera = cameraId;
+     console.log(activeCamera);
     cameraUsageTimer = camera.maxUsageTime;
     power -= 1;
     updatePowerDisplay();
@@ -137,69 +174,125 @@ function setupEventListeners() {
   document.getElementById('cam6').addEventListener('click', () => activateCamera("6"));
   document.getElementById('cam7').addEventListener('click', () => activateCamera("7"));
   
-  document.getElementById('you').addEventListener('click', () => { activeView = 'office'; });
+
   document.getElementById('leftDoor').addEventListener('click', () => toggleDoor(0));
   document.getElementById('rightDoor').addEventListener('click', () => toggleDoor(1));
   document.getElementById('leftLight').addEventListener('click', () => toggleLight('left'));
   document.getElementById('rightLight').addEventListener('click', () => toggleLight('right'));
-}
 
+
+}
 
 // Boucle de jeu
 function gameLoop() {
+
+    onCamera();
+
+    // Gestion du temps (heures:minutes)
+    ticksSinceLastMinute++;
+    if (ticksSinceLastMinute >= TICKS_PER_MINUTE) {
+        ticksSinceLastMinute = 0;
+        gameTime.minutes++;
+        minutesSinceLastTurn++; // Incrémente le compteur de minutes depuis le dernier tour
+
+        // Vérifie si 5 minutes se sont écoulées (tour de jeu)
+        if (minutesSinceLastTurn >= MINUTES_PER_TURN) {
+            minutesSinceLastTurn = 0;
+            currentTurn++;
+            console.log(`=== Tour ${currentTurn} (${formatGameTime(gameTime)}) ===`);
+            onNewTurn(currentTurn); // Appelle la fonction pour gérer le tour
+        }
+
+        if (gameTime.minutes >= MINUTES_PER_HOUR) {
+            gameTime.minutes = 0;
+            gameTime.hours = (gameTime.hours + 1) % 24;
+            console.log(`Il est maintenant ${formatGameTime(gameTime)}.`);
+        }
+    }
+
+    drawGameTime(ctx); // Affiche l'heure
+    drawCurrentTurn(ctx); // Affiche le tour actuel
+}
+/**
+ * Gère les actions à effectuer à chaque nouveau tour
+ * @param {number} turn - Numéro du tour actuel
+ */
+function onCamera() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+  	// Affichage selon la vue active
+	if (activeView === 'office') {
+	  drawOfficeView(ctx);
 
-   // Animation automatique de panoramique
- 
-if (activeView === 'camera') {
+	}else{
 
-    const camera = cameras.find(c => c.id === activeCamera);
-    if (!camera) return;
+    // Animation automatique de panoramique
+    if (activeView === 'camera') {
 
-    // Utilise roomsArray pour trouver la pièce associée à la caméra
-    const room = roomsArray.find(r => r.id === camera.roomId);
-    if (!room) return;
+      power -= 0.001;
+      updatePowerDisplay();
 
-    // Mise à jour du cameraOffset pour le panoramique automatique
-    if (isPanningLeft && room.cameraOffset > 0) room.cameraOffset -= panSpeed;
-    if (isPanningRight && room.cameraOffset < room.maxCameraOffset) room.cameraOffset += panSpeed;
+      const camera = cameras.find(c => c.id === activeCamera);
+      if (!camera) return;
 
-    // Panoramique automatique (va-et-vient)
-    room.cameraOffset += autoPanDirection * 1;
+      // Utilise roomsArray pour trouver la pièce associée à la caméra
+      const room = roomsArray.find(r => r.id === camera.roomId);
+      if (!room) return;
 
-    if (room.cameraOffset <= 0 || room.cameraOffset >= room.maxCameraOffset) autoPanDirection *= -1;
+        // Mise à jour de room.cameraOffset en fonction des touches
+        if (isPanningLeft && room.cameraOffset > 0) {
+            room.cameraOffset -= panSpeed;
+        }
+        if (isPanningRight && room.cameraOffset < room.maxCameraOffset) {
+            room.cameraOffset += panSpeed;
+        }
 
-    if (isUsingCamera) {
-      cameraUsageTimer -= 1/60;
-      if (cameraUsageTimer <= 0) {
-        cameras[camera].isAvailable = false;
-        cameras[camera].remainingTime = 5;
-        isUsingCamera = false;
+        // Panoramique automatique (va-et-vient)
+        room.cameraOffset += autoPanDirection * 1;
+        if (room.cameraOffset <= 0 || room.cameraOffset >= room.maxCameraOffset) {
+            autoPanDirection *= -1;
+        }
+
+      if (isUsingCamera) {
+        cameraUsageTimer -= 1/60;
+        if (cameraUsageTimer <= 0) {
+          camera.isAvailable = false;
+          camera.remainingTime = 5;
+          isUsingCamera = false;
+        }
+      } else {
+        camera.remainingTime -= 1/60;
+        if (camera.remainingTime <= 0) {
+          camera.isAvailable = true;
+          cameraUsageTimer = camera.maxUsageTime;
+          isUsingCamera = true;
+        }
       }
-    } else {
-      cameras[camera].remainingTime -= 1/60;
-      if (cameras[camera].remainingTime <= 0) {
-        cameras[camera].isAvailable = true;
-        cameraUsageTimer = cameras[camera].maxUsageTime;
-        isUsingCamera = true;
+      if (isUsingCamera) {
+        drawWithCamera(ctx, camera); // Affiche la caméra normalement
+      } else {
+        drawStaticEffect(ctx, camera); // Affiche l'effet de statique pendant la recharge
       }
+
     }
   }
 
-	// Affichage selon la vue active
-	if (activeView === 'office') {
-	  drawOfficeView(ctx);
-	} else {
-	  const camera = cameras.find(cam => cam.id === activeCamera);
-	  if (isUsingCamera) {
-		drawWithCamera(ctx, camera); // Affiche la caméra normalement
-	  } else {
-		drawStaticEffect(ctx, camera); // Affiche l'effet de statique pendant la recharge
-	  }
-	}
+
+}
+
+/**
+ * Gère les actions à effectuer à chaque nouveau tour
+ * @param {number} turn - Numéro du tour actuel
+ */
+function onNewTurn(currentTurn) {
 
   animatronics.forEach(animatronic => animatronic.move());
-  power -= 0.001;
-  updatePowerDisplay();
+}
+
+
+// Formate l'heure en "HH:MM"
+function formatGameTime(time) {
+    const hoursStr = time.hours.toString().padStart(2, '0');
+    const minutesStr = time.minutes.toString().padStart(2, '0');
+    return `${hoursStr}:${minutesStr}`;
 }

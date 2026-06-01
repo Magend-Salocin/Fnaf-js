@@ -93,8 +93,12 @@ const cameras_images = {
 
 
   const the_office = {
-    default: 'images/rooms/the_office/default.png',
-    default_00: 'images/rooms/the_office/default_00.jpg',
+
+    safe_room_left_light_0_right_light_0: 'images/rooms/the_office/safe_room_left_light_0_right_light_0.png',
+    safe_room_left_light_0_right_light_1: 'images/rooms/the_office/safe_room_left_light_0_right_light_1.png',
+    safe_room_left_light_1_right_light_0: 'images/rooms/the_office/safe_room_left_light_1_right_light_0.png',
+    safe_room_left_light_1_right_light_1: 'images/rooms/the_office/safe_room_left_light_1_right_light_1.png',
+/*
     default_01: 'images/rooms/the_office/default_01.jpg',
     default_02: 'images/rooms/the_office/default_02.jpg',
     default_03: 'images/rooms/the_office/default_03.jpg',
@@ -104,7 +108,7 @@ const cameras_images = {
     default_c0_1: 'images/rooms/the_office/default_c0_1.jpg',
     default_c1: 'images/rooms/the_office/default_c1.jpg',
     default_f0: 'images/rooms/the_office/default_f0.jpg',
-    default_f1: 'images/rooms/the_office/default_f1.jpg',
+    default_f1: 'images/rooms/the_office/default_f1.jpg',*/
     safe_room: {
       bonnie_jumpscare: 'images/rooms/the_office/safe_room/bonnie_jumpscare.gif',
       chika_jumpscare: 'images/rooms/the_office/safe_room/chika_jumpscare.gif',
@@ -114,10 +118,7 @@ const cameras_images = {
       right_door_cika_scare: 'images/rooms/the_office/safe_room/right_door_cika_scare.png',
       safe_room_bonny_right_door_scare: 'images/rooms/the_office/safe_room/safe_room_bonny_right_door_scare.png',
       safe_room_chika_left_door_scare: 'images/rooms/the_office/safe_room/safe_room_chika_left_door_scare.png',
-      safe_room_left_light_0_right_light_0: 'images/rooms/the_office/safe_room/safe_room_left_light_0_right_light_0.png',
-      safe_room_left_light_0_right_light_1: 'images/rooms/the_office/safe_room/safe_room_left_light_0_right_light_1.png',
-      safe_room_left_light_1_right_light_0: 'images/rooms/the_office/safe_room/safe_room_left_light_1_right_light_0.png',
-      safe_room_left_light_1_right_light_1: 'images/rooms/the_office/safe_room/safe_room_left_light_1_right_light_1.png',
+
       safe_room_powerdown_end: 'images/rooms/the_office/safe_room/safe_room_powerdown_end.gif',
       safe_room_powerdown_foxy: 'images/rooms/the_office/safe_room/safe_room_powerdown_foxy.gif',
       safe_room_power_0: 'images/rooms/the_office/safe_room/safe_room_power_0.png'
@@ -125,6 +126,7 @@ const cameras_images = {
 };
 
 const loadedCameraImages = {};
+const loadedTheOfficeImages = {}; // Objet pour stocker les images de the_office
 
 function preloadImages() {
   for (const roomId in cameras_images) {
@@ -137,6 +139,19 @@ function preloadImages() {
       loadedCameraImages[roomId][imageKey].src = imagePath;
     }
   }
+  // Précharger les images de the_office
+    for (const key in the_office) {
+        if (typeof the_office[key] === 'string') {
+            loadedTheOfficeImages[key] = new Image();
+            loadedTheOfficeImages[key].src = the_office[key];
+        } else if (typeof the_office[key] === 'object') {
+            loadedTheOfficeImages[key] = {};
+            for (const subKey in the_office[key]) {
+                loadedTheOfficeImages[key][subKey] = new Image();
+                loadedTheOfficeImages[key][subKey].src = the_office[key][subKey];
+            }
+        }
+    }
 }
 
 /*
