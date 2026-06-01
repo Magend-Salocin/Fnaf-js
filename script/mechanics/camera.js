@@ -11,8 +11,6 @@
 const gifRegistry = {};
 
 const CAMERA_DEBUG_CONSTANTS = Object.freeze({
-  POWER_DRAIN_PER_FRAME: 0.001,
-  SWITCH_POWER_COST: 1,
   RECHARGE_SECONDS: 5,
   AUTO_PAN_STEP: 1,
   EMPTY_ROOM_SOUND_CHANCE: 0.2
@@ -60,7 +58,6 @@ function activateCamera(cameraId) {
     }
 
     cameraUsageTimer = camera.maxUsageTime; // Réinitialise le timer d'utilisation
-    power -= CAMERA_DEBUG_CONSTANTS.SWITCH_POWER_COST; // Consomme de l'énergie
     updatePowerDisplay(); // Met à jour l'affichage de l'énergie
     playSound("camera_cycle"); // Joue le son de changement de caméra
     isUsingCamera = true; // Indique que la caméra est en cours d'utilisation
@@ -84,9 +81,6 @@ function onCamera() {
     // Animation automatique de panoramique
     if (activeView === 'camera') {
 
-      power -= CAMERA_DEBUG_CONSTANTS.POWER_DRAIN_PER_FRAME;
-      updatePowerDisplay();
-
       const camera = cameras.find(c => c.id === activeCamera);
       if (!camera) return;
 
@@ -102,10 +96,18 @@ function onCamera() {
             room.cameraOffset += panSpeed;
         }
 
+        room.cameraOffset = Math.max(0, Math.min(room.cameraOffset, room.maxCameraOffset));
+
         // Panoramique automatique (va-et-vient)
-        room.cameraOffset += autoPanDirection * CAMERA_DEBUG_CONSTANTS.AUTO_PAN_STEP;
-        if (room.cameraOffset <= 0 || room.cameraOffset >= room.maxCameraOffset) {
-            autoPanDirection *= -1;
+        const nextOffset = room.cameraOffset + (autoPanDirection * CAMERA_DEBUG_CONSTANTS.AUTO_PAN_STEP);
+        if (nextOffset <= 0) {
+          room.cameraOffset = 0;
+          autoPanDirection = 1;
+        } else if (nextOffset >= room.maxCameraOffset) {
+          room.cameraOffset = room.maxCameraOffset;
+          autoPanDirection = -1;
+        } else {
+          room.cameraOffset = nextOffset;
         }
 
       if (isUsingCamera) {
@@ -170,8 +172,6 @@ function displayCameraStatus() {
     <hr style="border-color:#444; margin:6px 0;"/>
     <div style="color:#ffaa66; font-weight:bold; margin-bottom:3px;">CONSTANTS</div>
     <div>
-      <span style="color:#bbb;">POWER_DRAIN_PER_FRAME:</span> ${CAMERA_DEBUG_CONSTANTS.POWER_DRAIN_PER_FRAME}<br/><br/>
-      <span style="color:#bbb;">SWITCH_POWER_COST:</span> ${CAMERA_DEBUG_CONSTANTS.SWITCH_POWER_COST}<br/><br/>
       <span style="color:#bbb;">RECHARGE_SECONDS:</span> ${CAMERA_DEBUG_CONSTANTS.RECHARGE_SECONDS}<br/><br/>
       <span style="color:#bbb;">AUTO_PAN_STEP:</span> ${CAMERA_DEBUG_CONSTANTS.AUTO_PAN_STEP}<br/><br/>
       <span style="color:#bbb;">EMPTY_ROOM_SOUND_CHANCE:</span> ${CAMERA_DEBUG_CONSTANTS.EMPTY_ROOM_SOUND_CHANCE}<br/><br/>
@@ -291,29 +291,31 @@ function drawWithCamera(ctx, camera) {
 // TODO NICO à reprendre : la clé d'image doit être déterminée en fonction de l'état de la pièce (présence des animatronics) et de la caméra active
 
     // Charge l'image en fonction de l'état de la pièce
-    const imageKey = `${roomKey}_b${roomData.b}_c${roomData.c}_f${roomData.f}`;
-    if(roomKey=="7"){
-      
-      switch(foxyInstance.getStatus().phase){
+    let imageKey = `${roomKey}_b${roomData.b}_c${roomData.c}_f${roomData.f}`;
+    if (roomKey === '1c' && typeof foxyInstance !== 'undefined' && foxyInstance) {
+      switch (foxyInstance.getStatus().phase) {
         case FoxyPhase.INACTIF:
-          imageKey = `1c_b0_c0_f0_00`;
+          imageKey = '1c_b0_c0_f0_00';
           break;
         case FoxyPhase.TETE_SORTIE:
-          imageKey = `1c_b0_c0_f0_01`;
+          imageKey = '1c_b0_c0_f0_01';
           break;
         case FoxyPhase.PRET_A_SORTIR:
-          imageKey = `1c_b0_c0_f0_02`;
+          imageKey = '1c_b0_c0_f0_02';
           break;
         case FoxyPhase.COURSE:
-          imageKey = `1c_b0_c0_f0_03`;
+          imageKey = '1c_b0_c0_f0_03';
           break;
         case FoxyPhase.RETRAIT:
-          imageKey = `1c_b0_c0_f0_04`;
+          imageKey = '1c_b0_c0_f0_00';
           break;
       }
     }
 
-    const camPicture = loadedCameraImages[roomKey]?.[imageKey];
+    const cameraImages = loadedCameraImages[roomKey] || {};
+    const fallbackImageKey = `${roomKey}_b0_c0_f0`;
+    const resolvedImageKey = cameraImages[imageKey] ? imageKey : fallbackImageKey;
+    const camPicture = cameraImages[resolvedImageKey];
 
     if (camPicture && camPicture.complete) {
 
@@ -325,36 +327,55 @@ function drawWithCamera(ctx, camera) {
             0, 0, room.width, room.height
         );
 
-        // 2. Lignes horizontales (interférences)
-        ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
-        ctx.lineWidth = 1;
-        for (let y = 0; y < canvas.height; y += 4) {
-            ctx.beginPath();
-            ctx.moveTo(0, y);
-            ctx.lineTo(canvas.width, y);
-            ctx.stroke();
-        }
+      // Les parasites doivent être rendus dans l'espace de la room, pas dans le canvas global.
+      const viewWidth = room.width;
+      const viewHeight = room.height;
+      const pixelSize = Math.max(1, 1 / scale);
+      const jitterX = (Math.random() - 0.5) * (pixelSize * 2.2);
+      const jitterY = (Math.random() - 0.5) * (pixelSize * 1.6);
+      const overlayFlicker = 0.8 + Math.random() * 0.35;
 
-        // 3. Bruit blanc (parasites)
-        for (let i = 0; i < 1500; i++) {
-            const x = Math.random() * canvas.width;
-            const y = Math.random() * canvas.height;
-            const alpha = Math.random() * 0.7;
-            // Variation de couleur : parfois gris, parfois teinté de vert/bleu (effet "vieille caméra")
-            const hue = 120 + Math.random() * 60; // Teinte verte/bleue
-            ctx.fillStyle = `hsla(${hue}, 100%, 80%, ${alpha})`;
-            ctx.fillRect(x, y, 1.5, 1.5);
-        }
+      ctx.save();
+      ctx.beginPath();
+      ctx.rect(0, 0, viewWidth, viewHeight);
+      ctx.clip();
+      ctx.translate(jitterX, jitterY);
+      ctx.globalAlpha = overlayFlicker;
 
-        // 4. Ajout de lignes verticales aléatoires (parasites)
-        for (let i = 0; i < 5; i++) {
-            const x = Math.random() * canvas.width;
-            ctx.strokeStyle = `rgba(255, 255, 255, ${Math.random() * 0.3})`;
-            ctx.beginPath();
-            ctx.moveTo(x, 0);
-            ctx.lineTo(x, canvas.height);
-            ctx.stroke();
-        }
+      // 2. Lignes horizontales (interférences)
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
+      ctx.lineWidth = pixelSize;
+      for (let y = 0; y < viewHeight; y += 4) {
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.lineTo(viewWidth, y);
+        ctx.stroke();
+      }
+
+      // 3. Bruit blanc (parasites)
+      const noiseCount = Math.max(600, Math.floor((viewWidth * viewHeight) / 450));
+      for (let i = 0; i < noiseCount; i++) {
+        const x = Math.random() * viewWidth;
+        const y = Math.random() * viewHeight;
+        const alpha = Math.random() * 0.7;
+        // Variation de couleur : parfois gris, parfois teinté de vert/bleu (effet "vieille caméra")
+        const hue = 120 + Math.random() * 60; // Teinte verte/bleue
+        ctx.fillStyle = `hsla(${hue}, 100%, 80%, ${alpha})`;
+        ctx.fillRect(x, y, pixelSize * 1.5, pixelSize * 1.5);
+      }
+
+      // 4. Ajout de lignes verticales aléatoires (parasites)
+      const verticalLineCount = Math.max(5, Math.floor(viewWidth / 220));
+      for (let i = 0; i < verticalLineCount; i++) {
+        const x = Math.random() * viewWidth;
+        ctx.strokeStyle = `rgba(255, 255, 255, ${Math.random() * 0.3})`;
+        ctx.beginPath();
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, viewHeight);
+        ctx.stroke();
+      }
+
+      ctx.restore();
     }
     ctx.restore();
 

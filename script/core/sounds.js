@@ -262,20 +262,7 @@ function _syncMixerUI() {
     _applyVolumeToAllSounds();
 }
 
-/**
- * Applique le volume global à un élément audio.
- * @param {HTMLAudioElement} audioElement - Élément audio à configurer.
- */
-/*
-function applyGlobalVolume(audioElement) {
-    if (audioElement){
-         if(audioElement.className=="Buzz-fan"){
-            audioElement.volume = 0.1 ;//Volume du ventilateur à 10% du volume global
-        }else{
-            audioElement.volume = globalVolume;
-        }
-    }
-}*/
+
 /**
  * Applique le volume global et l'égaliseur individuel à un élément audio.
  * @param {HTMLAudioElement} audioElement - Élément audio à configurer.
@@ -330,6 +317,16 @@ function playSoundLoop(id) {
     });
 }
 
+/**
+ * Joue un son de Foxy (avec limitation pour éviter les répétitions)
+ * @param {string} soundId - ID du son à jouer
+ * @param {string} message - Message de log
+ */
+function playFoxySound(soundId, message) {
+    console.log(`[Foxy] ${message}`);
+    playSound(soundId); 
+}
+    
 /**
  * Joue un son une seule fois.
  * @param {string} id - Identifiant du son.
@@ -402,5 +399,3 @@ function startMenuSounds() {
     }
 }
 
-_loadAudioMixerState();
-_syncMixerUI();

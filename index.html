@@ -8,6 +8,11 @@
   <link rel="stylesheet" href="style/style.css">
   <link rel="stylesheet" href="style/camera.css">
   <link rel="stylesheet" href="style/start-screen.css">
+	<link rel="stylesheet" href="style/timer.css">
+	<link rel="stylesheet" href="style/power-status.css">
+	<link rel="stylesheet" href="style/usage-status.css">
+	<link rel="stylesheet" href="style/debug.css">
+
 </head>
 <body>
 
@@ -94,81 +99,43 @@
 				<button id="debug-game-over-1" style="display:none">End Night</button>
 				<button id="stop" style="display:none">stop</button>
 				<button id="toggleCameraLayout">CAM</button>
-				<button id="debug-toggle-btn" onclick="toggleDebugPanel()" style="background-color: #222; color: #ff8800; border: 1px solid #ff8800; font-size: 11px; padding: 4px 8px; cursor: pointer;">🐾 Debug</button>
+				<button id="debug-toggle-btn" class="debug-toggle-btn" onclick="toggleDebugPanel()">🐾 Debug</button>
 			</div>
 
 			<!-- Panneau de Debug caché -->
-			<div id="debug-panel" style="
-				display: none;
-				position: fixed;
-				top: 40px;
-				left: 0;
-				background-color: rgba(10, 10, 10, 0.95);
-				border: 1px solid #ff8800;
-				border-top: none;
-				padding: 10px;
-				z-index: 100;
-				font-family: monospace;
-				font-size: 11px;
-				min-width: 220px;
-			">
-				<div style="color: #ff8800; font-weight: bold; margin-bottom: 8px; border-bottom: 1px solid #ff8800; padding-bottom: 4px;">
+			<div id="debug-panel">
+				<div class="debug-panel-title">
 					🐾 DEBUG PANEL
 				</div>
 
 				<!-- Infos de jeu -->
-				<div id="debug-game-info" style="margin-bottom: 8px; padding: 5px 6px; background: #111; border: 1px solid #333; font-size: 10px; color: #ccc; line-height: 1.8;">
+				<div id="debug-game-info" class="debug-game-info">
 					<span id="debug-info-nuit">Nuit : —</span><br>
 					<span id="debug-info-tour">Tour : —</span>
 				</div>
 
 				<!-- Boutons généraux -->
-				<div style="margin-bottom: 8px;">
-					<div style="color: #aaa; font-size: 10px; margin-bottom: 4px;">— GÉNÉRAL —</div>
-					<button onclick="document.getElementById('start').click()" style="display:block; width:100%; margin-bottom:3px; background:#333; color:#fff; border:1px solid #555; padding:3px 6px; cursor:pointer;">▶ Start Ambient</button>
-					<button onclick="document.getElementById('stop').click()" style="display:block; width:100%; margin-bottom:3px; background:#333; color:#fff; border:1px solid #555; padding:3px 6px; cursor:pointer;">⏹ Stop Sons</button>
-					<button onclick="document.getElementById('debug-game-over-0').click()" style="display:block; width:100%; margin-bottom:3px; background:#333; color:#fff; border:1px solid #555; padding:3px 6px; cursor:pointer;">Game Over (Freddy)</button>
-					<button onclick="document.getElementById('debug-game-over-1').click()" style="display:block; width:100%; margin-bottom:3px; background:#333; color:#fff; border:1px solid #555; padding:3px 6px; cursor:pointer;">End Night</button>
+				<div class="debug-section">
+					<div class="debug-section-label">— GÉNÉRAL —</div>
+
+					<button onclick="document.getElementById('debug-game-over-0').click()" class="debug-action-btn debug-action-btn-neutral">Game Over (Freddy)</button>
+					<button onclick="document.getElementById('debug-game-over-1').click()" class="debug-action-btn debug-action-btn-neutral">End Night</button>
 				</div>
 
 				<!-- Boutons Foxy -->
 				<div>
-					<div style="color: #aaa; font-size: 10px; margin-bottom: 4px;">— FOXY —</div>
-					<button id="debug-foxy-phase1" style="display:block; width:100%; margin-bottom:3px; background:#00aa00; color:#fff; border:none; padding:3px 6px; cursor:pointer;">Phase 1 — Inactif</button>
-					<button id="debug-foxy-phase2" style="display:block; width:100%; margin-bottom:3px; background:#aaaa00; color:#fff; border:none; padding:3px 6px; cursor:pointer;">Phase 2 — Tête Sortie</button>
-					<button id="debug-foxy-phase3" style="display:block; width:100%; margin-bottom:3px; background:#aa0000; color:#fff; border:none; padding:3px 6px; cursor:pointer;">Phase 3 — Course !</button>
-					<button id="debug-foxy-check-cove" style="display:block; width:100%; margin-bottom:3px; background:#005599; color:#fff; border:none; padding:3px 6px; cursor:pointer;">Vérifier Pirate Cove</button>
-					<button id="debug-foxy-close-door" style="display:block; width:100%; margin-bottom:3px; background:#555; color:#fff; border:none; padding:3px 6px; cursor:pointer;">Fermer Porte Est</button>
-					<button id="debug-foxy-open-door" style="display:block; width:100%; margin-bottom:3px; background:#888; color:#fff; border:none; padding:3px 6px; cursor:pointer;">Ouvrir Porte Est</button>
-					<button id="debug-foxy-reset" style="display:block; width:100%; background:#444; color:#aaa; border:1px solid #555; padding:3px 6px; cursor:pointer;">Reset Foxy</button>
+					<div class="debug-section-label">— FOXY —</div>
+					<button id="debug-foxy-phase1" class="debug-action-btn debug-action-btn-phase1">Phase 1 — Inactif</button>
+					<button id="debug-foxy-phase2" class="debug-action-btn debug-action-btn-phase2">Phase 2 — Tête Sortie</button>
+					<button id="debug-foxy-phase3" class="debug-action-btn debug-action-btn-phase3">Phase 3 — Course !</button>
+					<button id="debug-foxy-check-cove" class="debug-action-btn debug-action-btn-check">Vérifier Pirate Cove</button>
+					<button id="debug-foxy-reset" class="debug-action-btn debug-action-btn-reset">Reset Foxy</button>
 				</div>
 					<!-- Affichage du Statut de Foxy -->
-				<div id="foxy-status" style="
-			
-					padding: 10px 15px;
-					background-color: rgba(0, 0, 0, 0.8);
-					border: 2px solid #ff8800;
-					border-radius: 5px;
-					font-family: 'Press Start 2P', monospace;
-					font-size: 10px;
-					color: #ff8800;
-					z-index: 999;
-					display: none;
-				"></div>
+				<div id="foxy-status" class="debug-status-box"></div>
 
 				<!-- Affichage du Statut des caméras -->
-				<div id="camera-status" style="
-			
-					padding: 10px 15px;
-					background-color: rgba(0, 0, 0, 0.8);
-					border: 2px solid #ff8800;
-					border-radius: 5px;
-					font-family: 'Press Start 2P', monospace;
-					font-size: 10px;
-					color: #ff8800;
-					z-index: 999;
-					display: none;
-				"></div>
+				<div id="camera-status" class="debug-status-box"></div>
 			</div>
 
 		<!-- Volume Control -->
@@ -269,56 +236,10 @@
 	<!-- Canvas et affichages -->
 	<canvas id="gameCanvas"></canvas>
 	<img id="gameCanvasGif" class="gameCanvas" style="display:none">
-	<div id="powerUsage">Puissance : 100%</div>
+	<div id="powerUsage"><!-- mis a jour par updatePowerDisplay() --></div>
+	<div id="usage-status"><!-- mis a jour par updateUsageStatus() --></div>
 
 	<!-- Horloge digitale style FNAF -->
-	<style>
-		#time-status {
-			position: fixed;
-			top: 12px;
-			right: 12px;
-			z-index: 999;
-			background-color: #080808;
-			border: 1px solid #2a2a2a;
-			border-radius: 2px;
-			padding: 6px 12px 8px;
-			text-align: center;
-			box-shadow: 0 0 18px rgba(0,0,0,0.9), inset 0 0 8px rgba(0,0,0,0.6);
-			user-select: none;
-		}
-		#time-status .clock-label {
-			font-family: 'Press Start 2P', monospace;
-			font-size: 6px;
-			color: #555;
-			letter-spacing: 2px;
-			margin-bottom: 4px;
-		}
-		#time-status .clock-time {
-			font-family: 'Press Start 2P', monospace;
-			font-size: 28px;
-			color: #ff8800;
-			text-shadow: 0 0 8px #ff6600, 0 0 20px rgba(255,100,0,0.4);
-			letter-spacing: 2px;
-			line-height: 1;
-		}
-		#time-status .clock-colon {
-			animation: blink-colon 1s step-start infinite;
-			display: inline-block;
-			width: 18px;
-			text-align: center;
-		}
-		@keyframes blink-colon {
-			0%, 49% { opacity: 1; }
-			50%, 100% { opacity: 0; }
-		}
-		#time-status .clock-ampm {
-			font-family: 'Press Start 2P', monospace;
-			font-size: 6px;
-			color: #aa5500;
-			letter-spacing: 1px;
-			margin-top: 4px;
-		}
-	</style>
 	<div id="time-status"><!-- mis à jour par drawGameTime() --></div>
 
 	<!-- audios -->
@@ -374,9 +295,9 @@
 		<!-- Sons de Foxy -->
 		<audio preload="auto" class="foxy-curtain-open" src="audio/DOOR_POUNDING_ME_D0291401.wav"></audio>
 		<audio preload="auto" class="foxy-running" src="audio/running fast3.wav"></audio>
-		<audio preload="auto" class="foxy-blocked" src="audio/door-sound.wav"></audio>
+		<audio preload="auto" class="foxy-blocked" src="audio/knock2.wav"></audio>
 		<audio preload="auto" class="foxy-attack" src="audio/XSCREAM.wav"></audio>
-		<audio preload="auto" class="foxy-retrait" src="audio/door-sound.wav"></audio>
+		<audio preload="auto" class="foxy-retrait" src="audio/knock2.wav"></audio>
 
 		<!-- Sons de voix et appels -->
 		<audio preload="auto" class="call1" src="audio/voiceover1.wav"></audio>
@@ -408,24 +329,33 @@
 
 	<!-- script -->
 	<div id="script">
+		<script src="script/config/translations.js"></script>
+		<script src="script/config/game.js"></script>
+		<script src="script/config/data.js"></script>
+		<script src="script/config/assets.js"></script>
 		
-		<script src="script/render.js"></script>
-		<script src="script/animatronic.js"></script>
-		<script src="script/data.js"></script>
-		
-		<script src="script/gifPlayer.js"></script>
-		<script src="script/sounds.js"></script>	
-		
-		<script src="script/assets.js"></script>
 
-		<script src="script/door.js"></script>
-		<script src="script/camera.js"></script>
-		<script src="script/foxy.js"></script>
+		<script src="script/core/gifPlayer.js"></script>
+		<script src="script/core/sounds.js"></script>	
+		<script src="script/core/language.js"></script>	
+
+		<script src="script/render.js"></script>
 		
+		<script src="script/mechanics/ihm.js"></script>	
+		<script src="script/mechanics/foxy.js"></script>
+		<script src="script/mechanics/animatronic.js"></script>
+		<script src="script/mechanics/door.js"></script>
+		<script src="script/mechanics/camera.js"></script>
+		
+		
+		<script src="script/mechanics/power.js"></script>	
+		<script src="script/mechanics/night.js"></script>	
 
 		<script src="script/game.js"></script>
-		<script src="script/translations.js"></script>
+		
 		<script src="script/main.js"></script>
+		<script src="script/debug/debug.js"></script>
+		<script src="script/debug/debug_foxy.js"></script>
 	</div>
 </body>
 </html>

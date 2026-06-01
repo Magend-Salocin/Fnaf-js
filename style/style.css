@@ -183,17 +183,6 @@ button:not(.closed) {
   padding: 0;
 }
 
-#powerUsage {
-  font-size: 18px;
-  margin: 10px;
-  color: yellow;
-  position: absolute;
-  bottom: 0px;
-      z-index: 4;
-}
-
-
-
 /*transition*/
 .display-0 {
   display: none;

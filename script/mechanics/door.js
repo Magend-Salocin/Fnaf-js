@@ -24,6 +24,19 @@ const rightLight = {
     toggleId: 'right-light-toggle'
 };
 
+
+/**
+ * Objet représentant l'état et la configuration des portes gauche et droite.
+ * @property {boolean} isClosed - Indique si la porte est fermée.
+ * @property {number} value - État actuel de la porte (0 = ouverte, 1 = fermée).
+ * @property {HTMLElement} element - Élément DOM associé à la porte.
+ */
+const doors = {
+    left: { isClosed: false, value: 0, element: document.getElementById('_left') },
+    right: { isClosed: false, value: 0, element: document.getElementById('_right') }
+};
+
+
 /**
  * Configure les écouteurs d'événements pour basculer une lumière.
  * @param {Object} light - Objet représentant une lumière (gauche ou droite).
@@ -42,7 +55,6 @@ function setupLightToggle(light) {
 
         light.value = 1;
         light.on = true;
-        power -= 0.5;
         updatePowerDisplay();
         processLightActivity(light.value, light.side);
     });
@@ -87,16 +99,6 @@ function processLightActivity(state, pos) {
 
 // #region Gestion des portes
 
-/**
- * Objet représentant l'état et la configuration des portes gauche et droite.
- * @property {boolean} isClosed - Indique si la porte est fermée.
- * @property {number} value - État actuel de la porte (0 = ouverte, 1 = fermée).
- * @property {HTMLElement} element - Élément DOM associé à la porte.
- */
-const doors = {
-    left: { isClosed: false, value: 0, element: document.getElementById('_left') },
-    right: { isClosed: false, value: 0, element: document.getElementById('_right') }
-};
 
 /**
  * Cache les deux portes en appliquant la classe CSS 'display-0'.
@@ -135,7 +137,6 @@ function toggleDoor(location) {
     door.value= door.value ? 0 : 1;
     door.isClosed = !door.isClosed;
 
-    power -= 1;
     updatePowerDisplay();
 
     // Mise à jour des images

@@ -56,7 +56,7 @@ class Foxy {
                 this.inCooldown = false;
                 this.phase = FoxyPhase.INACTIF;
                 this.timeInCurrentPhase = 0;
-                this.playSound('foxy-retrait', "Foxy se retire dans Pirate Cove...");
+                playFoxySound('foxy-retrait', "Foxy se retire dans Pirate Cove...");
             }
             return true; // Pas de Game Over
         }
@@ -65,7 +65,7 @@ class Foxy {
         if (playerCheckedPirateCove) {
             this.timeSinceLastCheck = 0;
             this.aggressivity = Math.max(0, this.aggressivity - 30);
-            console.log("[Foxy] Joueur vérifie Pirate Cove - Agressivité réduite à", this.aggressivity);
+            this.writeMessage(`Joueur vérifie Pirate Cove - Agressivité réduite à ${this.aggressivity}`);
         }
 
         // Logique de transition entre les phases
@@ -77,8 +77,8 @@ class Foxy {
             if (transitionChance > Math.random()) {
                 this.phase = FoxyPhase.TETE_SORTIE;
                 this.timeInCurrentPhase = 0;
-                this.playSound('foxy-curtain-open', "*Bruit de rideau qui s'ouvre* (Tête de Foxy sortie !)");
-                console.log(`[Foxy] Phase TETE_SORTIE (Agressivité: ${this.aggressivity.toFixed(1)})`);
+                playFoxySound('foxy-curtain-open', "*Bruit de rideau qui s'ouvre* (Tête de Foxy sortie !)");
+                this.writeMessage(`Phase TETE_SORTIE (Agressivité: ${this.aggressivity.toFixed(1)})`);
             }
         } 
         else if (this.phase === FoxyPhase.TETE_SORTIE) {
@@ -92,8 +92,8 @@ class Foxy {
                 if (runChance > Math.random()) {
                     this.phase = FoxyPhase.COURSE;
                     this.timeInCurrentPhase = 0;
-                    this.playSound('foxy-running', "*Bruit de course rapide* (Foxy court dans le couloir Est !)");
-                    console.log(`[Foxy] Phase COURSE (Agressivité: ${this.aggressivity.toFixed(1)})`);
+                    playFoxySound('foxy-running', "*Bruit de course rapide* (Foxy court dans le couloir Est !)");
+                    this.writeMessage(`Phase COURSE (Agressivité: ${this.aggressivity.toFixed(1)})`);
                 }
             }
         } 
@@ -101,18 +101,26 @@ class Foxy {
             // Si la porte Est est fermée à temps, Foxy se retire
             if (doorEstClosed) {
                 this.initiateRetrait();
-                console.log("[Foxy] Foxy a été bloqué par la porte!");
-                this.playSound('foxy-blocked', "*Foxy a été bloqué par la porte!*");
+                this.writeMessage("Foxy a été bloqué par la porte!");
+                playFoxySound('foxy-blocked', "*Foxy a été bloqué par la porte!*");
             } else {
                 // Game Over si la porte n'est pas fermée
-               // this.playSound('foxy-attack', "*CRASH* (Foxy vous a attrapé !)");
-               this.playSound('pirate_song', "*CRASH* (Foxy vous a attrapé !)");
-                console.log("[Foxy] GAME OVER - Foxy a attaqué!");
+               // playFoxySound('foxy-attack', "*CRASH* (Foxy vous a attrapé !)");
+                playFoxySound('pirate_song', "*CRASH* (Foxy vous a attrapé !)");
+                this.writeMessage("GAME OVER - Foxy a attaqué!");
                 return false; // Game Over
             }
         }
 
         return true; // Pas de Game Over
+    }
+
+    /**
+     * Affiche un message de log spécifique à Foxy
+     * @param {string} message - Message à afficher
+     */
+    writeMessage(message) {
+        console.log(`[Foxy] ${message}`);
     }
 
     /**
@@ -123,29 +131,7 @@ class Foxy {
         this.inCooldown = true;
         this.cooldownTimer = this.cooldownDuration;
         this.timeInCurrentPhase = 0;
-        console.log(`[Foxy] Phase RETRAIT - Cooldown: ${this.cooldownTimer} ticks`);
-    }
-
-    /**
-     * Joue un son de Foxy (avec limitation pour éviter les répétitions)
-     * @param {string} soundId - ID du son à jouer
-     * @param {string} message - Message de log
-     */
-    playSound(soundId, message) {
-        // Éviter les répétitions trop rapides du même son
-        if (this.soundsPlayed[soundId] && Date.now() - this.soundsPlayed[soundId] < 1000) {
-            return;
-        }
-        
-        this.soundsPlayed[soundId] = Date.now();
-        console.log(`[Foxy] ${message}`);
-        
-        // Jouer le son si disponible
-        const audioElement = document.querySelector(`.${soundId}`);
-        if (audioElement) {
-            audioElement.currentTime = 0;
-            audioElement.play().catch(err => console.log("Son non disponible:", soundId));
-        }
+        this.writeMessage(`Phase RETRAIT - Cooldown: ${this.cooldownTimer} ticks`);
     }
 
     /**
@@ -192,125 +178,6 @@ class Foxy {
         this.cooldownTimer = 0;
         this.timeInCurrentPhase = 0;
         this.soundsPlayed = {};
-        console.log("[Foxy] Réinitialisé pour une nouvelle nuit");
-    }
-}
-
-/**
- * Classe Player - Gestion des actions du joueur avec Foxy
- */
-class Player {
-    constructor() {
-        this.doorEstClosed = false;
-        this.checkingPirateCove = false;
-    }
-
-    /**
-     * Le joueur vérifie Pirate Cove via la caméra
-     */
-    checkPirateCove() {
-        this.checkingPirateCove = true;
-        console.log("[Joueur] Vérifie Pirate Cove...");
-        return this.checkingPirateCove;
-    }
-
-    /**
-     * Le joueur ferme la porte Est
-     */
-    closeDoorEst() {
-        this.doorEstClosed = true;
-        console.log("[Joueur] Ferme la porte Est.");
-    }
-
-    /**
-     * Le joueur ouvre la porte Est
-     */
-    openDoorEst() {
-        this.doorEstClosed = false;
-        console.log("[Joueur] Ouvre la porte Est.");
-    }
-
-    /**
-     * Réinitialise l'état de la vérification de Pirate Cove
-     */
-    resetCheck() {
-        this.checkingPirateCove = false;
-    }
-}
-
-// Création d'une instance globale de Foxy
-let foxyInstance = null;
-
-/**
- * Initialise Foxy au démarrage du jeu
- */
-function initializeFoxy() {
-    if (!foxyInstance) {
-        foxyInstance = new Foxy();
-        console.log("[Foxy] Foxy initialisé");
-    }
-    return foxyInstance;
-}
-
-/**
- * Met à jour Foxy avec le contexte du jeu
- */
-function updateFoxy(aiLevel = 0) {
-    if (!foxyInstance) {
-        foxyInstance = initializeFoxy();
-    }
-
-    // Vérifier si le joueur surveille Pirate Cove via la caméra (Cam 1C)
-    const playerCheckedPirateCove = (typeof activeCamera !== 'undefined' && activeCamera === '1c');
-
-    // Vérifier si la porte Est est fermée
-    const doorEstClosed = (typeof doors !== 'undefined' && doors.right && doors.right.isClosed) || false;
-
-    // Mettre à jour Foxy
-    const foxyAlive = foxyInstance.update(playerCheckedPirateCove, doorEstClosed, aiLevel);
-    
-    return foxyAlive;
-}
-
-/**
- * Affiche le statut de Foxy dans l'interface
- */
-function displayFoxyStatus() {
-    if (!foxyInstance) return;
-
-    const status = foxyInstance.getStatus();
-    const statusDiv = document.getElementById('foxy-status');
-    
-    if (statusDiv) {
-        const phaseColor = {
-            'INACTIF': '#00ff00',
-            'TETE_SORTIE': '#ffff00',
-            'COURSE': '#ff0000',
-            'RETRAIT': '#0088ff'
-        };
-
-        const color = phaseColor[status.phase] || '#ffffff';
-
-        statusDiv.innerHTML = `
-            <div style="color: ${color}; font-weight: bold;">
-                FOXY: ${foxyInstance.getPhaseDescription()}
-                <br/>Agressivité: ${status.aggressivity}%
-                <br/>Dernier scan: ${status.timeSinceLastCheck}s
-            </div>
-        `;
-        
-        // Afficher le div pendant le jeu
-        if (!statusDiv.style.display || statusDiv.style.display === 'none') {
-            statusDiv.style.display = 'block';
-        }
-    }
-}
-
-/**
- * Réinitialise Foxy pour une nouvelle nuit
- */
-function resetFoxyForNewNight() {
-    if (foxyInstance) {
-        foxyInstance.reset();
+        this.writeMessage("Réinitialisé pour une nouvelle nuit");
     }
 }

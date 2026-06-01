@@ -31,7 +31,7 @@ const cameras_images = {
     "1b_b1_c0_f0": 'images/rooms/1b_dining_area/1b_b1_c0_f0.jpg'
   },
   "1c": {
-    "1c_b0_c0_f0": 'images/rooms/1c_pirate_cove/1c_b0_c0_f0.jpg',
+    "1c_b0_c0_f0": 'images/rooms/1c_pirate_cove/1c_b0_c0_f0_00.jpg',
     "1c_b0_c0_f0_00": 'images/rooms/1c_pirate_cove/1c_b0_c0_f0_00.jpg',
     "1c_b0_c0_f0_01": 'images/rooms/1c_pirate_cove/1c_b0_c0_f0_01.jpg',
     "1c_b0_c0_f0_02": 'images/rooms/1c_pirate_cove/1c_b0_c0_f0_02.jpg',

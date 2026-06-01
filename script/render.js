@@ -27,8 +27,6 @@
 function transitionScreen(night) {
     if (night < 2) {
 
-        
-
         // Après 5 secondes : animation de sortie du préchargeur et entrée de la transition
         setTimeout(function() {
             document.querySelector('.preloader').classList.add('animate-out');
@@ -79,76 +77,6 @@ function transitionScreen(night) {
     }
 }
 
-/**
- * Gère la séquence de fin de nuit lorsque le joueur n'a plus d'énergie (power = 0).
- * Cette fonction déclenche le jump scare de Freddy et la fin de partie.
- *
- * @description
- * - 0 ms : Le jeu est bloqué et les portes sont désactivées.
- * - 0 ms : L'écran du bureau est plongé dans le noir et le son de coupure de courant est joué.
- *
- * - 14 000 ms (14 s) :
- *   Le GIF de Freddy clignotant est affiché avec sa musique caractéristique.
- *
- * - 32 000 ms (32 s) :
- *   La musique de Freddy s'arrête, l'écran passe à un fond noir pour indiquer la défaite.
- *
- * - 34 000 ms (34 s) :
- *   Le jump scare de Freddy est déclenché (image + son effrayant).
- *
- * - 35 300 ms (35,3 s) :
- *   Transition vers l'écran de fin de partie (son de fin joué).
- *
- * - 37 000 ms (37 s) :
- *   Affichage de l'écran final de "Game Over".
- */
-function transitionEndNightFreddy() {
-    // Désactive les portes et bloque le jeu
-    hideDoors();
-    stopAllSounds();
-
-    // Plonge le bureau dans le noir et joue le son de coupure de courant
-    playSound("power_out");
-    drawOfficeViewByPicture("safe_room_power_0");
-
-    // Affiche Freddy clignotant avec sa musique après 14 secondes
-    setTimeout(function() {
-        playSound("power_jingle");
-        drawOfficeViewByPicture("safe_room_powerdown_freddy");
-    }, 14000);
-
-    // Transition vers le fond noir (défaite) après 32 secondes
-    setTimeout(function() {
-        if(!gameWin){
-            stopSound("power_jingle");
-            drawOfficeViewByPicture("safe_room_powerdown_end");
-        }
-    }, 32000);
-
-    // Déclenche le jump scare de Freddy après 34 secondes
-    setTimeout(function() {
-        if(!gameWin){
-            playSound("scare2");
-            drawOfficeViewByPicture("power_down_freddy_scare");
-        }
-    }, 34000);
-
-    // Transition vers l'écran de fin après 35,3 secondes
-    setTimeout(function() {
-        if(!gameWin){
-            stopSound("scare2");
-            playSound("game_over_static");
-            drawOfficeViewByPicture("game_over_trans");
-        }
-    }, 35300);
-
-    // Affiche l'écran final de "Game Over" après 37 secondes
-    setTimeout(function() {
-        if(!gameWin){
-            drawOfficeViewByPicture("game_over_end");
-        }
-    }, 37000);
-}
 
 /**
  * Gère la séquence de fin de nuit en cas de victoire (survie jusqu'à 6h du matin).
@@ -180,9 +108,7 @@ function transitionEndNightFreddy() {
  *   ou affiche les crédits si le jeu est terminé.
  */
 function transitionEndNight(night) {
-    // Désactive les portes et affiche l'écran de victoire
-    hideDoors();
-    stopAllSounds();
+    nightEndGame(); // Bloque le jeu et désactive les portes
 
     drawOfficeViewByPicture("game_win");
     playSound("win_sound");
@@ -240,6 +166,53 @@ function transitionEndNight(night) {
 }
 
 
+
+/**
+ * Gère la séquence de jump scare pour un animatronic donné, en jouant le son et en affichant l'image correspondante.
+ * Cette fonction est utilisée pour les jump scares spécifiques à Bonnie, Chica et Foxy, en centralisant la logique de déclenchement du jump scare.
+ * @param {string} scareSound - Le nom du son à jouer pour le jump scare (ex: "scare_1", "pirate_song").
+ * @param {string} jumpScarePicture - Le nom de l'image à afficher pour le jump scare (ex: "chika_jumpscare", "foxy_jumpscare").
+ * 
+ * Note : Cette fonction peut être appelée depuis les méthodes de jump scare spécifiques à chaque animatronic (ex: bonnieJumpScare, chicaJumpScare, foxyJumpScare) pour éviter la duplication de code et centraliser la gestion des jump scares.
+ * 
+ */
+function animatronicJumpScare(scareSound, jumpScarePicture) {
+
+    nightEndGame(); // Bloque le jeu et désactive les portes
+
+    // Lance le son + l'image du jump scare
+    setTimeout(function() {
+        playSound(scareSound);
+        drawOfficeViewByPicture(jumpScarePicture);
+    }, 2000);
+
+    // Affiche l'écran de transition game over
+    setTimeout(function() {
+        stopSound(scareSound);
+        playSound("gameover_static2");
+        drawOfficeViewByPicture("game_over_trans");
+    }, 4000);
+
+    // Écran final game over
+    setTimeout(function() {
+        drawOfficeViewByPicture("game_over_end");
+    }, 5300);
+}
+
+// Fonctions personnalisées pour chaque animatronic
+function bonnieJumpScare() {
+    animatronicJumpScare("scare_2", "bonnie_jumpscare");
+}
+
+function foxyJumpScare() {
+    animatronicJumpScare("pirate_song", "foxy_jumpscare");
+}
+
+function chicaJumpScare() {
+    animatronicJumpScare("scare_1", "chika_jumpscare");
+}
+
+
 /**
  * Gère la séquence de fin de nuit lorsque le joueur n'a plus d'énergie (power = 0).
  * Cette fonction déclenche le jump scare de Freddy et la fin de partie.
@@ -263,82 +236,48 @@ function transitionEndNight(night) {
  * - 37 000 ms (37 s) :
  *   Affichage de l'écran final de "Game Over".
  */
-function transitionDefaultJumpScare() {
-    // Désactive les portes et bloque le jeu
-    hideDoors();
-    stopAllSounds();
+function transitionEndNightFreddy() {
+    nightEndGame(); // Bloque le jeu et désactive les portes
 
     // Plonge le bureau dans le noir et joue le son de coupure de courant
-    playSound("pirate_song");
+    playSound("power_out");
+    drawOfficeViewByPicture("safe_room_power_0");
+
+    // Affiche Freddy clignotant avec sa musique après 14 secondes
+    setTimeout(function() {
+        playSound("power_jingle");
+        drawOfficeViewByPicture("safe_room_powerdown_freddy");
+    }, 14000);
 
     // Transition vers le fond noir (défaite) après 32 secondes
     setTimeout(function() {
-    
-            drawOfficeViewByPicture("foxy_jumpscare");
-        
-    }, 1000);
+        if(!gameWin){
+            stopSound("power_jingle");
+            drawOfficeViewByPicture("safe_room_powerdown_end");
+        }
+    }, 32000);
 
+    // Déclenche le jump scare de Freddy après 34 secondes
+    setTimeout(function() {
+        if(!gameWin){
+            playSound("scare2");
+            drawOfficeViewByPicture("power_down_freddy_scare");
+        }
+    }, 34000);
 
     // Transition vers l'écran de fin après 35,3 secondes
     setTimeout(function() {
-            stopSound("scare_2");
+        if(!gameWin){
+            stopSound("scare2");
             playSound("game_over_static");
             drawOfficeViewByPicture("game_over_trans");
-        
-    }, 3300);
+        }
+    }, 35300);
 
     // Affiche l'écran final de "Game Over" après 37 secondes
     setTimeout(function() {
+        if(!gameWin){
             drawOfficeViewByPicture("game_over_end");
-    }, 3700);
-}
-
-// Fonctions personnalisées pour chaque animatronic
-function bonnieJumpScare() {
-    // Désactive les portes et bloque le jeu
-    hideDoors();
-    stopAllSounds();
-
-    // Transition vers le fond noir (défaite) après 32 secondes
-    setTimeout(function() {
-        playSound("scare_2");
-        drawOfficeViewByPicture("bonnie_jumpscare");
-    }, 2000);
-
-    // Déclenche le jump scare de Freddy après 34 secondes
-    setTimeout(function() {
-        stopSound("scare_2");
-        playSound("gameover_static2");
-        drawOfficeViewByPicture("game_over_trans");
-    }, 4000);
-
-    // Transition vers l'écran de fin après 35,3 secondes
-    setTimeout(function() {
-       drawOfficeViewByPicture("game_over_end");
-    }, 5300);
-
-}
-
-function chicaJumpScare() {
-    // Désactive les portes et bloque le jeu
-    hideDoors();
-    stopAllSounds();
-
-    // Transition vers le fond noir (défaite) après 32 secondes
-    setTimeout(function() {
-        playSound("scare_1");
-        drawOfficeViewByPicture("chika_jumpscare");
-    }, 2000);
-
-    // Déclenche le jump scare de Freddy après 34 secondes
-    setTimeout(function() {
-        stopSound("scare_1");
-        playSound("gameover_static2");
-        drawOfficeViewByPicture("game_over_trans");
-    }, 4000);
-
-    // Transition vers l'écran de fin après 35,3 secondes
-    setTimeout(function() {
-       drawOfficeViewByPicture("game_over_end");
-    }, 5300);
+        }
+    }, 37000);
 }
