@@ -2,46 +2,46 @@
 
 /* DEBUG - Fonctions Foxy */
 function debugFoxyPhase1() {
-  if (!foxyInstance) foxyInstance = initializeFoxy();
-  foxyInstance.phase = FoxyPhase.INACTIF;
-  foxyInstance.aggressivity = 10;
-  foxyInstance.timeInCurrentPhase = 0;
+ 
+  foxy.foxyInstance.phase = FoxyPhase.INACTIF;
+  foxy.foxyInstance.aggressivity = 10;
+  foxy.foxyInstance.timeInCurrentPhase = 0;
   displayFoxyStatus();
 }
 
 function debugFoxyPhase2() {
-  if (!foxyInstance) foxyInstance = initializeFoxy();
-  foxyInstance.phase = FoxyPhase.TETE_SORTIE;
-  foxyInstance.aggressivity = 50;
-  foxyInstance.timeInCurrentPhase = 0;
+
+  foxy.foxyInstance.phase = FoxyPhase.TETE_SORTIE;
+  foxy.foxyInstance.aggressivity = 50;
+  foxy.foxyInstance.timeInCurrentPhase = 0;
   displayFoxyStatus();
 }
 function debugFoxyPhase3() {
-  if (!foxyInstance) foxyInstance = initializeFoxy();
-  foxyInstance.phase = FoxyPhase.PRET_A_SORTIR;
-  foxyInstance.aggressivity = 75;
-  foxyInstance.timeInCurrentPhase = 0;
+
+  foxy.foxyInstance.phase = FoxyPhase.PRET_A_SORTIR;
+  foxy.foxyInstance.aggressivity = 75;
+  foxy.foxyInstance.timeInCurrentPhase = 0;
   displayFoxyStatus();
 }
 
 function debugFoxyPhase4() {
-  if (!foxyInstance) foxyInstance = initializeFoxy();
-  foxyInstance.phase = FoxyPhase.COURSE;
-  foxyInstance.aggressivity = 100;
-  foxyInstance.timeInCurrentPhase = 0;
+
+  foxy.foxyInstance.phase = FoxyPhase.COURSE;
+  foxy.foxyInstance.aggressivity = 100;
+  foxy.foxyInstance.timeInCurrentPhase = 0;
   displayFoxyStatus();
 }
 
 function debugFoxyCheckCove() {
-  if (!foxyInstance) foxyInstance = initializeFoxy();
-  foxyInstance.timeSinceLastCheck = 0;
-  foxyInstance.aggressivity = Math.max(0, foxyInstance.aggressivity - 30);
+
+  foxy.foxyInstance.timeSinceLastCheck = 0;
+  foxy.foxyInstance.aggressivity = Math.max(0, foxy.foxyInstance.aggressivity - 30);
   displayFoxyStatus();
 }
 
 function debugFoxyReset() {
-  if (!foxyInstance) foxyInstance = initializeFoxy();
-  foxyInstance.reset();
+
+  foxy.foxyInstance.reset();
   console.log("[DEBUG] Foxy réinitialisé");
   displayFoxyStatus();
 }
@@ -50,9 +50,9 @@ function debugFoxyReset() {
  * Affiche le statut de Foxy dans l'interface
  */
 function displayFoxyStatus() {
-    if (!foxyInstance) return;
+    if (!foxy.foxyInstance) return;
 
-    const status = foxyInstance.getStatus();
+    const status = foxy.foxyInstance.getStatus();
     const statusDiv = document.getElementById('foxy-status');
     
     if (statusDiv) {
@@ -67,7 +67,7 @@ function displayFoxyStatus() {
 
         statusDiv.innerHTML = `
             <div style="color: ${color}; font-weight: bold;">
-                FOXY: ${foxyInstance.getPhaseDescription()}
+                FOXY: ${foxy.foxyInstance.getPhaseDescription()}
                 <br/>Agressivité: ${status.aggressivity}%
                 <br/>Dernier scan: ${status.timeSinceLastCheck}s
             </div>
