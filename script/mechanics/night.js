@@ -1,79 +1,143 @@
-
+/**
+ * Représente une nuit de jeu.
+ */
 class Night {
 
-  constructor(nightNumber) {
-    this.nightNumber = nightNumber;
-  }
-
-  VocalFinishCallback() {
-    console.log(`Le vocal de la nuit ${this.nightNumber} est terminé.`);
-    resetAnimatronicsForNight();
-    applyNightDifficulty(this.nightNumber);
-    isVocalEnd = true;
-  }
-
-  VocalIsFinish() {
-    return isVocalEnd;
-  }
-
-}
-
-function getNightAI(nightNumber) {
-  const fallbackNight = Math.max(1, Math.min(MAX_NIGHT, nightNumber));
-  return NIGHT_AI_LEVELS[fallbackNight];
-}
-
-function resetAnimatronicsForNight() {
-  clearRoomsState();
-
-  animatronics.forEach(animatronic => {
-    animatronic.resetForNight();
-    const roomKey = animatronic.getRoomKey(animatronic.startRoomId);
-    if (!roomKey || !rooms[roomKey]) return;
-
-    rooms[roomKey][animatronic.getKey()] = 1;
-    rooms[roomKey].occupy = 1;
-  });
-
-  animatronics.forEach(animatronic => animatronic.draw());
-}
-
-function applyNightDifficulty(nightNumber) {
-  const ai = getNightAI(nightNumber);
-  freddy.setAggression(ai.freddy);
-  bonnie.setAggression(ai.bonnie);
-  chica.setAggression(ai.chica);
-  foxy.setAggression(ai.foxy);
-}
-
-function playNightCall(nightNumber) {
-  const callNumber = Math.min(5, Math.max(1, nightNumber));
-  const callId = `call_${callNumber}`;
-  if (getSoundById(callId)) {
-    playSound(callId);
-  }
-  
-  let vocalDuration;
-    switch (nightNumber) {
-      case 1: vocalDuration = 206000; break;
-      case 2: vocalDuration = 103000; break;
-      case 3: vocalDuration = 75000; break;
-      case 4: vocalDuration = 65000; break;
-      case 5: vocalDuration = 37000; break;
-      default: vocalDuration = 0;
+    /**
+     * @param {number} nightNumber Numéro de la nuit (1 à MAX_NIGHT)
+     */
+    constructor(nightNumber) {
+        this.nightNumber = Math.max(1, Math.min(MAX_NIGHT, nightNumber));
     }
 
-    setTimeout(function() {
-      console.log(`Le vocal ${callNumber} est terminé.`);
-        resetAnimatronicsForNight();
-        applyNightDifficulty(night);
-        isVocalEnd = true;
-    }, vocalDuration);
+    /**
+     * private
+     * 
+     * Retourne la configuration d'agressivité
+     * des animatroniques pour cette nuit.
+     *
+     * @returns {Object}
+     */
+    getDifficultyConfig() {
+        return NIGHT_AI_LEVELS[this.nightNumber];
+    }
 
+    /**
+     * private
+     *   
+     * Applique les niveaux d'agressivité
+     * aux animatroniques.
+     */
+    applyAnimatronicDifficulty() {
+        const difficultyConfig = this.getDifficultyConfig();
+
+        freddy.setAggression(difficultyConfig.freddy);
+        bonnie.setAggression(difficultyConfig.bonnie);
+        chica.setAggression(difficultyConfig.chica);
+        foxy.setAggression(difficultyConfig.foxy);
+    }
+
+    /**
+     * private
+     * 
+     * Réinitialise tous les animatroniques
+     * dans leur salle de départ.
+     */
+    resetAnimatronics() {
+        clearRoomsState();
+
+        animatronics.forEach(animatronic => {
+
+            animatronic.resetForNight();
+
+            const startRoomKey =
+                animatronic.getRoomKey(animatronic.startRoomId);
+
+            if (!startRoomKey || !rooms[startRoomKey]) {
+                return;
+            }
+
+            rooms[startRoomKey][animatronic.getKey()] = 1;
+            rooms[startRoomKey].occupy = 1;
+        });
+
+        animatronics.forEach(animatronic => {
+            animatronic.draw();
+        });
+    }
+
+    /**
+     * private  
+     * 
+     * Callback appelée lorsque le message du Phone Guy est terminé.
+     */
+    onPhoneCallFinished() {
+        console.log(
+            `Phone call finished for night ${this.nightNumber}.`
+        );
+
+        this.resetAnimatronics();
+        this.applyAnimatronicDifficulty();
+
+        isVocalEnd = true;
+    }
+
+    /**
+     * ND
+     * 
+     * Indique si le message vocal est terminé.
+     *
+     * @returns {boolean}
+     */
+    isPhoneCallFinished() {
+        return isVocalEnd;
+    }
+
+    /**
+     * private
+     * 
+     * Retourne la durée du message vocal
+     * associée à la nuit.
+     *
+     * @returns {number}
+     */
+    getPhoneCallDuration() {
+
+        switch (this.nightNumber) {
+            case 1: return 206000;
+            case 2: return 103000;
+            case 3: return 75000;
+            case 4: return 65000;
+            case 5: return 37000;
+            default: return 0;
+        }
+    }
+
+    /**
+     * Joue le message du Phone Guy associé à la nuit courante.
+     */
+    playPhoneCall() {
+
+        const phoneCallNumber =
+            Math.min(5, Math.max(1, this.nightNumber));
+
+        const soundId = `call_${phoneCallNumber}`;
+
+        if (getSoundById(soundId)) {
+            playSound(soundId);
+        }
+
+        setTimeout(() => {
+            this.onPhoneCallFinished();
+        }, this.getPhoneCallDuration());
+    }
 }
 
 function startNight(nightNumber) {
   night = Math.max(1, Math.min(MAX_NIGHT, nightNumber));
+
+  const currentNight = new Night(night);
+
   gameWin = false;
   gameEnd = false;
   power = 100;
@@ -90,7 +154,7 @@ function startNight(nightNumber) {
 
   stopAllSounds();
   startAmbientSounds();
-  playNightCall(night);
+  currentNight.playPhoneCall();
 
   if (gameLoopInterval) {
     clearInterval(gameLoopInterval);
@@ -172,7 +236,7 @@ function endGameAt6AM() {
     console.log(`Fin de la nuit ${night} a 6AM.`);
 
     stopAllSounds();
-    resetAnimatronicsForNight();
+    currentNight.resetAnimatronicsForNight();
     transitionEndNight(night);
   }
   return gameWin;
