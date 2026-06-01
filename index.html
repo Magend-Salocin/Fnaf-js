@@ -1,50 +1,431 @@
-﻿<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Five Night at Freddy's</title>
-    <link href="https://fonts.googleapis.com/css?family=Press+Start+2P&subset=latin,greek" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="style/start-screen.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FNAF 1 - Nicolas Berger</title>
+  <link href="https://fonts.googleapis.com/css?family=Press+Start+2P&subset=latin,greek" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="style/style.css">
+  <link rel="stylesheet" href="style/camera.css">
+  <link rel="stylesheet" href="style/start-screen.css">
 </head>
 <body>
-    <div class="container" id="start-screen">
+
+	<!-- language-screen -->
+	<div id="language-screen" class="language-screen">
+		<div class="language-card">
+			<h2 id="language-title">Choisis ta langue</h2>
+			<p id="language-subtitle">Selectionne la langue avant de continuer</p>
+			<div class="language-buttons">
+				<button class="lang-btn" id="lang-fr-btn" data-lang="fr" type="button">Francais</button>
+				<button class="lang-btn" id="lang-en-btn" data-lang="en" type="button">English</button>
+			</div>
+		</div>
+	</div>
+
+  	<!-- transition -->
+	<div class="transition display-0">
+		<img src="images/game/transition_screen.png" alt="">
+		<h2 class="display-0" id="transition-start">12:00 AM</h2>
+		<h2 class="display-0" id="transition-night">Night <span id="night-count">1</span></h2>
+	</div>
+
+  	<!-- preloader -->
+	<div class="preloader display-0">
+		<h1>Five Nights at Freddy's 1</h1>
+        <img src="images/game/preloader.png" alt="">
+    </div>
+	
+	<!-- start-screen -->
+	<div class="container display-0" id="start-screen">
         <div class="static"></div>
         <div class="start">
-            <audio preload="auto" id="menu-start" src="audio/darkness_music.wav" loop="loop"></audio>
             <aside class="menu">
-                <h1>Five<br> Night <br>at<br> Freddy's</h1>
-                <a href="main.html" id="start-game" onclick="javascript:night=1;">Start Game</a>
-                
+				<h1 id="game-title">Five<br> Night <br>at<br> Freddy's</h1>
+                <a href="#" id="start-game" onclick="Start();">Start Game</a> 
             </aside>
         </div>
-    </div>
+    </div> 
+
+	<div id="__game" class="display-0">
+
+		<div id="camera-bg2"><img src="" alt="" class="display-0"></div>
+	
+
+		<!-- controls -->
+		<div id="controls">
+
+			<!-- cameraLayout -->
+			<div id="cameraLayout">
+					<div class="map-container" id="camLayoutContainer">
+						<!-- Pièces -->
+						<div class="room Dining-Area" id="room-dining-area">Dining Area</div>
+						<div class="room Backstage" id="room-backstage">Backstage</div>
+						<div class="room Showstage" id="room-showstage">Showstage</div>
+						<div class="room Office" id ="camsafe">Office</div>
+						<div class="room Pirate-Cove" id="room-pirate-cove">Pirate Cove</div>
+						<div class="room Supply-Closet" id="room-supply-closet">Supply Closet</div>
+						<div class="room Rest-Room" id="room-rest-room">Rest Room</div>
+						<div class="room Rest-Room-water-closet-h"></div>
+						<div class="room Rest-Room-water-closet-f"></div>
+						<div class="room Kitchen" id="room-kitchen">Kitchen</div>
+						<div class="room West-Hall" id="room-west-hall">West Hall</div>
+						<div class="room East-Hall" id="room-east-hall">East Hall</div>
+						<!-- Caméras -->
+						<div class="camera cam-1a" id="cam1a" >Cam 1A</div>
+						<div class="camera cam-1b" id="cam1b" >Cam 1B</div>
+						<div class="camera cam-1c" id="cam1c" >Cam 1C</div>
+						<div class="camera cam-2a" id="cam2a">Cam 2A</div>
+						<div class="camera cam-2b" id="cam2b" >Cam 2B</div>
+						<div class="camera cam-3" id="cam3" >Cam 3A</div>
+						<div class="camera cam-4a" id="cam4a" >Cam 4A</div>
+						<div class="camera cam-4b" id="cam4b" >Cam 4B</div>
+						<div class="camera cam-5" id="cam5" >Cam 5A</div>
+						<div class="camera cam-6" id="cam6" >Cam 6A</div>
+						<div class="camera cam-7" id="cam7" >Cam 7A</div>
+						<div  id="you" ></div>
+					</div>
+			</div>
+		
+			<!-- doorButtons -->
+			<div id="doorButtons" style="width: 100%; position: fixed; z-index: 4;">
+				<button id="start" style="display:none">start</button>
+				<button id="debug-game-over-0" style="display:none">game-over</button>
+				<button id="debug-game-over-1" style="display:none">End Night</button>
+				<button id="stop" style="display:none">stop</button>
+				<button id="toggleCameraLayout">CAM</button>
+				<button id="debug-toggle-btn" onclick="toggleDebugPanel()" style="background-color: #222; color: #ff8800; border: 1px solid #ff8800; font-size: 11px; padding: 4px 8px; cursor: pointer;">🐾 Debug</button>
+			</div>
+
+			<!-- Panneau de Debug caché -->
+			<div id="debug-panel" style="
+				display: none;
+				position: fixed;
+				top: 40px;
+				left: 0;
+				background-color: rgba(10, 10, 10, 0.95);
+				border: 1px solid #ff8800;
+				border-top: none;
+				padding: 10px;
+				z-index: 100;
+				font-family: monospace;
+				font-size: 11px;
+				min-width: 220px;
+			">
+				<div style="color: #ff8800; font-weight: bold; margin-bottom: 8px; border-bottom: 1px solid #ff8800; padding-bottom: 4px;">
+					🐾 DEBUG PANEL
+				</div>
+
+				<!-- Infos de jeu -->
+				<div id="debug-game-info" style="margin-bottom: 8px; padding: 5px 6px; background: #111; border: 1px solid #333; font-size: 10px; color: #ccc; line-height: 1.8;">
+					<span id="debug-info-nuit">Nuit : —</span><br>
+					<span id="debug-info-tour">Tour : —</span>
+				</div>
+
+				<!-- Boutons généraux -->
+				<div style="margin-bottom: 8px;">
+					<div style="color: #aaa; font-size: 10px; margin-bottom: 4px;">— GÉNÉRAL —</div>
+					<button onclick="document.getElementById('start').click()" style="display:block; width:100%; margin-bottom:3px; background:#333; color:#fff; border:1px solid #555; padding:3px 6px; cursor:pointer;">▶ Start Ambient</button>
+					<button onclick="document.getElementById('stop').click()" style="display:block; width:100%; margin-bottom:3px; background:#333; color:#fff; border:1px solid #555; padding:3px 6px; cursor:pointer;">⏹ Stop Sons</button>
+					<button onclick="document.getElementById('debug-game-over-0').click()" style="display:block; width:100%; margin-bottom:3px; background:#333; color:#fff; border:1px solid #555; padding:3px 6px; cursor:pointer;">Game Over (Freddy)</button>
+					<button onclick="document.getElementById('debug-game-over-1').click()" style="display:block; width:100%; margin-bottom:3px; background:#333; color:#fff; border:1px solid #555; padding:3px 6px; cursor:pointer;">End Night</button>
+				</div>
+
+				<!-- Boutons Foxy -->
+				<div>
+					<div style="color: #aaa; font-size: 10px; margin-bottom: 4px;">— FOXY —</div>
+					<button id="debug-foxy-phase1" style="display:block; width:100%; margin-bottom:3px; background:#00aa00; color:#fff; border:none; padding:3px 6px; cursor:pointer;">Phase 1 — Inactif</button>
+					<button id="debug-foxy-phase2" style="display:block; width:100%; margin-bottom:3px; background:#aaaa00; color:#fff; border:none; padding:3px 6px; cursor:pointer;">Phase 2 — Tête Sortie</button>
+					<button id="debug-foxy-phase3" style="display:block; width:100%; margin-bottom:3px; background:#aa0000; color:#fff; border:none; padding:3px 6px; cursor:pointer;">Phase 3 — Course !</button>
+					<button id="debug-foxy-check-cove" style="display:block; width:100%; margin-bottom:3px; background:#005599; color:#fff; border:none; padding:3px 6px; cursor:pointer;">Vérifier Pirate Cove</button>
+					<button id="debug-foxy-close-door" style="display:block; width:100%; margin-bottom:3px; background:#555; color:#fff; border:none; padding:3px 6px; cursor:pointer;">Fermer Porte Est</button>
+					<button id="debug-foxy-open-door" style="display:block; width:100%; margin-bottom:3px; background:#888; color:#fff; border:none; padding:3px 6px; cursor:pointer;">Ouvrir Porte Est</button>
+					<button id="debug-foxy-reset" style="display:block; width:100%; background:#444; color:#aaa; border:1px solid #555; padding:3px 6px; cursor:pointer;">Reset Foxy</button>
+				</div>
+					<!-- Affichage du Statut de Foxy -->
+				<div id="foxy-status" style="
+			
+					padding: 10px 15px;
+					background-color: rgba(0, 0, 0, 0.8);
+					border: 2px solid #ff8800;
+					border-radius: 5px;
+					font-family: 'Press Start 2P', monospace;
+					font-size: 10px;
+					color: #ff8800;
+					z-index: 999;
+					display: none;
+				"></div>
+
+				<!-- Affichage du Statut des caméras -->
+				<div id="camera-status" style="
+			
+					padding: 10px 15px;
+					background-color: rgba(0, 0, 0, 0.8);
+					border: 2px solid #ff8800;
+					border-radius: 5px;
+					font-family: 'Press Start 2P', monospace;
+					font-size: 10px;
+					color: #ff8800;
+					z-index: 999;
+					display: none;
+				"></div>
+			</div>
+
+		<!-- Volume Control -->
+		<div id="volume-control">
+			<button id="volume-btn" onclick="toggleVolumePanel()" title="Volume">🔊</button>
+			<div id="volume-panel" class="hidden">
+				<div class="volume-row volume-row-main">
+					<span class="volume-row-title">Master</span>
+					<span id="volume-label">40%</span>
+					<input
+						type="range"
+						id="volume-slider"
+						class="volume-slider"
+						min="0" max="100" value="40"
+						oninput="onVolumeSliderChange(this.value)"
+					>
+					<button id="volume-mute-btn" onclick="toggleMute()" title="Mute">🔈</button>
+				</div>
+
+				<div class="volume-row">
+					<span class="volume-row-title">Voix</span>
+					<span id="volume-voice-label" class="volume-group-label">100%</span>
+					<input
+						type="range"
+						id="volume-voice-slider"
+						class="volume-slider"
+						min="0" max="100" value="100"
+						oninput="onAudioGroupSliderChange('voice', this.value)"
+					>
+				</div>
+
+				<div class="volume-row">
+					<span class="volume-row-title">Ambiance</span>
+					<span id="volume-ambient-label" class="volume-group-label">100%</span>
+					<input
+						type="range"
+						id="volume-ambient-slider"
+						class="volume-slider"
+						min="0" max="100" value="100"
+						oninput="onAudioGroupSliderChange('ambient', this.value)"
+					>
+				</div>
+
+				<div class="volume-row">
+					<span class="volume-row-title">Metallique</span>
+					<span id="volume-metallic-label" class="volume-group-label">100%</span>
+					<input
+						type="range"
+						id="volume-metallic-slider"
+						class="volume-slider"
+						min="0" max="100" value="100"
+						oninput="onAudioGroupSliderChange('metallic', this.value)"
+					>
+				</div>
+
+				<div class="volume-row">
+					<span class="volume-row-title">Anormal</span>
+					<span id="volume-abnormal-label" class="volume-group-label">100%</span>
+					<input
+						type="range"
+						id="volume-abnormal-slider"
+						class="volume-slider"
+						min="0" max="100" value="100"
+						oninput="onAudioGroupSliderChange('abnormal', this.value)"
+					>
+				</div>
+			</div>
+		</div>
 
 
+		 <!-- Left Door Switch-->
+        <div id="_left" class="left to-hide">
+            <div class="left-door">
+                <img id="left-door"  src="images/_doors/left_door_1.png" class="default" alt="">
+            </div>
+            <div class="left-switch">
+                <img id="left-switch"  src="images/_switch_door/left_switch_door_0_light_0.png" alt="" >
+				<div id="left-door-toggle"  class="btndoorAndLight btndoor" ></div>
+				<div id="left-light-toggle" class="btndoorAndLight btnlight" ></div>
+            </div>
+        </div>
+        <!--  Right Door Switch-->
+        <div id="_right" class="right to-hide">
+            <div class="right-door">
+                <img id="right-door" src="images/_doors/right_door_1.png" alt="">
+            </div>
 
-    <script>
-        // Chargement des scripts dans l'ordre
-document.addEventListener('click', function() {
-    const menuStart = document.querySelector('#menu-start');
-    if (menuStart) {
-        menuStart.play().catch(e => console.error("Erreur de lecture :", e));
-    }
-    // Supprimer l'événement après la première interaction
-    document.removeEventListener('click', arguments.callee);
-}, { once: true });
+            <div class="right-switch">
+                <img id="right-switch" src="images/_switch_door/right_switch_door_0_light_0.png" alt="" >
+				<div id="right-door-toggle"  class="btndoorAndLight btndoor"></div>
+				<div id="right-light-toggle" class="btndoorAndLight btnlight"></div>
+            </div>
+        </div>
 
-/*
-    <a href="main.html" id="continue-game" class="display-0">Continue <p>Night <span id="night-no">2</span></p></a>
-    
-    // show continue?
-    var getNight = localStorage.getItem('night');
-    var getTimesPlayed = localStorage.getItem('timesPlayed');
+		
+	</div>
 
-    if (parseInt(getTimesPlayed) > 0) {
-        $('#night-no').html(getNight);
-        $('#continue-game').removeClass('display-0');
-    }
-*/
-    </script>
+	<!-- Canvas et affichages -->
+	<canvas id="gameCanvas"></canvas>
+	<img id="gameCanvasGif" class="gameCanvas" style="display:none">
+	<div id="powerUsage">Puissance : 100%</div>
+
+	<!-- Horloge digitale style FNAF -->
+	<style>
+		#time-status {
+			position: fixed;
+			top: 12px;
+			right: 12px;
+			z-index: 999;
+			background-color: #080808;
+			border: 1px solid #2a2a2a;
+			border-radius: 2px;
+			padding: 6px 12px 8px;
+			text-align: center;
+			box-shadow: 0 0 18px rgba(0,0,0,0.9), inset 0 0 8px rgba(0,0,0,0.6);
+			user-select: none;
+		}
+		#time-status .clock-label {
+			font-family: 'Press Start 2P', monospace;
+			font-size: 6px;
+			color: #555;
+			letter-spacing: 2px;
+			margin-bottom: 4px;
+		}
+		#time-status .clock-time {
+			font-family: 'Press Start 2P', monospace;
+			font-size: 28px;
+			color: #ff8800;
+			text-shadow: 0 0 8px #ff6600, 0 0 20px rgba(255,100,0,0.4);
+			letter-spacing: 2px;
+			line-height: 1;
+		}
+		#time-status .clock-colon {
+			animation: blink-colon 1s step-start infinite;
+			display: inline-block;
+			width: 18px;
+			text-align: center;
+		}
+		@keyframes blink-colon {
+			0%, 49% { opacity: 1; }
+			50%, 100% { opacity: 0; }
+		}
+		#time-status .clock-ampm {
+			font-family: 'Press Start 2P', monospace;
+			font-size: 6px;
+			color: #aa5500;
+			letter-spacing: 1px;
+			margin-top: 4px;
+		}
+	</style>
+	<div id="time-status"><!-- mis à jour par drawGameTime() --></div>
+
+	<!-- audios -->
+	<div id="audios">
+		<!-- Musique et ambiance -->
+		<audio preload="auto" id="menu-start" class="menu-start" src="audio/darkness_music.wav"></audio>
+		<audio preload="auto" class="ambience1" src="audio/EerieAmbienceLargeSca_MV005.wav" loop="loop" volume="0.3"></audio>
+		<audio preload="auto" class="ambience2" src="audio/ambience2.wav" loop="loop" volume="0.5"></audio>
+		<audio preload="auto" class="Buzz-fan" src="audio/Buzz_Fan_Florescent2.wav" loop="loop" volume="0.1"></audio>
+		<audio preload="auto" class="circus" src="audio/circus.wav" loop="loop" volume="0.3"></audio>
+		<audio preload="auto" class="pirate-song" src="audio/pirate song2.wav" loop="loop" volume="0.4"></audio>
+		<audio preload="auto" class="cold-presc" src="audio/ColdPresc B.wav" loop="loop" volume="0.2"></audio>
+		<audio preload="auto" class="menu-start2" src="audio/Five Nights at Freddys In Real Time Main Theme.wav" loop="loop" volume="0.5"></audio>
+
+		.
+
+		<!-- Sons des caméras -->
+		<audio preload="auto" class="camera-toggle" src="audio/CAMERA_VIDEO_LOA_60105303.wav"></audio>
+		<audio preload="auto" class="camera-put-down" src="audio/put down.wav"></audio>
+		<audio preload="auto" class="camera-cycle" src="audio/blip3.wav"></audio>
+		<audio preload="auto" class="camera-static" src="audio/COMPUTER_DIGITAL_L2076505.wav"></audio>
+
+		<!-- Sons des portes -->
+		<audio preload="auto" class="light-on" src="audio/BallastHumMedium2.wav"></audio>
+		<audio preload="auto" class="door-sound" src="audio/SFXBible_12478.wav"></audio>
+		<audio preload="auto" class="door-light-disabled" src="audio/error.wav"></audio>
+		<audio preload="auto" class="door-pounding" src="audio/DOOR_POUNDING_ME_D0291401.wav"></audio>
+
+		<!-- Sons de victoire -->
+		<audio preload="auto" class="win-sound" src="audio/chimes 2.wav"></audio>
+		<audio preload="auto" class="win-cheer" src="audio/CROWD_SMALL_CHIL_EC049202.wav"></audio>
+
+		<!-- Sons de game over et jump scares -->
+		<audio preload="auto" class="powerout-sound" src="audio/powerdown.wav" loop="false"></audio>
+		<audio preload="auto" class="powerout-jingle" src="audio/music box.wav" loop="false"></audio>
+		<audio preload="auto" class="scare-1" src="audio/XSCREAM.wav"></audio>
+		<audio preload="auto" class="scare-2" src="audio/XSCREAM2.wav"></audio>
+		<audio preload="auto" class="window-scare" src="audio/windowscare.wav"></audio>
+		<audio preload="auto" class="gameover-static" src="audio/static.wav" loop="false"></audio>
+		<audio preload="auto" class="gameover-static2" src="audio/static2.wav" loop="false"></audio>
+
+		<!-- Sons de cuisine -->
+		<audio preload="auto" class="kitchen-b" src="audio/OVEN-DRA_1_GEN-HDF18119.wav"></audio>
+		<audio preload="auto" class="kitchen-c" src="audio/OVEN-DRA_2_GEN-HDF18120.wav"></audio>
+		<audio preload="auto" class="kitchen-f" src="audio/OVEN-DRA_7_GEN-HDF18121.wav"></audio>
+		<audio preload="auto" class="kitchen-drawer" src="audio/OVEN-DRAWE_GEN-HDF18122.wav"></audio>
+
+		<!-- Sons de pas et mouvements -->
+		<audio preload="auto" class="move-sound" src="audio/deep steps.wav"></audio>
+		<audio preload="auto" class="run-sound" src="audio/run.wav"></audio>
+		<audio preload="auto" class="run-fast" src="audio/running fast3.wav"></audio>
+
+		<!-- Sons de Foxy -->
+		<audio preload="auto" class="foxy-curtain-open" src="audio/DOOR_POUNDING_ME_D0291401.wav"></audio>
+		<audio preload="auto" class="foxy-running" src="audio/running fast3.wav"></audio>
+		<audio preload="auto" class="foxy-blocked" src="audio/door-sound.wav"></audio>
+		<audio preload="auto" class="foxy-attack" src="audio/XSCREAM.wav"></audio>
+		<audio preload="auto" class="foxy-retrait" src="audio/door-sound.wav"></audio>
+
+		<!-- Sons de voix et appels -->
+		<audio preload="auto" class="call1" src="audio/voiceover1.wav"></audio>
+		<audio preload="auto" class="call2" src="audio/voiceover2.wav"></audio>
+		<audio preload="auto" class="call3" src="audio/voiceover3.wav"></audio>
+		<audio preload="auto" class="call4" src="audio/voiceover4.wav"></audio>
+		<audio preload="auto" class="call5" src="audio/voiceover5.wav"></audio>
+		<audio preload="auto" class="robot-voice" src="audio/robotvoice.wav"></audio>
+		<audio preload="auto" class="garble1" src="audio/garble1.wav"></audio>
+		<audio preload="auto" class="garble2" src="audio/garble2.wav"></audio>
+		<audio preload="auto" class="garble3" src="audio/garble3.wav"></audio>
+		<audio preload="auto" class="whispering" src="audio/whispering2.wav"></audio>
+
+		<!-- Sons de respiration -->
+		<audio preload="auto" class="breath1" src="audio/Vocals_Breaths_S_35972006.wav"></audio>
+		<audio preload="auto" class="breath2" src="audio/Vocals_Breaths_S_35972008.wav"></audio>
+		<audio preload="auto" class="breath3" src="audio/Vocals_Breaths_S_35972012.wav"></audio>
+		<audio preload="auto" class="breath4" src="audio/Vocals_Breaths_S_35972014.wav"></audio>
+
+		<!-- Sons divers -->
+		<audio preload="auto" class="laugh-girl1" src="audio/Laugh_Giggle_Girl_1.wav"></audio>
+		<audio preload="auto" class="laugh-girl1d" src="audio/Laugh_Giggle_Girl_1d.wav"></audio>
+		<audio preload="auto" class="laugh-girl2d" src="audio/Laugh_Giggle_Girl_2d.wav"></audio>
+		<audio preload="auto" class="laugh-girl8d" src="audio/Laugh_Giggle_Girl_8d.wav"></audio>
+		<audio preload="auto" class="tape-eject" src="audio/MiniDV_Tape_Eject_1.wav"></audio>
+		<audio preload="auto" class="party-favor" src="audio/PartyFavorraspyPart_AC01__3.wav"></audio>
+		<audio preload="auto" class="knock" src="audio/knock2.wav"></audio>
+	</div>
+
+	<!-- script -->
+	<div id="script">
+		
+		<script src="script/render.js"></script>
+		<script src="script/animatronic.js"></script>
+		<script src="script/data.js"></script>
+		
+		<script src="script/gifPlayer.js"></script>
+		<script src="script/sounds.js"></script>	
+		
+		<script src="script/assets.js"></script>
+
+		<script src="script/door.js"></script>
+		<script src="script/camera.js"></script>
+		<script src="script/foxy.js"></script>
+		
+
+		<script src="script/game.js"></script>
+		<script src="script/translations.js"></script>
+		<script src="script/main.js"></script>
+	</div>
 </body>
 </html>

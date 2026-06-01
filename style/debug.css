@@ -1,0 +1,106 @@
+.debug-toggle-btn {
+	background-color: #222;
+	color: #ff8800;
+	border: 1px solid #ff8800;
+	font-size: 11px;
+	padding: 4px 8px;
+	cursor: pointer;
+}
+
+.debug-toggle-btn-open {
+	background-color: #ff8800;
+	color: #000;
+}
+
+#debug-panel {
+	display: none;
+	position: fixed;
+	top: 40px;
+	left: 0;
+	min-width: 220px;
+	padding: 10px;
+	z-index: 100;
+	font-family: monospace;
+	font-size: 11px;
+	background-color: rgba(10, 10, 10, 0.95);
+	border: 1px solid #ff8800;
+	border-top: none;
+}
+
+.debug-panel-title {
+	margin-bottom: 8px;
+	padding-bottom: 4px;
+	color: #ff8800;
+	font-weight: bold;
+	border-bottom: 1px solid #ff8800;
+}
+
+.debug-game-info {
+	margin-bottom: 8px;
+	padding: 5px 6px;
+	font-size: 10px;
+	line-height: 1.8;
+	color: #ccc;
+	background: #111;
+	border: 1px solid #333;
+}
+
+.debug-section {
+	margin-bottom: 8px;
+}
+
+.debug-section-label {
+	margin-bottom: 4px;
+	color: #aaa;
+	font-size: 10px;
+}
+
+.debug-action-btn {
+	display: block;
+	width: 100%;
+	margin-bottom: 3px;
+	padding: 3px 6px;
+	color: #fff;
+	border: none;
+	cursor: pointer;
+}
+
+.debug-action-btn-neutral {
+	background: #333;
+	border: 1px solid #555;
+}
+
+.debug-action-btn-phase1 {
+	background: #00aa00;
+}
+
+.debug-action-btn-phase2 {
+	background: #aaaa00;
+}
+
+.debug-action-btn-phase3 {
+	background: #aa0000;
+}
+
+.debug-action-btn-check {
+	background: #005599;
+}
+
+.debug-action-btn-reset {
+	margin-bottom: 0;
+	color: #aaa;
+	background: #444;
+	border: 1px solid #555;
+}
+
+.debug-status-box {
+	display: none;
+	padding: 10px 15px;
+	font-family: 'Press Start 2P', monospace;
+	font-size: 10px;
+	color: #ff8800;
+	background-color: rgba(0, 0, 0, 0.8);
+	border: 2px solid #ff8800;
+	border-radius: 5px;
+	z-index: 999;
+}

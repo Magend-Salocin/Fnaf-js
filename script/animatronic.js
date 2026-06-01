@@ -1,29 +1,48 @@
 class Animatronic {
-    constructor(name, startRoomId, aggression, path = null) {
+    constructor(name, scareDoor, startRoomId, aggression, path = null, scareFunction = null) {
         this.name = name;
+        this.scareDoor = scareDoor;
         this.currentRoomId = startRoomId;
         this.startRoomId = startRoomId;
         this.aggression = aggression;
-        this.path = path; // Chemin spécifique pour cet animatronic
-        this.currentPathIndex = 0; // Index actuel dans le chemin
+        this.path = path;
+        this.currentPathIndex = 0;
         this.moveCounter = 0;
         this.blockedCounter = 0;
+        this.attackCounter = 0; // Nouveau : compteur pour l'attaque
+        this.attackThreshold = 99; // Seuil aléatoire entre 30 et 90
+        this.attackReady = false; // Nouveau : état d'attaque
+        this.scareFunction = scareFunction; 
+        this.nextAttackThreshold();
+    }
+
+    nextAttackThreshold() {
+        // Seuil aléatoire entre 10 et 20
+        this.attackThreshold = Math.floor(Math.random() * 11) + 10;
+        this.attackReady = false;
+        console.log(`[${this.name}] Nouveau seuil d'attaque : ${this.attackThreshold}`);
     }
 
     move() {
         this.moveCounter++;
         const moveInterval = 20 - this.aggression * 2;
-   
+
         if (this.moveCounter < moveInterval) return;
         this.moveCounter = 0;
 
-        // Si un chemin est défini, utilise-le
-        if (this.path) {
-            this.moveAlongPath();
+        
+        this.moveAlongPath();
+      
+
+        // Incrémente attackCounter si dans la saferoom
+        if (this.isInSafeRoom()) {
+            this.attackCounter++;
         } else {
-            // Sinon, utilise l'ancienne logique de déplacement aléatoire
-            this.moveRandomly();
+            this.attackCounter = 0; // Réinitialise si hors de la saferoom
+            this.attackReady = false;
         }
+
+       // this.attack(); // Vérifie si une attaque doit être déclenchée
         this.draw();
         
     }
@@ -34,7 +53,9 @@ class Animatronic {
         const oldRoomKey = this.getRoomKey(this.currentRoomId);
         if (oldRoomKey) {
             rooms[oldRoomKey][this.getKey()] = 0;
-
+            if (rooms[oldRoomKey].b === 0 && rooms[oldRoomKey].c === 0 && rooms[oldRoomKey].f === 0) {
+                rooms[oldRoomKey].occupy = 0;
+            }
             document.getElementById('cam'+oldRoomKey).style.background='#555';
         }
 
@@ -44,43 +65,42 @@ class Animatronic {
             this.currentPathIndex = 0; // Recommence depuis le début du chemin
         }
 
-        const nextRoomKey = this.path[this.currentPathIndex];
-        this.currentRoomId = this.getRoomId(nextRoomKey);
+        let nextRoomKey = this.path[this.currentPathIndex];
 
-        // Met à jour la nouvelle pièce
-        if (this.currentRoomId !== null) {
-            rooms[nextRoomKey][this.getKey()] = 1;
-            rooms[nextRoomKey].occupy = 1;
-        }
-    }
+        if(rooms[nextRoomKey].occupy == 1){
 
-    // Déplacement aléatoire (ancienne logique)
-    moveRandomly() {
-        // Met à jour l'ancienne pièce
-        const oldRoomKey = this.getRoomKey(this.currentRoomId);
-        if (oldRoomKey){
-             rooms[oldRoomKey][this.getKey()] = 0;
+            nextRoomKey = oldRoomKey;
+        }else{
+            this.currentRoomId = this.getRoomId(nextRoomKey);
 
-        document.getElementById('cam'+oldRoomKey).style.background='#555';
-        }
-        
-
-        // Trouve une pièce accessible aléatoirement
-        const newRoomKey = this.findAccessibleRoom();
-        if (newRoomKey) {
-            this.currentRoomId = this.getRoomId(newRoomKey);
-            rooms[newRoomKey][this.getKey()] = 1;
-            rooms[newRoomKey].occupy = 1;
-        } else {
-            // Si bloqué, retourne à la pièce de départ après un certain temps
-            this.blockedCounter++;
-            if (this.blockedCounter > 120) {
-                this.currentRoomId = this.startRoomId;
-                this.blockedCounter = 0;
-                const startRoomKey = this.getRoomKey(this.startRoomId);
-                if (startRoomKey) rooms[startRoomKey][this.getKey()] = 1;
+            // Met à jour la nouvelle pièce
+            if (this.currentRoomId !== null) {
+                rooms[nextRoomKey][this.getKey()] = 1;
+                rooms[nextRoomKey].occupy = 1;
             }
         }
+
+        // Sons de pas et mouvements
+        const possibleSounds = [
+            "move_sound", "move_sound", "move_sound", "run_sound", "run_sound", "run_fast"
+        ];
+        const randomSound = possibleSounds[Math.floor(Math.random() * possibleSounds.length)];
+        playSound(randomSound);
+        
+    }
+
+    setAggression(value) {
+        this.aggression = Math.max(0, Math.min(20, value));
+    }
+
+    resetForNight() {
+        this.currentRoomId = this.startRoomId;
+        this.currentPathIndex = 0;
+        this.moveCounter = 0;
+        this.blockedCounter = 0;
+        this.attackCounter = 0;
+        this.attackReady = false;
+        this.nextAttackThreshold();
     }
 
     // Retourne la clé de la pièce (ex: '1a')
@@ -107,8 +127,9 @@ class Animatronic {
 
         const possibleConnections = currentRoom.connectedTo.filter(connection => {
             if (connection.doorId === null) return true;
-            const door = doors.find(d => d.id === connection.doorId);
-            return door && !door.isClosed;
+            return true;
+            /*const door = doors.find(d => d.id === connection.doorId);
+            return door && !door.isClosed;*/
         });
 
         if (possibleConnections.length > 0) {
@@ -119,48 +140,118 @@ class Animatronic {
         return null;
     }
 
+     // Ajoute cette méthode dans ta classe Animatronic
+    isInSafeRoom() {
+        const SAFEROOM_ID = 0; // Exemple : à adapter selon ton code
+
+        return this.currentRoomId === SAFEROOM_ID;
+    }
+
+
+    attack() {
+        if (this.isInSafeRoom() && !gameEnd){
+             this.attackCounter++;
+            // Log : État actuel de l'animatronic
+            console.log(`[${this.name}] Attack check - Room: ${this.getRoomKey(this.currentRoomId)}, AttackCounter: ${this.attackCounter}, AttackThreshold: ${this.attackThreshold}, AttackReady: ${this.attackReady}`);
+
+            // Vérifie si l'animatronic est dans la saferoom et pas encore prêt à attaquer
+            if (this.isInSafeRoom() && !this.attackReady) {
+                console.log(`[${this.name}] Dans la saferoom, incrémentation du compteur d'attaque...`);
+
+                // Si le seuil est atteint, prépare l'attaque
+                if (this.attackCounter >= this.attackThreshold) {
+                    console.log(`[${this.name}] SEUIL ATTEINT ! Prêt à attaquer !`);
+                    this.attackReady = true;
+                    this.attackCounter = 0;
+                }else{
+                    // Déclenche le son "door_pounding" avec une probabilité de 30% 
+                    if (Math.random() < 0.3) { // 30% de chance
+                        playSound("door_pounding");
+                        console.log(`[${this.name}] Door pounding sound joué !`);
+                    }
+                }
+            }
+
+            // Si prêt à attaquer
+            if (this.attackReady) {
+                console.log(`[${this.name}] Prêt à attaquer, vérification des portes...`);
+
+                // Vérifie si la porte correspondante est FERMÉE (corrigé)
+                if ((this.scareDoor === 'left' && !doors["left"].isClosed) ||
+                    (this.scareDoor === 'right' && !doors["right"].isClosed)) {
+
+                    if (this.scareFunction) {
+                        this.scareFunction(); // Appelle la fonction personnalisée
+                    } else {
+                        transitionDefaultJumpScare(); // Fonction par défaut
+                    }
+               
+                    gameEnd=true;
+
+                } else {
+                    console.log(`[${this.name}] Porte fermée... Annulation de l'attaque.`);
+                    this.attackThreshold = this.nextAttackThreshold();   // Nouveau seuil aléatoire
+               
+                }
+            } else if (!this.isInSafeRoom()) {
+                console.log(`[${this.name}] Hors de la saferoom, réinitialisation.`);
+                this.attackThreshold = this.nextAttackThreshold();   // Nouveau seuil aléatoire
+            }
+        }
+    }
+
+    // #region Debug
+    // Ajoute cette méthode dans ta classe Animatronic
+    forceMoveToRoom(roomKey) {
+        // Met à jour l'ancienne pièce
+        const oldRoomKey = this.getRoomKey(this.currentRoomId);
+        if (oldRoomKey) {
+            rooms[oldRoomKey][this.getKey()] = 0;
+            document.getElementById('cam'+oldRoomKey).style.background='#555';
+        }
+
+        // Met à jour la pièce actuelle
+        this.currentRoomId = this.getRoomId(roomKey);
+        if (this.currentRoomId !== null) {
+            rooms[roomKey][this.getKey()] = 1;
+            rooms[roomKey].occupy = 1;
+        }
+
+        // Réinitialise les compteurs si nécessaire
+        this.moveCounter = 0;
+        this.blockedCounter = 0;
+
+        this.draw();
+    }
+
     // Dessine l'animatronic
     draw() {
         const Room = this.getRoomKey(this.currentRoomId);
         console.log("deplacement de "+this.name+" room : "+Room) ;
 
-
         const color = this.name === 'Freddy' ? 'brown' :
                         this.name === 'Bonnie' ? 'blue' :
                         this.name === 'Chica' ? 'yellow' : 'purple';
+                        
         document.getElementById('cam'+ Room).style.background= color;
+    }
+    // #endregion
+}
+
+/***** Office ****/
+function drawJumpscare(ctx, jumpscareKey) {
+    if (loadedTheOfficeImages.safe_room && loadedTheOfficeImages.safe_room[jumpscareKey] && loadedTheOfficeImages.safe_room[jumpscareKey].complete) {
+        ctx.drawImage(loadedTheOfficeImages.safe_room[jumpscareKey], 0, 0, canvas.width, canvas.height);
     }
 }
 
-
-
 // Crée les animatronics
-const freddy 	= new Animatronic('Freddy'	, '1a'	, 5, ['1a']);
-const bonnie 	= new Animatronic('Bonnie'	, '1a'	, 7, ['1a', '1b', '3', '6', '5', '2b', 'safe']  );
-const chica 	= new Animatronic('Chica'	, '1a'	, 5, ['1a', '1b', '7', '6', '4a', '4b', 'safe'] );
-const foxy 		= new Animatronic('Foxy'	, '1c'	, 5,  ['1c']);
+
+//name, scareDoor, startRoomId, aggression, path = null, scareFunction = null
+
+const freddy 	= new Animatronic('Freddy'	,'right', 1	, 0, ['1a']);
+const bonnie 	= new Animatronic('Bonnie'	,'left', 1	, 6, ['1a', '1b', '3', '5', '2a', '2b', 'safe'] ,bonnieJumpScare );
+const chica 	= new Animatronic('Chica'	,'right', 1	, 3, ['1a', '1b', '7', '6', '4a', '4b', 'safe'],chicaJumpScare );
+const foxy 		= new Animatronic('Foxy'	,'left', 7	, 0,  ['1c']);
 
 const animatronics = [freddy, bonnie, chica, foxy];
-
-/*
-Exemple pour Bonnie ('1a', '1b', '3', '6', '5', '2b', 'safe')
-
-	'1a' (Show Stage) → '1b' (Dining Area)
-	'1b' (Dining Area) → '3' (Restrooms)
-	'3' (Restrooms) → '6' (Supply Closet)
-	'6' (Supply Closet) → '5' (Backstage)
-	'5' (Backstage) → '2b' (West Hall B)
-	'2b' (West Hall B) → 'safe' (The Office)
-
-
-Exemple pour Chica ('1a', '1b', '7', '6', '4a', '4b', 'safe')
-
-	'1a' (Show Stage) → '1b' (Dining Area)
-	'1b' (Dining Area) → '7' (Pirate Cove)
-	'7' (Pirate Cove) → '6' (Supply Closet)
-	'6' (Supply Closet) → '4a' (East Hall A)
-	'4a' (East Hall A) → '4b' (East Hall B)
-	'4b' (East Hall B) → 'safe' (The Office)
-
-
-*/

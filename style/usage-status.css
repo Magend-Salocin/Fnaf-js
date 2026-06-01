@@ -1,0 +1,134 @@
+#usage-status {
+    position: fixed;
+    top: 168px;
+    right: 12px;
+    z-index: 999;
+    width: 220px;
+    background-color: #080808;
+    border: 1px solid #2a2a2a;
+    border-radius: 2px;
+    padding: 7px 10px 9px;
+    text-align: left;
+    box-shadow: 0 0 18px rgba(0, 0, 0, 0.9), inset 0 0 8px rgba(0, 0, 0, 0.6);
+    user-select: none;
+}
+
+#usage-status::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: repeating-linear-gradient(
+        to bottom,
+        rgba(255, 255, 255, 0.04) 0,
+        rgba(255, 255, 255, 0.04) 1px,
+        transparent 2px,
+        transparent 4px
+    );
+    opacity: 0.16;
+}
+
+#usage-status .usage-label {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 6px;
+    color: #666;
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+}
+
+#usage-status .usage-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+#usage-status .usage-bars {
+    display: flex;
+    align-items: flex-end;
+    gap: 4px;
+    min-height: 18px;
+}
+
+#usage-status .usage-bar {
+    width: 11px;
+    border-radius: 1px;
+    border: 1px solid #4a4a4a;
+    background: #121212;
+    box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.85);
+    transition: background 0.2s linear, box-shadow 0.2s linear;
+}
+
+#usage-status .usage-bar-1 {
+    height: 7px;
+}
+
+#usage-status .usage-bar-2 {
+    height: 9px;
+}
+
+#usage-status .usage-bar-3 {
+    height: 11px;
+}
+
+#usage-status .usage-bar-4 {
+    height: 13px;
+}
+
+#usage-status .usage-bar-5 {
+    height: 15px;
+}
+
+#usage-status .usage-bar.active {
+    border-color: #7f5d1d;
+    background: linear-gradient(180deg, #ffd24f 0%, #ff9d20 100%);
+    box-shadow: 0 0 5px rgba(255, 170, 48, 0.8), inset 0 0 4px rgba(255, 217, 120, 0.35);
+}
+
+#usage-status .usage-value {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 10px;
+    color: #ffb648;
+    letter-spacing: 1px;
+    text-shadow: 0 0 6px rgba(255, 136, 0, 0.75);
+    min-width: 26px;
+    text-align: right;
+}
+
+#usage-status .usage-footnote {
+    margin-top: 6px;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 6px;
+    letter-spacing: 1px;
+    color: #7a5d20;
+    text-align: right;
+}
+
+#usage-status.usage-critical .usage-bar.active {
+    border-color: #9b2a2a;
+    background: linear-gradient(180deg, #ff7f54 0%, #ff3535 100%);
+    box-shadow: 0 0 8px rgba(255, 58, 58, 0.88), inset 0 0 5px rgba(255, 180, 180, 0.2);
+}
+
+#usage-status.usage-critical .usage-value {
+    color: #ff4b4b;
+    text-shadow: 0 0 8px rgba(255, 0, 0, 0.82);
+}
+
+@media (max-width: 720px) {
+    #usage-status {
+        top: 150px;
+        right: 8px;
+        width: 180px;
+        padding: 6px 8px 8px;
+    }
+
+    #usage-status .usage-bar {
+        width: 9px;
+    }
+
+    #usage-status .usage-value {
+        font-size: 9px;
+        min-width: 22px;
+    }
+}

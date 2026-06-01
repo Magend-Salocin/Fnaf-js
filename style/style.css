@@ -1,5 +1,147 @@
 @import url(https://fonts.googleapis.com/css?family=Press+Start+2P&subset=latin,greek);
 
+/* =============================================
+   CONTRÔLE DE VOLUME
+   ============================================= */
+#volume-control {
+  position: fixed;
+  top: 12px;
+  right: 185px;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Press Start 2P', cursive;
+}
+
+#volume-btn {
+  background: rgba(0, 0, 0, 0.75);
+  border: 2px solid #888;
+  border-radius: 6px;
+  color: white;
+  font-size: 18px;
+  padding: 6px 10px;
+  cursor: pointer;
+  margin: 0;
+  transition: border-color 0.2s;
+}
+#volume-btn:hover {
+  border-color: #fff;
+}
+
+#volume-panel {
+  display: flex;
+  align-items: stretch;
+  flex-direction: column;
+  gap: 8px;
+  background: rgba(0, 0, 0, 0.85);
+  border: 2px solid #888;
+  border-radius: 6px;
+  padding: 8px 10px;
+  min-width: 320px;
+  transition: opacity 0.2s, transform 0.2s;
+}
+#volume-panel.hidden {
+  display: none;
+}
+
+#volume-label {
+  font-size: 9px;
+  color: #ccc;
+  min-width: 38px;
+  text-align: right;
+}
+
+.volume-group-label {
+  font-size: 9px;
+  color: #ccc;
+  min-width: 38px;
+  text-align: right;
+}
+
+.volume-row {
+  display: grid;
+  grid-template-columns: 88px 42px 1fr;
+  align-items: center;
+  gap: 8px;
+}
+
+.volume-row-main {
+  grid-template-columns: 88px 42px 1fr auto;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  padding-bottom: 8px;
+  margin-bottom: 2px;
+}
+
+.volume-row-title {
+  font-size: 8px;
+  color: #ddd;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  text-align: left;
+}
+
+.volume-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 6px;
+  border-radius: 3px;
+  background: #555;
+  outline: none;
+  cursor: pointer;
+}
+.volume-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #fff;
+  cursor: pointer;
+  border: 2px solid #aaa;
+}
+.volume-slider::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #fff;
+  cursor: pointer;
+  border: 2px solid #aaa;
+}
+
+#volume-mute-btn {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 16px;
+  padding: 2px 4px;
+  margin: 0;
+  cursor: pointer;
+}
+#volume-mute-btn:hover {
+  color: #f88;
+}
+
+@media (max-width: 720px) {
+  #volume-panel {
+    min-width: 260px;
+  }
+
+  .volume-row {
+    grid-template-columns: 74px 36px 1fr;
+  }
+
+  .volume-row-main {
+    grid-template-columns: 74px 36px 1fr auto;
+  }
+
+  #volume-mute-btn {
+    grid-column: 4;
+    justify-self: end;
+  }
+}
+
 body {
   font-family: 'Press Start 2P', cursive;
   text-align: center;
@@ -32,7 +174,7 @@ button:not(.closed) {
   background-color: green;
 }
 
-#gameCanvas {
+.gameCanvas {
   display: block;
   width: 98vw;
   height: 98vh;
@@ -50,11 +192,6 @@ button:not(.closed) {
       z-index: 4;
 }
 
-#gameOver {
-  z-index: 100;
-  background-color: black;
-  padding: 20px;
-}
 
 
 /*transition*/
@@ -122,4 +259,89 @@ button:not(.closed) {
 @keyframes fadeIn {
     from { opacity: 0; }
     to { opacity: 1; }
+}
+
+
+/** door / switch **/
+.left-switch {
+  position: absolute;
+  top: 50%;
+  left:1%;
+  height: 247px;
+  width: 92px;
+  z-index: 3;
+}
+
+.left-door {
+    top: 0%;
+    left: 6%;
+    position: absolute;
+    height: 100%;
+    width: 13%;
+}
+
+.left-door img {
+  width: 100%;
+  height: 100%;
+}
+
+.left-door-opened {
+  top: 0%;
+  position: absolute;
+}
+
+.left-door-closed {
+  top: 0%;
+  position: absolute;
+}
+
+.right-switch {
+  position: absolute;
+  top: 50%;
+  right: 1%;
+  height: 247px;
+  width: 92px;
+  z-index: 3;
+}
+
+.right-door {
+  top: 0%;
+  right: 6%;
+  position: absolute;
+  height: 100%;
+  width: 13%;
+}
+
+.right-door img {
+    width: 100%;
+    height: 100%;
+}
+
+.right-door-opened {
+    top: 0%;
+    right:0;
+    position: absolute;
+}
+
+.right-door-closed {
+    top: 0%;
+    right: 0;
+    position: absolute;
+}
+
+.btndoorAndLight{
+  height: 50px;    
+  width: 75px;   
+
+  position: absolute;    
+  opacity: 0.4;
+}
+.btndoor{
+  background-color: red;   
+  top: 56px;   
+}
+
+.btnlight{
+  background-color: blue;   
+  top: 133px;   
 }

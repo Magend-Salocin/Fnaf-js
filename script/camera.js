@@ -1,0 +1,492 @@
+
+
+/* ------------------------------------------------------------------ */
+/*  Animated GIF layer — drawn directly on the canvas (no DOM hacks)   */
+/* ------------------------------------------------------------------ */
+
+/**
+ * Registry of active GIF players: { id → { player: GifPlayer, x, y, w, h, visible } }
+ * Use the helpers below to load / show / hide / remove them.
+ */
+const gifRegistry = {};
+
+const CAMERA_DEBUG_CONSTANTS = Object.freeze({
+  POWER_DRAIN_PER_FRAME: 0.001,
+  SWITCH_POWER_COST: 1,
+  RECHARGE_SECONDS: 5,
+  AUTO_PAN_STEP: 1,
+  EMPTY_ROOM_SOUND_CHANCE: 0.2
+});
+
+let lastActiveCameraId = null;
+
+let currentSoundCamera = null;
+
+var _pictureGif=null;
+
+/**
+ * Basculer l'affichage de la caméra (ouvrir/fermer)
+ */
+function showCloseCamera(){
+  const cameraLayout = document.getElementById('cameraLayout');
+  // Inverse l'affichage de la caméra
+  cameraLayout.style.display = cameraLayout.style.display === 'block' ? 'none' : 'block';
+  if (cameraLayout.style.display == 'none') {
+    cameraDown(); // Animation de descente de la caméra
+    activeView = 'office'; // Retour à la vue du bureau
+    lastActiveCamera = activeCamera; // Sauvegarde la dernière caméra active
+    activeCamera = 0; // Désactive la caméra
+    playSound("camera_put_down"); // Joue le son de descente de caméra
+  } else {
+    playSound("camera_toggle"); // Joue le son de basculement de caméra
+    cameraUp(); // Animation de montée de la caméra
+  }
+}
+
+/**
+ * Activer une caméra spécifique
+ * @param {string} cameraId - L'identifiant de la caméra à activer
+ */
+function activateCamera(cameraId) {
+  const camera = cameras.find(c => c.id === cameraId);
+  if (camera && camera.isAvailable && power > 0) {
+      activeView = 'camera'; // Passe en vue caméra
+    activeCamera = cameraId; // Définit la caméra active
+    
+    // Si la caméra change, joue un son ambiant
+    if (lastActiveCameraId !== cameraId) {
+      CameraPlaysound(cameraId);
+      lastActiveCameraId = activeCamera;
+    }
+
+    cameraUsageTimer = camera.maxUsageTime; // Réinitialise le timer d'utilisation
+    power -= CAMERA_DEBUG_CONSTANTS.SWITCH_POWER_COST; // Consomme de l'énergie
+    updatePowerDisplay(); // Met à jour l'affichage de l'énergie
+    playSound("camera_cycle"); // Joue le son de changement de caméra
+    isUsingCamera = true; // Indique que la caméra est en cours d'utilisation
+  }
+}
+
+
+/**
+ * Gère les actions à effectuer à chaque nouveau tour (frame)
+ * @param {number} turn - Numéro du tour actuel
+ */
+function onCamera() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  	// Affichage selon la vue active
+	if (activeView === 'office') {
+	  drawOfficeView(ctx);
+
+	}else{
+
+    // Animation automatique de panoramique
+    if (activeView === 'camera') {
+
+      power -= CAMERA_DEBUG_CONSTANTS.POWER_DRAIN_PER_FRAME;
+      updatePowerDisplay();
+
+      const camera = cameras.find(c => c.id === activeCamera);
+      if (!camera) return;
+
+      // Utilise roomsArray pour trouver la pièce associée à la caméra
+      const room = roomsArray.find(r => r.id === camera.roomId);
+      if (!room) return;
+
+        // Mise à jour de room.cameraOffset en fonction des touches
+        if (isPanningLeft && room.cameraOffset > 0) {
+            room.cameraOffset -= panSpeed;
+        }
+        if (isPanningRight && room.cameraOffset < room.maxCameraOffset) {
+            room.cameraOffset += panSpeed;
+        }
+
+        // Panoramique automatique (va-et-vient)
+        room.cameraOffset += autoPanDirection * CAMERA_DEBUG_CONSTANTS.AUTO_PAN_STEP;
+        if (room.cameraOffset <= 0 || room.cameraOffset >= room.maxCameraOffset) {
+            autoPanDirection *= -1;
+        }
+
+      if (isUsingCamera) {
+        cameraUsageTimer -= 1/60;
+        if (cameraUsageTimer <= 0) {
+          camera.isAvailable = false;// Désactive la caméra
+          camera.remainingTime = CAMERA_DEBUG_CONSTANTS.RECHARGE_SECONDS;// Temps de recharge
+          isUsingCamera = false;
+        }
+      } else {
+        camera.remainingTime -= 1/60;
+        if (camera.remainingTime <= 0) {
+          camera.isAvailable = true;// Réactive la caméra
+          cameraUsageTimer = camera.maxUsageTime;
+          isUsingCamera = true;
+        }
+      }
+       // Affiche la caméra ou l'effet de statique selon l'état
+      if (isUsingCamera) {
+        drawWithCamera(ctx, camera); 
+      } else {
+        drawStaticEffect(ctx, camera); 
+      }
+
+    }
+  }
+
+  displayCameraStatus();
+}
+
+function displayCameraStatus() {
+  const statusDiv = document.getElementById('camera-status');
+  if (!statusDiv) return;
+
+  const activeCameraData = cameras.find(c => c.id === activeCamera) || null;
+  const camerasSummary = cameras
+    .map(camera => {
+      const availability = camera.isAvailable ? 'UP' : 'DOWN';
+      return `${camera.id}:${availability} use=${camera.maxUsageTime}s reload=${camera.remainingTime.toFixed(1)}s`;
+    })
+    .join('<br/>');
+
+  statusDiv.innerHTML = `
+    <div style="font-weight:bold; color:#66ccff; margin-bottom:4px;">CAMERA DEBUG</div>
+    <div>
+      <span style="color:#bbb;">activeView:</span> ${activeView}<br/><br/>
+      <span style="color:#bbb;">activeCamera:</span> ${activeCamera}<br/><br/>
+      <span style="color:#bbb;">lastActiveCamera:</span> ${lastActiveCamera}<br/><br/>
+      <span style="color:#bbb;">lastActiveCameraId:</span> ${lastActiveCameraId || 'none'}<br/><br/>
+      <span style="color:#bbb;">isUsingCamera:</span> ${isUsingCamera}<br/><br/>
+      <span style="color:#bbb;">cameraUsageTimer:</span> ${cameraUsageTimer.toFixed(2)}s<br/><br/>
+      <span style="color:#bbb;">currentSoundCamera:</span> ${currentSoundCamera || 'none'}<br/><br/>
+      <span style="color:#bbb;">power:</span> ${Math.max(0, power).toFixed(2)}%<br/><br/>
+      <span style="color:#bbb;">panSpeed:</span> ${panSpeed}<br/><br/>
+      <span style="color:#bbb;">autoPanDirection:</span> ${autoPanDirection}<br/><br/>
+      <span style="color:#bbb;">roomOffset/max:</span> ${activeCameraData ? (() => {
+        const room = roomsArray.find(r => r.id === activeCameraData.roomId);
+        if (!room) return 'n/a';
+        return `${room.cameraOffset}/${room.maxCameraOffset}<br/>`;
+      })() : 'n/a'}
+    </div>
+    <hr style="border-color:#444; margin:6px 0;"/>
+    <div style="color:#ffaa66; font-weight:bold; margin-bottom:3px;">CONSTANTS</div>
+    <div>
+      <span style="color:#bbb;">POWER_DRAIN_PER_FRAME:</span> ${CAMERA_DEBUG_CONSTANTS.POWER_DRAIN_PER_FRAME}<br/><br/>
+      <span style="color:#bbb;">SWITCH_POWER_COST:</span> ${CAMERA_DEBUG_CONSTANTS.SWITCH_POWER_COST}<br/><br/>
+      <span style="color:#bbb;">RECHARGE_SECONDS:</span> ${CAMERA_DEBUG_CONSTANTS.RECHARGE_SECONDS}<br/><br/>
+      <span style="color:#bbb;">AUTO_PAN_STEP:</span> ${CAMERA_DEBUG_CONSTANTS.AUTO_PAN_STEP}<br/><br/>
+      <span style="color:#bbb;">EMPTY_ROOM_SOUND_CHANCE:</span> ${CAMERA_DEBUG_CONSTANTS.EMPTY_ROOM_SOUND_CHANCE}<br/><br/>
+      <span style="color:#bbb;">CAMERAS_TOTAL:</span> ${cameras.length}<br/>
+    </div>
+    <hr style="border-color:#444; margin:6px 0;"/>
+    <div style="color:#a0ffa0; font-weight:bold; margin-bottom:3px;">CAMERAS</div>
+    <div>${camerasSummary}</div>
+  `;
+
+  if (!statusDiv.style.display || statusDiv.style.display === 'none') {
+    statusDiv.style.display = 'block';
+  }
+}
+
+/**
+ * Animation de montée de la caméra
+ */
+function cameraUp() {
+    const img = document.querySelector('#camera-bg2 img');
+    img.src = 'images/_cam/camera_mode_1.gif';
+    img.classList.toggle('display-1');
+
+    camTimeout = setTimeout(() => {
+        hideDoors();
+        img.classList.remove('display-0', 'display-1');
+        img.classList.add('display-0');
+         
+        // Active la dernière caméra utilisée            
+        activateCamera(lastActiveCamera);
+        
+        // Joue le son de basculement
+        playSound("camera_toggle"); 
+    }, 500);
+}
+
+/**
+ * Animation de descente de la caméra
+ */
+function cameraDown() {
+    const img = document.querySelector('#camera-bg2 img');
+    img.classList.remove('display-0', 'display-1');
+    img.classList.add('display-1');
+    img.src = 'images/_cam/camera_mode_0.gif';
+    showDoors();
+    
+    // Arrête le son en cours
+    stopSound(currentSoundCamera);
+    camTimeout = setTimeout(() => {
+        img.classList.remove('display-0', 'display-1');
+        img.classList.add('display-0');
+    }, 500);
+}
+
+/**
+ * Dessine une salle sur le canvas
+ * @param {CanvasRenderingContext2D} ctx - Contexte de dessin
+ * @param {Object} room - Objet représentant la salle
+ * @param {number} cameraOffset - Décalage de la caméra pour le panoramique
+ */
+function drawRoom(ctx, room, cameraOffset = 0) {
+    // Récupère l'image active pour la caméra actuelle
+    const camera = cameras.find(c => c.id === activeCamera);
+    if (!camera) return;
+
+    // Clé de l'image par défaut (ex. "b0_c0_f0")
+    const defaultImageKey = activeCamera+"_b0_c0_f0";
+
+    const camPicture = loadedCameraImages[activeCamera]?.[defaultImageKey];
+
+    // Vérifie que l'image est chargée
+    if (!camPicture || !camPicture.complete) {
+        console.warn(`Image non chargée pour la caméra ${activeCamera} _ ${defaultImageKey}`);
+        return;
+    }
+
+    // Utilise room.cameraOffset pour le panoramique
+    const sourceX = Math.max(0, Math.min(room.cameraOffset, camPicture.width - room.width));
+    const sourceWidth = room.width;
+
+    ctx.drawImage(
+        camPicture,
+        sourceX, 0, sourceWidth, camPicture.height,
+        room.x, room.y, room.width, room.height
+    );
+}
+
+/**
+ * Dessine la vue de la caméra avec effets visuels
+ * @param {CanvasRenderingContext2D} ctx - Contexte de dessin
+ * @param {Object} camera - Objet représentant la caméra
+ */
+function drawWithCamera(ctx, camera) {
+    const roomKey = camera.id;
+
+    const roomData = rooms[roomKey];
+    if (!roomData) return;
+
+    ctx.fillStyle = 'black';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    const room = roomsArray.find(r => r.cameraId === roomKey);
+    if (!room) return;
+
+    // Calcule l'échelle pour adapter la salle à la taille du canvas
+    const scaleX = canvas.width / room.width;
+    const scaleY = canvas.height / room.height;
+    const scale = Math.min(scaleX, scaleY);
+
+    const offsetX = (canvas.width - room.width * scale) / 2;
+    const offsetY = (canvas.height - room.height * scale) / 2;
+
+    ctx.save();
+    ctx.translate(offsetX, offsetY);
+    ctx.scale(scale, scale);
+
+// TODO NICO à reprendre : la clé d'image doit être déterminée en fonction de l'état de la pièce (présence des animatronics) et de la caméra active
+
+    // Charge l'image en fonction de l'état de la pièce
+    const imageKey = `${roomKey}_b${roomData.b}_c${roomData.c}_f${roomData.f}`;
+    if(roomKey=="7"){
+      
+      switch(foxyInstance.getStatus().phase){
+        case FoxyPhase.INACTIF:
+          imageKey = `1c_b0_c0_f0_00`;
+          break;
+        case FoxyPhase.TETE_SORTIE:
+          imageKey = `1c_b0_c0_f0_01`;
+          break;
+        case FoxyPhase.PRET_A_SORTIR:
+          imageKey = `1c_b0_c0_f0_02`;
+          break;
+        case FoxyPhase.COURSE:
+          imageKey = `1c_b0_c0_f0_03`;
+          break;
+        case FoxyPhase.RETRAIT:
+          imageKey = `1c_b0_c0_f0_04`;
+          break;
+      }
+    }
+
+    const camPicture = loadedCameraImages[roomKey]?.[imageKey];
+
+    if (camPicture && camPicture.complete) {
+
+        const sourceX = Math.max(0, Math.min(room.cameraOffset, camPicture.width - room.width));
+   
+        ctx.drawImage(
+            camPicture,
+            sourceX, 0, room.width, camPicture.height,
+            0, 0, room.width, room.height
+        );
+
+        // 2. Lignes horizontales (interférences)
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
+        ctx.lineWidth = 1;
+        for (let y = 0; y < canvas.height; y += 4) {
+            ctx.beginPath();
+            ctx.moveTo(0, y);
+            ctx.lineTo(canvas.width, y);
+            ctx.stroke();
+        }
+
+        // 3. Bruit blanc (parasites)
+        for (let i = 0; i < 1500; i++) {
+            const x = Math.random() * canvas.width;
+            const y = Math.random() * canvas.height;
+            const alpha = Math.random() * 0.7;
+            // Variation de couleur : parfois gris, parfois teinté de vert/bleu (effet "vieille caméra")
+            const hue = 120 + Math.random() * 60; // Teinte verte/bleue
+            ctx.fillStyle = `hsla(${hue}, 100%, 80%, ${alpha})`;
+            ctx.fillRect(x, y, 1.5, 1.5);
+        }
+
+        // 4. Ajout de lignes verticales aléatoires (parasites)
+        for (let i = 0; i < 5; i++) {
+            const x = Math.random() * canvas.width;
+            ctx.strokeStyle = `rgba(255, 255, 255, ${Math.random() * 0.3})`;
+            ctx.beginPath();
+            ctx.moveTo(x, 0);
+            ctx.lineTo(x, canvas.height);
+            ctx.stroke();
+        }
+    }
+    ctx.restore();
+
+    // Affiche le nom de la caméra et le temps restant
+    ctx.fillStyle = 'white';
+    ctx.font = `${20 * scale}px Arial`;
+    ctx.fillText(`Caméra : ${camera.name}`, 20, 30 * scale);
+    ctx.fillStyle = 'red';
+    ctx.font = `${24 * scale}px Arial`;
+    ctx.fillText(`Temps restant : ${Math.ceil(cameraUsageTimer)}s`, 20, 60 * scale);
+
+    // Render any registered animated GIFs on top of the camera view
+    drawGifs(ctx);
+}
+
+/**
+ * Joue un son aléatoire en fonction de la présence ou non d'un animatronic dans la pièce.
+ * @param {string} cameraId - L'identifiant de la caméra associée à la pièce.
+ */
+function CameraPlaysound(cameraId) {
+
+    stopSound(currentSoundCamera);
+
+    // Vérifie la présence d'un animatronic dans la pièce
+    const isAnimatronicPresent = isAnimatronicInRoom(cameraId);
+    const room = roomsArray.find(r => r.cameraId === cameraId);
+    let randomSound = null;
+
+    if(isAnimatronicPresent && room.name === "Kitchen"){
+      const possibleSoundsWithAnimatronic = ["kitchen_b", "kitchen_c", "kitchen_f", "kitchen_drawer"];
+      randomSound = possibleSoundsWithAnimatronic[Math.floor(Math.random() * possibleSoundsWithAnimatronic.length)];
+    }
+
+
+    if(Math.random() < CAMERA_DEBUG_CONSTANTS.EMPTY_ROOM_SOUND_CHANCE){ // 20% de chance de jouer un son même si la pièce est vide
+      // Tableau des sons possibles si aucun animatronic n'est présent
+      let possibleSoundsEmpty = ["laugh_girl1", "laugh_girl1d", "laugh_girl2d", "laugh_girl8d"];
+      if (isAnimatronicPresent) {
+        possibleSoundsEmpty = ["breath_1", "breath_2", "breath_3", "breath_4", "whispering", "robot_voice", "garble_1", "garble_2"];
+      }
+      randomSound = possibleSoundsEmpty[Math.floor(Math.random() * possibleSoundsEmpty.length)];
+    }
+
+    if(randomSound){
+      currentSoundCamera = randomSound;
+      
+      playSound(randomSound);
+      console.log(`Son joué (animatronic présent) : ${randomSound}` );
+    }
+  }
+
+/**
+ * Effet de statique pour les caméras en recharge
+ * @param {CanvasRenderingContext2D} ctx - Contexte de dessin
+ * @param {Object} camera - Objet représentant la caméra
+ */
+function drawStaticEffect(ctx, camera) {
+  ctx.fillStyle = 'black';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  for (let i = 0; i < 1200; i++) {
+    const x = Math.random() * canvas.width;
+    const y = Math.random() * canvas.height;
+    ctx.fillStyle = `rgba(255, 255, 255, ${Math.random() * 0.6})`;
+    ctx.fillRect(x, y, 2, 2);
+  }
+  ctx.fillStyle = 'white';
+  ctx.font = '24px Arial';
+  ctx.fillText(`RECHARGE... (${Math.ceil(camera.remainingTime)}s)`, 50, 50);
+  ctx.fillStyle = 'yellow';
+  ctx.fillText(`Caméra ${camera.name} en recharge`, 50, 80);
+}
+
+
+
+/**
+ * Dessine la vue du bureau en utilisant une clé d'image spécifique
+ * @param {string} officeImageKey - Clé de l'image du bureau à afficher
+ */
+function drawOfficeViewByPicture(officeImageKey){
+  if (loadedTheOfficeImages[officeImageKey] && loadedTheOfficeImages[officeImageKey].complete) {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);	
+    activeView = 'office';
+    drawOfficeView(ctx,officeImageKey);
+  }
+}
+
+/**
+ * Dessine la vue du bureau
+ * @param {CanvasRenderingContext2D} ctx - Contexte de dessin
+ * @param {string} officeImageKey - Clé de l'image du bureau à afficher (optionnel)
+ */
+function drawOfficeView(ctx,officeImageKey=null) {
+
+    ctx.fillStyle = 'darkgray';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    // Choisir l'image en fonction de l'état des lumières
+    if(officeImageKey == null){
+      officeImageKey = getOfficeImageKey();
+    }
+
+    if (loadedTheOfficeImages[officeImageKey] && loadedTheOfficeImages[officeImageKey].complete) {
+        const picture = loadedTheOfficeImages[officeImageKey];
+
+        // Vérifie si l'image est un GIF
+        if (isGif(picture)) {
+
+            if(_pictureGif != picture){
+            // Affiche le GIF (il sera dessiné par drawGifs)
+            showGif(picture);
+            _pictureGif = picture;
+            }
+        } else {
+            // Si ce n'est pas un GIF, dessine l'image normalement
+            ctx.drawImage(picture, 0, 0, canvas.width, canvas.height);
+            hideGif();
+        }
+    }
+
+    ctx.restore();
+}
+
+/**
+ * Vérifie si un animatronic est présent dans une pièce
+ * @param {string} roomKey - Clé de la pièce
+ * @returns {boolean} - Vrai si un animatronic est présent
+ */
+function isAnimatronicInRoom(roomKey) {
+    const roomData = rooms[roomKey];
+
+    if (!roomData) return false;
+
+    // Vérifie si au moins un animatronic est présent dans la pièce
+    return roomData.b === 1 || roomData.c === 1 || roomData.f === 1 || roomData.foxy === 1;
+}
