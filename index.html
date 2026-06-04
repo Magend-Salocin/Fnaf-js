@@ -94,12 +94,13 @@
 		
 			<!-- doorButtons -->
 			<div id="doorButtons" style="width: 100%; position: fixed; z-index: 4;">
-				<button id="start" style="display:none">start</button>
-				<button id="debug-game-over-0" style="display:none">game-over</button>
-				<button id="debug-game-over-1" style="display:none">End Night</button>
-				<button id="stop" style="display:none">stop</button>
 				<button id="toggleCameraLayout">CAM</button>
-				<button id="debug-toggle-btn" class="debug-toggle-btn" onclick="toggleDebugPanel()">🐾 Debug</button>
+				<button id="toggleCameraLayout" onclick="showTerminalIntro()">Information</button>
+			</div>
+
+
+			<div id="debug-control">
+				<button id="debug-toggle-btn" class="debug-btn" onclick="toggleDebugPanel()" title="Debug">	🐾</button>
 			</div>
 
 			<!-- Panneau de Debug caché -->
@@ -139,6 +140,7 @@
 			</div>
 
 		<!-- Volume Control -->
+		
 		<div id="volume-control">
 			<button id="volume-btn" onclick="toggleVolumePanel()" title="Volume">🔊</button>
 			<div id="volume-panel" class="hidden">
@@ -325,6 +327,10 @@
 		<audio preload="auto" class="tape-eject" src="audio/MiniDV_Tape_Eject_1.wav"></audio>
 		<audio preload="auto" class="party-favor" src="audio/PartyFavorraspyPart_AC01__3.wav"></audio>
 		<audio preload="auto" class="knock" src="audio/knock2.wav"></audio>
+
+		<!-- terminal divers -->
+		<audio preload="auto" class="terminal-keyboard-typing" src="audio/terminal-keyboard-typing.mp3"></audio>
+		<audio preload="auto" class="terminal-start" src="audio/terminal-start.mp3"></audio>
 	</div>
 
 	<!-- script -->
@@ -333,11 +339,13 @@
 		<script src="script/config/game.js"></script>
 		<script src="script/config/data.js"></script>
 		<script src="script/config/assets.js"></script>
+		<script src="script/config/terminal.js"></script>
 		
 
 		<script src="script/core/gifPlayer.js"></script>
 		<script src="script/core/sounds.js"></script>	
 		<script src="script/core/language.js"></script>	
+		<script src="script/core/retroTerminal.js"></script>	
 
 		<script src="script/render.js"></script>
 		

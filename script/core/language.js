@@ -39,10 +39,6 @@ function applyLanguage(lang) {
   document.getElementById('cam6').textContent = t.cameras.cam6;
   document.getElementById('cam7').textContent = t.cameras.cam7;
 
-  document.getElementById('start').textContent = t.debugButtons.start;
-  document.getElementById('debug-game-over-0').textContent = t.debugButtons.gameOver;
-  document.getElementById('debug-game-over-1').textContent = t.debugButtons.endNight;
-  document.getElementById('stop').textContent = t.debugButtons.stop;
   document.getElementById('toggleCameraLayout').textContent = t.debugButtons.cam;
 
   window.selectedLanguage = selectedLanguage;

@@ -3,9 +3,9 @@
 function setupDebugEventListeners() {
 
   /*Debug*/
-  document.getElementById('debug-game-over-0').addEventListener('click', () => _transitionFreddy());
+  /*document.getElementById('debug-game-over-0').addEventListener('click', () => _transitionFreddy());
   document.getElementById('debug-game-over-1').addEventListener('click', () => _endGameAt5h50());
-
+*/
 
   /* DEBUG - Boutons Foxy */
   document.getElementById('debug-foxy-phase1').addEventListener('click', () => debugFoxyPhase1());

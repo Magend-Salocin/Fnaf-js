@@ -136,7 +136,7 @@ class Night {
 function startNight(nightNumber) {
   night = Math.max(1, Math.min(MAX_NIGHT, nightNumber));
 
-  const currentNight = new Night(night);
+  currentNight = new Night(night);
 
   gameWin = false;
   gameEnd = false;

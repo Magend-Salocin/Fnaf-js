@@ -210,5 +210,9 @@ const gameSounds = [
     { id: "laugh_girl8d", element: document.querySelector('.laugh-girl8d'), category: "misc", description: "Rire de fille 8 (version différente)", mixVolume: 0.9 },
     { id: "tape_eject", element: document.querySelector('.tape-eject'), category: "misc", description: "Éjection de cassette", mixVolume: 1.0 },
     { id: "party_favor", element: document.querySelector('.party-favor'), category: "misc", description: "Son de fête", mixVolume: 1.0 },
-    { id: "knock", element: document.querySelector('.knock'), category: "misc", description: "Coup frappé", mixVolume: 1.3 }
+    { id: "knock", element: document.querySelector('.knock'), category: "misc", description: "Coup frappé", mixVolume: 1.3 },
+
+// Terminal sounds
+    { id: "terminal-keyboard-typing", element: document.querySelector('.terminal-keyboard-typing'), category: "misc", description: "Sons de frappe au clavier du terminal", mixVolume: 0.8 },
+    { id: "terminal-start", element: document.querySelector('.terminal-start'), category: "misc", description: "Son de démarrage du terminal", mixVolume: 1.0 }
 ];

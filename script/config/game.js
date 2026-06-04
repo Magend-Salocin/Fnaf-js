@@ -23,6 +23,9 @@ const MINUTES_PER_TURN = 5; // Un tour toutes les 5 minutes
 let minutesSinceLastTurn = 0; // Compteur de minutes depuis le dernier tour
 let currentTurn = 1; // Numéro du tour actuel
 
+
+let currentNight = null; // Instance de la classe Night représentant la nuit en cours
+
 // Variables globales
 let activeView = 'office';
 let activeCamera = '0';
@@ -35,7 +38,7 @@ const POWER_SYSTEM = Object.freeze({
   BASE_USAGE: 1,
   MAX_USAGE: 5,
   DRAIN_PER_SECOND: Object.freeze({
-    1: 0.18,
+    1: 0.09,//1: 0.18,
     2: 0.27,
     3: 0.4,
     4: 0.65,

@@ -1,7 +1,7 @@
 #powerUsage {
     position: fixed;
-    top: 98px;
-    right: 12px;
+   /* top: 98px;
+    right: 12px;*/
     z-index: 999;
     width: 220px;
     background-color: #080808;
@@ -11,6 +11,11 @@
     text-align: left;
     box-shadow: 0 0 18px rgba(0, 0, 0, 0.9), inset 0 0 8px rgba(0, 0, 0, 0.6);
     user-select: none;
+
+    top: 12px;
+    right: 517px;
+    width: 220px;
+    height: 46px;
 }
 
 #powerUsage::after {
