@@ -24,3 +24,7 @@ https://dev.to/m1kc3b/from-2500-to-1000000-particles-supercharging-a-threejs-dem
 https://www.youtube.com/watch?v=DvSqlVTBcaE
 
 https://www.snokido.fr/jeu/five-nights-at-freddys
+
+
+Convert image to ascci
+https://manytools.org/hacker-tools/convert-images-to-ascii-art/go/

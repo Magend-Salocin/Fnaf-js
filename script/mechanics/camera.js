@@ -22,22 +22,53 @@ let currentSoundCamera = null;
 
 var _pictureGif=null;
 
+function updateCameraPanelState(isOpen) {
+  const panel = document.getElementById('camera-panel');
+  const statusEl = document.getElementById('camera-panel-status');
+  const footerEl = document.getElementById('camera-panel-footer');
+
+  if (!panel || !statusEl || !footerEl) {
+    return;
+  }
+
+  if (isOpen) {
+    panel.classList.remove('camera-closing');
+    panel.classList.add('camera-open');
+    statusEl.textContent = 'ONLINE';
+    footerEl.textContent = 'CLICK TO CLOSE';
+    return;
+  }
+
+  panel.classList.remove('camera-open');
+  panel.classList.add('camera-closing');
+  statusEl.textContent = 'READY';
+  footerEl.textContent = 'CLICK TO OPEN';
+
+  setTimeout(() => {
+    panel.classList.remove('camera-closing');
+  }, 350);
+}
+
 /**
  * Basculer l'affichage de la caméra (ouvrir/fermer)
  */
 function showCloseCamera(){
   const cameraLayout = document.getElementById('cameraLayout');
   // Inverse l'affichage de la caméra
-  cameraLayout.style.display = cameraLayout.style.display === 'block' ? 'none' : 'block';
-  if (cameraLayout.style.display == 'none') {
+  const willOpen = cameraLayout.style.display !== 'block';
+  cameraLayout.style.display = willOpen ? 'block' : 'none';
+
+  if (!willOpen) {
     cameraDown(); // Animation de descente de la caméra
     activeView = 'office'; // Retour à la vue du bureau
     lastActiveCamera = activeCamera; // Sauvegarde la dernière caméra active
     activeCamera = 0; // Désactive la caméra
     playSound("camera_put_down"); // Joue le son de descente de caméra
+    updateCameraPanelState(false);
   } else {
     playSound("camera_toggle"); // Joue le son de basculement de caméra
     cameraUp(); // Animation de montée de la caméra
+    updateCameraPanelState(true);
   }
 }
 

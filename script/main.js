@@ -18,6 +18,37 @@ document.addEventListener('keyup', (e) => {
   if (e.key === 'ArrowRight') isPanningRight = false;
 });
 
+function openInfoComputerPanel() {
+  const panel = document.getElementById('computer-panel');
+  const statusEl = document.getElementById('computer-panel-status');
+  const footerEl = document.getElementById('computer-panel-footer');
+
+  if (!panel || !statusEl || !footerEl) {
+    showTerminalIntro();
+    return;
+  }
+
+  panel.classList.remove('computer-active');
+  void panel.offsetWidth;
+  panel.classList.add('computer-active');
+
+  statusEl.textContent = 'BOOTING';
+  footerEl.textContent = 'TERMINAL OPENING';
+
+  setTimeout(() => {
+    statusEl.textContent = 'ONLINE';
+    footerEl.textContent = 'SECURITY FEED READY';
+  }, 240);
+
+  setTimeout(() => {
+    statusEl.textContent = 'IDLE';
+    footerEl.textContent = 'CLICK FOR INFO';
+    panel.classList.remove('computer-active');
+  }, 1700);
+
+  showTerminalIntro();
+}
+
 // Écouteurs d'événements
 function setupEventListeners() {
   document.getElementById('cam1a').addEventListener('click', () => activateCamera("1a"));
@@ -32,7 +63,10 @@ function setupEventListeners() {
   document.getElementById('cam6').addEventListener('click', () => activateCamera("6"));
   document.getElementById('cam7').addEventListener('click', () => activateCamera("7"));
 
-  document.getElementById('toggleCameraLayout').addEventListener('click', () => showCloseCamera());
+  
+  document.getElementById('phone-panel').addEventListener('click', () => hangupPhoneFromPanel());
+  document.getElementById('camera-panel').addEventListener('click', () => showCloseCamera());
+  document.getElementById('computer-panel').addEventListener('click', () => openInfoComputerPanel());
 
   /*Gestion des portes*/
   document.getElementById('left-door-toggle').addEventListener('click', () => toggleDoor('left'));

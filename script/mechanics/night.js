@@ -8,6 +8,8 @@ class Night {
      */
     constructor(nightNumber) {
         this.nightNumber = Math.max(1, Math.min(MAX_NIGHT, nightNumber));
+      this.phoneCallTimeoutId = null;
+      this.phoneCallActive = false;
     }
 
     /**
@@ -76,6 +78,8 @@ class Night {
             `Phone call finished for night ${this.nightNumber}.`
         );
 
+      setPhonePanelVisible(false);
+
         this.resetAnimatronics();
         this.applyAnimatronicDifficulty();
 
@@ -91,6 +95,10 @@ class Night {
      */
     isPhoneCallFinished() {
         return isVocalEnd;
+    }
+
+    isPhoneCallActive() {
+      return this.phoneCallActive;
     }
 
     /**
@@ -123,14 +131,93 @@ class Night {
 
         const soundId = `call_${phoneCallNumber}`;
 
+        this.phoneCallActive = true;
+        setPhonePanelVisible(true);
+        setPhonePanelState('in-call');
+
         if (getSoundById(soundId)) {
             playSound(soundId);
         }
 
-        setTimeout(() => {
-            this.onPhoneCallFinished();
+        clearTimeout(this.phoneCallTimeoutId);
+        this.phoneCallTimeoutId = setTimeout(() => {
+          this.finishPhoneCall();
         }, this.getPhoneCallDuration());
     }
+
+    /**
+     * Arrête le message du Phone Guy et déclenche la fin de l'appel.
+     */
+    stopPhoneCall() {
+
+      if (!this.phoneCallActive) {
+        return;
+      }
+
+        const phoneCallNumber =
+            Math.min(5, Math.max(1, this.nightNumber));
+
+        const soundId = `call_${phoneCallNumber}`;
+
+        if (getSoundById(soundId)) {
+            stopSound(soundId);
+        }
+
+        this.finishPhoneCall();
+    }
+
+    finishPhoneCall() {
+        if (!this.phoneCallActive) {
+            return;
+        }
+
+        this.phoneCallActive = false;
+        clearTimeout(this.phoneCallTimeoutId);
+        this.phoneCallTimeoutId = null;
+        this.onPhoneCallFinished();
+    }
+}
+
+function setPhonePanelState(state) {
+  const panel = document.getElementById('phone-panel');
+  const statusEl = document.getElementById('phone-panel-status');
+  const footerEl = document.getElementById('phone-panel-footer');
+
+  if (!panel || !statusEl || !footerEl) {
+    return;
+  }
+
+  if (state === 'in-call') {
+    panel.classList.remove('call-ended');
+    statusEl.textContent = 'CALL ACTIVE';
+    footerEl.textContent = 'CLICK TO HANG UP';
+    return;
+  }
+
+  panel.classList.add('call-ended');
+  statusEl.textContent = 'CALL ENDED';
+  footerEl.textContent = 'LINE CLOSED';
+}
+
+function setPhonePanelVisible(isVisible) {
+  const panel = document.getElementById('phone-panel');
+  if (!panel) {
+    return;
+  }
+
+  panel.classList.toggle('hidden', !isVisible);
+
+  if (!isVisible) {
+    setPhonePanelState('ended');
+  }
+}
+
+function hangupPhoneFromPanel() {
+  if (!currentNight || typeof currentNight.stopPhoneCall !== 'function') {
+    return;
+  }
+
+  currentNight.stopPhoneCall();
 }
 
 function startNight(nightNumber) {
@@ -154,6 +241,7 @@ function startNight(nightNumber) {
 
   stopAllSounds();
   startAmbientSounds();
+  setPhonePanelVisible(true);
   currentNight.playPhoneCall();
 
   if (gameLoopInterval) {

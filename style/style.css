@@ -6,6 +6,463 @@
 
 
 
+   .terminal-choice{
+    padding:6px;
+    text-align:center;
+    transition:.15s;
+}
+
+.terminal-choice.selected{
+    background:#00ff66;
+    color:#000;
+    text-shadow:none;
+}
+#top-panel{
+    position:absolute;
+    top:10px;
+    left:50%;
+    transform:translateX(-50%);
+
+    display:flex;
+    gap:12px;
+
+    z-index:100;
+}
+
+.terminal-widget{
+    width:190px;
+    height:70px;
+
+    background:#050505;
+    border:1px solid #222;
+
+    box-shadow:
+        inset 0 0 15px rgba(255,120,0,.08),
+        0 0 8px rgba(255,120,0,.08);
+
+    color:#ff9900;
+
+    font-family:monospace;
+    text-transform:uppercase;
+
+    padding:6px 10px;
+
+    position:relative;
+}
+
+.widget-title{
+    font-size:10px;
+    color:#777;
+    letter-spacing:2px;
+}
+
+.widget-value{
+    position:absolute;
+    right:10px;
+    top:24px;
+
+    font-size:22px;
+    font-weight:bold;
+
+    color:#ff9900;
+}
+
+.widget-footer{
+    position:absolute;
+    bottom:4px;
+    left:10px;
+
+    font-size:9px;
+    color:#997040;
+}
+
+.clickable{
+    cursor:pointer;
+    transition:.15s;
+}
+
+.clickable:hover{
+    transform:translateY(-2px);
+    box-shadow:
+        0 0 10px rgba(255,160,0,.4),
+        inset 0 0 15px rgba(255,160,0,.15);
+}
+
+.phone-status,
+.cam-status{
+    margin-top:10px;
+    font-size:13px;
+    font-weight:bold;
+}
+
+.phone-led{
+    width:10px;
+    height:10px;
+
+    background:#ff3300;
+    border-radius:50%;
+
+    position:absolute;
+    right:10px;
+    top:28px;
+
+    animation:blink .8s infinite;
+}
+
+#phone-panel {
+  position: fixed;
+  top: 12px;
+  right: 1210px;
+  z-index: 999;
+  width: 220px;
+  height: 46px;
+  background-color: #080808;
+  border: 1px solid #2a2a2a;
+  border-radius: 2px;
+  padding: 7px 10px 9px;
+  text-align: left;
+  box-shadow: 0 0 18px rgba(0, 0, 0, 0.9), inset 0 0 8px rgba(0, 0, 0, 0.6);
+  user-select: none;
+  color: #ff961f;
+  font-family: 'Press Start 2P', monospace;
+  border-collapse: collapse;
+}
+
+#computer-panel {
+  position: fixed;
+  top: 12px;
+  right: 748px;
+  z-index: 999;
+  width: 220px;
+  height: 46px;
+  background-color: #080808;
+  border: 1px solid #2a2a2a;
+  border-radius: 2px;
+  padding: 7px 10px 9px;
+  text-align: left;
+  box-shadow: 0 0 18px rgba(0, 0, 0, 0.9), inset 0 0 8px rgba(0, 0, 0, 0.6);
+  user-select: none;
+  color: #95ff66;
+  font-family: 'Press Start 2P', monospace;
+}
+
+#computer-panel::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.04) 0,
+    rgba(255, 255, 255, 0.04) 1px,
+    transparent 2px,
+    transparent 4px
+  );
+  opacity: 0.18;
+}
+
+#computer-panel:hover {
+  transform: none;
+}
+
+#computer-panel.computer-active {
+  border-color: #3f7640;
+  box-shadow: 0 0 16px rgba(35, 140, 55, 0.4), inset 0 0 12px rgba(140, 255, 120, 0.15);
+  animation: computer-boot 0.45s ease-out;
+}
+
+.computer-panel-label {
+  font-size: 6px;
+  color: #637d5d;
+  letter-spacing: 2px;
+  margin-bottom: 5px;
+}
+
+.computer-panel-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+
+.computer-panel-status {
+  font-size: 9px;
+  color: #95ff66;
+  letter-spacing: 1px;
+  text-shadow: 0 0 7px rgba(120, 255, 130, 0.55);
+}
+
+.computer-led {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #274029;
+  box-shadow: 0 0 4px rgba(70, 130, 80, 0.5);
+}
+
+#computer-panel.computer-active .computer-led {
+  background: #78ff87;
+  box-shadow: 0 0 10px rgba(120, 255, 135, 0.85);
+  animation: computer-led-blink 0.45s steps(2, start) 3;
+}
+
+.computer-panel-footer {
+  font-size: 6px;
+  color: #5a8551;
+  letter-spacing: 1px;
+}
+
+@keyframes computer-led-blink {
+  0%, 49% {
+    opacity: 1;
+  }
+  50%, 100% {
+    opacity: 0.4;
+  }
+}
+
+@keyframes computer-boot {
+  0% {
+    transform: scale(0.97);
+    filter: brightness(0.8);
+  }
+  60% {
+    transform: scale(1.02);
+    filter: brightness(1.25);
+  }
+  100% {
+    transform: scale(1);
+    filter: brightness(1);
+  }
+}
+
+#camera-panel {
+  position: fixed;
+  top: 12px;
+  right: 979px;
+  z-index: 999;
+  width: 220px;
+  height: 46px;
+  background-color: #080808;
+  border: 1px solid #2a2a2a;
+  border-radius: 2px;
+  padding: 7px 10px 9px;
+  text-align: left;
+  box-shadow: 0 0 18px rgba(0, 0, 0, 0.9), inset 0 0 8px rgba(0, 0, 0, 0.6);
+  user-select: none;
+  color: #66c8ff;
+  font-family: 'Press Start 2P', monospace;
+}
+
+#camera-panel::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.04) 0,
+    rgba(255, 255, 255, 0.04) 1px,
+    transparent 2px,
+    transparent 4px
+  );
+  opacity: 0.18;
+}
+
+#camera-panel:hover {
+  transform: none;
+}
+
+#camera-panel.camera-open {
+  border-color: #3a6d85;
+  box-shadow: 0 0 18px rgba(0, 80, 120, 0.45), inset 0 0 12px rgba(40, 170, 255, 0.12);
+  animation: camera-panel-pulse 0.8s ease-out;
+}
+
+#camera-panel.camera-closing {
+  animation: camera-panel-close 0.35s ease-in;
+}
+
+.camera-panel-label {
+  font-size: 6px;
+  color: #5f7380;
+  letter-spacing: 2px;
+  margin-bottom: 5px;
+}
+
+.camera-panel-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+
+.camera-panel-status {
+  font-size: 9px;
+  color: #66c8ff;
+  letter-spacing: 1px;
+  text-shadow: 0 0 8px rgba(102, 200, 255, 0.6);
+}
+
+.camera-led {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #2f4855;
+  box-shadow: 0 0 4px rgba(80, 120, 140, 0.55);
+}
+
+#camera-panel.camera-open .camera-led {
+  background: #66f2ff;
+  box-shadow: 0 0 10px rgba(102, 242, 255, 0.9);
+  animation: camera-led-blink 0.55s steps(2, start) infinite;
+}
+
+.camera-panel-footer {
+  font-size: 6px;
+  color: #507185;
+  letter-spacing: 1px;
+}
+
+@keyframes camera-led-blink {
+  0%, 49% {
+    opacity: 1;
+  }
+  50%, 100% {
+    opacity: 0.45;
+  }
+}
+
+@keyframes camera-panel-pulse {
+  0% {
+    transform: scale(0.98);
+  }
+  65% {
+    transform: scale(1.02);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes camera-panel-close {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.7;
+  }
+}
+
+#phone-panel::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.04) 0,
+    rgba(255, 255, 255, 0.04) 1px,
+    transparent 2px,
+    transparent 4px
+  );
+  opacity: 0.18;
+}
+
+#phone-panel.hidden {
+  display: none;
+}
+
+#phone-panel:hover {
+  transform: none;
+}
+
+.phone-panel-label {
+  font-size: 6px;
+  color: #666;
+  letter-spacing: 2px;
+  margin-bottom: 5px;
+}
+
+.phone-panel-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+
+.phone-panel-status {
+  font-size: 9px;
+  color: #ff961f;
+  letter-spacing: 1px;
+  text-shadow: 0 0 6px rgba(255, 136, 0, 0.7);
+}
+
+#phone-panel .phone-led {
+  width: 9px;
+  height: 9px;
+  position: static;
+  background: #ff3300;
+  box-shadow: 0 0 6px rgba(255, 45, 0, 0.85);
+}
+
+#phone-panel.call-ended .phone-led {
+  background: #444;
+  box-shadow: none;
+  animation: none;
+}
+
+.phone-panel-footer {
+  font-size: 6px;
+  color: #7a5d20;
+  letter-spacing: 1px;
+}
+
+@media (max-width: 720px) {
+  #computer-panel {
+    top: 32px;
+    right: 8px;
+    width: 180px;
+    padding: 6px 8px 8px;
+  }
+
+  .computer-panel-status {
+    font-size: 8px;
+  }
+
+  #camera-panel {
+    top: 84px;
+    right: 8px;
+    width: 180px;
+    padding: 6px 8px 8px;
+  }
+
+  .camera-panel-status {
+    font-size: 8px;
+  }
+
+  #phone-panel {
+  top: 136px;
+  right: 8px;
+  width: 180px;
+  padding: 6px 8px 8px;
+  }
+
+  .phone-panel-status {
+  font-size: 8px;
+  }
+}
+
+@keyframes blink{
+    50%{
+        opacity:.2;
+    }
+}
+
+
+/* ----- */
+
+
    #debug-control {
   position: fixed;
   top: 12px;

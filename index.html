@@ -62,41 +62,70 @@
 
 			<!-- cameraLayout -->
 			<div id="cameraLayout">
-					<div class="map-container" id="camLayoutContainer">
-						<!-- Pièces -->
-						<div class="room Dining-Area" id="room-dining-area">Dining Area</div>
-						<div class="room Backstage" id="room-backstage">Backstage</div>
-						<div class="room Showstage" id="room-showstage">Showstage</div>
-						<div class="room Office" id ="camsafe">Office</div>
-						<div class="room Pirate-Cove" id="room-pirate-cove">Pirate Cove</div>
-						<div class="room Supply-Closet" id="room-supply-closet">Supply Closet</div>
-						<div class="room Rest-Room" id="room-rest-room">Rest Room</div>
-						<div class="room Rest-Room-water-closet-h"></div>
-						<div class="room Rest-Room-water-closet-f"></div>
-						<div class="room Kitchen" id="room-kitchen">Kitchen</div>
-						<div class="room West-Hall" id="room-west-hall">West Hall</div>
-						<div class="room East-Hall" id="room-east-hall">East Hall</div>
-						<!-- Caméras -->
-						<div class="camera cam-1a" id="cam1a" >Cam 1A</div>
-						<div class="camera cam-1b" id="cam1b" >Cam 1B</div>
-						<div class="camera cam-1c" id="cam1c" >Cam 1C</div>
-						<div class="camera cam-2a" id="cam2a">Cam 2A</div>
-						<div class="camera cam-2b" id="cam2b" >Cam 2B</div>
-						<div class="camera cam-3" id="cam3" >Cam 3A</div>
-						<div class="camera cam-4a" id="cam4a" >Cam 4A</div>
-						<div class="camera cam-4b" id="cam4b" >Cam 4B</div>
-						<div class="camera cam-5" id="cam5" >Cam 5A</div>
-						<div class="camera cam-6" id="cam6" >Cam 6A</div>
-						<div class="camera cam-7" id="cam7" >Cam 7A</div>
-						<div  id="you" ></div>
-					</div>
+				<div class="map-container" id="camLayoutContainer">
+					<!-- Pièces -->
+					<div class="room Dining-Area" id="room-dining-area">Dining Area</div>
+					<div class="room Backstage" id="room-backstage">Backstage</div>
+					<div class="room Showstage" id="room-showstage">Showstage</div>
+					<div class="room Office" id ="camsafe">Office</div>
+					<div class="room Pirate-Cove" id="room-pirate-cove">Pirate Cove</div>
+					<div class="room Supply-Closet" id="room-supply-closet">Supply Closet</div>
+					<div class="room Rest-Room" id="room-rest-room">Rest Room</div>
+					<div class="room Rest-Room-water-closet-h"></div>
+					<div class="room Rest-Room-water-closet-f"></div>
+					<div class="room Kitchen" id="room-kitchen">Kitchen</div>
+					<div class="room West-Hall" id="room-west-hall">West Hall</div>
+					<div class="room East-Hall" id="room-east-hall">East Hall</div>
+					<!-- Caméras -->
+					<div class="camera cam-1a" id="cam1a" >Cam 1A</div>
+					<div class="camera cam-1b" id="cam1b" >Cam 1B</div>
+					<div class="camera cam-1c" id="cam1c" >Cam 1C</div>
+					<div class="camera cam-2a" id="cam2a">Cam 2A</div>
+					<div class="camera cam-2b" id="cam2b" >Cam 2B</div>
+					<div class="camera cam-3" id="cam3" >Cam 3A</div>
+					<div class="camera cam-4a" id="cam4a" >Cam 4A</div>
+					<div class="camera cam-4b" id="cam4b" >Cam 4B</div>
+					<div class="camera cam-5" id="cam5" >Cam 5A</div>
+					<div class="camera cam-6" id="cam6" >Cam 6A</div>
+					<div class="camera cam-7" id="cam7" >Cam 7A</div>
+					<div  id="you" ></div>
+				</div>
 			</div>
 		
-			<!-- doorButtons -->
-			<div id="doorButtons" style="width: 100%; position: fixed; z-index: 4;">
-				<button id="toggleCameraLayout">CAM</button>
-				<button id="toggleCameraLayout" onclick="showTerminalIntro()">Information</button>
-			</div>
+
+			<button id="computer-panel" class="clickable" type="button" aria-label="Computer panel">
+				<div class="computer-panel-label">SECURITY PC</div>
+				<div class="computer-panel-row">
+					<div id="computer-panel-status" class="computer-panel-status">IDLE</div>
+					<div class="computer-led"></div>
+				</div>
+				<div id="computer-panel-footer" class="computer-panel-footer">CLICK FOR INFO</div>
+			</button>
+
+			<button id="phone-panel" class="clickable" type="button" aria-label="Phone panel">
+				<div class="phone-panel-label">OFFICE PHONE</div>
+				<div class="phone-panel-row">
+					<div id="phone-panel-status" class="phone-panel-status">INCOMING CALL</div>
+					<div class="phone-led"></div>
+				</div>
+				<div id="phone-panel-footer" class="phone-panel-footer">CLICK TO HANG UP</div>
+			</button>
+
+			<button id="camera-panel" class="clickable" type="button" aria-label="Camera panel">
+				<div class="camera-panel-label">CAM SYSTEM</div>
+				<div class="camera-panel-row">
+					<div id="camera-panel-status" class="camera-panel-status">READY</div>
+					<div class="camera-led"></div>
+				</div>
+				<div id="camera-panel-footer" class="camera-panel-footer">CLICK TO OPEN</div>
+			</button>
+
+
+			<div id="powerUsage"><!-- mis a jour par updatePowerDisplay() --></div>
+			<div id="usage-status"><!-- mis a jour par updateUsageStatus() --></div>
+
+			<!-- Horloge digitale style FNAF -->
+			<div id="time-status"><!-- mis à jour par drawGameTime() --></div>
 
 
 			<div id="debug-control">
@@ -207,8 +236,7 @@
 			</div>
 		</div>
 
-
-		 <!-- Left Door Switch-->
+		<!-- Left Door Switch-->
         <div id="_left" class="left to-hide">
             <div class="left-door">
                 <img id="left-door"  src="images/_doors/left_door_1.png" class="default" alt="">
@@ -219,6 +247,7 @@
 				<div id="left-light-toggle" class="btndoorAndLight btnlight" ></div>
             </div>
         </div>
+
         <!--  Right Door Switch-->
         <div id="_right" class="right to-hide">
             <div class="right-door">
@@ -232,17 +261,14 @@
             </div>
         </div>
 
-		
 	</div>
 
 	<!-- Canvas et affichages -->
 	<canvas id="gameCanvas"></canvas>
 	<img id="gameCanvasGif" class="gameCanvas" style="display:none">
-	<div id="powerUsage"><!-- mis a jour par updatePowerDisplay() --></div>
-	<div id="usage-status"><!-- mis a jour par updateUsageStatus() --></div>
 
-	<!-- Horloge digitale style FNAF -->
-	<div id="time-status"><!-- mis à jour par drawGameTime() --></div>
+
+
 
 	<!-- audios -->
 	<div id="audios">

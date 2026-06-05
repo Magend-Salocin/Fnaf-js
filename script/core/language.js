@@ -39,8 +39,7 @@ function applyLanguage(lang) {
   document.getElementById('cam6').textContent = t.cameras.cam6;
   document.getElementById('cam7').textContent = t.cameras.cam7;
 
-  document.getElementById('toggleCameraLayout').textContent = t.debugButtons.cam;
-
+ 
   window.selectedLanguage = selectedLanguage;
 }
 
