@@ -111,11 +111,11 @@
 
 #phone-panel {
   position: fixed;
-  top: 12px;
-  right: 1210px;
+  top: 8px;
+  right: 1222px;
   z-index: 999;
   width: 220px;
-  height: 46px;
+  height: 63px;
   background-color: #080808;
   border: 1px solid #2a2a2a;
   border-radius: 2px;
@@ -130,11 +130,11 @@
 
 #computer-panel {
   position: fixed;
-  top: 12px;
-  right: 748px;
+  top: 8px;
+  right: 765px;
   z-index: 999;
   width: 220px;
-  height: 46px;
+  height: 63px;
   background-color: #080808;
   border: 1px solid #2a2a2a;
   border-radius: 2px;
@@ -238,11 +238,11 @@
 
 #camera-panel {
   position: fixed;
-  top: 12px;
-  right: 979px;
+  top: 8px;
+  right: 992px;
   z-index: 999;
   width: 220px;
-  height: 46px;
+  height: 63px;
   background-color: #080808;
   border: 1px solid #2a2a2a;
   border-radius: 2px;

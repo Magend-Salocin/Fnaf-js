@@ -16,6 +16,20 @@ function applyLanguage(lang) {
     document.getElementById('powerUsage').textContent = t.powerUsage;
   }
 
+  if (t.panels) {
+    document.getElementById('computer-panel-label').textContent = t.panels.computerLabel;
+    document.getElementById('computer-panel-status').textContent = t.panels.computerStatus;
+    document.getElementById('computer-panel-footer').textContent = t.panels.computerFooter;
+
+    document.getElementById('phone-panel-label').textContent = t.panels.phoneLabel;
+    document.getElementById('phone-panel-status').textContent = t.panels.phoneStatus;
+    document.getElementById('phone-panel-footer').textContent = t.panels.phoneFooter;
+
+    document.getElementById('camera-panel-label').textContent = t.panels.cameraLabel;
+    document.getElementById('camera-panel-status').textContent = t.panels.cameraStatus;
+    document.getElementById('camera-panel-footer').textContent = t.panels.cameraFooter;
+  }
+
   document.getElementById('room-dining-area').textContent = t.rooms.diningArea;
   document.getElementById('room-backstage').textContent = t.rooms.backstage;
   document.getElementById('room-showstage').textContent = t.rooms.showstage;

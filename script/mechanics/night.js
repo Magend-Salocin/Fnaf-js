@@ -182,6 +182,13 @@ function setPhonePanelState(state) {
   const panel = document.getElementById('phone-panel');
   const statusEl = document.getElementById('phone-panel-status');
   const footerEl = document.getElementById('phone-panel-footer');
+  const lang = window.selectedLanguage || window.FNAF_DEFAULT_LANGUAGE || 'fr';
+  const allTranslations = window.FNAF_TRANSLATIONS || {};
+  const t = allTranslations[lang] || allTranslations[window.FNAF_DEFAULT_LANGUAGE] || {};
+  const inCallLabel = t.panels?.phoneInCall || 'CALL ACTIVE';
+  const hangupLabel = t.panels?.phoneFooter || 'CLICK TO HANG UP';
+  const endedLabel = t.panels?.phoneEnded || 'CALL ENDED';
+  const lineClosedLabel = t.panels?.phoneLineClosed || 'LINE CLOSED';
 
   if (!panel || !statusEl || !footerEl) {
     return;
@@ -189,14 +196,14 @@ function setPhonePanelState(state) {
 
   if (state === 'in-call') {
     panel.classList.remove('call-ended');
-    statusEl.textContent = 'CALL ACTIVE';
-    footerEl.textContent = 'CLICK TO HANG UP';
+    statusEl.textContent = inCallLabel;
+    footerEl.textContent = hangupLabel;
     return;
   }
 
   panel.classList.add('call-ended');
-  statusEl.textContent = 'CALL ENDED';
-  footerEl.textContent = 'LINE CLOSED';
+  statusEl.textContent = endedLabel;
+  footerEl.textContent = lineClosedLabel;
 }
 
 function setPhonePanelVisible(isVisible) {

@@ -9,6 +9,40 @@ window.FNAF_TRANSLATIONS = {
     gameTitle: "Cinq<br> Nuits <br>avec<br> Freddy\'s",
     startGame: 'Lancer la partie',
     powerUsage: 'Puissance : 100%',
+    panels: {
+      computerLabel: 'PC SECURITE',
+      computerStatus: 'EN VEILLE',
+      computerFooter: 'CLIQUE POUR INFO',
+      computerBooting: 'DEMARRAGE',
+      computerOpening: 'OUVERTURE TERMINAL',
+      computerOnline: 'EN LIGNE',
+      computerReady: 'FLUX SECURITE PRET',
+      phoneLabel: 'TELEPHONE BUREAU',
+      phoneStatus: 'APPEL ENTRANT',
+      phoneFooter: 'CLIQUE POUR RACCROCHER',
+      phoneInCall: 'APPEL ACTIF',
+      phoneEnded: 'APPEL TERMINE',
+      phoneLineClosed: 'LIGNE FERMEE',
+      cameraLabel: 'SYSTEME CAM',
+      cameraStatus: 'PRET',
+      cameraFooter: 'CLIQUE POUR OUVRIR'
+    },
+    powerPanel: {
+      officePrefix: 'BUREAU',
+      powerLabel: 'PUISSANCE',
+      batteryFootnote: 'BATTERIE // FLUX LIVE'
+    },
+    usagePanel: {
+      officePrefix: 'BUREAU',
+      usageLabel: 'CONSO',
+      gridLabel: 'RESEAU ELEC',
+      ariaLabel: 'niveau de conso {level} sur {max}'
+    },
+    clockPanel: {
+      modeLabel: 'CAM / BUREAU',
+      amLabel: 'AM',
+      nightLabel: 'NUIT'
+    },
     rooms: {
       diningArea: 'Salle a manger',
       backstage: 'Backstage',
@@ -50,6 +84,40 @@ window.FNAF_TRANSLATIONS = {
     gameTitle: "Five<br> Night <br>at<br> Freddy\'s",
     startGame: 'Start Game',
     powerUsage: 'Power: 100%',
+    panels: {
+      computerLabel: 'SECURITY PC',
+      computerStatus: 'IDLE',
+      computerFooter: 'CLICK FOR INFO',
+      computerBooting: 'BOOTING',
+      computerOpening: 'TERMINAL OPENING',
+      computerOnline: 'ONLINE',
+      computerReady: 'SECURITY FEED READY',
+      phoneLabel: 'OFFICE PHONE',
+      phoneStatus: 'INCOMING CALL',
+      phoneFooter: 'CLICK TO HANG UP',
+      phoneInCall: 'CALL ACTIVE',
+      phoneEnded: 'CALL ENDED',
+      phoneLineClosed: 'LINE CLOSED',
+      cameraLabel: 'CAM SYSTEM',
+      cameraStatus: 'READY',
+      cameraFooter: 'CLICK TO OPEN'
+    },
+    powerPanel: {
+      officePrefix: 'OFFICE',
+      powerLabel: 'POWER',
+      batteryFootnote: 'BATTERY // LIVE FEED'
+    },
+    usagePanel: {
+      officePrefix: 'OFFICE',
+      usageLabel: 'USAGE',
+      gridLabel: 'POWER GRID',
+      ariaLabel: 'usage level {level} of {max}'
+    },
+    clockPanel: {
+      modeLabel: 'CAM / OFFICE',
+      amLabel: 'AM',
+      nightLabel: 'NIGHT'
+    },
     rooms: {
       diningArea: 'Dining Area',
       backstage: 'Backstage',
