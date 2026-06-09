@@ -10,6 +10,16 @@ document.addEventListener('keydown', (e) => {
   if (activeView === 'camera') {
     if (e.key === 'ArrowLeft') isPanningLeft = true;
     if (e.key === 'ArrowRight') isPanningRight = true;
+    return;
+  }
+
+  if (activeView === 'office') {
+    if (e.key === 'ArrowLeft') {
+      shiftOfficeLook(-1);
+    }
+    if (e.key === 'ArrowRight') {
+      shiftOfficeLook(1);
+    }
   }
 });
 
@@ -17,6 +27,15 @@ document.addEventListener('keyup', (e) => {
   if (e.key === 'ArrowLeft') isPanningLeft = false;
   if (e.key === 'ArrowRight') isPanningRight = false;
 });
+
+function handleOfficeMouseLook(event) {
+  if (activeView !== 'office' || gameEnd) return;
+
+  const viewportWidth = Math.max(1, window.innerWidth || document.documentElement.clientWidth || 1);
+  const pointerX = Math.max(0, Math.min(viewportWidth, event.clientX));
+  const normalizedX = (pointerX / viewportWidth) * 2 - 1;
+  setOfficeLookTargetOffset(normalizedX);
+}
 
 function openInfoComputerPanel() {
   const panel = document.getElementById('computer-panel');
@@ -82,8 +101,24 @@ function setupEventListeners() {
   document.getElementById('right-door-toggle').addEventListener('click', () => toggleDoor('right'));
   
   /*Gestion des lumières*/
-  document.getElementById('left-light-toggle').addEventListener('click', () => setupLightToggle(leftLight));
-  document.getElementById('right-light-toggle').addEventListener('click', () => setupLightToggle(rightLight));
+  setupLightToggle(leftLight);
+  setupLightToggle(rightLight);
+
+  const lookLeftBtn = document.getElementById('office-look-left');
+  const lookCenterBtn = document.getElementById('office-look-center');
+  const lookRightBtn = document.getElementById('office-look-right');
+
+  if (lookLeftBtn) {
+    lookLeftBtn.addEventListener('click', () => setOfficeLookDirection('left'));
+  }
+  if (lookCenterBtn) {
+    lookCenterBtn.addEventListener('click', () => setOfficeLookDirection('center'));
+  }
+  if (lookRightBtn) {
+    lookRightBtn.addEventListener('click', () => setOfficeLookDirection('right'));
+  }
+
+  document.addEventListener('mousemove', handleOfficeMouseLook);
 
   /*Debug*/
   setupDebugEventListeners();

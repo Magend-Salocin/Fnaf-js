@@ -36,6 +36,14 @@ const doors = {
     right: { isClosed: false, value: 0, element: document.getElementById('_right') }
 };
 
+function setDoorPanelVisibility(side, isVisible) {
+    const door = doors[side];
+    if (!door || !door.element) return;
+
+    door.element.classList.remove('display-0', 'display-1');
+    door.element.classList.add(isVisible ? 'display-1' : 'display-0');
+}
+
 
 /**
  * Configure les écouteurs d'événements pour basculer une lumière.
@@ -104,20 +112,45 @@ function processLightActivity(state, pos) {
  * Cache les deux portes en appliquant la classe CSS 'display-0'.
  */
 function hideDoors() {
-    Object.values(doors).forEach(door => {
-        door.element.classList.remove('display-0', 'display-1');
-        door.element.classList.add('display-0');
-    });
+    //setDoorPanelVisibility('left', false);
+   // setDoorPanelVisibility('right', false);
 }
 
 /**
  * Affiche les deux portes en appliquant la classe CSS 'display-1'.
  */
 function showDoors() {
-    Object.values(doors).forEach(door => {
-        door.element.classList.remove('display-0', 'display-1');
-        door.element.classList.add('display-1');
-    });
+    //setDoorPanelVisibility('left', true);
+    //setDoorPanelVisibility('right', true);
+    //updateOfficeDoorVisibility();
+}
+
+function syncOfficeDoorAnchors() {
+    const drawWidth = canvas.width * (1 + OFFICE_LOOK_PAN_INTENSITY);
+    const maxHorizontalShift = (drawWidth - canvas.width) / 2;
+    const drawX = ((canvas.width - drawWidth) / 2) - (officeLookCurrentOffset * maxHorizontalShift);
+
+    const applyAnchor = (element) => {
+        if (!element) return;
+        element.style.left = `${drawX}px`;
+        element.style.width = `${drawWidth}px`;
+    };
+
+    applyAnchor(doors.left?.element);
+    applyAnchor(doors.right?.element);
+}
+
+function updateOfficeDoorVisibility() {
+    if (activeView !== 'office' || gameEnd) {
+        hideDoors();
+        return;
+    }
+
+    syncOfficeDoorAnchors();
+
+    // Les panneaux sont ancrés aux bords de l'image : le scroll les fait entrer/sortir de l'écran.
+    setDoorPanelVisibility('left', true);
+    setDoorPanelVisibility('right', true);
 }
 
 /**

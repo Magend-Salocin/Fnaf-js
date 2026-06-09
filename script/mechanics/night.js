@@ -265,6 +265,12 @@ function resetOfficeState() {
   lastActiveCamera = '1a';
   isUsingCamera = false;
 
+  officeLookDirection = 'center';
+  officeLookTargetDirection = 'center';
+  officeLookCurrentOffset = OFFICE_LOOK_POSITIONS.center;
+  officeLookTargetOffset = OFFICE_LOOK_POSITIONS.center;
+  officeLookIsMoving = false;
+
   document.getElementById('cameraLayout').style.display = 'none';
 
   doors.left.isClosed = false;
@@ -285,6 +291,8 @@ function resetOfficeState() {
   document.getElementById('right-switch').src = 'images/_switch_door/right_switch_door_0_light_0.png';
 
   showDoors();
+  updateOfficeDoorVisibility();
+  updateOfficeLookControls();
 }
 
 function resetCameraState() {
@@ -320,6 +328,7 @@ function clearRoomsState() {
 function nightEndGame() {
     // Désactive les portes et bloque le jeu
     hideDoors();
+  updateOfficeLookControls();
     stopAllSounds();
 }
 

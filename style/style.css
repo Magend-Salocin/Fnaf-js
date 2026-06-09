@@ -318,6 +318,44 @@
   animation: camera-led-blink 0.55s steps(2, start) infinite;
 }
 
+#office-look-controls {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  display: flex;
+  gap: 10px;
+}
+
+#office-look-controls.hidden {
+  display: none;
+}
+
+#office-look-controls button {
+  min-width: 112px;
+  padding: 8px 10px;
+  border: 1px solid #2a2a2a;
+  border-radius: 2px;
+  background: rgba(8, 8, 8, 0.92);
+  color: #e0e0e0;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 8px;
+  letter-spacing: 1px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.7), inset 0 0 6px rgba(255, 255, 255, 0.05);
+}
+
+#office-look-controls button.active {
+  border-color: #6f6f6f;
+  color: #ffd18f;
+  box-shadow: 0 0 12px rgba(255, 184, 88, 0.25), inset 0 0 8px rgba(255, 184, 88, 0.12);
+}
+
+#office-look-controls button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
 .camera-panel-footer {
   font-size: 6px;
   color: #507185;
@@ -740,6 +778,15 @@ button:not(.closed) {
 
 
 /** door / switch **/
+#_left,
+#_right {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  will-change: transform, left, width;
+  pointer-events: none;
+}
+
 .left-switch {
   position: absolute;
   top: 50%;
@@ -812,6 +859,7 @@ button:not(.closed) {
 
   position: absolute;    
   opacity: 0.4;
+  pointer-events: auto;
 }
 .btndoor{
   background-color: red;   

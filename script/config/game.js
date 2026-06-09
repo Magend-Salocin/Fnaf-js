@@ -64,6 +64,18 @@ let isPanningRight = false;
 const panSpeed = 5; // Vitesse de déplacement (pixels par frame)
 let autoPanDirection = 1;
 
+const OFFICE_LOOK_POSITIONS = Object.freeze({
+  left: -1,
+  center: 0,
+  right: 1
+});
+const OFFICE_LOOK_PAN_INTENSITY = 0.12;
+let officeLookDirection = 'center';
+let officeLookTargetDirection = 'center';
+let officeLookCurrentOffset = OFFICE_LOOK_POSITIONS.center;
+let officeLookTargetOffset = OFFICE_LOOK_POSITIONS.center;
+let officeLookIsMoving = false;
+
 // Variable pour suivre les événements en cours
 const activeEvents = {};
 

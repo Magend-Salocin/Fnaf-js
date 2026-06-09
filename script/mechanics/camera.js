@@ -22,6 +22,87 @@ let currentSoundCamera = null;
 
 var _pictureGif=null;
 
+function resolveOfficeLookDirectionFromOffset(offset) {
+  if (offset <= -0.33) return 'left';
+  if (offset >= 0.33) return 'right';
+  return 'center';
+}
+
+function setOfficeLookTargetOffset(offset) {
+  if (activeView !== 'office' || gameEnd) return;
+
+  officeLookTargetOffset = Math.max(-1, Math.min(1, offset));
+  officeLookTargetDirection = resolveOfficeLookDirectionFromOffset(officeLookTargetOffset);
+}
+
+function updateOfficeLookControls() {
+  const controls = document.getElementById('office-look-controls');
+  if (!controls) return;
+
+  const shouldShow = activeView === 'office' && !gameEnd;
+  controls.classList.toggle('hidden', !shouldShow);
+
+  const isLocked = officeLookIsMoving || !shouldShow;
+  const leftBtn = document.getElementById('office-look-left');
+  const centerBtn = document.getElementById('office-look-center');
+  const rightBtn = document.getElementById('office-look-right');
+  const buttons = [leftBtn, centerBtn, rightBtn].filter(Boolean);
+
+  buttons.forEach(btn => {
+    btn.disabled = isLocked;
+    btn.classList.remove('active');
+  });
+
+  const activeButtonByDirection = {
+    left: leftBtn,
+    center: centerBtn,
+    right: rightBtn
+  };
+  const activeButton = activeButtonByDirection[officeLookDirection];
+  if (activeButton) {
+    activeButton.classList.add('active');
+  }
+}
+
+function setOfficeLookDirection(direction) {
+  if (!OFFICE_LOOK_POSITIONS.hasOwnProperty(direction)) return;
+  setOfficeLookTargetOffset(OFFICE_LOOK_POSITIONS[direction]);
+}
+
+function shiftOfficeLook(step) {
+  if (activeView !== 'office' || gameEnd || officeLookIsMoving) return;
+
+  const directionOrder = ['left', 'center', 'right'];
+  const currentIndex = directionOrder.indexOf(officeLookDirection);
+  if (currentIndex < 0) return;
+
+  const nextIndex = Math.max(0, Math.min(directionOrder.length - 1, currentIndex + step));
+  setOfficeLookDirection(directionOrder[nextIndex]);
+}
+
+function updateOfficeLookAnimation() {
+  const previousDirection = officeLookDirection;
+  const previousMoving = officeLookIsMoving;
+  const delta = officeLookTargetOffset - officeLookCurrentOffset;
+  const isMovingNow = Math.abs(delta) > 0.004;
+
+  if (isMovingNow) {
+    officeLookCurrentOffset += delta * 0.12;
+  } else {
+    officeLookCurrentOffset = officeLookTargetOffset;
+  }
+
+  officeLookDirection = resolveOfficeLookDirectionFromOffset(officeLookCurrentOffset);
+  officeLookIsMoving = isMovingNow;
+
+  syncOfficeDoorAnchors();
+
+  if (previousDirection !== officeLookDirection || previousMoving !== officeLookIsMoving) {
+    updateOfficeDoorVisibility();
+    updateOfficeLookControls();
+  }
+}
+
 function updateCameraPanelState(isOpen) {
   const panel = document.getElementById('camera-panel');
   const statusEl = document.getElementById('camera-panel-status');
@@ -59,13 +140,15 @@ function showCloseCamera(){
   cameraLayout.style.display = willOpen ? 'block' : 'none';
 
   if (!willOpen) {
-    cameraDown(); // Animation de descente de la caméra
     activeView = 'office'; // Retour à la vue du bureau
+    cameraDown(); // Animation de descente de la caméra
     lastActiveCamera = activeCamera; // Sauvegarde la dernière caméra active
     activeCamera = 0; // Désactive la caméra
     playSound("camera_put_down"); // Joue le son de descente de caméra
     updateCameraPanelState(false);
   } else {
+    hideDoors();
+    updateOfficeLookControls();
     playSound("camera_toggle"); // Joue le son de basculement de caméra
     cameraUp(); // Animation de montée de la caméra
     updateCameraPanelState(true);
@@ -80,6 +163,8 @@ function activateCamera(cameraId) {
   const camera = cameras.find(c => c.id === cameraId);
   if (camera && camera.isAvailable && power > 0) {
       activeView = 'camera'; // Passe en vue caméra
+    updateOfficeDoorVisibility();
+    updateOfficeLookControls();
     activeCamera = cameraId; // Définit la caméra active
     
     // Si la caméra change, joue un son ambiant
@@ -228,6 +313,7 @@ function cameraUp() {
 
     camTimeout = setTimeout(() => {
         hideDoors();
+      updateOfficeLookControls();
         img.classList.remove('display-0', 'display-1');
         img.classList.add('display-0');
          
@@ -248,6 +334,7 @@ function cameraDown() {
     img.classList.add('display-1');
     img.src = 'images/_cam/camera_mode_0.gif';
     showDoors();
+    updateOfficeLookControls();
     
     // Arrête le son en cours
     stopSound(currentSoundCamera);
@@ -489,6 +576,8 @@ function drawOfficeViewByPicture(officeImageKey){
   if (loadedTheOfficeImages[officeImageKey] && loadedTheOfficeImages[officeImageKey].complete) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);	
     activeView = 'office';
+    updateOfficeDoorVisibility();
+    updateOfficeLookControls();
     drawOfficeView(ctx,officeImageKey);
   }
 }
@@ -499,6 +588,8 @@ function drawOfficeViewByPicture(officeImageKey){
  * @param {string} officeImageKey - Clé de l'image du bureau à afficher (optionnel)
  */
 function drawOfficeView(ctx,officeImageKey=null) {
+
+  updateOfficeLookAnimation();
 
     ctx.fillStyle = 'darkgray';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -521,7 +612,13 @@ function drawOfficeView(ctx,officeImageKey=null) {
             }
         } else {
             // Si ce n'est pas un GIF, dessine l'image normalement
-            ctx.drawImage(picture, 0, 0, canvas.width, canvas.height);
+          const drawWidth = canvas.width * (1 + OFFICE_LOOK_PAN_INTENSITY);
+          const drawHeight = canvas.height * 1.02;
+          const maxHorizontalShift = (drawWidth - canvas.width) / 2;
+          const drawX = ((canvas.width - drawWidth) / 2) - (officeLookCurrentOffset * maxHorizontalShift);
+          const drawY = (canvas.height - drawHeight) / 2;
+
+          ctx.drawImage(picture, drawX, drawY, drawWidth, drawHeight);
             hideGif();
         }
     }
