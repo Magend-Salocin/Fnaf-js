@@ -104,19 +104,7 @@ function setupEventListeners() {
   setupLightToggle(leftLight);
   setupLightToggle(rightLight);
 
-  const lookLeftBtn = document.getElementById('office-look-left');
-  const lookCenterBtn = document.getElementById('office-look-center');
-  const lookRightBtn = document.getElementById('office-look-right');
-
-  if (lookLeftBtn) {
-    lookLeftBtn.addEventListener('click', () => setOfficeLookDirection('left'));
-  }
-  if (lookCenterBtn) {
-    lookCenterBtn.addEventListener('click', () => setOfficeLookDirection('center'));
-  }
-  if (lookRightBtn) {
-    lookRightBtn.addEventListener('click', () => setOfficeLookDirection('right'));
-  }
+  
 
   document.addEventListener('mousemove', handleOfficeMouseLook);
 

@@ -41,27 +41,6 @@ function updateOfficeLookControls() {
 
   const shouldShow = activeView === 'office' && !gameEnd;
   controls.classList.toggle('hidden', !shouldShow);
-
-  const isLocked = officeLookIsMoving || !shouldShow;
-  const leftBtn = document.getElementById('office-look-left');
-  const centerBtn = document.getElementById('office-look-center');
-  const rightBtn = document.getElementById('office-look-right');
-  const buttons = [leftBtn, centerBtn, rightBtn].filter(Boolean);
-
-  buttons.forEach(btn => {
-    btn.disabled = isLocked;
-    btn.classList.remove('active');
-  });
-
-  const activeButtonByDirection = {
-    left: leftBtn,
-    center: centerBtn,
-    right: rightBtn
-  };
-  const activeButton = activeButtonByDirection[officeLookDirection];
-  if (activeButton) {
-    activeButton.classList.add('active');
-  }
 }
 
 function setOfficeLookDirection(direction) {

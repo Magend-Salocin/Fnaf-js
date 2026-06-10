@@ -692,13 +692,6 @@ button {
   cursor: pointer;
 }
 
-button.closed {
-  background-color: red;
-}
-
-button:not(.closed) {
-  background-color: green;
-}
 
 .gameCanvas {
   display: block;
@@ -862,11 +855,11 @@ button:not(.closed) {
   pointer-events: auto;
 }
 .btndoor{
-  background-color: red;   
+
   top: 56px;   
 }
 
 .btnlight{
-  background-color: blue;   
+
   top: 133px;   
 }

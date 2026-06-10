@@ -340,7 +340,7 @@ function endGameAt6AM() {
     console.log(`Fin de la nuit ${night} a 6AM.`);
 
     stopAllSounds();
-    currentNight.resetAnimatronicsForNight();
+    currentNight.resetAnimatronics();
     transitionEndNight(night);
   }
   return gameWin;

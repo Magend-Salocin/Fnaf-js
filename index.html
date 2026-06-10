@@ -1,16 +1,17 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FNAF 1 - Nicolas Berger</title>
-  <link href="https://fonts.googleapis.com/css?family=Press+Start+2P&subset=latin,greek" rel="stylesheet" type="text/css">
-  <link rel="stylesheet" href="style/style.css">
-  <link rel="stylesheet" href="style/camera.css">
-  <link rel="stylesheet" href="style/start-screen.css">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>FNAF 1 - Nicolas Berger</title>
+	<link href="https://fonts.googleapis.com/css?family=Press+Start+2P&subset=latin,greek" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" href="style/style.css">
+	<link rel="stylesheet" href="style/camera.css">
+	<link rel="stylesheet" href="style/start-screen.css">
 	<link rel="stylesheet" href="style/timer.css">
 	<link rel="stylesheet" href="style/power-status.css">
 	<link rel="stylesheet" href="style/usage-status.css">
+	<link rel="stylesheet" href="style/retro-terminal.css">
 	<link rel="stylesheet" href="style/debug.css">
 
 </head>
@@ -93,6 +94,7 @@
 			</div>
 		
 
+			<!-- Panneaux de contrôle -->
 			<button id="computer-panel" class="clickable" type="button" aria-label="Computer panel">
 				<div id="computer-panel-label" class="computer-panel-label">SECURITY PC</div>
 				<div class="computer-panel-row">
@@ -102,6 +104,7 @@
 				<div id="computer-panel-footer" class="computer-panel-footer">CLICK FOR INFO</div>
 			</button>
 
+			<!-- Panneau de téléphone -->
 			<button id="phone-panel" class="clickable" type="button" aria-label="Phone panel">
 				<div id="phone-panel-label" class="phone-panel-label">OFFICE PHONE</div>
 				<div class="phone-panel-row">
@@ -111,6 +114,7 @@
 				<div id="phone-panel-footer" class="phone-panel-footer">CLICK TO HANG UP</div>
 			</button>
 
+			<!-- Panneau de caméras -->
 			<button id="camera-panel" class="clickable" type="button" aria-label="Camera panel">
 				<div id="camera-panel-label" class="camera-panel-label">CAM SYSTEM</div>
 				<div class="camera-panel-row">
@@ -120,23 +124,17 @@
 				<div id="camera-panel-footer" class="camera-panel-footer">CLICK TO OPEN</div>
 			</button>
 
-			<div id="office-look-controls" aria-label="Office look controls">
-				<button id="office-look-left" type="button">LOOK LEFT</button>
-				<button id="office-look-center" type="button">CENTER</button>
-				<button id="office-look-right" type="button">LOOK RIGHT</button>
-			</div>
-
-
+			<!-- Affichage de la puissance restante -->
 			<div id="powerUsage"><!-- mis a jour par updatePowerDisplay() --></div>
+
+			<!-- Affichage du statut d'utilisation des portes et lumières -->
 			<div id="usage-status"><!-- mis a jour par updateUsageStatus() --></div>
 
-			<!-- Horloge digitale style FNAF -->
+			<!-- Affichage du temps de jeu -->
 			<div id="time-status"><!-- mis à jour par drawGameTime() --></div>
 
 
-			<div id="debug-control">
-				<button id="debug-toggle-btn" class="debug-btn" onclick="toggleDebugPanel()" title="Debug">	🐾</button>
-			</div>
+		
 
 			<!-- Panneau de Debug caché -->
 			<div id="debug-panel">
@@ -378,6 +376,7 @@
 		<script src="script/core/sounds.js"></script>	
 		<script src="script/core/language.js"></script>	
 		<script src="script/core/retroTerminal.js"></script>	
+		<script src="script/core/terminalScreens.js"></script>	
 
 		<script src="script/render.js"></script>
 		

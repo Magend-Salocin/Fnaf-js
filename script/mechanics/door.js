@@ -112,17 +112,17 @@ function processLightActivity(state, pos) {
  * Cache les deux portes en appliquant la classe CSS 'display-0'.
  */
 function hideDoors() {
-    //setDoorPanelVisibility('left', false);
-   // setDoorPanelVisibility('right', false);
+    setDoorPanelVisibility('left', false);
+    setDoorPanelVisibility('right', false);
 }
 
 /**
  * Affiche les deux portes en appliquant la classe CSS 'display-1'.
  */
 function showDoors() {
-    //setDoorPanelVisibility('left', true);
-    //setDoorPanelVisibility('right', true);
-    //updateOfficeDoorVisibility();
+    setDoorPanelVisibility('left', true);
+    setDoorPanelVisibility('right', true);
+    updateOfficeDoorVisibility();
 }
 
 function syncOfficeDoorAnchors() {

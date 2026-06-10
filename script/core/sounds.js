@@ -348,7 +348,7 @@ function playSound(id) {
     applyGlobalVolume(audioElement);
 
     audioElement.play().catch(error => {
-        console.error("Erreur de lecture :", error);
+        console.error("Erreur de lecture :", error ,"(son id:", id, ")");
     });
 }
 
