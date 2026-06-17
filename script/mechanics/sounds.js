@@ -359,7 +359,6 @@ function stopSound(id) {
  */
 function stopAllSounds() {
     gameSounds.forEach(soundInfo => {
-        console.log(`Arrêt du son (id: ${soundInfo.id}):`, soundInfo.element.src);
         stopSound(soundInfo.id);
     });
     console.log("Tous les sons ont été arrêtés.");

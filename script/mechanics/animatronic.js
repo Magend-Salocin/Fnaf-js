@@ -16,12 +16,11 @@ class Animatronic {
         this.attackThreshold = 99; // Seuil aléatoire entre 30 et 90
         this.attackReady = false; // Nouveau : état d'attaque
         this.scareFunction = scareFunction; 
-        this.nextAttackThreshold();
+        //this.nextAttackThreshold();
         this.foxyInstance = null;
 
         if(this.name=='Foxy'){  
             this.foxyInstance = new Foxy();
-            this.writeMessage("Foxy initialisé");
         }
     }
 
@@ -57,6 +56,9 @@ class Animatronic {
         const moveInterval = 20 - this.aggression * 2;
 
         if (this.moveCounter < moveInterval) return;
+        
+        if(this.foxyInstance) return; // Si c'est Foxy, on ne déplace pas Foxy pour éviter les conflits de logique
+            
         this.moveCounter = 0;
 
         this.moveAlongPath();
@@ -140,6 +142,9 @@ class Animatronic {
         if(this.name === 'Foxy' && this.foxyInstance){
             this.foxyInstance.reset();
         }
+        this.aggression =0;
+        this.attackCounter = 0;
+        this.attackThreshold = 99;
         this.currentRoomId = this.startRoomId;
         this.currentPathIndex = 0;
         this.moveCounter = 0;
@@ -226,6 +231,9 @@ class Animatronic {
      * }    
      */
     attack() {
+
+        if(this.aggression === 0) return; // Si l'agressivité est nulle, ne pas attaquer
+
         if(this.foxyInstance){
             this.updateFoxy();
         }else{
@@ -300,7 +308,7 @@ class Animatronic {
         const doorEstClosed = (typeof doors !== 'undefined' && doors.right && doors.right.isClosed) || false;
 
         // Mettre à jour Foxy
-        const foxyAlive = foxyInstance.update(playerCheckedPirateCove, doorEstClosed, this.night_ia_level);
+        const foxyAlive = this.foxyInstance.update(playerCheckedPirateCove, doorEstClosed, this.night_ia_level);
         
         displayFoxyStatus();
 
@@ -359,8 +367,8 @@ function drawJumpscare(ctx, jumpscareKey) {
 //name, scareDoor, startRoomId, aggression, path = null, scareFunction = null
 
 const freddy 	= new Animatronic('Freddy'	,'right', 1	, 0, ['1a']);
-const bonnie 	= new Animatronic('Bonnie'	,'left', 1	, 6, ['1a', '1b', '3', '5', '2a', '2b', 'safe'] , bonnieJumpScare );
-const chica 	= new Animatronic('Chica'	,'right', 1	, 3, ['1a', '1b', '7', '6', '4a', '4b', 'safe'] , chicaJumpScare );
+const bonnie 	= new Animatronic('Bonnie'	,'left', 1	, 0, ['1a', '1b', '3', '5', '2a', '2b', 'safe'] , bonnieJumpScare );
+const chica 	= new Animatronic('Chica'	,'right', 1	, 0, ['1a', '1b', '7', '6', '4a', '4b', 'safe'] , chicaJumpScare );
 const foxy 		= new Animatronic('Foxy'	,'left', 7	, 0,  ['1c'],foxyJumpScare);
 
-const animatronics = [freddy, bonnie, chica];
+const animatronics = [freddy, bonnie, chica, foxy];

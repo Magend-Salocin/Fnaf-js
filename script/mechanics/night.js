@@ -7,7 +7,7 @@ class Night {
      * @param {number} nightNumber Numéro de la nuit (1 à MAX_NIGHT)
      */
     constructor(nightNumber) {
-        this.nightNumber = Math.max(1, Math.min(MAX_NIGHT, nightNumber));
+      this.nightNumber = nightNumber;
       this.phoneCallTimeoutId = null;
       this.phoneCallActive = false;
     }
@@ -21,7 +21,7 @@ class Night {
      * @returns {Object}
      */
     getDifficultyConfig() {
-        return NIGHT_AI_LEVELS[this.nightNumber];
+      return NIGHT_AI_LEVELS[this.nightNumber];
     }
 
     /**
@@ -31,12 +31,12 @@ class Night {
      * aux animatroniques.
      */
     applyAnimatronicDifficulty() {
-        const difficultyConfig = this.getDifficultyConfig();
+      const difficultyConfig = this.getDifficultyConfig();
 
-        freddy.setAggression(difficultyConfig.freddy);
-        bonnie.setAggression(difficultyConfig.bonnie);
-        chica.setAggression(difficultyConfig.chica);
-        foxy.setAggression(difficultyConfig.foxy);
+      freddy.setAggression(difficultyConfig.freddy);
+      bonnie.setAggression(difficultyConfig.bonnie);
+      chica.setAggression(difficultyConfig.chica);
+      foxy.setAggression(difficultyConfig.foxy);
     }
 
     /**
@@ -73,17 +73,20 @@ class Night {
      * 
      * Callback appelée lorsque le message du Phone Guy est terminé.
      */
-    onPhoneCallFinished() {
-        console.log(
-            `Phone call finished for night ${this.nightNumber}.`
-        );
+    onPhoneCallFinished(nightNumber) {
+
+      if(nightNumber !== this.nightNumber) return;
+
+      console.log(
+          `Phone call finished for night ${this.nightNumber}.`
+      );
 
       setPhonePanelVisible(false);
 
-        this.resetAnimatronics();
-        this.applyAnimatronicDifficulty();
+      this.resetAnimatronics();
+      this.applyAnimatronicDifficulty();
 
-        isVocalEnd = true;
+      isVocalEnd = true;
     }
 
     /**
@@ -126,8 +129,7 @@ class Night {
      */
     playPhoneCall() {
 
-        const phoneCallNumber =
-            Math.min(5, Math.max(1, this.nightNumber));
+        const phoneCallNumber = this.nightNumber;
 
         const soundId = `call_${phoneCallNumber}`;
 
@@ -141,7 +143,7 @@ class Night {
 
         clearTimeout(this.phoneCallTimeoutId);
         this.phoneCallTimeoutId = setTimeout(() => {
-          this.finishPhoneCall();
+          this.finishPhoneCall(this.nightNumber);
         }, this.getPhoneCallDuration());
     }
 
@@ -154,19 +156,21 @@ class Night {
         return;
       }
 
-        const phoneCallNumber =
-            Math.min(5, Math.max(1, this.nightNumber));
+      const phoneCallNumber = this.nightNumber;
 
-        const soundId = `call_${phoneCallNumber}`;
+      const soundId = `call_${phoneCallNumber}`;
 
-        if (getSoundById(soundId)) {
-            stopSound(soundId);
-        }
+      if (getSoundById(soundId)) {
+          stopSound(soundId);
+      }
 
-        this.finishPhoneCall();
+      this.finishPhoneCall(this.nightNumber);
     }
 
-    finishPhoneCall() {
+    /**
+     * Termine l'appel téléphonique et déclenche le callback de fin d'appel.
+     */
+    finishPhoneCall(nightNumber) {
         if (!this.phoneCallActive) {
             return;
         }
@@ -174,10 +178,15 @@ class Night {
         this.phoneCallActive = false;
         clearTimeout(this.phoneCallTimeoutId);
         this.phoneCallTimeoutId = null;
-        this.onPhoneCallFinished();
+        this.onPhoneCallFinished(nightNumber);
     }
 }
-
+/**
+ * Met à jour l'état du panneau du téléphone.
+ * 
+ * @param {string} state 
+ * @returns {void}
+ */
 function setPhonePanelState(state) {
   const panel = document.getElementById('phone-panel');
   const statusEl = document.getElementById('phone-panel-status');
@@ -205,7 +214,11 @@ function setPhonePanelState(state) {
   statusEl.textContent = endedLabel;
   footerEl.textContent = lineClosedLabel;
 }
-
+/**
+ * Affiche ou masque le panneau du téléphone.
+ * @param {boolean} isVisible - true pour afficher, false pour masquer
+ * @returns {void}
+ */
 function setPhonePanelVisible(isVisible) {
   const panel = document.getElementById('phone-panel');
   if (!panel) {
@@ -218,7 +231,10 @@ function setPhonePanelVisible(isVisible) {
     setPhonePanelState('ended');
   }
 }
-
+/**
+ * Raccroche le téléphone depuis le panneau.
+ * @returns {void}
+ */
 function hangupPhoneFromPanel() {
   if (!currentNight || typeof currentNight.stopPhoneCall !== 'function') {
     return;
@@ -227,10 +243,16 @@ function hangupPhoneFromPanel() {
   currentNight.stopPhoneCall();
 }
 
+/**
+  * Démarre la nuit spécifiée, réinitialise l'état du jeu et lance la boucle de jeu.   
+ * @param {number} nightNumber - Numéro de la nuit à démarrer (1 à MAX_NIGHT)
+ * @returns {void}
+ */
 function startNight(nightNumber) {
-  night = Math.max(1, Math.min(MAX_NIGHT, nightNumber));
 
-  currentNight = new Night(night);
+  currentNight = new Night(nightNumber);
+
+  currentNight.resetAnimatronics();
 
   gameWin = false;
   gameEnd = false;
@@ -259,6 +281,9 @@ function startNight(nightNumber) {
   console.log(`Nuit ${night} commencée.`);
 }
 
+/**
+ * Réinitialise l'état du bureau, y compris les portes, les lumières et la direction de regard.
+ */
 function resetOfficeState() {
   activeView = 'office';
   activeCamera = '0';
@@ -295,6 +320,9 @@ function resetOfficeState() {
   updateOfficeLookControls();
 }
 
+/**
+ * Réinitialise l'état des caméras, en marquant toutes les caméras comme disponibles et en réinitialisant leur temps restant.
+ */
 function resetCameraState() {
   cameras.forEach(camera => {
     camera.isAvailable = true;
@@ -302,6 +330,9 @@ function resetCameraState() {
   });
 }
 
+/**
+ * Réinitialise l'état du temps de jeu, y compris les heures, les minutes et les compteurs de ticks.
+ */
 function resetTimeState() {
   gameTime.hours = 0;
   gameTime.minutes = 0;
@@ -310,7 +341,9 @@ function resetTimeState() {
   currentTurn = 1;
 }
 
-
+/**
+ * Réinitialise l'état de toutes les salles, en réinitialisant les compteurs et en mettant à jour l'affichage des caméras.
+ */
 function clearRoomsState() {
   Object.keys(rooms).forEach(roomKey => {
     rooms[roomKey].b = 0;
@@ -325,13 +358,19 @@ function clearRoomsState() {
   });
 }
 
-function nightEndGame() {
-    // Désactive les portes et bloque le jeu
-    hideDoors();
+/**
+ * Met fin au jeu, désactive les portes et bloque le jeu.
+ */
+function nightEndGame() { 
+  // Désactive les portes et bloque le jeu
+  hideDoors();
   updateOfficeLookControls();
-    stopAllSounds();
+  stopAllSounds();
 }
 
+/**
+ * Vérifie si le joueur a atteint 6 heures du matin et termine la nuit si c'est le cas.
+ */
 function endGameAt6AM() {
   if (gameTime.hours >= 6) {
     gameWin = true;

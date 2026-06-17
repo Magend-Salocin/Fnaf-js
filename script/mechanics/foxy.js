@@ -73,8 +73,10 @@ class Foxy {
             // Probabilité de passer à Tête Sortie
             // Dépend de l'agressivité et du temps depuis la dernière vérification
             const transitionChance = (this.aggressivity / 100) * 0.02 * Math.sqrt(this.timeSinceLastCheck / 100);
-            
-            if (transitionChance > Math.random()) {
+            const randomValue = Math.random();
+            console.log(`[Foxy] Phase INACTIF - Chance de transition: ${transitionChance.toFixed(4)} (Agressivité: ${this.aggressivity.toFixed(1)}, Temps depuis vérification: ${this.timeSinceLastCheck})`);
+            console.log(`[Foxy] Phase INACTIF - Random value: ${randomValue.toFixed(4)}`);
+            if (transitionChance > randomValue) {
                 this.phase = FoxyPhase.TETE_SORTIE;
                 this.timeInCurrentPhase = 0;
                 playFoxySound('foxy-curtain-open', "*Bruit de rideau qui s'ouvre* (Tête de Foxy sortie !)");
@@ -89,7 +91,10 @@ class Foxy {
             // Sinon, il peut passer en phase de course
             else if (this.timeInCurrentPhase > 20) { // Minimum 20 ticks avant de passer à la course
                 const runChance = (this.aggressivity / 100) * 0.08;
-                if (runChance > Math.random()) {
+                const randomValue = Math.random();
+                console.log(`[Foxy] Phase TETE_SORTIE - Chance de transition: ${runChance.toFixed(4)} (Agressivité: ${this.aggressivity.toFixed(1)})`);
+                console.log(`[Foxy] Phase TETE_SORTIE - Random value: ${randomValue.toFixed(4)}`);
+                if (runChance > randomValue) {
                     this.phase = FoxyPhase.COURSE;
                     this.timeInCurrentPhase = 0;
                     playFoxySound('foxy-running', "*Bruit de course rapide* (Foxy court dans le couloir Est !)");
@@ -178,6 +183,6 @@ class Foxy {
         this.cooldownTimer = 0;
         this.timeInCurrentPhase = 0;
         this.soundsPlayed = {};
-        this.writeMessage("Réinitialisé pour une nouvelle nuit");
+        this.writeMessage("--Réinitialisé pour une nouvelle nuit--");
     }
 }

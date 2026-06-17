@@ -4,7 +4,7 @@ const MAX_NIGHT = 6;
 
 const NIGHT_AI_LEVELS = {
   1: { freddy: 0, bonnie: 5, chica: 5, foxy: 0 },
-  2: { freddy: 0, bonnie: 6, chica: 6, foxy: 2 },
+  2: { freddy: 0, bonnie: 0, chica: 0, foxy: 10 },
   3: { freddy: 1, bonnie: 7, chica: 7, foxy: 4 },
   4: { freddy: 2, bonnie: 8, chica: 8, foxy: 6 },
   5: { freddy: 3, bonnie: 9, chica: 9, foxy: 8 },
