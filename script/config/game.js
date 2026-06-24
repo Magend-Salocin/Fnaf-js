@@ -1,5 +1,5 @@
 
-let night = 1;
+let _night = 2;
 const MAX_NIGHT = 6;
 
 const NIGHT_AI_LEVELS = {

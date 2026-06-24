@@ -42,7 +42,7 @@ function setGlobalVolume(volume) {
     globalVolume = Math.max(0, Math.min(1, volume)); // Limite entre 0 et 1
     _applyVolumeToAllSounds();
     _saveAudioMixerState();
-    console.log(`Volume global défini à : ${globalVolume}`);
+    //console.log(`Volume global défini à : ${globalVolume}`);
 }
 
 /**
@@ -369,7 +369,7 @@ function stopSound(id) {
  */
 function stopAllSounds() {
     gameSounds.forEach(soundInfo => {
-        console.log(`Arrêt du son (id: ${soundInfo.id}):`, soundInfo.element.src);
+        //console.log(`Arrêt du son (id: ${soundInfo.id}):`, soundInfo.element.src);
         stopSound(soundInfo.id);
     });
     console.log("Tous les sons ont été arrêtés.");

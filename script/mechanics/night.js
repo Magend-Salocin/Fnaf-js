@@ -3,7 +3,7 @@
  */
 class Night {
 
-    /**
+  /**
      * @param {number} nightNumber Numéro de la nuit (1 à MAX_NIGHT)
      */
     constructor(nightNumber) {
@@ -73,13 +73,9 @@ class Night {
      * 
      * Callback appelée lorsque le message du Phone Guy est terminé.
      */
-    onPhoneCallFinished(nightNumber) {
+    onPhoneCallFinished() {
 
-      if(nightNumber !== this.nightNumber) return;
-
-      console.log(
-          `Phone call finished for night ${this.nightNumber}.`
-      );
+      if(_night !== this.nightNumber) return;
 
       setPhonePanelVisible(false);
 
@@ -164,13 +160,13 @@ class Night {
           stopSound(soundId);
       }
 
-      this.finishPhoneCall(this.nightNumber);
+      this.finishPhoneCall();
     }
 
     /**
      * Termine l'appel téléphonique et déclenche le callback de fin d'appel.
      */
-    finishPhoneCall(nightNumber) {
+    finishPhoneCall() {
         if (!this.phoneCallActive) {
             return;
         }
@@ -178,7 +174,7 @@ class Night {
         this.phoneCallActive = false;
         clearTimeout(this.phoneCallTimeoutId);
         this.phoneCallTimeoutId = null;
-        this.onPhoneCallFinished(nightNumber);
+        this.onPhoneCallFinished();
     }
 }
 /**
@@ -278,7 +274,7 @@ function startNight(nightNumber) {
   }
   gameLoopInterval = setInterval(gameLoop, 1000 / 60);
 
-  console.log(`Nuit ${night} commencée.`);
+  console.log(`Nuit ${_night} commencée.`);
 }
 
 /**
@@ -376,11 +372,15 @@ function endGameAt6AM() {
     gameWin = true;
     gameEnd = true;
     clearInterval(gameLoopInterval);
-    console.log(`Fin de la nuit ${night} a 6AM.`);
+    console.log(`Fin de la nuit ${_night} a 6AM.`);
 
+    _night++;
+    if (_night > MAX_NIGHT) {
+      _night = 1; // Réinitialise à la première nuit si toutes les nuits sont terminées
+    }
     stopAllSounds();
     currentNight.resetAnimatronics();
-    transitionEndNight(night);
+    transitionEndNight(_night);
   }
   return gameWin;
 }

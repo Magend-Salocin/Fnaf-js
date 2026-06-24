@@ -128,16 +128,11 @@ const actions =[
         hint: "CONTRÔLE D'ACCÈS",
 
         onSelect() {
-
-              gameTime.hours = 6;
-  gameTime.minutes = 0;
-/*
-                power = 0;
-    gameTime.hours = 5 ;
-    gameTime.minutes = 30;*/
+            gameTime.hours = 6;
+            gameTime.minutes = 0;
         }
     },
-            {
+    {
         label: "Debug show",
         icon: "🚪",
         status: "OUVERTES",
@@ -145,8 +140,7 @@ const actions =[
         hint: "CONTRÔLE D'ACCÈS",
 
         onSelect() {
-
-    toggleDebugPanel();
+            toggleDebugPanel();
         }
     },
 ];
@@ -157,8 +151,7 @@ function _showTerminalIntro(securityTerminalHtml, actions) {
 
     RetroTerminal.menu({
 
-        title:
-            "FAZBEAR SECURITY TERMINAL v1.0.2",
+        title:"FAZBEAR SECURITY TERMINAL v1.0.2",
 
         width: "980px",
 

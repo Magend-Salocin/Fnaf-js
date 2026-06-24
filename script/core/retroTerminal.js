@@ -154,7 +154,7 @@ class RetroTerminal {
             );
 
             if (withSound) {
-                playSound("ui_move");
+                playSound("terminal-keyboard-typing");
             }
         };
 

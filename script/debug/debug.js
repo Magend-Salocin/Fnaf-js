@@ -51,6 +51,6 @@ function toggleDebugPanel() {
 function DebugDrawCurrentTurn() {
   const nuitEl = document.getElementById('debug-info-nuit');
   const tourEl = document.getElementById('debug-info-tour');
-  if (nuitEl) nuitEl.textContent = `Nuit : ${night}`;
+  if (nuitEl) nuitEl.textContent = `Nuit : ${_night}`;
   if (tourEl) tourEl.textContent = `Tour : ${currentTurn}`;
 }

@@ -72,7 +72,7 @@ class Foxy {
         if (this.phase === FoxyPhase.INACTIF) {
             // Probabilité de passer à Tête Sortie
             // Dépend de l'agressivité et du temps depuis la dernière vérification
-            const transitionChance = (this.aggressivity / 100) * 0.02 * Math.sqrt(this.timeSinceLastCheck / 100);
+            const transitionChance = (this.aggressivity / 100) * 0.2 * Math.sqrt(this.timeSinceLastCheck / 100);
             const randomValue = Math.random();
             console.log(`[Foxy] Phase INACTIF - Chance de transition: ${transitionChance.toFixed(4)} (Agressivité: ${this.aggressivity.toFixed(1)}, Temps depuis vérification: ${this.timeSinceLastCheck})`);
             console.log(`[Foxy] Phase INACTIF - Random value: ${randomValue.toFixed(4)}`);
@@ -88,12 +88,31 @@ class Foxy {
             if (doorEstClosed) {
                 this.initiateRetrait();
             }
-            // Sinon, il peut passer en phase de course
+            // Sinon, il peut passer en phase PRET_A_SORTIR
             else if (this.timeInCurrentPhase > 20) { // Minimum 20 ticks avant de passer à la course
-                const runChance = (this.aggressivity / 100) * 0.08;
+                const prepChance = (this.aggressivity / 100) * 0.08;
                 const randomValue = Math.random();
-                console.log(`[Foxy] Phase TETE_SORTIE - Chance de transition: ${runChance.toFixed(4)} (Agressivité: ${this.aggressivity.toFixed(1)})`);
+                console.log(`[Foxy] Phase TETE_SORTIE - Chance de transition vers PRET_A_SORTIR: ${prepChance.toFixed(4)} (Agressivité: ${this.aggressivity.toFixed(1)})`);
                 console.log(`[Foxy] Phase TETE_SORTIE - Random value: ${randomValue.toFixed(4)}`);
+                if (prepChance > randomValue) {
+                    this.phase = FoxyPhase.PRET_A_SORTIR;
+                    this.timeInCurrentPhase = 0;
+                    playFoxySound('foxy-curtain-open', "*Foxy est prêt à sortir...*");
+                    this.writeMessage(`Phase PRET_A_SORTIR (Agressivité: ${this.aggressivity.toFixed(1)})`);
+                }
+            }
+        }
+        else if (this.phase === FoxyPhase.PRET_A_SORTIR) {
+            // Si la porte Est est fermée, Foxy se retire
+            if (doorEstClosed) {
+                this.initiateRetrait();
+            }
+            // Sinon, Foxy passe en COURSE
+            else if (this.timeInCurrentPhase > 10) {
+                const runChance = (this.aggressivity / 100) * 0.12;
+                const randomValue = Math.random();
+                console.log(`[Foxy] Phase PRET_A_SORTIR - Chance de transition vers COURSE: ${runChance.toFixed(4)} (Agressivité: ${this.aggressivity.toFixed(1)})`);
+                console.log(`[Foxy] Phase PRET_A_SORTIR - Random value: ${randomValue.toFixed(4)}`);
                 if (runChance > randomValue) {
                     this.phase = FoxyPhase.COURSE;
                     this.timeInCurrentPhase = 0;
@@ -163,6 +182,8 @@ class Foxy {
                 return "Inactif dans Pirate Cove";
             case FoxyPhase.TETE_SORTIE:
                 return "Tête sortie (Surveillance requise!)";
+            case FoxyPhase.PRET_A_SORTIR:
+                return "Prêt à sortir (Tension maximale!)";
             case FoxyPhase.COURSE:
                 return "EN COURSE! (FERME LA PORTE!)";
             case FoxyPhase.RETRAIT:
@@ -178,7 +199,7 @@ class Foxy {
     reset() {
         this.phase = FoxyPhase.INACTIF;
         this.timeSinceLastCheck = 0;
-        this.aggressivity = 0;
+        this.aggressivity = 150;
         this.inCooldown = false;
         this.cooldownTimer = 0;
         this.timeInCurrentPhase = 0;

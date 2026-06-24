@@ -73,6 +73,7 @@ function transitionScreen(night) {
             container.style.opacity = '1';
         });
         document.querySelector('.transition').style.display = 'none';
+        document.getElementById('__game').classList.toggle('display-1');
         gamestart();
     }
 }

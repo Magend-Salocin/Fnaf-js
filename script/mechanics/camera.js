@@ -389,8 +389,8 @@ function drawWithCamera(ctx, camera) {
 
     // Charge l'image en fonction de l'état de la pièce
     let imageKey = `${roomKey}_b${roomData.b}_c${roomData.c}_f${roomData.f}`;
-    if (roomKey === '1c' && typeof foxyInstance !== 'undefined' && foxyInstance) {
-      switch (foxyInstance.getStatus().phase) {
+    if (roomKey === '1c' && typeof foxy.foxyInstance !== 'undefined' && foxy.foxyInstance) {
+      switch (foxy.foxyInstance.getStatus().phase) {
         case FoxyPhase.INACTIF:
           imageKey = '1c_b0_c0_f0_00';
           break;
@@ -407,6 +407,7 @@ function drawWithCamera(ctx, camera) {
           imageKey = '1c_b0_c0_f0_00';
           break;
       }
+      console.log(`Foxy phase: ${foxy.foxyInstance.getStatus().phase}, imageKey: ${imageKey}`);
     }
 
     const cameraImages = loadedCameraImages[roomKey] || {};

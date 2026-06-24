@@ -1,11 +1,5 @@
-
-
-
-
 _loadAudioMixerState();
 _syncMixerUI();
-
-
 
 // Dans la boucle gameLoop, ajoute :
 function triggerRandomEvents() {
@@ -42,8 +36,6 @@ function gameLoop() {
       onCamera();
     }
 
-    //clearInterval(gameLoopInterval);
-
     // Gestion du temps (heures:minutes)
     ticksSinceLastMinute++;
     if (ticksSinceLastMinute >= TICKS_PER_MINUTE) {
@@ -55,7 +47,7 @@ function gameLoop() {
         if (minutesSinceLastTurn >= MINUTES_PER_TURN) {
             minutesSinceLastTurn = 0;
             currentTurn++;
-            console.log(`=== Tour ${currentTurn} (${formatGameTime(gameTime)}) ===`);
+            // console.log(`=== Tour ${currentTurn} (${formatGameTime(gameTime)}) ===`);
 
             if(!gameEnd){
               onNewTurn(currentTurn); // Appelle la fonction pour gérer le tour
@@ -69,7 +61,6 @@ function gameLoop() {
 
         // Vérifie si l'heure est 6AM
         if (endGameAt6AM() && !gameWin) {
-
             return; // Arrête la boucle si la partie est terminée
         }
 
@@ -81,15 +72,11 @@ function gameLoop() {
         if (gameTime.minutes >= MINUTES_PER_HOUR) {
             gameTime.minutes = 0;
             gameTime.hours = (gameTime.hours + 1) % 24;
-            console.log(`Il est maintenant ${formatGameTime(gameTime)}.`);
         }
     }
 
     drawGameTime(); // Affiche l'heure dans #time-status
     DebugDrawCurrentTurn(); // Affiche le tour actuel dans le debug panel
-
-
- 
 }
 
 
@@ -113,8 +100,8 @@ function Start(){
     document.getElementById('start-screen').classList.add('display-0');
     document.querySelector('.preloader').classList.remove('display-0', 'display-1')
     document.querySelector('.transition').classList.remove('display-0', 'display-1')
-    night=1;
-    transitionScreen(1);
+   
+    transitionScreen(_night);
 }
 
 function gamestart(){
@@ -125,7 +112,7 @@ function gamestart(){
     setupEventListeners();
 
     // Démarre la nuit courante avec une réinitialisation complète
-    startNight(night);
+    startNight(_night);
 
     resizeCanvas();
 

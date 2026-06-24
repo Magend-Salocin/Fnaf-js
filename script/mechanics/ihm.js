@@ -17,7 +17,7 @@ function drawGameTime() {
   el.innerHTML =
     `<div class="clock-label">${modeLabel}</div>` +
     `<div class="clock-time"><span class="clock-digits">${h}</span><span class="clock-colon">:</span><span class="clock-digits">${m}</span></div>` +
-    `<div class="clock-ampm">${amLabel} - ${nightLabel} ${night}</div>`;
+    `<div class="clock-ampm">${amLabel} - ${nightLabel} ${_night}</div>`;
 }
 
 // Formate l'heure en "HH:MM"
