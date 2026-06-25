@@ -305,10 +305,10 @@ class Animatronic {
         const playerCheckedPirateCove = (typeof activeCamera !== 'undefined' && activeCamera === '1c');
 
         // Vérifier si la porte Est est fermée
-        const doorEstClosed = (typeof doors !== 'undefined' && doors.right && doors.right.isClosed) || false;
+        const doorClosed = (typeof doors !== 'undefined' && doors.left && doors.left.isClosed) || false;
 
         // Mettre à jour Foxy
-        const foxyAlive = this.foxyInstance.update(playerCheckedPirateCove, doorEstClosed, this.night_ia_level);
+        const foxyAlive = this.foxyInstance.update(playerCheckedPirateCove, doorClosed, this.night_ia_level);
         
         displayFoxyStatus();
 

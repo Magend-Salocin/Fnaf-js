@@ -35,11 +35,11 @@ class Foxy {
     /**
      * Met à jour l'état de Foxy en fonction des actions du joueur et du temps
      * @param {boolean} playerCheckedPirateCove - Le joueur a-t-il vérifié Pirate Cove ce tick?
-     * @param {boolean} doorEstClosed - La porte Est est-elle fermée?
+     * @param {boolean} doorClosed - La porte Est est-elle fermée?
      * @param {number} aiLevel - Niveau d'IA pour cette nuit (0-20)
      * @returns {boolean} true si le joueur survit, false si Game Over
      */
-    update(playerCheckedPirateCove, doorEstClosed, aiLevel = 0) {
+    update(playerCheckedPirateCove, doorClosed, aiLevel = 0) {
         this.timeSinceLastCheck += 1;
         this.timeInCurrentPhase += 1;
 
@@ -84,12 +84,7 @@ class Foxy {
             }
         } 
         else if (this.phase === FoxyPhase.TETE_SORTIE) {
-            // Si la porte Est est fermée, Foxy se retire
-            if (doorEstClosed) {
-                this.initiateRetrait();
-            }
-            // Sinon, il peut passer en phase PRET_A_SORTIR
-            else if (this.timeInCurrentPhase > 20) { // Minimum 20 ticks avant de passer à la course
+            if (this.timeInCurrentPhase > 20) { // Minimum 20 ticks avant de passer à la course
                 const prepChance = (this.aggressivity / 100) * 0.08;
                 const randomValue = Math.random();
                 console.log(`[Foxy] Phase TETE_SORTIE - Chance de transition vers PRET_A_SORTIR: ${prepChance.toFixed(4)} (Agressivité: ${this.aggressivity.toFixed(1)})`);
@@ -104,11 +99,7 @@ class Foxy {
         }
         else if (this.phase === FoxyPhase.PRET_A_SORTIR) {
             // Si la porte Est est fermée, Foxy se retire
-            if (doorEstClosed) {
-                this.initiateRetrait();
-            }
-            // Sinon, Foxy passe en COURSE
-            else if (this.timeInCurrentPhase > 10) {
+            if (this.timeInCurrentPhase > 10) {
                 const runChance = (this.aggressivity / 100) * 0.12;
                 const randomValue = Math.random();
                 console.log(`[Foxy] Phase PRET_A_SORTIR - Chance de transition vers COURSE: ${runChance.toFixed(4)} (Agressivité: ${this.aggressivity.toFixed(1)})`);
@@ -123,7 +114,7 @@ class Foxy {
         } 
         else if (this.phase === FoxyPhase.COURSE) {
             // Si la porte Est est fermée à temps, Foxy se retire
-            if (doorEstClosed) {
+            if (doorClosed) {
                 this.initiateRetrait();
                 this.writeMessage("Foxy a été bloqué par la porte!");
                 playFoxySound('foxy-blocked', "*Foxy a été bloqué par la porte!*");

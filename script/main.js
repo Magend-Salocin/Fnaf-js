@@ -38,43 +38,15 @@ function handleOfficeMouseLook(event) {
 }
 
 function openInfoComputerPanel() {
-  const panel = document.getElementById('computer-panel');
-  const statusEl = document.getElementById('computer-panel-status');
-  const footerEl = document.getElementById('computer-panel-footer');
-  const lang = window.selectedLanguage || window.FNAF_DEFAULT_LANGUAGE || 'fr';
-  const allTranslations = window.FNAF_TRANSLATIONS || {};
-  const t = allTranslations[lang] || allTranslations[window.FNAF_DEFAULT_LANGUAGE] || {};
-  const bootingLabel = t.panels?.computerBooting || 'BOOTING';
-  const openingLabel = t.panels?.computerOpening || 'TERMINAL OPENING';
-  const onlineLabel = t.panels?.computerOnline || 'ONLINE';
-  const readyLabel = t.panels?.computerReady || 'SECURITY FEED READY';
-  const idleLabel = t.panels?.computerStatus || 'IDLE';
-  const idleFooterLabel = t.panels?.computerFooter || 'CLICK FOR INFO';
-
-  if (!panel || !statusEl || !footerEl) {
-    showTerminalIntro();
-    return;
-  }
-
-  panel.classList.remove('computer-active');
-  void panel.offsetWidth;
-  panel.classList.add('computer-active');
-
-  statusEl.textContent = bootingLabel;
-  footerEl.textContent = openingLabel;
-
-  setTimeout(() => {
-    statusEl.textContent = onlineLabel;
-    footerEl.textContent = readyLabel;
-  }, 240);
-
-  setTimeout(() => {
-    statusEl.textContent = idleLabel;
-    footerEl.textContent = idleFooterLabel;
-    panel.classList.remove('computer-active');
-  }, 1700);
-
-  showTerminalIntro();
+  RetroTerminal.shell({
+      title: "ARCHIVES — ACCÈS NON RÉFÉRENCÉ",
+      intro: "Connexion établie...\nTapez HELP pour les commandes publiques.",
+      onCommand: raw => LoreCore.handleCommand(raw),
+      idleEvent: () => LoreCore.idleEvent(),
+      idleIntervalMs: 5000,
+      typewriterSpeed: 14,
+      ambientGlitch: true
+  });
 }
 
 // Écouteurs d'événements

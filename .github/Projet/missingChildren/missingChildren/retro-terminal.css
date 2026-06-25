@@ -398,36 +398,6 @@
     animation:glitchPulse .35s steps(2,end);
 }
 
-@keyframes staticFlicker{
-    0%{
-        opacity:1;
-        filter:brightness(1) contrast(1);
-    }
-    30%{
-        opacity:.85;
-        filter:brightness(1.6) contrast(1.3);
-        transform:translateX(-1px);
-    }
-    55%{
-        opacity:.95;
-        filter:brightness(.7) contrast(1.4);
-        transform:translateX(1px);
-    }
-    80%{
-        opacity:.9;
-        filter:brightness(1.3);
-        transform:translateX(0);
-    }
-    100%{
-        opacity:1;
-        filter:brightness(1) contrast(1);
-    }
-}
-
-.retro-static-flicker{
-    animation:staticFlicker .22s steps(3,end);
-}
-
 /* =========================================================
    ROOT SEQUENCE — écran final dépouillé, sans chrome
    ========================================================= */
@@ -471,16 +441,4 @@
 .retro-root-line.visible{
     opacity:1;
     transform:translateY(0);
-}
-
-.retro-shell-flash{
-    color:#ff5050;
-    text-shadow:0 0 12px rgba(255,80,80,.9);
-}
-
-.retro-root-error{
-    font-size:34px;
-    letter-spacing:4px;
-    color:#ff3030;
-    text-shadow:0 0 18px rgba(255,40,40,.9);
 }
