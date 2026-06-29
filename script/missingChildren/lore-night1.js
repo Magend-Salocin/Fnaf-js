@@ -15,7 +15,7 @@
 
 LoreCore.registerNight(1, {
 
-    secretPool: ["LOGS", "ARCHIVE", "STAFF", "WHOAMI", "SUDO", "CAMLOG", "LOST"],
+    secretPool: ["LOGS", "ARCHIVE", "STAFF", "WHOAMI", "SUDO", "CAMLOG", "LOST","PARTY"],
 
     commands: {
 
@@ -187,8 +187,438 @@ Dernière connexion :
             };
         },
 
+/* ===================== CLOSED (TRÈS RARE) ===================== */
+
+CLOSED(state, ctx) {
+
+    ctx.markFound("CLOSED");
+
+    return {
+        sequence: [
+
+            {
+                text:
+`
+╔══════════════════════════════════════════════════════════════╗
+║             PROCÉDURE DE FERMETURE                          ║
+╚══════════════════════════════════════════════════════════════╝
+
+Nettoyage ............. OK
+
+Extinction lumières ... OK
+
+Cuisine ............... OK
+
+Animatroniques ........ OK
+
+Invités ............... OK
+
+--------------------------------------------------------------
+
+Analyse du bâtiment...
+`,
+                delay: 0
+            },
+
+            {
+                text:
+`
+Analyse du bâtiment...
+
+Vérification des accès...
+
+`,
+                delay: 2500
+            },
+
+            {
+                text:
+`
+Analyse du bâtiment...
+
+Vérification des accès...
+
+Contrôle des salles...
+
+`,
+                delay: 2500
+            },
+
+            {
+                text:
+`
+Analyse du bâtiment...
+
+Vérification des accès...
+
+Contrôle des salles...
+
+Recherche des occupants...
+
+`,
+                delay: 3000
+            },
+
+            {
+                text:
+`
+Analyse terminée.
+
+...
+`,
+                delay: 3500
+            },
+
+            {
+                text:
+`
+Analyse terminée.
+
+ERREUR
+`,
+                delay: 2000,
+                glitch: true
+            },
+
+            {
+                text:
+`
+Analyse terminée.
+
+ERREUR
+
+1 enfant est toujours
+présent dans le bâtiment.
+`,
+                delay: 2800,
+                glitch: true,
+                flash: true,
+                flashDuration: 600
+            },
+
+            {
+                text:
+`
+Impossible de fermer
+le restaurant.
+
+Nouvelle tentative...
+`,
+                delay: 3500,
+                glitch: true
+            },
+
+            {
+                text:
+`
+Impossible de fermer
+le restaurant.
+
+Nouvelle tentative...
+
+Nouvelle tentative...
+`,
+                delay: 2500,
+                glitch: true,
+                flash: true,
+                flashDuration: 800
+            },
+
+            {
+                text:
+`
+Impossible de fermer
+le restaurant.
+
+Nouvelle tentative...
+
+Nouvelle tentative...
+
+Nouvelle tentative...
+`,
+                delay: 2500,
+                glitch: true
+            },
+
+            {
+                text:
+`
+Impossible de fermer
+le restaurant.
+
+Nouvelle tentative...
+
+Nouvelle tentative...
+
+Nouvelle tentative...
+
+ÉCHEC.
+`,
+                delay: 2500,
+                glitch: true,
+                flash: true,
+                flashDuration: 1200
+            },
+
+            {
+                text:
+`
+Le restaurant reste ouvert.
+
+En attente...
+
+█
+`,
+                delay: 4000,
+                glitch: true
+            }
+
+        ]
+    };
+},
+
+/* ===================== LOST_OBJECTS (rare) ===================== */
+
+        
+        LOST_OBJECTS(state, ctx) {
+
+            ctx.markFound("LOST_OBJECTS");
+
+            return {
+                sequence: [
+                    {
+                        text:
+`
+╔══════════════════════════════════════════════════════════════╗
+║                OBJETS TROUVÉS                               ║
+╚══════════════════════════════════════════════════════════════╝
+N°      OBJET               STATUT
+
+442     Veste bleue         RENDUE
+
+443     Voiture             RENDUE
+
+444     Sac à dos           RENDU
+
+445     Casquette           EN ATTENTE
+
+--------------------------------------------------------------
+
+PROPRIÉTAIRE :      INCONNU
+TEMPS D'ATTENTE :   4018 jours
+Statut :            Personne n'est revenu.
+--------------------------------------------------------------
+`,
+                        delay: 0
+                    },
+                    {
+                        text: `
+PARTY`,
+                        delay: 9200,
+                        glitch: true,
+                        flash: true,
+                        flashDuration: 2000
+                    },
+                   
+                ]
+            };
+        },
+
+        /* ===================== BALLOON (rare) ===================== */
+
+        
+        BALLOON(state, ctx) {
+
+            ctx.markFound("BALLOON");
+
+            return {
+                sequence: [
+                    {
+                        text:
+`
+╔══════════════════════════════════════════════════════════════╗
+║               INVENTAIRE DÉCORATION                         ║
+╚══════════════════════════════════════════════════════════════╝
+
+ROUGE      ████████████████████ 37
+
+BLEU       ███████████████████████ 42
+
+VERT       █████████ 18
+
+JAUNE      █ 1
+`,
+                        delay: 0
+                    },
+                    {
+                        text: `
+Objet détecté : BALLON JAUNE
+Position :      SALLE PRINCIPALE
+Aucune demandede décoration enregistrée.
+ `,
+                        delay: 9200,
+                        glitch: true,
+                        flash: true,
+                        flashDuration: 2000
+                    },
+                   
+                ]
+            };
+        },
+                 /* ===================== TABLES (rare) ===================== */
+
+        
+        TABLES(state, ctx) {
+
+            ctx.markFound("TABLES");
+
+            return {
+                sequence: [
+                    {
+                        text:
+`
+╔══════════════════════════════════════════════════════════════╗
+║                PLAN DE LA SALLE                             ║
+╚══════════════════════════════════════════════════════════════╝
+
+            TABLE ANNIVERSAIRE
+
+          ○────○────○
+
+          │          │
+
+          ○────○────○
+
+                 ▲
+             CHAISE DÉPLACÉE
+
+--------------------------------------------------------------
+
+Dernière vérification :     26/06
+
+Signalement maintenance :   AUCUN
+
+
+`,
+                        delay: 0
+                    },
+                    {
+                        text: `
+Temps écoulé :  11 ans
+ `,
+                        delay: 9200,
+                        glitch: true,
+                        flash: true,
+                        flashDuration: 2000
+                    },
+                   
+                ]
+            };
+        },
+
+
+         /* ===================== GUESTS (rare) ===================== */
+
+        
+        GUESTS(state, ctx) {
+
+            ctx.markFound("GUESTS");
+
+            return {
+                sequence: [
+                    {
+                        text:
+`
+
+> OUVERTURE DU Réservation 26/06 GUESTS.LOG...
+
+Analyse de la réservation...
+
+✓ Jeremy
+
+✓ Susie
+
+✓ Fritz
+
+✓ Gabriel
+--------------------------------------------------------------
+INVITÉS PRÉVUS ......... 4
+
+INVITÉS PRÉSENTS ....... 4
+--------------------------------------------------------------
+`,
+                        delay: 0
+                    },
+                    {
+                        text: `
+ERREUR
+
+□ ???????? 
+
+Une réservation est incomplète.
+
+Le système attend toujours
+le dernier invité.
+
+ `,
+                        delay: 9200,
+                        glitch: true,
+                        flash: true,
+                        flashDuration: 2000
+                    },
+                   
+                ]
+            };
+        },
+
+
+        /* ===================== PARTY (rare) ===================== */
+
+        
+        PARTY(state, ctx) {
+
+            ctx.markFound("PARTY");
+
+            return {
+                sequence: [
+                    {
+                        text:
+`
+
+> OUVERTURE DU FICHIER PARTY.LOG...
+
+--------------------------------------------------------------
+
+DATE      TYPE          INV.   Âge  STATUT
+--------------------------------------------------------------
+
+04/06     ANNIVERSAIRE   11    6 ANS  TERMINÉ
+
+09/06     ANNIVERSAIRE   15    8 ANS  TERMINÉ
+
+26/06     ANNIVERSAIRE    4    7 ANS  TERMINÉ
+
+--------------------------------------------------------------
+`,
+                        delay: 0
+                    },
+                    {
+                        text: `
+ERREUR
+26/06     ANNIVERSAIRE    5    7 ANS  INTERROMPU`,
+                        delay: 9200,
+                        glitch: true,
+                        flash: true,
+                        flashDuration: 2000
+                    },
+                   
+                ]
+            };
+        },
+
         /* ===================== CAMLOG (rare) ===================== */
 
+        
         CAMLOG(state, ctx) {
 
             ctx.markFound("CAMLOG");
