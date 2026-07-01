@@ -75,9 +75,7 @@ const cameras_images = {
   },
   "5": {
     "5_b0_c0_f0": 'images/rooms/5_backstage/5_b0_c0_f0.jpg',
-    "5_b0_c0_f0_event": 'images/rooms/5_backstage/5_b0_c0_f0_event.jpg',
     "5_b1_c0_f0": 'images/rooms/5_backstage/5_b1_c0_f0.jpg',
-    "5_b1_c0_f0_event": 'images/rooms/5_backstage/5_b1_c0_f0_event.jpg'
   },
   "6": {
     "6_b0_c0_f0": 'images/rooms/6_kitchen/6_b0_c0_f0.png'

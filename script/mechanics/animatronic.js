@@ -349,8 +349,10 @@ class Animatronic {
         const color = this.name === 'Freddy' ? 'brown' :
                         this.name === 'Bonnie' ? 'blue' :
                         this.name === 'Chica' ? 'yellow' : 'purple';
-                        
-        document.getElementById('cam'+ Room).style.background= color;
+                    
+        if(document.getElementById('cam'+ Room) !== null){
+            document.getElementById('cam'+ Room).style.background= color;
+        }
     }
     // #endregion
 }
@@ -367,7 +369,8 @@ function drawJumpscare(ctx, jumpscareKey) {
 //name, scareDoor, startRoomId, aggression, path = null, scareFunction = null
 
 const freddy 	= new Animatronic('Freddy'	,'right', 1	, 0, ['1a']);
-const bonnie 	= new Animatronic('Bonnie'	,'left', 1	, 0, ['1a', '1b', '3', '5', '2a', '2b', 'safe'] , bonnieJumpScare );
+//const bonnie 	= new Animatronic('Bonnie'	,'left', 1	, 0, ['1a', '1b', '3', '5', '2a', '2b', 'safe'] , bonnieJumpScare );
+const bonnie 	= new Animatronic('Bonnie'	,'left', 1	, 0, ['1a', '1b',  '5'] , bonnieJumpScare );
 const chica 	= new Animatronic('Chica'	,'right', 1	, 0, ['1a', '1b', '7', '6', '4a', '4b', 'safe'] , chicaJumpScare );
 const foxy 		= new Animatronic('Foxy'	,'left', 7	, 0,  ['1c'],foxyJumpScare);
 

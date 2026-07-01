@@ -38,6 +38,8 @@ const EVENT_ROOM_MAP = {
   "Dining":      { cameraId: "1b5", folder: "1b_dining_area" },
   "Backstage":   { cameraId: "5", folder: "5_backstage" },
   "Stage":       { cameraId: "1a", folder: "1a_show_stage" },
+  "Restroom":    { cameraId: "7", folder: "7_restroom" },
+  "East Hall Corner":    { cameraId: "4b", folder: "4b_east_hall_corner" },
   "Bureau":      { cameraId: null, folder: null } // pas de caméra (vue office)
 };
 
@@ -100,7 +102,7 @@ function parseTrigger(str) {
 const RANDOM_EVENTS_RAW = [
   {
     id: "GAB-001", priority: "Haute", type: "Objet", roomLabel: "Dining Area",
-    night: 2, hourStr: "00h-06h", chance: 0.80, triggerStr: "Observer",
+    night: 1, hourStr: "00h-06h", chance: 0.80, triggerStr: "Observer",
     description: "Une chaise est reculée", lore: "Quelqu'un était assis",
     image: "GAB-010.png", sound: "chair", js: "chair",
     terminal: "LOST001", journal: null, tape: null, evolution: "revient"
@@ -169,13 +171,33 @@ const RANDOM_EVENTS_RAW = [
     image: "GAB-010.png", sound: "drip", js: "cup",
     terminal: "CLEAN01", journal: null, tape: null, evolution: "liquide_disparait"
   },
+
+
+  // Event legacy d'overlay avec animatronic
   {
     id: "BONNIE-001", priority: "Haute", type: "Overlay", roomLabel: "Backstage",
-    night: 1, hourStr: "Toute nuit", chance: 0.90, triggerStr: "Observer",
-    description: "-", lore: "-",
-    image: "BONNIE-001.jpg", animatronic: "Bonnie", sound: "drip", js: "cup",
-    terminal: "CLEAN01", journal: null, tape: null, evolution: "liquide_disparait"
-  }
+    night: 0, hourStr: "Toute nuit", chance: 0.50, triggerStr: "Observer",
+    image: "BONNIE-001.jpg", animatronic: "Bonnie", sound: "breath_1", 
+    terminal: null, journal: null, tape: null, evolution: ""
+  },
+  {
+    id: "RESTO-001", priority: "Haute", type: "Overlay", roomLabel: "Backstage",
+    night: 0, hourStr: "Toute nuit", chance: 0.50, triggerStr: "Observer",
+    image: "5_b0_c0_f0_event.jpg",  sound: "breath_2", 
+    terminal: null, journal: null, tape: null, evolution: ""
+  },
+   {
+    id: "CHICA-001", priority: "Haute", type: "Overlay", roomLabel: "Restroom",
+    night: 0, hourStr: "Toute nuit", chance: 0.50, triggerStr: "Observer",
+    image: "CHICA-001.jpg", animatronic: "Chica", sound: "breath_2", 
+    terminal: null, journal: null, tape: null, evolution: ""
+  },
+     {
+    id: "CHICA-002", priority: "Haute", type: "Overlay", roomLabel: "East Hall Corne",
+    night: 0, hourStr: "Toute nuit", chance: 0.50, triggerStr: "Observer",
+    image: "CHICA-002.jpg", animatronic: "Chica", sound: "breath_2", 
+    terminal: null, journal: null, tape: null, evolution: ""
+  },
 ];
 
 /* ------------------------------------------------------------
@@ -197,12 +219,12 @@ RANDOM_EVENTS_RAW.forEach(raw => {
     hourRange: parseHourRange(raw.hourStr),  // {start, end} en heures décimales (0-6)
     chance: raw.chance,                   // probabilité par tentative (0 à 1)
     trigger: parseTrigger(raw.triggerStr),// {type, duration}
-    description: raw.description,
-    lore: raw.lore,
+    description: (raw.description) ? raw.description.trim() : "",
+    lore: (raw.lore) ? raw.lore.trim() : "",
     imagePath: buildHiddenImagePath(raw.roomLabel, raw.image),
-    animatronic: raw.animatronic || null,
-    sound: raw.sound,                     // nom logique passé à playSound()
-    jsHandler: raw.js,                    // nom du handler custom (voir RANDOM_EVENT_HANDLERS)
+    animatronic: (raw.animatronic) ? raw.animatronic.trim() : "",
+    sound: (raw.sound) ? raw.sound.trim() : "",                      // nom logique passé à playSound()
+    jsHandler: (raw.js) ? raw.js.trim() : "",                    // nom du handler custom (voir RANDOM_EVENT_HANDLERS)
     terminal: raw.terminal,
     journal: raw.journal,
     tape: raw.tape,

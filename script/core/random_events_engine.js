@@ -183,17 +183,7 @@ function triggerEvent(event) {
     ? Infinity
     : DEFAULT_EVENT_DISPLAY_SECONDS;
 
-  if (event.sound) {
-    // Ne rejoue pas le son tant qu'on reste sur la même caméra.
-    if (!event.cameraId || _lastSoundCameraVisitByEvent[event.id] !== _cameraVisitToken) {
-      playSound(event.sound); // réutilise ton système de son existant
-      if (event.cameraId) {
-        _lastSoundCameraVisitByEvent[event.id] = _cameraVisitToken;
-      }
-    }
-  }
-
-  console.log(`[RandomEvents] Déclenché : ${event.id} — ${event.description}`);
+  //console.log(`[RandomEvents] Déclenché : ${event.id} — ${event.description}`);
 }
 
 function isTerminalCommandUnlocked(commandId) {
@@ -215,23 +205,6 @@ function getActiveEventForCamera(cameraId) {
     const state = eventRuntimeState[event.id];
     return state.active && event.cameraId === cameraId;
   }) || null;
-}
-
-function getAnimatronicForCamera(cameraId) {
-  const roomData = (typeof rooms !== 'undefined') ? rooms[cameraId] : null;
-  if (roomData) {
-    const present = [];
-    if (roomData.b === 1) present.push('Bonnie');
-    if (roomData.c === 1) present.push('Chica');
-    if (roomData.f === 1) present.push('Freddy');
-    if (roomData.foxy === 1) present.push('Foxy');
-    if (present.length > 0) return present.join(', ');
-  }
-
-  // Fallback: un event overlay peut forcer une identification spécifique.
-  const event = getActiveEventForCamera(cameraId);
-  if (!event || !event.animatronic) return null;
-  return event.animatronic;
 }
 
 /* ============================================================
@@ -323,18 +296,46 @@ function updateSilenceEvents() {
   });
 }
 
+
 /* ============================================================
    RENDU (appelé depuis drawWithCamera, dans le repère room)
    ============================================================ */
 function drawActiveRandomEventOverlay(ctx, camera, room) {
   const event = getActiveEventForCamera(camera.id);
-  console.log(`[RandomEvents] Dessin de l'overlay pour ${event ? event.id : 'aucun événement actif'} sur la caméra ${camera.id}`);
+  let animatronic = "";
+  const roomData = (typeof rooms !== 'undefined') ? rooms[camera.id] : null;
+  if (roomData) {
+    const _animatronic = [];
+    if (roomData.b === 1) _animatronic.push('Bonnie');
+    if (roomData.c === 1) _animatronic.push('Chica');
+    if (roomData.f === 1) _animatronic.push('Freddy');
+    if (roomData.foxy === 1) _animatronic.push('Foxy');
+    if (_animatronic.length > 0) animatronic = _animatronic.join(', ');
+  }
+
+  // Si aucun événement actif ou si l'image n'est pas prête, ne rien dessiner
   if (!event || !event.imagePath) return;
 
+  // Si l'événement a un animatronic associé, ne le dessine que si l'animatronic est présent dans la pièce (ex: GAB-001 ne se déclenche que si Bonnie est là).
+  if(animatronic !== event.animatronic)return;
+  
+
   const img = loadedHiddenEventImages[event.id];
+  // Si l'image n'est pas encore chargée ou est invalide, ne rien dessiner
   if (!img || !img.complete || img.naturalWidth === 0) return;
 
-  console.log(`[RandomEvents] Dessin de l'image cachée pour ${event.id} : ${event.imagePath}`);
+  // Si l'événement a un son associé, le jouer (mais pas à chaque frame)
+  if (event.sound) {
+    // Ne rejoue pas le son tant qu'on reste sur la même caméra.
+    if (!event.cameraId || _lastSoundCameraVisitByEvent[event.id] !== _cameraVisitToken) {
+      playSound(event.sound); // réutilise ton système de son existant
+      if (event.cameraId) {
+        _lastSoundCameraVisitByEvent[event.id] = _cameraVisitToken;
+      }
+    }
+  }
+
+  //console.log(`[RandomEvents] Dessin de l'image cachée pour ${event.id} : ${event.imagePath}`);
   // Dessine l'image cachée par-dessus la pièce, alignée sur le
   // panoramique actuel de la pièce (même logique que drawRoom).
   const sourceX = Math.max(0, Math.min(room.cameraOffset, img.width - room.width));
@@ -357,7 +358,6 @@ const RandomEvents = {
   drawActiveOverlay: drawActiveRandomEventOverlay,
   resetForNewNight: resetRandomEventsForNewNight,
   isTerminalCommandUnlocked,
-  getAnimatronicForCamera,
   // Utile pour debug / affichage dans ton panneau camera-status existant
   getDebugSummary() {
     return Object.values(RANDOM_EVENTS).map(event => {

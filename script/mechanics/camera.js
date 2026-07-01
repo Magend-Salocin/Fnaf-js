@@ -501,11 +501,7 @@ function drawWithCamera(ctx, camera) {
     ctx.font = `${20 * scale}px Arial`;
     ctx.fillText(`Caméra : ${camera.name}`, 20, 30 * scale);
     ctx.fillStyle = 'red';
-    ctx.font = `${24 * scale}px Arial`;
-    ctx.fillText(`Temps restant : ${Math.ceil(cameraUsageTimer)}s`, 20, 60 * scale);
-    ctx.fillStyle = '#ffd166';
-    ctx.font = `${18 * scale}px Arial`;
-    ctx.fillText(`Animatronic : ${detectedAnimatronicLabel}`, 20, 86 * scale);
+
 
     // Render any registered animated GIFs on top of the camera view
     drawGifs(ctx);
@@ -529,7 +525,7 @@ function CameraPlaysound(cameraId) {
       randomSound = possibleSoundsWithAnimatronic[Math.floor(Math.random() * possibleSoundsWithAnimatronic.length)];
     }
 
-
+/*
     if(Math.random() < CAMERA_DEBUG_CONSTANTS.EMPTY_ROOM_SOUND_CHANCE){ // 20% de chance de jouer un son même si la pièce est vide
       // Tableau des sons possibles si aucun animatronic n'est présent
       let possibleSoundsEmpty = ["laugh_girl1", "laugh_girl1d", "laugh_girl2d", "laugh_girl8d"];
@@ -538,7 +534,7 @@ function CameraPlaysound(cameraId) {
       }
       randomSound = possibleSoundsEmpty[Math.floor(Math.random() * possibleSoundsEmpty.length)];
     }
-
+*/
     if(randomSound){
       currentSoundCamera = randomSound;
       
