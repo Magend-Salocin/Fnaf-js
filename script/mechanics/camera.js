@@ -145,6 +145,9 @@ function activateCamera(cameraId) {
     updateOfficeDoorVisibility();
     updateOfficeLookControls();
     activeCamera = cameraId; // Définit la caméra active
+    if (typeof RandomEvents !== 'undefined') {
+      RandomEvents.notifyCameraSwitch(cameraId); // Notifie du changement de caméra
+    }
     
     // Si la caméra change, joue un son ambiant
     if (lastActiveCameraId !== cameraId) {
@@ -182,6 +185,11 @@ function onCamera() {
       // Utilise roomsArray pour trouver la pièce associée à la caméra
       const room = roomsArray.find(r => r.id === camera.roomId);
       if (!room) return;
+
+      // Met à jour les événements aléatoires
+      if (typeof RandomEvents !== 'undefined') {
+        RandomEvents.update(1/60, camera, room);
+      }
 
         // Mise à jour de room.cameraOffset en fonction des touches
         if (isPanningLeft && room.cameraOffset > 0) {
@@ -366,6 +374,11 @@ function drawWithCamera(ctx, camera) {
 
     const roomData = rooms[roomKey];
     if (!roomData) return;
+    const animatronicsInRoom = getAnimatronicsInRoom(roomKey);
+    const eventAnimatronic = (typeof RandomEvents !== 'undefined' && typeof RandomEvents.getAnimatronicForCamera === 'function')
+      ? RandomEvents.getAnimatronicForCamera(roomKey)
+      : null;
+    const detectedAnimatronicLabel = eventAnimatronic || (animatronicsInRoom.length ? animatronicsInRoom.join(', ') : 'Aucun');
 
     ctx.fillStyle = 'black';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -425,6 +438,12 @@ function drawWithCamera(ctx, camera) {
             0, 0, room.width, room.height
         );
 
+
+      // Dessine les overlays d'événements aléatoires
+      RandomEvents.drawActiveOverlay(ctx, camera, room);
+
+
+
       // Les parasites doivent être rendus dans l'espace de la room, pas dans le canvas global.
       const viewWidth = room.width;
       const viewHeight = room.height;
@@ -475,8 +494,8 @@ function drawWithCamera(ctx, camera) {
 
       ctx.restore();
     }
-    ctx.restore();
 
+    ctx.restore();
     // Affiche le nom de la caméra et le temps restant
     ctx.fillStyle = 'white';
     ctx.font = `${20 * scale}px Arial`;
@@ -484,6 +503,9 @@ function drawWithCamera(ctx, camera) {
     ctx.fillStyle = 'red';
     ctx.font = `${24 * scale}px Arial`;
     ctx.fillText(`Temps restant : ${Math.ceil(cameraUsageTimer)}s`, 20, 60 * scale);
+    ctx.fillStyle = '#ffd166';
+    ctx.font = `${18 * scale}px Arial`;
+    ctx.fillText(`Animatronic : ${detectedAnimatronicLabel}`, 20, 86 * scale);
 
     // Render any registered animated GIFs on top of the camera view
     drawGifs(ctx);
@@ -618,4 +640,22 @@ function isAnimatronicInRoom(roomKey) {
 
     // Vérifie si au moins un animatronic est présent dans la pièce
     return roomData.b === 1 || roomData.c === 1 || roomData.f === 1 || roomData.foxy === 1;
+}
+
+/**
+ * Retourne la liste des animatronics présents selon les flags roomData.
+ * b -> Bonnie, c -> Chica, f -> Freddy.
+ * @param {string} roomKey - Clé de la pièce
+ * @returns {string[]} - Noms des animatronics présents
+ */
+function getAnimatronicsInRoom(roomKey) {
+  const roomData = rooms[roomKey];
+  if (!roomData) return [];
+
+  const present = [];
+  if (roomData.b === 1) present.push('Bonnie');
+  if (roomData.c === 1) present.push('Chica');
+  if (roomData.f === 1) present.push('Freddy');
+  if (roomData.foxy === 1) present.push('Foxy');
+  return present;
 }

@@ -20,7 +20,9 @@ const FoxyPhase = {
  * Classe Foxy - Gestion du comportement et des phases de Foxy
  */
 class Foxy {
+    
     constructor() {
+        this.debugFoxy = false; // Activer/désactiver les logs de débogage pour Foxy
         this.phase = FoxyPhase.INACTIF;
         this.timeSinceLastCheck = 0;      // Temps écoulé depuis la dernière vérification de Pirate Cove
         this.aggressivity = 0;            // Niveau d'agressivité (0-100)
@@ -74,8 +76,10 @@ class Foxy {
             // Dépend de l'agressivité et du temps depuis la dernière vérification
             const transitionChance = (this.aggressivity / 100) * 0.2 * Math.sqrt(this.timeSinceLastCheck / 100);
             const randomValue = Math.random();
-            console.log(`[Foxy] Phase INACTIF - Chance de transition: ${transitionChance.toFixed(4)} (Agressivité: ${this.aggressivity.toFixed(1)}, Temps depuis vérification: ${this.timeSinceLastCheck})`);
-            console.log(`[Foxy] Phase INACTIF - Random value: ${randomValue.toFixed(4)}`);
+            if (this.debugFoxy) {
+                console.log(`[Foxy] Phase INACTIF - Chance de transition: ${transitionChance.toFixed(4)} (Agressivité: ${this.aggressivity.toFixed(1)}, Temps depuis vérification: ${this.timeSinceLastCheck})`);
+                console.log(`[Foxy] Phase INACTIF - Random value: ${randomValue.toFixed(4)}`);
+            }
             if (transitionChance > randomValue) {
                 this.phase = FoxyPhase.TETE_SORTIE;
                 this.timeInCurrentPhase = 0;
@@ -87,8 +91,10 @@ class Foxy {
             if (this.timeInCurrentPhase > 20) { // Minimum 20 ticks avant de passer à la course
                 const prepChance = (this.aggressivity / 100) * 0.08;
                 const randomValue = Math.random();
-                console.log(`[Foxy] Phase TETE_SORTIE - Chance de transition vers PRET_A_SORTIR: ${prepChance.toFixed(4)} (Agressivité: ${this.aggressivity.toFixed(1)})`);
-                console.log(`[Foxy] Phase TETE_SORTIE - Random value: ${randomValue.toFixed(4)}`);
+                if (this.debugFoxy) {
+                    console.log(`[Foxy] Phase TETE_SORTIE - Chance de transition vers PRET_A_SORTIR: ${prepChance.toFixed(4)} (Agressivité: ${this.aggressivity.toFixed(1)})`);
+                    console.log(`[Foxy] Phase TETE_SORTIE - Random value: ${randomValue.toFixed(4)}`);
+                }
                 if (prepChance > randomValue) {
                     this.phase = FoxyPhase.PRET_A_SORTIR;
                     this.timeInCurrentPhase = 0;
@@ -102,8 +108,10 @@ class Foxy {
             if (this.timeInCurrentPhase > 10) {
                 const runChance = (this.aggressivity / 100) * 0.12;
                 const randomValue = Math.random();
-                console.log(`[Foxy] Phase PRET_A_SORTIR - Chance de transition vers COURSE: ${runChance.toFixed(4)} (Agressivité: ${this.aggressivity.toFixed(1)})`);
-                console.log(`[Foxy] Phase PRET_A_SORTIR - Random value: ${randomValue.toFixed(4)}`);
+                if(this.debugFoxy) {
+                    console.log(`[Foxy] Phase PRET_A_SORTIR - Chance de transition vers COURSE: ${runChance.toFixed(4)} (Agressivité: ${this.aggressivity.toFixed(1)})`);
+                    console.log(`[Foxy] Phase PRET_A_SORTIR - Random value: ${randomValue.toFixed(4)}`);
+                }
                 if (runChance > randomValue) {
                     this.phase = FoxyPhase.COURSE;
                     this.timeInCurrentPhase = 0;
@@ -135,7 +143,9 @@ class Foxy {
      * @param {string} message - Message à afficher
      */
     writeMessage(message) {
-        console.log(`[Foxy] ${message}`);
+        if(this.debugFoxy) {
+            console.log(`[Foxy] ${message}`);
+        }
     }
 
     /**

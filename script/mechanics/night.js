@@ -261,6 +261,9 @@ function startNight(nightNumber) {
   resetTimeState();
   resetOfficeState();
   resetCameraState();
+  if (typeof RandomEvents !== 'undefined') {
+    RandomEvents.resetForNewNight(); // Réinitialise l'état des événements aléatoires
+  }
 
   updatePowerDisplay();
 

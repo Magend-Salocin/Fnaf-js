@@ -17,6 +17,7 @@ LoreCore.registerNight(1, {
 
     secretPool: ["LOGS", "ARCHIVE", "STAFF", "WHOAMI", "SUDO", "CAMLOG", "LOST","PARTY"],
 
+    //appelé par handleCommand 
     commands: {
 
         /* ===================== LOGS ===================== */
@@ -651,6 +652,36 @@ Heure :
                         flashDuration: 1000
                     }
                 ]
+            };
+        },
+
+        /* ===================== LOST001 (déverrouillé par event) ===================== */
+
+        LOST001(state, ctx) {
+
+            ctx.markFound("LOST001");
+
+            return {
+                text:
+`DOSSIER OBJET PERDU : LOST001
+
+--------------------------------
+
+Objet :
+Chaise enfant (zone repas)
+
+Statut :
+Déplacée puis retrouvée.
+
+Réclamation :
+Aucune
+
+--------------------------------
+
+Annotation sécurité :
+"Mouvement non expliqué."
+`,
+                glitch: false
             };
         },
 

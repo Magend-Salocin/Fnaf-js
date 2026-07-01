@@ -181,6 +181,25 @@ const LoreCore = (() => {
             return buildHelp();
         }
 
+        const randomEventTerminalCommand =
+            typeof RANDOM_EVENTS !== "undefined" &&
+            Object.values(RANDOM_EVENTS).some(event =>
+                typeof event.terminal === "string" &&
+                event.terminal.toUpperCase() === cmd
+            );
+
+        if (
+            randomEventTerminalCommand &&
+            typeof RandomEvents !== "undefined" &&
+            typeof RandomEvents.isTerminalCommandUnlocked === "function" &&
+            !RandomEvents.isTerminalCommandUnlocked(cmd)
+        ) {
+            return {
+                text: "ACCES REFUSE. COMMANDE NON DEVERROUILLEE.",
+                glitch: false
+            };
+        }
+
         const night = getCurrentNight();
         const config = nights[night];
 

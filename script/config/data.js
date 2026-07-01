@@ -212,7 +212,10 @@ const gameSounds = [
     { id: "party_favor", element: document.querySelector('.party-favor'), category: "misc", description: "Son de fête", mixVolume: 1.0 },
     { id: "knock", element: document.querySelector('.knock'), category: "misc", description: "Coup frappé", mixVolume: 1.3 },
 
-// Terminal sounds
+    // Terminal sounds
     { id: "terminal-keyboard-typing", element: document.querySelector('.terminal-keyboard-typing'), category: "misc", description: "Sons de frappe au clavier du terminal", mixVolume: 0.8 },
-    { id: "terminal-start", element: document.querySelector('.terminal-start'), category: "misc", description: "Son de démarrage du terminal", mixVolume: 1.0 }
+    { id: "terminal-start", element: document.querySelector('.terminal-start'), category: "misc", description: "Son de démarrage du terminal", mixVolume: 1.0 },
+
+    //Hidden
+    { id: "chair", element: document.querySelector('.chair'), category: "misc", description: "Chaise", mixVolume: 0.8 },
 ];

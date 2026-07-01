@@ -3,10 +3,16 @@
 // Chargement des scripts dans l'ordre
 document.addEventListener('DOMContentLoaded',async () => {
     setupLanguageScreen();
-    preloadImages(); // Précharge les images des salles  
+    preloadImages(); // Précharge les images des salles
+    if (typeof RandomEvents !== 'undefined') {
+      RandomEvents.preload(); // Précharge les images des événements aléatoires
+    }
 });
 
 document.addEventListener('keydown', (e) => {
+  if (typeof RandomEvents !== 'undefined') {
+    RandomEvents.notifyUserInput(); // Notifie de l'activité utilisateur (GAB-006)
+  }
   if (activeView === 'camera') {
     if (e.key === 'ArrowLeft') isPanningLeft = true;
     if (e.key === 'ArrowRight') isPanningRight = true;
@@ -24,11 +30,17 @@ document.addEventListener('keydown', (e) => {
 });
 
 document.addEventListener('keyup', (e) => {
+  if (typeof RandomEvents !== 'undefined') {
+    RandomEvents.notifyUserInput(); // Notifie de l'activité utilisateur (GAB-006)
+  }
   if (e.key === 'ArrowLeft') isPanningLeft = false;
   if (e.key === 'ArrowRight') isPanningRight = false;
 });
 
 function handleOfficeMouseLook(event) {
+  if (typeof RandomEvents !== 'undefined') {
+    RandomEvents.notifyUserInput(); // Notifie de l'activité utilisateur (GAB-006)
+  }
   if (activeView !== 'office' || gameEnd) return;
 
   const viewportWidth = Math.max(1, window.innerWidth || document.documentElement.clientWidth || 1);
