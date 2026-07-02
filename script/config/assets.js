@@ -16,18 +16,14 @@ const cameras_images = {
   "1a": {
     "1a_b0_c0_f0": 'images/rooms/1a_show_stage/1a_b0_c0_f0.jpg',
     "1a_b0_c0_f1": 'images/rooms/1a_show_stage/1a_b0_c0_f1.jpg',
-    "1a_b0_c0_f1_event": 'images/rooms/1a_show_stage/1a_b0_c0_f1_event.jpg',
     "1a_b0_c1_f1": 'images/rooms/1a_show_stage/1a_b0_c1_f1.jpg',
     "1a_b1_c0_f1": 'images/rooms/1a_show_stage/1a_b1_c0_f1.jpg',
     "1a_b1_c1_f1": 'images/rooms/1a_show_stage/1a_b1_c1_f1.jpg',
-    "1a_b1_c1_f1_event": 'images/rooms/1a_show_stage/1a_b1_c1_f1_event.jpg'
   },
   "1b": {
     "1b_b0_c0_f0": 'images/rooms/1b_dining_area/1b_b0_c0_f0.jpg',
-    "1b_b0_c0_f0_event": 'images/rooms/1b_dining_area/1b_b0_c0_f0_event.jpg',
     "1b_b0_c0_f1": 'images/rooms/1b_dining_area/1b_b0_c0_f1.jpg',
     "1b_b0_c1_f0": 'images/rooms/1b_dining_area/1b_b0_c1_f0.jpg',
-    "1b_b0_c1_f0_event": 'images/rooms/1b_dining_area/1b_b0_c1_f0_event.jpg',
     "1b_b1_c0_f0": 'images/rooms/1b_dining_area/1b_b1_c0_f0.jpg'
   },
   "1c": {
@@ -36,19 +32,14 @@ const cameras_images = {
     "1c_b0_c0_f0_01": 'images/rooms/1c_pirate_cove/1c_b0_c0_f0_01.jpg',
     "1c_b0_c0_f0_02": 'images/rooms/1c_pirate_cove/1c_b0_c0_f0_02.jpg',
     "1c_b0_c0_f0_03": 'images/rooms/1c_pirate_cove/1c_b0_c0_f0_03.jpg',
-    "1c_b0_c0_f0_event": 'images/rooms/1c_pirate_cove/1c_b0_c0_f0_event.jpg'
   },
   "2a": {
     "2a_b0_c0_f0": 'images/rooms/2a_west_hall/2a_b0_c0_f0.jpg',
     "2a_b1_c0_f0": 'images/rooms/2a_west_hall/2a_b1_c0_f0.jpg',
-   // "foxy_run": 'images/rooms/2a_west_hall/foxy_run.gif'
   },
   "2b": {
     "2b_b0_c0_f0": 'images/rooms/2b_west_hall_corner/2b_b0_c0_f0.jpg',
-    "2b_b0_c0_f0_event": 'images/rooms/2b_west_hall_corner/2b_b0_c0_f0_event.jpg',
-    "2b_b0_c0_f0_GF": 'images/rooms/2b_west_hall_corner/2b_b0_c0_f0_GF.jpg',
     "2b_b1_c0_f0": 'images/rooms/2b_west_hall_corner/2b_b1_c0_f0.jpg',
-    "2b_b1_c0_f0_event": 'images/rooms/2b_west_hall_corner/2b_b1_c0_f0_event.jpg'
   },
   "3": {
     "3_b0_c0_f0": 'images/rooms/3_supply_closet/3_b0_c0_f0.jpg',
@@ -56,22 +47,13 @@ const cameras_images = {
   },
   "4a": {
     "4a_b0_c0_f0": 'images/rooms/4a_east_hall/4a_b0_c0_f0.jpg',
-    "4a_b0_c0_f0_event": 'images/rooms/4a_east_hall/4a_b0_c0_f0_event.jpg',
-    "4a_b0_c0_f0_GF": 'images/rooms/4a_east_hall/4a_b0_c0_f0_GF.jpg',
     "4a_b0_c0_f1": 'images/rooms/4a_east_hall/4a_b0_c0_f1.jpg',
     "4a_b0_c1_f0": 'images/rooms/4a_east_hall/4a_b0_c1_f0.jpg',
-    "4a_b0_c1_f0_event": 'images/rooms/4a_east_hall/4a_b0_c1_f0_event.jpg'
   },
   "4b": {
     "4b_b0_c0_f0": 'images/rooms/4b_east_hall_corner/4b_b0_c0_f0_d1.jpg',
-    "4b_b0_c0_f0_d1": 'images/rooms/4b_east_hall_corner/4b_b0_c0_f0_d1.jpg',
-    "4b_b0_c0_f0_d2": 'images/rooms/4b_east_hall_corner/4b_b0_c0_f0_d2.jpg',
-    "4b_b0_c0_f0_d3": 'images/rooms/4b_east_hall_corner/4b_b0_c0_f0_d3.jpg',
-    "4b_b0_c0_f0_d4": 'images/rooms/4b_east_hall_corner/4b_b0_c0_f0_d4.jpg',
-    "4b_b0_c0_f0_d5": 'images/rooms/4b_east_hall_corner/4b_b0_c0_f0_d5.jpg',
     "4b_b0_c0_f1": 'images/rooms/4b_east_hall_corner/4b_b0_c0_f1.jpg',
     "4b_b0_c1_f0": 'images/rooms/4b_east_hall_corner/4b_b0_c1_f0.jpg',
-    "4b_b0_c1_f0_event": 'images/rooms/4b_east_hall_corner/4b_b0_c1_f0_event.jpg',
   },
   "5": {
     "5_b0_c0_f0": 'images/rooms/5_backstage/5_b0_c0_f0.jpg',
@@ -84,7 +66,6 @@ const cameras_images = {
     "7_b0_c0_f0": 'images/rooms/7_restroom/7_b0_c0_f0.jpg',
     "7_b0_c0_f1": 'images/rooms/7_restroom/7_b0_c0_f1.jpg',
     "7_b0_c1_f0": 'images/rooms/7_restroom/7_b0_c1_f0.jpg',
-    "7_b0_c1_f0_event": 'images/rooms/7_restroom/7_b0_c1_f0_event.jpg'
   }
 };
 

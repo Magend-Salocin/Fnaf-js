@@ -192,10 +192,34 @@ const RANDOM_EVENTS_RAW = [
     image: "CHICA-001.jpg", animatronic: "Chica", sound: "breath_2", 
     terminal: null, journal: null, tape: null, evolution: ""
   },
-     {
+  {
     id: "CHICA-002", priority: "Haute", type: "Overlay", roomLabel: "East Hall Corne",
     night: 0, hourStr: "Toute nuit", chance: 0.50, triggerStr: "Observer",
     image: "CHICA-002.jpg", animatronic: "Chica", sound: "breath_2", 
+    terminal: null, journal: null, tape: null, evolution: ""
+  },
+  {
+    id: "Animatronic-001", priority: "Haute", type: "Overlay", roomLabel: "Stage",
+    night: 0, hourStr: "Toute nuit", chance: 0.50, triggerStr: "Observer",
+    image: "Animatronic-001.jpg", animatronic: "Chica,Bonnie,Freddy", sound: "breath_2", 
+    terminal: null, journal: null, tape: null, evolution: ""
+  },
+  {
+    id: "Freddy-001", priority: "Haute", type: "Overlay", roomLabel: "Stage",
+    night: 0, hourStr: "Toute nuit", chance: 0.50, triggerStr: "Observer",
+    image: "Freddy-001.jpg", animatronic: "Freddy", sound: "breath_3", 
+    terminal: null, journal: null, tape: null, evolution: ""
+  },
+     {
+    id: "CHICA-002", priority: "Haute", type: "Overlay", roomLabel: "Dining",
+    night: 0, hourStr: "Toute nuit", chance: 0.50, triggerStr: "Observer",
+    image: "CHICA-002.jpg", animatronic: "Chica", sound: "breath_2", 
+    terminal: null, journal: null, tape: null, evolution: ""
+  },
+    {
+    id: "BONNIE-002", priority: "Haute", type: "Overlay", roomLabel: "Dining",
+    night: 0, hourStr: "Toute nuit", chance: 0.50, triggerStr: "Observer",
+    image: "BONNIE-002.jpg", animatronic: "Bonnie", sound: "breath_1", 
     terminal: null, journal: null, tape: null, evolution: ""
   },
 ];
