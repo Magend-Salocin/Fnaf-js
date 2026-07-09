@@ -36,16 +36,16 @@ Il attend quelqu'un.
 
 | ID      | Priorité | Type    | Salle       | Caméra | Nuit | Heure      | Chance | Déclencheur   | Description                     | Lore                  | Image              | Son          | JS           | Terminal | Journal | Cassette | Evolution         |
 | ------- | -------- | ------- | ----------- | ------ | ---- | ---------- | ------ | ------------- | ------------------------------- | --------------------- | ------------------ | ------------ | ------------ | -------- | ------- | -------- | ----------------- |
-| GAB-001 | Haute    | Objet   | Dining Area | CAM01  | 1    | 00h-06h    | 20%    | Observer      | Une chaise est reculée          | Quelqu'un était assis | chair01.png        | chair.wav    | chair.js     | LOST001  | —       | —        | Revient           |
-| GAB-002 | Haute    | Objet   | Dining Area | CAM01  | 1    | Toute nuit | 15%    | Retour caméra | Un ballon jaune apparaît        | Décoration oubliée    | balloon_yellow.png | balloon.wav  | balloon.js   | LOST002  | NEWS001 | —        | Persistant        |
-| GAB-003 | Haute    | Décor   | Stage       | CAM01  | 2    | 01h        | 10%    | Observer 8 s  | Une cinquième assiette apparaît | Cinquième enfant      | plate05.png        | —            | plate.js     | —        | NEWS002 | —        | Persistant        |
-| GAB-004 | Haute    | IA      | Stage       | CAM01  | 2    | 03h        | 6%     | Retour caméra | Freddy regarde une chaise vide  | Gabriel attend        | freddy_stare.png   | breathe.wav  | stare.js     | —        | —       | TAPE003  | 3 états           |
-| GAB-005 | Moyenne  | Overlay | Dining      | CAM01  | 2    | 02h        | 12%    | Observer      | Une bougie est allumée          | Anniversaire          | candle.png         | flame.wav    | candle.js    | REPORT05 | NEWS002 | —        | Devient éteinte   |
+| X GAB-001 | Haute    | Objet   | Dining Area | CAM01  | 1    | 00h-06h    | 20%    | Observer      | Une chaise est reculée          | Quelqu'un était assis | chair01.png        | chair.wav    | chair.js     | LOST001  | —       | —        | Revient           |
+| X GAB-002 | Haute    | Objet   | Dining Area | CAM01  | 1    | Toute nuit | 15%    | Retour caméra | Un ballon jaune apparaît        | Décoration oubliée    | balloon_yellow.png | balloon.wav  | balloon.js   | LOST002  | NEWS001 | —        | Persistant        |
+| X GAB-003 | Haute    | Décor   | Stage       | CAM01  | 2    | 01h        | 10%    | Observer 8 s  | Une cinquième assiette apparaît | Cinquième enfant      | plate05.png        | —            | plate.js     | —        | NEWS002 | —        | Persistant        |
+|  GAB-004 | Haute    | IA      | Stage       | CAM01  | 2    | 03h        | 6%     | Retour caméra | Freddy regarde une chaise vide  | Gabriel attend        | freddy_stare.png   | breathe.wav  | stare.js     | —        | —       | TAPE003  | 3 états           |
+| X GAB-005 | Moyenne  | Overlay | Dining      | CAM01  | 2    | 02h        | 12%    | Observer      | Une bougie est allumée          | Anniversaire          | candle.png         | flame.wav    | candle.js    | REPORT05 | NEWS002 | —        | Devient éteinte   |
 | GAB-006 | Haute    | Son     | Bureau      | —      | 2    | 02h15      | 7%     | Silence       | Applaudissements lointains      | Souvenir d'une fête   | —                  | applause.wav | audio.js     | —        | —       | TAPE001  | Variable          |
-| GAB-007 | Haute    | Objet   | Dining      | CAM01  | 3    | 00h        | 9%     | Observer      | Boîte cadeau fermée             | Cadeau jamais ouvert  | gift_closed.png    | paper.wav    | gift.js      | LOST004  | —       | —        | Peut s'ouvrir     |
-| GAB-008 | Moyenne  | Overlay | Dining      | CAM01  | 3    | 04h        | 5%     | Retour caméra | Le cadeau est ouvert            | Souvenir évolutif     | gift_open.png      | —            | gift_open.js | —        | —       | —        | Persistant        |
-| GAB-009 | Haute    | Objet   | Dining      | CAM01  | 3    | Toute nuit | 8%     | Observer      | Part de gâteau oubliée          | Dernier anniversaire  | cake_slice.png     | flies.wav    | cake.js      | LOST005  | NEWS003 | —        | Pourrit           |
-| GAB-010 | Haute    | Objet   | Dining      | CAM01  | 3    | Toute nuit | 6%     | Observer      | Verre en carton renversé        | Fête interrompue      | cup.png            | drip.wav     | cup.js       | CLEAN01  | —       | —        | Liquide disparaît |
+| X GAB-007 | Haute    | Objet   | Dining      | CAM01  | 3    | 00h        | 9%     | Observer      | Boîte cadeau fermée             | Cadeau jamais ouvert  | gift_closed.png    | paper.wav    | gift.js      | LOST004  | —       | —        | Peut s'ouvrir     |
+| X GAB-008 | Moyenne  | Overlay | Dining      | CAM01  | 3    | 04h        | 5%     | Retour caméra | Le cadeau est ouvert            | Souvenir évolutif     | gift_open.png      | —            | gift_open.js | —        | —       | —        | Persistant        |
+| X GAB-009 | Haute    | Objet   | Dining      | CAM01  | 3    | Toute nuit | 8%     | Observer      | Part de gâteau oubliée          | Dernier anniversaire  | cake_slice.png     | flies.wav    | cake.js      | LOST005  | NEWS003 | —        | Pourrit           |
+| X GAB-010 | Haute    | Objet   | Dining      | CAM01  | 3    | Toute nuit | 6%     | Observer      | Verre en carton renversé        | Fête interrompue      | cup.png            | drip.wav     | cup.js       | CLEAN01  | —       | —        | Liquide disparaît |
 
 
 
@@ -59,23 +59,14 @@ Il regarde.
 
 Toujours.
 
-| ID      | Description                                | Lore                        |
-| ------- | ------------------------------------------ | --------------------------- |
-| GAB-011 | Freddy regarde toujours la même chaise     | Gabriel attend son père     |
-| GAB-012 | Freddy regarde la caméra quelques secondes | Michael ressemble à William |
-| GAB-013 | Freddy baisse légèrement la tête           | Résignation                 |
-| GAB-014 | Freddy semble regarder un ballon           | Dernier souvenir            |
-| GAB-015 | Freddy fixe une boîte cadeau               | Cadeau jamais ouvert        |
-
-
 Série "Anniversaire
 | ID      | Description                                | Lore                        |
 | ------- | ------------------------------------------ | --------------------------- |
-| GAB-011 | Freddy regarde toujours la même chaise     | Gabriel attend son père     |
+| X GAB-011 | Freddy regarde toujours la même chaise     | Gabriel attend son père     |
 | GAB-012 | Freddy regarde la caméra quelques secondes | Michael ressemble à William |
-| GAB-013 | Freddy baisse légèrement la tête           | Résignation                 |
-| GAB-014 | Freddy semble regarder un ballon           | Dernier souvenir            |
-| GAB-015 | Freddy fixe une boîte cadeau               | Cadeau jamais ouvert        |
+| X GAB-013 | Freddy baisse légèrement la tête           | Résignation                 |
+| X GAB-014 | Freddy semble regarder un ballon           | Dernier souvenir            |
+| X GAB-015 | Freddy fixe une boîte cadeau               | Cadeau jamais ouvert        |
 
 Série "Le Temps"
 
@@ -117,19 +108,6 @@ Série "Terminal"
 🎨 Liste complète des assets à produire
 
 
-Sons
-balloon_squeak.wav
-applause_far.wav
-child_laugh_old.wav
-paper_wrap.wav
-chair_slide.wav
-candle_blow.wav
-clock_tick.wav
-clock_reverse.wav
-birthday_song_far.wav
-room_tone_party.wav
-
-Terminal
 PARTY.LOG
 GUESTS.LOG
 LOST_OBJECTS.LOG

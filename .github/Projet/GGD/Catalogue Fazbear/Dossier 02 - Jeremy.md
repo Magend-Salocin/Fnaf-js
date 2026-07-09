@@ -30,30 +30,27 @@ Mais il n'y arrive jamais.
 Tableau de Production
 | ID      | Priorité | Type    | Salle         | Caméra | Nuit | Heure         | Chance | Déclencheur   | Description                               | Lore                       | Image               | Son             | JS               | Terminal | Journal | Cassette | Évolution             |
 | ------- | -------- | ------- | ------------- | ------ | ---- | ------------- | ------ | ------------- | ----------------------------------------- | -------------------------- | ------------------- | --------------- | ---------------- | -------- | ------- | -------- | --------------------- |
-| JER-001 | Haute    | Objet   | Backstage     | CAM07  | 1    | Toute nuit    | 18%    | Observer      | Une feuille blanche apparaît              | Jeremy préparait un dessin | paper_blank.png     | paper.wav       | paper.js         | LOST010  | —       | —        | Peut être dessinée    |
-| JER-002 | Haute    | Overlay | Backstage     | CAM07  | 2    | Retour caméra | 12%    | Retour caméra | Un soleil est dessiné                     | Dessin terminé             | drawing_sun.png     | pencil.wav      | draw.js          | DRAW01   | —       | —        | Devient complet       |
-| JER-003 | Haute    | Objet   | Supply Closet | CAM06  | 2    | Toute nuit    | 10%    | Observer      | Une boîte de crayons apparaît             | Crayons oubliés            | crayons_box.png     | crayons.wav     | crayons.js       | LOST011  | —       | —        | Couleurs changent     |
-| JER-004 | Haute    | IA      | Backstage     | CAM07  | 2    | 02h00         | 7%     | Observer 8s   | Bonnie tient un crayon                    | Bonnie continue le dessin  | bonnie_pencil.png   | scratch.wav     | bonnie_draw.js   | —        | —       | TAPE010  | Plusieurs états       |
-| JER-005 | Haute    | Overlay | Dining Area   | CAM01  | 3    | 03h00         | 6%     | Retour caméra | Un dessin est accroché au mur             | Personne ne l'avait vu     | child_drawing01.png | —               | drawing_wall.js  | DRAW02   | NEWS010 | —        | Vieillit              |
-| JER-006 | Moyenne  | Son     | Backstage     | CAM07  | 2    | Toute nuit    | 9%     | Silence       | Bruit de crayon sur papier                | Jeremy dessine             | —                   | pencil_loop.wav | audio_draw.js    | —        | —       | —        | Devient plus long     |
-| JER-007 | Haute    | Objet   | Supply Closet | CAM06  | 3    | Toute nuit    | 8%     | Observer      | Une gomme est posée sur une table         | Quelqu'un corrige          | eraser.png          | eraser.wav      | eraser.js        | LOST012  | —       | —        | Disparaît             |
-| JER-008 | Haute    | Décor   | Backstage     | CAM07  | 3    | 01h00         | 6%     | Observer      | Deux feuilles sont au sol                 | Dessins abandonnés         | papers_floor.png    | paper.wav       | papers.js        | DRAW03   | —       | —        | Une feuille disparaît |
-| JER-009 | Haute    | IA      | Backstage     | CAM07  | 4    | 02h30         | 4%     | Retour caméra | Bonnie tourne une feuille                 | Le dessin continue         | bonnie_turn.png     | page.wav        | bonnie_page.js   | —        | —       | TAPE011  | Persistant            |
-| JER-010 | Haute    | Objet   | Dining Area   | CAM01  | 4    | Toute nuit    | 5%     | Observer      | Un dessin d'enfant est posé sur une table | Aucun adulte ne l'a vu     | drawing_table.png   | —               | drawing_table.js | LOST013  | NEWS011 | —        | Jaunit                |
+| X JER-001 | Haute    | Objet   | West Hall     | CAM07  | 1    | Toute nuit    | 18%    | Observer      | Une feuille blanche apparaît              | Jeremy préparait un dessin | paper_blank.png     | paper.wav       | paper.js         | LOST010  | —       | —        | Peut être dessinée    |
+| X JER-002 | Haute    | Overlay | West Hall     | CAM07  | 2    | Retour caméra | 12%    | Retour caméra | Un soleil est dessiné                     | Dessin terminé             | drawing_sun.png     | pencil.wav      | draw.js          | DRAW01   | —       | —        | Devient complet       |
+| X JER-003 | Haute    | Objet   | Supply Closet | CAM06  | 2    | Toute nuit    | 10%    | Observer      | Une boîte de crayons apparaît             | Crayons oubliés            | crayons_box.png     | crayons.wav     | crayons.js       | LOST011  | —       | —        | Couleurs changent     |
+| X JER-004 | Haute    | IA      | Backstage     | CAM07  | 2    | 02h00         | 7%     | Observer 8s   | Bonnie tient un crayon                    | Bonnie continue le dessin  | bonnie_pencil.png   | scratch.wav     | bonnie_draw.js   | —        | —       | TAPE010  | Plusieurs états       |
+| X JER-005 | Haute    | Overlay | Dining Area   | CAM01  | 3    | 03h00         | 6%     | Retour caméra | Un dessin est accroché au mur             | Personne ne l'avait vu     | child_drawing01.png | —               | drawing_wall.js  | DRAW02   | NEWS010 | —        | Vieillit              |
+| JER-006 | Moyenne  | Son     | Supply Closet     | CAM07  | 2    | Toute nuit    | 9%     | Silence       | Bruit de crayon sur papier                | Jeremy dessine             | —                   | pencil_loop.wav | audio_draw.js    | —        | —       | —        | Devient plus long     |
+| X JER-007 | Haute    | Objet   | Supply Closet | CAM06  | 3    | Toute nuit    | 8%     | Observer      | Une gomme est posée sur le sol un dessin d'un anniversaire est effacé         | Quelqu'un corrige          | eraser.png          | eraser.wav      | eraser.js        | LOST012  | —       | —        | Disparaît             |
+| X JER-008 | Haute    | Décor   | Supply Closet     | CAM07  | 3    | 01h00         | 6%     | Observer      | Deux feuilles sont au sol                 | Dessins abandonnés         | papers_floor.png    | paper.wav       | papers.js        | DRAW03   | —       | —        | Une feuille disparaît |
+| X JER-009 | Haute    | IA      | West Hall     | CAM07  | 4    | 02h30         | 4%     | Retour caméra | Bonnie tourne une feuille                 | Le dessin continue         | bonnie_turn.png     | page.wav        | bonnie_page.js   | —        | —       | TAPE011  | Persistant            |
+| JER-010 | Haute    | Objet   | Backstage   | CAM01  | 4    | Toute nuit    | 5%     | Observer      | Un dessin d'enfant est posé sur une table | Aucun adulte ne l'a vu     | drawing_table.png   | —               | drawing_table.js | LOST013  | NEWS011 | —        | Jaunit                |
+| JER-011 | Haute    | Objet   | Backstage   | CAM01  | 4    | Toute nuit    | 5%     | Observer      | Dessin d'un soleil          Un souvenir heureux avant le drame     |     |       |        | LOST000  | NEWS000 |         |  |
+| JER-012 | Haute    | Objet   | Backstage   | CAM01  | 4    | Toute nuit    | 5%     | Observer      | Dessin de Freddy            Jeremy admirait les animatroniques      | | |  | LOST000  | NEWS000 ||  |
+| JER-013 | Haute    | Objet   | Backstage   | CAM01  | 4    | Toute nuit    | 5%     | Observer      | Dessin de Bonnie            Bonnie devient son refuge     | | |  | LOST000  | NEWS000 ||  |
+| JER-014 | Haute    | Objet   | Backstage   | CAM01  | 4    | Toute nuit    | 5%     | Observer      | Dessin d'une maison         Il voulait rentrer chez lui     | | |  | LOST000  | NEWS000 ||  |
+| JER-015 | Haute    | Objet   | Backstage   | CAM01  | 4    | Toute nuit    | 5%     | Observer      | Dessin d'une famille        Les parents ne reviendront jamais      | | |  | LOST000  | NEWS000 ||  |
+| JER-016 | Haute    | Objet   | Backstage   | CAM01  | 4    | Toute nuit    | 5%     | Observer      | Dessin de cinq enfants      Première allusion aux victimes      | | |  | LOST000  | NEWS000 ||  |
+| JER-017 | Haute    | Objet   | Backstage   | CAM01  | 4    | Toute nuit    | 5%     | Observer      | Dessin barré                Quelqu'un tente d'effacer le souvenir     | | |  | LOST000  | NEWS000 ||  |
+| JER-018 | Haute    | Objet   | Backstage   | CAM01  | 4    | Toute nuit    | 5%     | Observer      | Dessin déchiré              La mémoire se fragmente       | | |  | LOST000  | NEWS000 ||  |
+| JER-019 | Haute    | Objet   | Backstage   | CAM01  | 4    | Toute nuit    | 5%     | Observer      | Dessin inachevé             Le souvenir reste bloqu     | | |  | LOST000  | NEWS000 ||  |
+| JER-020 | Haute    | Objet   | Backstage   | CAM01  | 4    | Toute nuit    | 5%     | Observer      | Feuille totalement blanche  Le souvenir s'efface      | | |  | LOST000  | NEWS000 ||  |
 
-Série "Les Dessins"
-| ID      | Description                | Lore                                  |
-| ------- | -------------------------- | ------------------------------------- |
-| JER-011 | Dessin d'un soleil         | Un souvenir heureux avant le drame    |
-| JER-012 | Dessin de Freddy           | Jeremy admirait les animatroniques    |
-| JER-013 | Dessin de Bonnie           | Bonnie devient son refuge             |
-| JER-014 | Dessin d'une maison        | Il voulait rentrer chez lui           |
-| JER-015 | Dessin d'une famille       | Les parents ne reviendront jamais     |
-| JER-016 | Dessin de cinq enfants     | Première allusion aux victimes        |
-| JER-017 | Dessin barré               | Quelqu'un tente d'effacer le souvenir |
-| JER-018 | Dessin déchiré             | La mémoire se fragmente               |
-| JER-019 | Dessin inachevé            | Le souvenir reste bloqué              |
-| JER-020 | Feuille totalement blanche | Le souvenir s'efface                  |
 
 
 Série "Les Crayons"
@@ -83,46 +80,7 @@ Série "Terminal"
 | JER-034 | CHILDREN_ART | Exposition interne des dessins   |
 | JER-035 | SCANNER      | Archives de dessins numérisés    |
 
-Assets Graphiques
-Dessins
-drawing_sun.png
-drawing_house.png
-drawing_family.png
-drawing_freddy.png
-drawing_bonnie.png
-drawing_children.png
-drawing_crossed.png
-drawing_torn.png
-drawing_blank.png
-drawing_table.png
-Objets
-crayons_box.png
-crayon_blue.png
-crayon_red.png
-crayon_green.png
-eraser.png
-paper_blank.png
-paper_half.png
-paper_complete.png
-papers_floor.png
-clipboard.png
-Bonnie
-bonnie_draw_01.png
-bonnie_draw_02.png
-bonnie_turn_page.png
-bonnie_holding_pencil.png
-bonnie_looking_picture.png
-Sons à Produire
-pencil_draw.wav
-paper_slide.wav
-page_turn.wav
-crayon_drop.wav
-eraser_move.wav
-child_humming.wav (très rare, presque inaudible)
-tape_measure.wav (maintenance en arrière-plan)
-paper_rip.wav
-chair_creak.wav
-ventilation_backstage.wav
+
 
 Terminal
 DRAWINGS.LOG
