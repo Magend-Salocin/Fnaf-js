@@ -29,62 +29,42 @@ Est-ce un souvenir ?
 
 Ou est-ce le restaurant qui se souvient ?
 
-| ID      | Priorité | Type    | Salle       | Caméra | Nuit | Heure       | Chance | Déclencheur   | Description                               | Lore                            | Asset           | Son          | Script JS      | Terminal  | Journal | Cassette | Évolution            |
-| ------- | -------- | ------- | ----------- | ------ | ---- | ----------- | ------ | ------------- | ----------------------------------------- | ------------------------------- | --------------- | ------------ | -------------- | --------- | ------- | -------- | -------------------- |
-| FRT-001 | Critique | Objet   | Pirate Cove | CAM05  | 2    | 02h00-02h30 | 8%     | Observer 5 s  | Petite voiture rouge apparaît             | Jouet préféré de Fritz          | car_red.png     | toy_roll.wav | car_memory.js  | LOST031   | —       | —        | Revient ailleurs     |
-| FRT-002 | Critique | IA      | Pirate Cove | CAM05  | 2    | 02h00       | 5%     | Retour caméra | Foxy pousse doucement la voiture          | Fritz continue de jouer         | foxy_car01.png  | wheel.wav    | foxy_car.js    | —         | —       | —        | Plusieurs animations |
-| FRT-003 | Haute    | Overlay | Pirate Cove | CAM05  | 2    | Toute nuit  | 12%    | Retour caméra | La voiture change de position             | Souvenir vivant                 | overlay_car.png | —            | overlay_car.js | LOST032   | —       | —        | Persistant           |
-| FRT-004 | Haute    | Objet   | Pirate Cove | CAM05  | 3    | 01h45       | 6%     | Observer      | Bateau pirate miniature                   | Jeu abandonné                   | boat.png        | wood.wav     | boat.js        | LOST033   | NEWS031 | —        | Vieillit             |
-| FRT-005 | Haute    | Objet   | Pirate Cove | CAM05  | 3    | Toute nuit  | 9%     | Observer      | Coffre à trésor entrouvert                | Fritz jouait aux pirates        | chest.png       | creak.wav    | chest.js       | REPORT031 | —       | TAPE031  | Peut s'ouvrir        |
-| FRT-006 | Haute    | Son     | Bureau      | —      | 2    | 02h20       | 7%     | Silence       | Petite voiture qui roule                  | Fritz traverse le couloir       | —               | toy_car.wav  | toy_audio.js   | —         | —       | —        | Plus proche          |
-| FRT-007 | Haute    | IA      | Pirate Cove | CAM05  | 3    | 03h00       | 4%     | Observer 10 s | Foxy ramasse le bateau                    | Le souvenir évolue              | foxy_boat.png   | wood.wav     | foxy_boat.js   | —         | —       | —        | Animation longue     |
-| FRT-008 | Haute    | Décor   | Pirate Cove | CAM05  | 3    | Toute nuit  | 6%     | Observer      | Trois cubes en bois apparaissent          | Jeu d'enfant                    | cubes.png       | block.wav    | cubes.js       | LOST034   | —       | —        | Déplacés             |
-| FRT-009 | Haute    | Overlay | West Hall   | CAM02  | 4    | Toute nuit  | 5%     | Retour caméra | Petite voiture dans le couloir            | Le souvenir sort de Pirate Cove | hallway_car.png | wheel.wav    | hallway.js     | REPORT032 | NEWS032 | —        | Disparaît            |
-| FRT-010 | Critique | IA      | Pirate Cove | CAM05  | 5    | 03h30       | 2%     | Retour caméra | Foxy aligne soigneusement tous les jouets | Fritz termine sa partie         | foxy_toys.png   | toys.wav     | final_play.js  | —         | —       | TAPE032  | Ne revient plus      |
+# Tableau de Production
 
-Série "Les Jouets"
-| ID      | Objet            | Lore                                  |
-| ------- | ---------------- | ------------------------------------- |
-| FRT-011 | Voiture rouge    | Jouet favori de Fritz                 |
-| FRT-012 | Bateau pirate    | Pirate Cove devient un terrain de jeu |
-| FRT-013 | Coffre miniature | Chasse au trésor imaginaire           |
-| FRT-014 | Cube en bois     | Construction interrompue              |
-| FRT-015 | Figurine pirate  | Le capitaine du jeu                   |
+| ID      | Priorité | Type    | Salle           | Caméra    | Nuit | Heure         | Chance | Déclencheur   | Description                               | Lore                                  | Son          | Script JS          | Terminal  | Journal | Cassette | RequiresEvent |
+| ------- | -------- | ------- | --------------- | --------- | ---- | ------------- | ------ | ------------- | ----------------------------------------- | ------------------------------------- | ------------ | ------------------ | --------- | ------- | -------- | ------------- |
+| FRT-001 | Critique | Objet   | Pirate Cove     | CAM05     | 2    | 02h00–02h30   | 8%     | Observer 5 s  | Petite voiture rouge apparaît             | Jouet préféré de Fritz                | toy_roll.wav | car_memory.js      | LOST031   | —       | —        | —             |
+| FRT-002 | Critique | IA      | Pirate Cove     | CAM05     | 2    | 02h00         | 5%     | Retour caméra | Foxy pousse doucement la voiture          | Fritz continue de jouer               | wheel.wav    | foxy_car.js        | —         | —       | —        | **FRT-001**   |
+| FRT-003 | Haute    | Overlay | Pirate Cove     | CAM05     | 2    | Toute nuit    | 12%    | Retour caméra | La voiture change de position             | Souvenir vivant                       | —            | overlay_car.js     | LOST032   | —       | —        | **FRT-002**   |
+| FRT-004 | Haute    | Objet   | Pirate Cove     | CAM05     | 3    | 01h45         | 6%     | Observer      | Bateau pirate miniature                   | Jeu abandonné                         | wood.wav     | boat.js            | LOST033   | NEWS031 | —        | **FRT-003**   |
+| FRT-005 | Haute    | Objet   | Pirate Cove     | CAM05     | 3    | Toute nuit    | 9%     | Observer      | Coffre à trésor entrouvert                | Fritz jouait aux pirates              | creak.wav    | chest.js           | REPORT031 | —       | TAPE031  | **FRT-004**   |
+| FRT-006 | Haute    | Son     | Bureau          | —         | 2    | 02h20         | 7%     | Silence       | Petite voiture qui roule                  | Fritz traverse le couloir             | toy_car.wav  | toy_audio.js       | —         | —       | —        | **FRT-001**   |
+| FRT-007 | Haute    | IA      | Pirate Cove     | CAM05     | 3    | 03h00         | 4%     | Observer 10 s | Foxy ramasse le bateau                    | Le souvenir évolue                    | wood.wav     | foxy_boat.js       | —         | —       | —        | **FRT-004**   |
+| FRT-008 | Haute    | Décor   | Pirate Cove     | CAM05     | 3    | Toute nuit    | 6%     | Observer      | Trois cubes en bois apparaissent          | Jeu d'enfant                          | block.wav    | cubes.js           | LOST034   | —       | —        | **FRT-007**   |
+| FRT-009 | Haute    | Overlay | West Hall       | CAM02     | 4    | Toute nuit    | 5%     | Retour caméra | Petite voiture dans le couloir            | Le souvenir sort de Pirate Cove       | wheel.wav    | hallway.js         | REPORT032 | NEWS032 | —        | **FRT-006**   |
+| FRT-010 | Critique | IA      | Pirate Cove     | CAM05     | 5    | 03h30         | 2%     | Retour caméra | Foxy aligne soigneusement tous les jouets | Fritz termine sa partie               | toys.wav     | final_play.js      | —         | —       | TAPE032  | **FRT-029**   |
+| FRT-011 | Moyenne  | Objet   | **West Hall**   | **CAM02** | 2    | Toute nuit    | 8%     | Observer      | Voiture rouge                             | Jouet favori de Fritz                 | toy_roll.wav | red_car.js         | LOST035   | —       | —        | **FRT-001**   |
+| FRT-012 | Moyenne  | Objet   | Pirate Cove     | CAM05     | 3    | Toute nuit    | 7%     | Observer      | Bateau pirate                             | Pirate Cove devient un terrain de jeu | wood.wav     | pirate_boat.js     | LOST036   | —       | —        | **FRT-004**   |
+| FRT-013 | Moyenne  | Objet   | **Dining Area** | **CAM01** | 3    | Toute nuit    | 6%     | Observer      | Coffre miniature                          | Chasse au trésor imaginaire           | creak.wav    | mini_chest.js      | LOST037   | —       | —        | **FRT-005**   |
+| FRT-014 | Moyenne  | Objet   | **West Hall**   | **CAM02** | 3    | Toute nuit    | 5%     | Observer      | Cube en bois                              | Construction interrompue              | block.wav    | cube.js            | LOST038   | —       | —        | **FRT-008**   |
+| FRT-015 | Moyenne  | Objet   | **Dining Area** | **CAM01** | 4    | Toute nuit    | 4%     | Observer      | Figurine pirate                           | Le capitaine du jeu                   | figurine.wav | pirate_figure.js   | LOST039   | NEWS033 | —        | **FRT-013**   |
+| FRT-016 | Haute    | Overlay | **West Hall**   | **CAM02** | 3    | Retour caméra | 6%     | Retour caméra | La voiture avance seule                   | Le jeu continue                       | wheel.wav    | car_move.js        | REPORT033 | —       | —        | **FRT-003**   |
+| FRT-017 | Haute    | Overlay | **Dining Area** | **CAM01** | 4    | Retour caméra | 5%     | Retour caméra | Le bateau change d'étagère                | Quelqu'un joue encore                 | wood.wav     | boat_move.js       | REPORT034 | —       | —        | **FRT-012**   |
+| FRT-018 | Haute    | Overlay | **West Hall**   | **CAM02** | 4    | Retour caméra | 5%     | Retour caméra | Un cube disparaît                         | La construction change                | block.wav    | cube_disappear.js  | REPORT035 | —       | —        | **FRT-014**   |
+| FRT-019 | Haute    | Overlay | Pirate Cove     | CAM05     | 5    | Retour caméra | 4%     | Retour caméra | Le coffre est refermé                     | La partie est terminée                | creak.wav    | chest_close.js     | REPORT036 | —       | —        | **FRT-013**   |
+| FRT-020 | Haute    | Overlay | Pirate Cove     | CAM05     | 5    | 05h55         | 3%     | Heure         | Tous les objets reviennent à leur place   | Comme si rien ne s'était passé        | reset.wav    | toys_reset.js      | REPORT037 | —       | TAPE033  | **FRT-019**   |
+| FRT-021 | Haute    | IA      | Pirate Cove     | CAM05     | 3    | 02h30         | 6%     | Observer 8 s  | Foxy regarde la voiture                   | Il surveille le jouet                 | servo.wav    | foxy_watch_car.js  | —         | —       | —        | **FRT-002**   |
+| FRT-022 | Haute    | IA      | Pirate Cove     | CAM05     | 3    | 03h00         | 5%     | Observer 8 s  | Foxy pousse le bateau                     | Le jeu continue                       | wood.wav     | foxy_push_boat.js  | —         | —       | —        | **FRT-007**   |
+| FRT-023 | Haute    | IA      | Pirate Cove     | CAM05     | 4    | 02h30         | 5%     | Observer 8 s  | Foxy ramasse un cube                      | Il construit quelque chose            | block.wav    | foxy_cube.js       | —         | —       | —        | **FRT-014**   |
+| FRT-024 | Haute    | IA      | Pirate Cove     | CAM05     | 4    | 03h30         | 4%     | Retour caméra | Foxy laisse tomber un jouet               | Comme un enfant distrait              | drop.wav     | foxy_drop.js       | —         | NEWS034 | —        | **FRT-023**   |
+| FRT-025 | Haute    | IA      | Pirate Cove     | CAM05     | 5    | 03h45         | 3%     | Observer 10 s | Foxy regarde le coffre ouvert             | Il cherche un trésor                  | creak.wav    | foxy_chest.js      | —         | —       | TAPE034  | **FRT-019**   |
+| FRT-026 | Haute    | Décor   | Pirate Cove     | CAM05     | 4    | Toute nuit    | 5%     | Retour caméra | Tour de cubes construite                  | Un enfant est passé par là            | block.wav    | tower_build.js     | REPORT038 | —       | —        | **FRT-023**   |
+| FRT-027 | Haute    | Overlay | Pirate Cove     | CAM05     | 4    | Retour caméra | 5%     | Retour caméra | Tour écroulée                             | Personne ne l'a vue tomber            | crash.wav    | tower_fall.js      | REPORT039 | —       | —        | **FRT-026**   |
+| FRT-028 | Haute    | Objet   | **Dining Area** | **CAM01** | 5    | Toute nuit    | 4%     | Observer      | Voiture sous une table                    | Fritz s'est caché en jouant           | wheel.wav    | car_under_table.js | LOST040   | —       | —        | **FRT-016**   |
+| FRT-029 | Haute    | Objet   | Pirate Cove     | CAM05     | 5    | Toute nuit    | 3%     | Observer      | Trésor sorti du coffre                    | Le jeu touche à sa fin                | coins.wav    | treasure.js        | REPORT040 | NEWS035 | TAPE035  | **FRT-019**   |
+| FRT-030 | Critique | Décor   | Pirate Cove     | CAM05     | 5    | 05h55         | 2%     | Heure         | Jouets parfaitement rangés                | Fritz a terminé de jouer              | toys.wav     | toys_sorted.js     | REPORT041 | NEWS036 | TAPE036  | **FRT-020**   |
 
-Série "Les Déplacements"
 
-Le restaurant semble rejouer la scène.
-| ID      | Description                                       |
-| ------- | ------------------------------------------------- |
-| FRT-016 | La voiture avance seule                           |
-| FRT-017 | Le bateau change d'étagère                        |
-| FRT-018 | Un cube disparaît                                 |
-| FRT-019 | Le coffre est refermé                             |
-| FRT-020 | Tous les objets reviennent à leur place avant 6 h |
-
-Série "Foxy"
-
-Foxy n'est jamais agressif dans ces anomalies.
-
-Il joue.
-| ID      | Description                   |
-| ------- | ----------------------------- |
-| FRT-021 | Foxy regarde la voiture       |
-| FRT-022 | Foxy pousse le bateau         |
-| FRT-023 | Foxy ramasse un cube          |
-| FRT-024 | Foxy laisse tomber un jouet   |
-| FRT-025 | Foxy regarde le coffre ouvert |
-
-Série "Les Jeux"
-
-Ces événements donnent vraiment l'impression qu'un enfant joue.
-| ID      | Description                         |
-| ------- | ----------------------------------- |
-| FRT-026 | Tour de cubes construite            |
-| FRT-027 | Tour écroulée au retour caméra      |
-| FRT-028 | Voiture sous une table              |
-| FRT-029 | Trésor sorti du coffre              |
-| FRT-030 | Jouets parfaitement rangés à 5 h 55 |
 
 Série "Terminal"
 | ID      | Commande   | Contenu                         |
@@ -95,45 +75,6 @@ Série "Terminal"
 | FRT-034 | MAINT_05   | Réparations de Pirate Cove      |
 | FRT-035 | STAGE_PROP | Accessoires de spectacle        |
 
-Assets Graphiques
-Jouets
-car_red.png
-car_red_old.png
-pirate_boat.png
-pirate_chest.png
-pirate_chest_open.png
-pirate_figure.png
-wooden_blocks.png
-wooden_blocks_stack.png
-toy_soldier.png
-treasure_map.png
-Foxy
-foxy_car_push_01.png
-foxy_car_push_02.png
-foxy_boat_hold.png
-foxy_blocks.png
-foxy_look_toy.png
-Overlays
-toy_shadow.png
-hallway_car.png
-pirate_floor_toys.png
-chest_open_overlay.png
-block_tower_overlay.png
-
-Sons à Produire
-toy_car_roll.wav
-wooden_block.wav
-chest_creak.wav
-pirate_flag.wav (tissu qui bouge légèrement)
-toy_drop.wav
-child_run_far.wav (extrêmement rare)
-pirate_bell.wav
-toy_slide.wav
-wood_knock.wav
-pirate_roomtone.wav
-
-Terminal
-TOYS.LOG
 
 Inventaire des jouets retrouvés après fermeture.
 

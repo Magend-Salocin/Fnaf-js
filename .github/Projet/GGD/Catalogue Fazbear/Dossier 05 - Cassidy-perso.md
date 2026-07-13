@@ -1,27 +1,25 @@
 Ce que je garderais du lore officiel
 
 Le lore officiel dit seulement :
-
-Cassidy fait partie du Missing Children Incident.
-Elle devient Golden Freddy.
-Elle est différente des autres.
-Elle refuse de partir.
+- Cassidy fait partie du Missing Children Incident.
+- Elle devient Golden Freddy.
+- Elle est différente des autres.
+- Elle refuse de partir.
 
 Il ne dit rien de :
+- sa famille 
+- son âge exact 
+- son anniversaire 
+- ses amis 
+- son caractère
 
-sa famille ;
-son âge exact ;
-son anniversaire ;
-ses amis ;
-son caractère.
 
-Tu as donc un immense espace d'écriture.
 
-Ma proposition
+Réflexion
 
 Je ne dirais jamais :
 
-Cassidy est orpheline.
+- Cassidy est orpheline.
 
 Je ferais en sorte que le joueur le déduise, sans jamais pouvoir en être certain.
 
@@ -29,33 +27,25 @@ Par exemple :
 
 Terminal :
 
+[------------------------------]
+
 FAMILLE CONTACTÉE
-
 Gabriel ........ Confirmé
-
 Jeremy ......... Confirmé
-
 Susie .......... Confirmé
-
 Fritz .......... Confirmé
-
 Cinquième dossier...
-
 ...
 
 ERREUR
-
 Puis plus tard :
-
 Responsable légal
-
 ...
-
 NON RENSEIGNÉ
 
-Ce n'est pas une confirmation.
+[------------------------------]
 
-C'est un vide.
+Ce n'est pas une confirmation, C'est un vide.
 
 Et les vides sont bien plus puissants dans FNAF que les réponses.
 
@@ -65,45 +55,29 @@ Parce qu'elle change complètement le rôle de Charlie (The Puppet).
 
 Les autres enfants reçoivent :
 
-un corps ;
-une identité ;
-une mémoire.
+- un corps ;
+- une identité 
+- une mémoire.
 
-Cassidy reçoit aussi une âme...
+Cassidy reçoit aussi une âme... Mais personne ne prononce plus jamais son nom.
 
-Mais personne ne prononce plus jamais son nom.
+Charlie lui donne une seconde existence. Le monde, lui, ne lui donne jamais une seconde mémoire.
 
-Charlie lui donne une seconde existence.
 
-Le monde, lui, ne lui donne jamais une seconde mémoire.
-
-Une idée qui me touche davantage
 
 Je pousserais encore plus loin le parallèle entre mémoire et oubli.
 
 Regarde :
 
-Gabriel
+- Gabriel, Le restaurant se souvient de son anniversaire.
 
-Le restaurant se souvient de son anniversaire.
+- Jeremy, Le restaurant se souvient de ses dessins.
 
-Jeremy
+- Susie, Le restaurant se souvient de son chien.
 
-Le restaurant se souvient de ses dessins.
+- Fritz, Le restaurant se souvient de ses jouets.
 
-Susie
-
-Le restaurant se souvient de son chien.
-
-Fritz
-
-Le restaurant se souvient de ses jouets.
-
-Cassidy
-
-Le restaurant...
-
-...ne se souvient de rien.
+- Cassidy, Le restaurant... ne se souvient de rien.
 
 C'est justement pour cela qu'elle devient une anomalie.
 
@@ -117,15 +91,13 @@ Et là, tu renforces le bâtiment comme personnage
 
 Depuis le début, on dit que :
 
-Le restaurant est un personnage.
+- Le restaurant est un personnage.
 
-Alors imagine cette idée.
+- Le restaurant essaie de se souvenir de tous les enfants.
 
-Le restaurant essaie de se souvenir de tous les enfants.
+- Il y arrive. Sauf pour un.
 
-Il y arrive.
-
-Sauf pour un.
+[----------------------------]
 
 Quand il tente d'accéder à Cassidy :
 
@@ -149,38 +121,37 @@ Comme si le bâtiment lui-même était incapable de charger ce souvenir.
 
 Je trouve ça extrêmement fort.
 
+[----------------------------]
+
 Pourquoi Cassidy est-elle fantomatique ?
 
-Pas parce qu'elle est plus puissante.
+- Pas parce qu'elle est plus puissante.
 
-Pas parce qu'elle est "élue".
+- Pas parce qu'elle est "élue".
 
-Parce que...
-
-elle n'a plus aucun ancrage.
+- Parce que... elle n'a plus aucun ancrage.
 
 Gabriel possède encore :
 
-une chaise,
-un ballon,
-une assiette.
+- une chaise,
+- un ballon,
+- une assiette.
 
 Jeremy possède :
 
-ses dessins.
+- ses dessins.
 
 Susie :
 
-son collier,
-sa gamelle.
+- son collier,
+- sa gamelle.
 
 Fritz :
 
-sa voiture.
+- sa voiture.
 
 Cassidy...
-
-rien.
+- rien.
 
 Elle ne peut apparaître que dans les erreurs du système.
 
@@ -190,29 +161,16 @@ Je trouve qu'on peut même raconter quelque chose de très beau.
 
 Charlie offre un souvenir à chacun.
 
-Gabriel
+- Gabriel → Freddy → Aniversaire
 
-→ Freddy
+- Jeremy → Bonnie → Dessins
 
-Jeremy
+- Susie → Chica → Chien
 
-→ Bonnie
+- Fritz  → Foxy → jouet
 
-Susie
+- Cassidy → ... → Aucun souvenir disponible.
 
-→ Chica
-
-Fritz
-
-→ Foxy
-
-Puis :
-
-Cassidy
-
-...
-
-Aucun souvenir disponible.
 
 Charlie n'échoue pas parce qu'elle est faible.
 
@@ -227,23 +185,20 @@ Il y a un point sur lequel je ne te suivrais pas.
 Je pense que c'est un peu trop absolu.
 
 Au contraire, je pense que les autres enfants sentent qu'il manque quelqu'un, sans pouvoir dire qui.
-
-Par exemple :
-
-Gabriel laisse toujours une cinquième assiette sur une table.
-Jeremy dessine parfois cinq enfants, puis le cinquième disparaît après un glitch.
-Susie laisse un cinquième gobelet près de la scène.
-Fritz aligne cinq jouets alors qu'il n'y en a que quatre dans le décor.
+- Gabriel laisse toujours une cinquième assiette sur une table.
+- Jeremy dessine parfois cinq enfants, puis le cinquième disparaît après un glitch.
+- Susie laisse un cinquième gobelet près de la scène.
+- Fritz aligne cinq jouets alors qu'il n'y en a que quatre dans le décor.
 
 Pourquoi ?
 
-Parce que leur mémoire est incomplète.
+- Parce que leur mémoire est incomplète.
 
-Ils ne se souviennent plus du visage.
+- Ils ne se souviennent plus du visage.
 
-Ils ne se souviennent plus du nom.
+- Ils ne se souviennent plus du nom.
 
-Mais ils se souviennent qu'ils n'étaient pas seulement quatre.
+- Mais ils se souviennent qu'ils n'étaient **pas seulement quatre**.
 
 Et je trouve que cette idée est infiniment plus triste.
 
