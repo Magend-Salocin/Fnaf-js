@@ -413,8 +413,7 @@ Statut :            Personne n'est revenu.
                         delay: 0
                     },
                     {
-                        text: `
-PARTY`,
+                        text: `PARTY`,
                         delay: 9200,
                         glitch: true,
                         flash: true,
