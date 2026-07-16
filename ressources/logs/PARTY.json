@@ -1,0 +1,21 @@
+{
+    "command": "PARTY",
+    "label": "rare",
+    "markFound": "PARTY",
+    "type": "sequence",
+    "steps": [
+        {
+            "text": "\n\n> OUVERTURE DU FICHIER PARTY.LOG...\n\n--------------------------------------------------------------\n\nDATE      TYPE          INV.   Âge  STATUT\n--------------------------------------------------------------\n\n04/06     ANNIVERSAIRE   11    6 ANS  TERMINÉ\n\n09/06     ANNIVERSAIRE   15    8 ANS  TERMINÉ\n\n26/06     ANNIVERSAIRE    4    7 ANS  TERMINÉ\n\n--------------------------------------------------------------\n",
+            "delay": 0,
+            "glitch": false,
+            "flash": false
+        },
+        {
+            "text": "\nERREUR\n26/06     ANNIVERSAIRE    5    7 ANS  INTERROMPU",
+            "delay": 9200,
+            "glitch": true,
+            "flash": true,
+            "flashDuration": 2000
+        }
+    ]
+}

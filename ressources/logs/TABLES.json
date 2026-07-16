@@ -1,0 +1,21 @@
+{
+    "command": "TABLES",
+    "label": "rare",
+    "markFound": "TABLES",
+    "type": "sequence",
+    "steps": [
+        {
+            "text": "\n╔══════════════════════════════════════════════════════════════╗\n║                PLAN DE LA SALLE                             ║\n╚══════════════════════════════════════════════════════════════╝\n\n            TABLE ANNIVERSAIRE\n\n          ○────○────○\n\n          │          │\n\n          ○────○────○\n\n                 ▲\n             CHAISE DÉPLACÉE\n\n--------------------------------------------------------------\n\nDernière vérification :     26/06\n\nSignalement maintenance :   AUCUN\n\n\n",
+            "delay": 0,
+            "glitch": false,
+            "flash": false
+        },
+        {
+            "text": "\nTemps écoulé :  11 ans\n ",
+            "delay": 9200,
+            "glitch": true,
+            "flash": true,
+            "flashDuration": 2000
+        }
+    ]
+}

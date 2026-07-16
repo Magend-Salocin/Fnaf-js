@@ -1,0 +1,7 @@
+{
+    "command": "ARCHIVE",
+    "markFound": "ARCHIVE",
+    "type": "text",
+    "text": "╔══════════════════════════════════════════════════════════════╗\n║         FAZBEAR ENTERTAINMENT - EVENTS v2.1                  ║\n║             ARCHIVES DES FESTIVITÉS                          ║\n╚══════════════════════════════════════════════════════════════╝\n\n> OUVERTURE : ARCHIVE.LOG\n\n════════════════════════════════════════════════════════════════\n\nÉVÉNEMENTS ENREGISTRÉS\n\n DATE         TYPE                 STATUT\n──────────────────────────────────────────────────────────────\n\n 12/04/1989   Anniversaire privé   TERMINÉ\n\n 21/04/1989   Anniversaire privé   TERMINÉ\n\n════════════════════════════════════════════════════════════════\n\nDOSSIER : 12/04/1989\n\n Invités enregistrés ......... 47\n Départs enregistrés ......... 47\n\n Incident déclaré ............ NON\n\n Clôture de l'événement ...... VALIDÉ\n\n──────────────────────────────────────────────────────────────\n\nDOSSIER : 21/04/1989\n\n Invités enregistrés ......... 32\n Départs enregistrés ......... 32\n\n Incident déclaré ............ NON\n\n Clôture de l'événement ...... VALIDÉ\n\n════════════════════════════════════════════════════════════════\n\nStatut des archives\n\nSynchronisation .............. OK\n\nIntégrité .................... 100 %\n\nDernière vérification ........ 03/07/1989\n\n════════════════════════════════════════════════════════════════\n\nAccès administrateur requis.\n\nFIN DU FICHIER\n\n█",
+    "glitch": false
+}

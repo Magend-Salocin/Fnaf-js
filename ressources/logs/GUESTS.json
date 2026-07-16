@@ -1,0 +1,21 @@
+{
+    "command": "GUESTS",
+    "label": "rare",
+    "markFound": "GUESTS",
+    "type": "sequence",
+    "steps": [
+        {
+            "text": "\n\n> OUVERTURE DU Réservation 26/06 GUESTS.LOG...\n\nAnalyse de la réservation...\n\n✓ Jeremy\n\n✓ Susie\n\n✓ Fritz\n\n✓ Gabriel\n--------------------------------------------------------------\nINVITÉS PRÉVUS ......... 4\n\nINVITÉS PRÉSENTS ....... 4\n--------------------------------------------------------------\n",
+            "delay": 0,
+            "glitch": false,
+            "flash": false
+        },
+        {
+            "text": "\nERREUR\n\n□ ???????? \n\nUne réservation est incomplète.\n\nLe système attend toujours\nle dernier invité.\n\n ",
+            "delay": 9200,
+            "glitch": true,
+            "flash": true,
+            "flashDuration": 2000
+        }
+    ]
+}

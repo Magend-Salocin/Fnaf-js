@@ -1,0 +1,21 @@
+{
+    "command": "LOST_OBJECTS",
+    "label": "rare",
+    "markFound": "LOST_OBJECTS",
+    "type": "sequence",
+    "steps": [
+        {
+            "text": "\n╔══════════════════════════════════════════════════════════════╗\n║                OBJETS TROUVÉS                               ║\n╚══════════════════════════════════════════════════════════════╝\nN°      OBJET               STATUT\n\n442     Veste bleue         RENDUE\n\n443     Voiture             RENDUE\n\n444     Sac à dos           RENDU\n\n445     Casquette           EN ATTENTE\n\n--------------------------------------------------------------\n\nPROPRIÉTAIRE :      INCONNU\nTEMPS D'ATTENTE :   4018 jours\nStatut :            Personne n'est revenu.\n--------------------------------------------------------------\n",
+            "delay": 0,
+            "glitch": false,
+            "flash": false
+        },
+        {
+            "text": "PARTY",
+            "delay": 9200,
+            "glitch": true,
+            "flash": true,
+            "flashDuration": 2000
+        }
+    ]
+}

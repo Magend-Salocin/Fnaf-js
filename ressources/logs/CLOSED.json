@@ -1,0 +1,83 @@
+{
+    "command": "CLOSED",
+    "label": "TRÈS RARE",
+    "markFound": "CLOSED",
+    "type": "sequence",
+    "steps": [
+        {
+            "text": "\n╔══════════════════════════════════════════════════════════════╗\n║             PROCÉDURE DE FERMETURE                          ║\n╚══════════════════════════════════════════════════════════════╝\n\nNettoyage ............. OK\n\nExtinction lumières ... OK\n\nCuisine ............... OK\n\nAnimatroniques ........ OK\n\nInvités ............... OK\n\n--------------------------------------------------------------\n\nAnalyse du bâtiment...\n",
+            "delay": 0,
+            "glitch": false,
+            "flash": false
+        },
+        {
+            "text": "\nAnalyse du bâtiment...\nVérification des accès...\n\n",
+            "delay": 2500,
+            "glitch": false,
+            "flash": false
+        },
+        {
+            "text": "",
+            "delay": 2500,
+            "glitch": false,
+            "flash": false
+        },
+        {
+            "text": "Contrôle des salles...\nRecherche des occupants...\n\n",
+            "delay": 3000,
+            "glitch": false,
+            "flash": false
+        },
+        {
+            "text": "\nAnalyse terminée.\n\n...\n",
+            "delay": 3500,
+            "glitch": false,
+            "flash": false
+        },
+        {
+            "text": "\nAnalyse terminée.\n\nERREUR\n",
+            "delay": 2000,
+            "glitch": true,
+            "flash": false
+        },
+        {
+            "text": "\nAnalyse terminée.\n\nERREUR\n\n1 enfant est toujours\nprésent dans le bâtiment.\n",
+            "delay": 2800,
+            "glitch": true,
+            "flash": true,
+            "flashDuration": 600
+        },
+        {
+            "text": "\nImpossible de fermer\nle restaurant.\n\nNouvelle tentative...\n",
+            "delay": 3500,
+            "glitch": true,
+            "flash": false
+        },
+        {
+            "text": "\nImpossible de fermer\nle restaurant.\n\nNouvelle tentative...\n\nNouvelle tentative...\n",
+            "delay": 2500,
+            "glitch": true,
+            "flash": true,
+            "flashDuration": 800
+        },
+        {
+            "text": "\nImpossible de fermer\nle restaurant.\n\nNouvelle tentative...\n\nNouvelle tentative...\n\nNouvelle tentative...\n",
+            "delay": 2500,
+            "glitch": true,
+            "flash": false
+        },
+        {
+            "text": "\nImpossible de fermer\nle restaurant.\n\nNouvelle tentative...\n\nNouvelle tentative...\n\nNouvelle tentative...\n\nÉCHEC.\n",
+            "delay": 2500,
+            "glitch": true,
+            "flash": true,
+            "flashDuration": 1200
+        },
+        {
+            "text": "\nLe restaurant reste ouvert.\n\nEn attente...\n\n█\n",
+            "delay": 4000,
+            "glitch": true,
+            "flash": false
+        }
+    ]
+}

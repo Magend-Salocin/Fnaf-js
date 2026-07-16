@@ -1,0 +1,27 @@
+{
+    "command": "CAMLOG",
+    "label": "rare",
+    "markFound": "CAMLOG",
+    "type": "sequence",
+    "steps": [
+        {
+            "text": "CAMÉRA 03\n\nArchive disponible.\n\nDate :\n18 avril 1989\n\nHeure :\n18h41",
+            "delay": 0,
+            "glitch": false,
+            "flash": false
+        },
+        {
+            "text": "FICHIER CORROMPU",
+            "delay": 1200,
+            "glitch": true,
+            "flash": false
+        },
+        {
+            "text": "1 personne détectée",
+            "delay": 900,
+            "glitch": true,
+            "flash": true,
+            "flashDuration": 1000
+        }
+    ]
+}

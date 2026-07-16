@@ -1,0 +1,7 @@
+{
+    "command": "WHOAMI",
+    "markFound": "WHOAMI",
+    "type": "text",
+    "text": "UTILISATEUR ACTUEL\n\nNom :\n[NON DISPONIBLE]\n\nPoste :\nVeilleur de nuit\n\n--------------------------------\n\nUTILISATEUR PRÉCÉDENT\n\nNom :\n[NON DISPONIBLE]\n\nPoste :\nVeilleur de nuit\n\nDate de départ :\nInconnue\n\nMotif :\nAbsence non justifiée.",
+    "glitch": false
+}

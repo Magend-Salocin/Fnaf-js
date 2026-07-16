@@ -1,0 +1,7 @@
+{
+    "command": "SUDO",
+    "markFound": "SUDO",
+    "type": "text",
+    "text": "╔══════════════════════════════════════════════════════════════╗\n║           FAZBEAR ENTERTAINMENT - SYS v1.8                   ║\n║              CONTRÔLE DES AUTORISATIONS                      ║\n╚══════════════════════════════════════════════════════════════╝\n\n> EXÉCUTION : SUDO\n\n════════════════════════════════════════════════════════════════\n\nVÉRIFICATION DES IDENTIFIANTS...\n\nUTILISATEUR ............ VEILLEUR DE NUIT\n\nNIVEAU D'ACCÈS ......... 01\n\nNIVEAU REQUIS .......... 05\n\n════════════════════════════════════════════════════════════════\n\nACCÈS REFUSÉ\n\nVous ne disposez pas des autorisations\nnécessaires pour consulter cette section.\n\n════════════════════════════════════════════════════════════════\n\nADMINISTRATEUR ACTIF\n\nNom .............. [SUPPRIMÉ]\n\nStatut ........... ARCHIVÉ\n\nDernière connexion\n\n................. il y a 1247 jours\n\n════════════════════════════════════════════════════════════════\n\nJOURNAL SYSTÈME\n\n► 14 fichiers protégés\n\n► 3 archives verrouillées\n\n► 1 administrateur supprimé\n\n════════════════════════════════════════════════════════════════\n\nMessage système\n\nCertaines archives ont été retirées\ndu réseau principal.\n\nContacter la direction pour toute\ndemande d'accès.\n\n════════════════════════════════════════════════════════════════\n\nERREUR : ACCÈS REFUSÉ\n\nRetour au terminal...\n\n█",
+    "glitch": false
+}

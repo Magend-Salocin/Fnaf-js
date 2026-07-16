@@ -1,0 +1,13 @@
+{
+    "command": "LOST",
+    "label": "fin de nuit seulement",
+    "markFound": "LOST",
+    "minHour": 5,
+    "beforeHour": {
+        "text": "AUCUNE DONNÉE DISPONIBLE AVANT LA FERMETURE.",
+        "glitch": false
+    },
+    "type": "text",
+    "text": "╔══════════════════════════════════════════════════════════════╗\n║          FAZBEAR ENTERTAINMENT - LOST v1.2                   ║\n║          INVENTAIRE DES OBJETS TROUVÉS                       ║\n╚══════════════════════════════════════════════════════════════╝\n\n> OUVERTURE : LOST.LOG\n\n════════════════════════════════════════════════════════════════\n\nÉTAT DE L'INVENTAIRE\n\n N°    OBJET                  EMPLACEMENT\n──────────────────────────────────────────────────────────────\n\n 001   Ballon bleu            Salle principale\n\n 002   Peluche ours           Dining Area\n\n 003   Casquette rouge        Show Stage\n\n 004   Bracelet rose          East Hall\n\n════════════════════════════════════════════════════════════════\n\nRÉCAPITULATIF\n\nObjets enregistrés ......... 4\n\nObjets récupérés ........... 0\n\nObjets en attente .......... 4\n\n════════════════════════════════════════════════════════════════\n\nPROCÉDURE\n\nLes objets trouvés restent à\nla disposition de leur propriétaire\njusqu'à leur récupération.\n\nToute réclamation doit être validée\npar un responsable.\n\n════════════════════════════════════════════════════════════════\n\nSTATUT\n\nEn attente de récupération...\n\nDernière mise à jour\n\n05:00\n\nFIN DU FICHIER\n\n█",
+    "glitch": false
+}
