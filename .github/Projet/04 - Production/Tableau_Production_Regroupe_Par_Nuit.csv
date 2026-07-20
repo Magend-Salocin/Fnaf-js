@@ -1,0 +1,111 @@
+﻿ID;Réalisé;Type;Salle;Caméra;Nuit;Heure;Chance;Déclencheur;;;Son;Script JS;Terminal;Journal;Cassette;RequiresEvent;Description;Lore
+GAB-001;;Objet;Dining Area;CAM01;1;00h-06h;20%;Observer;;;chair.wav;—;LOST001;—;—;—;Une chaise est reculée;Quelqu'un était assis
+GAB-002;;Objet;Dining Area;CAM01;1;Toute nuit;15%;Retour caméra;;;balloon.wav;—;LOST002;NEWS001;—;**GAB-001**;Un ballon jaune apparaît;Décoration oubliée
+JER-001;;Objet;West Hall;CAM07;1;Toute nuit;18%;Observer;;;paper.wav;—;LOST010;—;—;—;Une feuille blanche apparaît;Jeremy préparait un dessin
+SUS-001;;Objet;Dining Area;CAM01;1;Toute nuit;18%;Observer;;;bowl.wav;—;LOST021;—;—;—;Gamelle métallique sous une table;Appartient au chien
+GAB-003;;Décor;Stage;CAM02;2;01h00;10%;Observer 8 s;;;—;—;—;NEWS002;—;**GAB-002**;Une cinquième assiette apparaît;Cinquième enfant
+SUS-002;;Objet;Dining Area;CAM01;2;01h00;10%;Retour caméra;;;chain.wav;—;LOST022;NEWS021;—;**SUS-001**;Laisse rouge oubliée;Dernière promenade
+FRT-002;;IA;Pirate Cove;CAM05;2;02h00;5%;Retour caméra;;;wheel.wav;—;—;—;—;**FRT-001**;Foxy pousse doucement la voiture;Fritz continue de jouer
+GAB-005;;Overlay;Dining Area;CAM01;2;02h00;12%;Observer;;;flame.wav;—;REPORT005;NEWS002;—;**GAB-002**;Une bougie est allumée;Anniversaire
+JER-004;;IA;Backstage;CAM07;2;02h00;7%;Observer 8s;;;scratch.wav;—;—;—;TAPE010;**JER-003**;Bonnie tient un crayon;Bonnie continue le dessin
+FRT-001;;Objet;Pirate Cove;CAM05;2;02h00–02h30;8%;Observer 5 s;;;toy_roll.wav;—;LOST031;—;—;—;Petite voiture rouge apparaît;Jouet préféré de Fritz
+GAB-006;;Son;Bureau;—;2;02h15;7%;Silence;;;applause.wav;—;—;—;TAPE001;**GAB-005**;Applaudissements lointains;Souvenir d'une fête
+SUS-003;;Son;Kitchen;Audio;2;02h15;5%;Écoute CAM06;;;dog_far.wav;—;—;—;TAPE021;**SUS-002**;Aboiement très lointain;Faux espoir
+FRT-006;;Son;Bureau;—;2;02h20;7%;Silence;;;toy_car.wav;—;—;—;—;**FRT-001**;Petite voiture qui roule;Fritz traverse le couloir
+GAB-004;;IA;Stage;CAM02;2;03h00;6%;Retour caméra;;;breathe.wav;—;—;—;TAPE003;**GAB-003**;Freddy regarde une chaise vide;Gabriel attend
+JER-002;;Overlay;West Hall;CAM07;2;Retour caméra;12%;Retour caméra;;;pencil.wav;—;DRAW01;—;—;**JER-001**;Un soleil est dessiné;Dessin terminé
+FRT-003;;Overlay;Pirate Cove;CAM05;2;Toute nuit;12%;Retour caméra;;;—;—;LOST032;—;—;**FRT-002**;La voiture change de position;Souvenir vivant
+FRT-011;;Objet;**West Hall**;**CAM02**;2;Toute nuit;8%;Observer;;;toy_roll.wav;—;LOST035;—;—;**FRT-001**;Voiture rouge;Jouet favori de Fritz
+JER-006;;Son;Supply Closet;CAM07;2;Toute nuit;9%;Silence;;;pencil_loop.wav;—;—;—;—;**JER-003**;Bruit de crayon sur papier;Jeremy dessine
+SUS-011;;Objet;Dining Area;CAM01;2;Toute nuit;8%;Observer;;;bowl.wav;—;LOST025;—;—;**SUS-001**;Gamelle déplacée;Quelqu'un est revenu
+SUS-012;;Objet;Dining Area;CAM01;2;Toute nuit;7%;Observer;;;chain.wav;—;LOST026;—;—;**SUS-002**;Laisse au sol;Dernière promenade
+JER-003;;Objet;Supply Closet;CAM06;2;Toute nuit;10%;Observer;;;crayons.wav;—;LOST011;—;—;**JER-001**;Une boîte de crayons apparaît;Crayons oubliés
+GAB-007;;Objet;Dining Area;CAM01;3;00h00;9%;Observer;;;paper.wav;—;LOST004;—;—;**GAB-005**;Boîte cadeau fermée;Cadeau jamais ouvert
+JER-008;;Décor;Supply Closet;CAM07;3;01h00;6%;Observer;;;paper.wav;—;DRAW03;—;—;**JER-007**;Deux feuilles sont au sol;Dessins abandonnés
+JER-026;;IA;Backstage;CAM07;3;01h30;8%;Observer 8s;;;breath.wav;—;—;—;TAPE013;**JER-005**;Bonnie regarde un dessin;Il contemple l'œuvre de Jeremy
+SUS-006;;Objet;East Hall;CAM04;3;01h30;6%;Observer;;;bell.wav;—;LOST023;NEWS022;—;**SUS-002**;???;Objet perdu
+FRT-004;;Objet;Pirate Cove;CAM05;3;01h45;6%;Observer;;;wood.wav;—;LOST033;NEWS031;—;**FRT-003**;Bateau pirate miniature;Jeu abandonné
+SUS-026;;IA;Restroom;CAM01;3;02h00;6%;Retour caméra;;;servo.wav;—;—;—;—;**SUS-004**;Chica regarde la cuisine;Elle cherche quelque chose
+FRT-021;;IA;Pirate Cove;CAM05;3;02h30;6%;Observer 8 s;;;servo.wav;—;—;—;—;**FRT-002**;Foxy regarde la voiture;Il surveille le jouet
+JER-027;;IA;Backstage;CAM07;3;02h30;7%;Observer 8s;;;scratch.wav;—;—;—;TAPE014;**JER-026**;Bonnie dessine;Le dessin continue sans personne
+FRT-007;;IA;Pirate Cove;CAM05;3;03h00;4%;Observer 10 s;;;wood.wav;—;—;—;—;**FRT-004**;Foxy ramasse le bateau;Le souvenir évolue
+FRT-022;;IA;Pirate Cove;CAM05;3;03h00;5%;Observer 8 s;;;wood.wav;—;—;—;—;**FRT-007**;Foxy pousse le bateau;Le jeu continue
+SUS-004;;IA;Kitchen;Audio;3;03h00;4%;Écoute 10 s;;;metal.wav;—;—;—;—;**SUS-003**;Chica tourne la tête vers une porte;Elle « entend » quelque chose
+JER-005;;Overlay;Dining Area;CAM01;3;03h00;6%;Retour caméra;;;—;—;DRAW02;NEWS010;—;**JER-004**;Un dessin est accroché au mur;Personne ne l'avait vu
+GAB-008;;Overlay;Dining Area;CAM01;3;04h00;5%;Retour caméra;;;—;—;—;—;—;**GAB-007**;Le cadeau est ouvert;Souvenir évolutif
+FRT-016;;Overlay;**West Hall**;**CAM02**;3;Retour caméra;6%;Retour caméra;;;wheel.wav;—;REPORT033;—;—;**FRT-003**;La voiture avance seule;Le jeu continue
+SUS-016;;Overlay;Dining Area;CAM01;3;Retour caméra;6%;Retour caméra;;;ceramic.wav;—;REPORT023;—;—;**SUS-005**;Cupcake orienté vers la caméra;Il semble observer
+FRT-005;;Objet;Pirate Cove;CAM05;3;Toute nuit;9%;Observer;;;creak.wav;—;REPORT031;—;TAPE031;**FRT-004**;Coffre à trésor entrouvert;Fritz jouait aux pirates
+FRT-008;;Décor;Pirate Cove;CAM05;3;Toute nuit;6%;Observer;;;block.wav;—;LOST034;—;—;**FRT-007**;Trois cubes en bois apparaissent;Jeu d'enfant
+FRT-012;;Objet;Pirate Cove;CAM05;3;Toute nuit;7%;Observer;;;wood.wav;—;LOST036;—;—;**FRT-004**;Bateau pirate;Pirate Cove devient un terrain de jeu
+FRT-013;;Objet;**Dining Area**;**CAM01**;3;Toute nuit;6%;Observer;;;creak.wav;—;LOST037;—;—;**FRT-005**;Coffre miniature;Chasse au trésor imaginaire
+FRT-014;;Objet;**West Hall**;**CAM02**;3;Toute nuit;5%;Observer;;;block.wav;—;LOST038;—;—;**FRT-008**;Cube en bois;Construction interrompue
+GAB-021;;Décor;Dining Area;CAM01;3;Toute nuit;8%;Observer;;;clock.wav;—;REPORT007;—;—;**GAB-005**;Horloge bloquée à 17h45;L'heure de la fête
+JER-021;;Objet;Supply Closet;CAM06;3;Toute nuit;10%;Observer;;;paper.wav;—;LOST014;—;—;**JER-003**;Crayon bleu au sol;Jeremy a commencé son dessin
+JER-022;;Objet;Supply Closet;CAM06;3;Toute nuit;8%;Observer;;;crack.wav;—;LOST015;—;—;**JER-021**;Crayon rouge cassé;Quelqu'un s'est interrompu
+SUS-017;;Overlay;Dining Area;CAM01;3;Toute nuit;5%;Observer;;;ceramic.wav;—;REPORT024;—;—;**SUS-016**;Cupcake regarde la porte;Il attend quelqu'un
+SUS-021;;Son;Kitchen;Audio;3;Toute nuit;6%;Écoute;;;bowl_move.wav;—;CLEAN022;—;—;**SUS-008**;Gamelle métallique déplacée;Quelqu'un est dans la cuisine
+SUS-022;;Son;Kitchen;Audio;3;Toute nuit;5%;Écoute;;;cupboard.wav;—;CLEAN023;—;—;**SUS-021**;Placard ouvert;Une recherche silencieuse
+GAB-009;;Objet;Dining Area;CAM01;3;Toute nuit;8%;Observer;;;flies.wav;—;LOST005;NEWS003;—;**GAB-008**;Part de gâteau oubliée;Dernier anniversaire
+GAB-010;;Objet;Dining Area;CAM01;3;Toute nuit;6%;Observer;;;drip.wav;—;CLEAN01;—;—;**GAB-009**;Verre en carton renversé;Fête interrompue
+GAB-011;;IA;Stage;CAM02;3;Toute nuit;6%;Retour caméra;;;breathe.wav;—;—;NEWS004;—;**GAB-004**;Freddy regarde toujours la même chaise;Gabriel attend son père
+JER-007;;Objet;Supply Closet;CAM06;3;Toute nuit;8%;Observer;;;eraser.wav;—;LOST012;—;—;**JER-002**;Une gomme est posée sur le sol, un dessin d'anniversaire est effacé;Quelqu'un corrige
+SUS-005;;Overlay;Dining Area;CAM01;3;Toute nuit;7%;Observer;;;ceramic.wav;—;REPORT021;—;—;**SUS-004**;Cupcake légèrement déplacé;Chica protège un souvenir
+SUS-013;;Objet;East Hall;CAM04;3;Toute nuit;6%;Observer;;;bell.wav;—;LOST027;—;—;**SUS-006**;Collier usé;Objet jamais récupéré
+SUS-014;;Décor;East Hall;CAM04;3;Toute nuit;5%;Observer;;;step.wav;—;REPORT022;—;—;**SUS-013**;Empreintes de pattes poussiéreuses;Vieilles traces
+JER-028;;IA;Backstage;CAM07;4;01h00;6%;Retour caméra;;;paper.wav;—;—;—;TAPE015;**JER-027**;Bonnie tient une feuille;Il protège un souvenir
+GAB-012;;IA;Stage;CAM02;4;02h00;5%;Retour caméra;;;servo.wav;—;—;NEWS005;TAPE004;**GAB-011**;Freddy regarde la caméra quelques secondes;Michael ressemble à William
+FRT-023;;IA;Pirate Cove;CAM05;4;02h30;5%;Observer 8 s;;;block.wav;—;—;—;—;**FRT-014**;Foxy ramasse un cube;Il construit quelque chose
+JER-009;;IA;West Hall;CAM07;4;02h30;4%;Retour caméra;;;page.wav;—;—;—;TAPE011;**JER-008**;Bonnie tourne une feuille;Le dessin continue
+SUS-027;;IA;Stage;CAM01;4;02h30;5%;Retour caméra;;;breathe.wav;—;—;NEWS025;—;**SUS-016**;Chica protège le Cupcake;Elle garde un souvenir
+SUS-007;;Son;Bureau;—;4;02h45;3%;Silence;;;puppy.wav;—;—;—;—;**SUS-003**;Petit jappement très faible;Souvenir
+JER-029;;IA;Backstage;CAM07;4;03h00;5%;Retour caméra;;;servo.wav;—;—;NEWS013;—;**JER-028**;Bonnie baisse la tête devant un dessin;Comme un instant de recueillement
+GAB-013;;IA;Stage;CAM02;4;03h00;5%;Observer;;;servo.wav;—;—;—;—;**GAB-012**;Freddy baisse légèrement la tête;Résignation
+SUS-028;;IA;Stage;CAM01;4;03h00;4%;Observer 10 s;;;servo.wav;—;—;—;TAPE024;**SUS-027**;Chica baisse la tête;Comme si elle pleurait
+FRT-024;;IA;Pirate Cove;CAM05;4;03h30;4%;Retour caméra;;;drop.wav;—;—;NEWS034;—;**FRT-023**;Foxy laisse tomber un jouet;Comme un enfant distrait
+FRT-017;;Overlay;**Dining Area**;**CAM01**;4;Retour caméra;5%;Retour caméra;;;wood.wav;—;REPORT034;—;—;**FRT-012**;Le bateau change d'étagère;Quelqu'un joue encore
+FRT-018;;Overlay;**West Hall**;**CAM02**;4;Retour caméra;5%;Retour caméra;;;block.wav;—;REPORT035;—;—;**FRT-014**;Un cube disparaît;La construction change
+FRT-027;;Overlay;Pirate Cove;CAM05;4;Retour caméra;5%;Retour caméra;;;crash.wav;—;REPORT039;—;—;**FRT-026**;Tour écroulée;Personne ne l'a vue tomber
+GAB-022;;Overlay;Dining Area;CAM01;4;Retour caméra;6%;Retour caméra;;;tick.wav;—;REPORT008;—;—;**GAB-021**;Horloge repart quelques secondes;Le temps refuse d'avancer
+JER-024;;Décor;Supply Closet;CAM06;4;Retour caméra;6%;Retour caméra;;;paper.wav;—;DRAW04;—;TAPE012;**JER-023**;Les crayons changent de place;Une présence continue le dessin
+SUS-018;;Overlay;Dining Area;CAM01;4;Retour caméra;4%;Retour caméra;;;whoosh.wav;—;REPORT025;—;—;**SUS-017**;Cupcake disparaît une seconde;Impossible à expliquer
+SUS-019;;Overlay;Dining Area;CAM01;4;Retour caméra;4%;Retour caméra;;;ceramic.wav;—;REPORT026;—;—;**SUS-018**;Cupcake revient à sa place;Rien n'a changé...
+FRT-009;;Overlay;West Hall;CAM02;4;Toute nuit;5%;Retour caméra;;;wheel.wav;—;REPORT032;NEWS032;—;**FRT-006**;Petite voiture dans le couloir;Le souvenir sort de Pirate Cove
+FRT-015;;Objet;**Dining Area**;**CAM01**;4;Toute nuit;4%;Observer;;;figurine.wav;—;LOST039;NEWS033;—;**FRT-013**;Figurine pirate;Le capitaine du jeu
+FRT-026;;Décor;Pirate Cove;CAM05;4;Toute nuit;5%;Retour caméra;;;block.wav;—;REPORT038;—;—;**FRT-023**;Tour de cubes construite;Un enfant est passé par là
+GAB-023;;Décor;Dining Area;CAM01;4;Toute nuit;5%;Observer;;;clock_error.wav;—;REPORT009;NEWS008;—;**GAB-022**;Une seconde horloge affiche une autre heure;Deux réalités
+JER-011;;Objet;Backstage;CAM01;4;Toute nuit;5%;Observer;;;—;—;LOST000;NEWS000;—;**JER-010**;Dessin d'un soleil;Un souvenir heureux avant le drame
+JER-016;;Objet;Backstage;CAM01;4;Toute nuit;5%;Observer;;;—;—;LOST000;NEWS000;—;**JER-015**;Dessin de cinq enfants;Première allusion aux victimes
+JER-017;;Objet;Backstage;CAM01;4;Toute nuit;5%;Observer;;;—;—;LOST000;NEWS000;—;**JER-016**;Dessin barré;Quelqu'un tente d'effacer le souvenir
+JER-018;;Objet;Backstage;CAM01;4;Toute nuit;5%;Observer;;;—;—;LOST000;NEWS000;—;**JER-017**;Dessin déchiré;La mémoire se fragmente
+JER-019;;Objet;Backstage;CAM01;4;Toute nuit;5%;Observer;;;—;—;LOST000;NEWS000;—;**JER-018**;Dessin inachevé;Le souvenir reste bloqué
+JER-020;;Objet;Backstage;CAM01;4;Toute nuit;5%;Observer;;;—;—;LOST000;NEWS000;—;**JER-019**;Feuille totalement blanche;Le souvenir s'efface
+JER-023;;Objet;Supply Closet;CAM06;4;Toute nuit;7%;Retour caméra;;;whoosh.wav;—;LOST016;—;—;**JER-022**;Le crayon vert disparaît;Le souvenir s'efface
+SUS-008;;Overlay;Kitchen;Audio;4;Toute nuit;5%;Retour écoute;;;bowl_move.wav;—;CLEAN021;—;—;**SUS-006**;Bruit de gamelle déplacée;Quelqu'un nourrit encore le chien
+SUS-015;;Objet;Dining Area;CAM01;4;Toute nuit;5%;Observer;;;ball.wav;—;LOST028;NEWS023;—;**SUS-014**;Petite balle jaune sous une chaise;Jouet oublié
+SUS-023;;Son;Kitchen;Audio;4;Toute nuit;5%;Écoute;;;cutlery.wav;—;CLEAN024;—;—;**SUS-022**;Couverts qui tombent;Bruit métallique inquiétant
+SUS-024;;Son;Kitchen;Audio;4;Toute nuit;4%;Écoute;;;water.wav;—;CLEAN025;—;—;**SUS-023**;Eau qui coule;Quelqu'un utilise l'évier
+GAB-014;;IA;Dining Area;CAM01;4;Toute nuit;4%;Observer;;;metal.wav;—;—;NEWS006;—;**GAB-002**;Freddy semble regarder un ballon;Dernier souvenir
+JER-010;;Objet;Backstage;CAM01;4;Toute nuit;5%;Observer;;;—;—;LOST013;NEWS011;—;**JER-009**;Un dessin d'enfant est posé sur une table;Aucun adulte ne l'a vu
+JER-012;;Objet;Backstage;CAM01;4;Toute nuit;5%;Observer;;;—;—;LOST000;NEWS000;—;**JER-011**;Dessin de Freddy;Jeremy admirait les animatroniques
+JER-013;;Objet;Backstage;CAM01;4;Toute nuit;5%;Observer;;;—;—;LOST000;NEWS000;—;**JER-012**;Dessin de Bonnie;Bonnie devient son refuge
+JER-014;;Objet;Backstage;CAM01;4;Toute nuit;5%;Observer;;;—;—;LOST000;NEWS000;—;**JER-013**;Dessin d'une maison;Il voulait rentrer chez lui
+JER-015;;Objet;Backstage;CAM01;4;Toute nuit;5%;Observer;;;—;—;LOST000;NEWS000;—;**JER-014**;Dessin d'une famille;Les parents ne reviendront jamais
+FRT-010;;IA;Pirate Cove;CAM05;5;03h30;2%;Retour caméra;;;toys.wav;—;—;—;TAPE032;**FRT-029**;Foxy aligne soigneusement tous les jouets;Fritz termine sa partie
+SUS-029;;IA;Stage;CAM01;5;03h30;3%;Silence;;;static.wav;—;—;—;—;**SUS-028**;Chica semble écouter;Elle entend encore le chien
+FRT-025;;IA;Pirate Cove;CAM05;5;03h45;3%;Observer 10 s;;;creak.wav;—;—;—;TAPE034;**FRT-019**;Foxy regarde le coffre ouvert;Il cherche un trésor
+GAB-024;;Overlay;Stage;CAM02;5;04h00;4%;Retour caméra;;;reverse.wav;—;REPORT010;—;TAPE006;**GAB-023**;Les aiguilles tournent à l'envers;La fête revient en arrière
+JER-030;;IA;Backstage;CAM07;5;04h00;4%;Observer 10s;;;drop.wav;—;DRAW05;NEWS014;TAPE016;**JER-029**;Bonnie repose doucement le crayon;Le dessin est enfin terminé
+SUS-010;;IA;Stage;CAM01;5;04h00;2%;Retour caméra;;;breathe.wav;—;—;—;—;**SUS-009**;Chica regarde le joueur sans bouger;Confusion avec Michael
+SUS-030;;IA;Stage;CAM01;5;04h30;2%;Retour caméra;;;door.wav;—;REPORT028;NEWS026;TAPE025;**SUS-029**;Chica s'arrête devant une porte fermée;Elle attend toujours le retour de Susie
+GAB-015;;IA;Dining Area;CAM01;5;05h00;3%;Retour caméra;;;breathe.wav;—;REPORT006;NEWS007;TAPE005;**GAB-008**;Freddy fixe une boîte cadeau;Cadeau jamais ouvert
+FRT-020;;Overlay;Pirate Cove;CAM05;5;05h55;3%;Heure;;;reset.wav;—;REPORT037;—;TAPE033;**FRT-019**;Tous les objets reviennent à leur place;Comme si rien ne s'était passé
+FRT-030;;Décor;Pirate Cove;CAM05;5;05h55;2%;Heure;;;toys.wav;—;REPORT041;NEWS036;TAPE036;**FRT-020**;Jouets parfaitement rangés;Fritz a terminé de jouer
+GAB-025;;Glitch;Dining Area;CAM01;5;05h55;2%;Heure;;;glitch.wav;—;REPORT011;NEWS009;TAPE007;**GAB-024**;L'horloge revient à 00:00;Boucle éternelle
+FRT-019;;Overlay;Pirate Cove;CAM05;5;Retour caméra;4%;Retour caméra;;;creak.wav;—;REPORT036;—;—;**FRT-013**;Le coffre est refermé;La partie est terminée
+FRT-028;;Objet;**Dining Area**;**CAM01**;5;Toute nuit;4%;Observer;;;wheel.wav;—;LOST040;—;—;**FRT-016**;Voiture sous une table;Fritz s'est caché en jouant
+FRT-029;;Objet;Pirate Cove;CAM05;5;Toute nuit;3%;Observer;;;coins.wav;—;REPORT040;NEWS035;TAPE035;**FRT-019**;Trésor sorti du coffre;Le jeu touche à sa fin
+JER-025;;Objet;Supply Closet;CAM06;5;Toute nuit;5%;Observer;;;pencil.wav;—;LOST017;NEWS012;—;**JER-024**;Un seul crayon reste sur la table;Il ne reste qu'un souvenir
+SUS-009;;Objet;Dining Area;CAM01;5;Toute nuit;4%;Observer;;;cloth.wav;—;LOST024;—;TAPE022;**SUS-008**;Ruban jaune au sol;Susie
+SUS-020;;Objet;Dining Area;CAM01;5;Toute nuit;3%;Observer;;;crack.wav;—;REPORT027;NEWS024;—;**SUS-019**;Cupcake légèrement fissuré;Même lui se détériore
+SUS-025;;Son;Kitchen;Audio;5;Toute nuit;3%;Silence;;;pant.wav;—;CLEAN026;—;TAPE023;**SUS-024**;Petit halètement très discret;Comme un chien fatigué

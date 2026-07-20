@@ -1,0 +1,247 @@
+
+# Tableau de Production
+
+
+
+| ID      | Priorité | Type    | Salle       | Caméra | Nuit | Heure      | Chance | Déclencheur   | Description                                | Lore                        | Son          | Script JS         | Terminal  | Journal | Cassette | RequiresEvent |
+| ------- | -------- | ------- | ----------- | ------ | ---- | ---------- | ------ | ------------- | ------------------------------------------ | --------------------------- | ------------ | ----------------- | --------- | ------- | -------- | ------------- |
+| X GAB-001 | Haute    | Objet   | Dining Area | CAM01  | 1    | 00h-06h    | 20%    | Observer      | Une chaise est reculée                     | Quelqu'un était assis       | chair.wav    | chair.js          | LOST001   | —       | —        | —             |
+| X GAB-002 | Haute    | Objet   | Dining Area | CAM01  | 1    | Toute nuit | 15%    | Retour caméra | Un ballon jaune apparaît                   | Décoration oubliée          | balloon.wav  | balloon.js        | LOST002   | NEWS001 | —        | **GAB-001**   |
+| X GAB-003 | Haute    | Décor   | Stage       | CAM02  | 2    | 01h00      | 10%    | Observer 8 s  | Une cinquième assiette apparaît            | Cinquième enfant            | —            | plate.js          | —         | NEWS002 | —        | **GAB-002**   |
+| GAB-004 | Haute    | IA      | Stage       | CAM02  | 2    | 03h00      | 6%     | Retour caméra | Freddy regarde une chaise vide             | Gabriel attend              | breathe.wav  | stare.js          | —         | —       | TAPE003  | **GAB-003**   |
+| X GAB-005 | Moyenne  | Overlay | Dining Area | CAM01  | 2    | 02h00      | 12%    | Observer      | Une bougie est allumée                     | Anniversaire                | flame.wav    | candle.js         | REPORT005 | NEWS002 | —        | **GAB-002**   |
+| GAB-006 | Haute    | Son     | Bureau      | —      | 2    | 02h15      | 7%     | Silence       | Applaudissements lointains                 | Souvenir d'une fête         | applause.wav | audio.js          | —         | —       | TAPE001  | **GAB-005**   |
+| X GAB-007 | Haute    | Objet   | Dining Area | CAM01  | 3    | 00h00      | 9%     | Observer      | Boîte cadeau fermée                        | Cadeau jamais ouvert        | paper.wav    | gift.js           | LOST004   | —       | —        | **GAB-005**   |
+| X GAB-008 | Moyenne  | Overlay | Dining Area | CAM01  | 3    | 04h00      | 5%     | Retour caméra | Le cadeau est ouvert                       | Souvenir évolutif           | —            | gift_open.js      | —         | —       | —        | **GAB-007**   |
+| X GAB-009 | Haute    | Objet   | Dining Area | CAM01  | 3    | Toute nuit | 8%     | Observer      | Part de gâteau oubliée                     | Dernier anniversaire        | flies.wav    | cake.js           | LOST005   | NEWS003 | —        | **GAB-008**   |
+| X GAB-010 | Haute    | Objet   | Dining Area | CAM01  | 3    | Toute nuit | 6%     | Observer      | Verre en carton renversé                   | Fête interrompue            | drip.wav     | cup.js            | CLEAN01   | —       | —        | **GAB-009**   |
+| X GAB-011 | Haute    | IA      | Stage       | CAM02  | 3    | Toute nuit | 6%     | Retour caméra | Freddy regarde toujours la même chaise     | Gabriel attend son père     | breathe.wav  | freddy_chair.js   | —         | NEWS004 | —        | **GAB-004**   |
+| X GAB-012 | Haute    | IA      | Stage       | CAM02  | 4    | 02h00      | 5%     | Retour caméra | Freddy regarde la caméra quelques secondes | Michael ressemble à William | servo.wav    | freddy_camera.js  | —         | NEWS005 | TAPE004  | **GAB-011**   |
+| X GAB-013 | Haute    | IA      | Stage       | CAM02  | 4    | 03h00      | 5%     | Observer      | Freddy baisse légèrement la tête           | Résignation                 | servo.wav    | freddy_head.js    | —         | —       | —        | **GAB-012**   |
+| X GAB-014 | Haute    | IA      | Dining Area | CAM01  | 4    | Toute nuit | 4%     | Observer      | Freddy semble regarder un ballon           | Dernier souvenir            | metal.wav    | freddy_balloon.js | —         | NEWS006 | —        | **GAB-002**   |
+| X GAB-015 | Critique | IA      | Dining Area | CAM01  | 5    | 05h00      | 3%     | Retour caméra | Freddy fixe une boîte cadeau               | Cadeau jamais ouvert        | breathe.wav  | freddy_gift.js    | REPORT006 | NEWS007 | TAPE005  | **GAB-008**   |
+| GAB-021 | Haute    | Décor   | Dining Area | CAM01  | 3    | Toute nuit    | 8%     | Observer      | Horloge bloquée à 17h45                     | L'heure de la fête         | clock.wav       | clock_stop.js    | REPORT007 | —       | —        | **GAB-005**   |
+| GAB-022 | Haute    | Overlay | Dining Area | CAM01  | 4    | Retour caméra | 6%     | Retour caméra | Horloge repart quelques secondes            | Le temps refuse d'avancer  | tick.wav        | clock_restart.js | REPORT008 | —       | —        | **GAB-021**   |
+| GAB-023 | Haute    | Décor   | Dining Area | CAM01  | 4    | Toute nuit    | 5%     | Observer      | Une seconde horloge affiche une autre heure | Deux réalités              | clock_error.wav | clock_double.js  | REPORT009 | NEWS008 | —        | **GAB-022**   |
+| GAB-024 | Critique | Overlay | Stage       | CAM02  | 5    | 04h00         | 4%     | Retour caméra | Les aiguilles tournent à l'envers           | La fête revient en arrière | reverse.wav     | clock_reverse.js | REPORT010 | —       | TAPE006  | **GAB-023**   |
+| GAB-025 | Critique | Glitch  | Dining Area | CAM01  | 5    | 05h55         | 2%     | Heure         | L'horloge revient à 00:00                   | Boucle éternelle           | glitch.wav      | clock_reset.js   | REPORT011 | NEWS009 | TAPE007  | **GAB-024**   |
+
+
+
+Série "Les Sons"
+
+| ID      | Son                            | Utilisation   |
+| ------- | ------------------------------ | ------------- |
+| GAB-026 | Enfants qui applaudissent      | Dining Area   |
+| GAB-027 | "Happy Birthday" très lointain | Stage         |
+| GAB-028 | Bougie soufflée                | Retour caméra |
+| GAB-029 | Papier cadeau froissé          | Boîte cadeau  |
+| GAB-030 | Ballon qui éclate              | Très rare     |
+
+
+Série "Terminal"
+
+| Réaliser| ID      | Commande  | Contenu                      |
+| ------- | ------- | --------- | ---------------------------- |
+| X | GAB-031 | PARTY     | Liste des anniversaires      |
+| X | GAB-032 | TABLES    | Nombre de couverts préparés  |
+| X | GAB-033 | BALLOON   | Inventaire des ballons       |
+| X | GAB-034 | LOST      | Casquette jamais récupérée   |
+| X | GAB-035 | GUESTS    | Liste incomplète des invités |
+
+
+🎨 Liste complète des assets à produire
+
+
+Journaux
+NEWS_GAB_01 — « Une fête d'anniversaire tourne court »
+NEWS_GAB_02 — « Les parents quittent précipitamment le restaurant »
+NEWS_GAB_03 — « Des objets oubliés restent sans propriétaire »
+
+Cassettes
+TAPE_GAB_01 — Préparation d'un anniversaire
+TAPE_GAB_02 — Consignes d'animation pour Freddy
+TAPE_GAB_03 — Procédure de fermeture après une fête
+
+
+
+
+|-----------------------------------------------------------------------------------------------------------------|
+
+| ID      | Priorité | Type    | Salle         | Caméra | Nuit | Heure         | Chance | Déclencheur   | Description                                                         | Lore                                  | Son             | JS               | Terminal | Journal | Cassette | RequiresEvent |
+| ------- | -------- | ------- | ------------- | ------ | ---- | ------------- | ------ | ------------- | ------------------------------------------------------------------- | ------------------------------------- | --------------- | ---------------- | -------- | ------- | -------- | ------------- |
+| X JER-001 | Haute    | Objet   | West Hall     | CAM07  | 1    | Toute nuit    | 18%    | Observer      | Une feuille blanche apparaît                                        | Jeremy préparait un dessin            | paper.wav       | paper.js         | LOST010  | —       | —        | —             |
+| X JER-002 | Haute    | Overlay | West Hall     | CAM07  | 2    | Retour caméra | 12%    | Retour caméra | Un soleil est dessiné                                               | Dessin terminé                        | pencil.wav      | draw.js          | DRAW01   | —       | —        | **JER-001**   |
+| X JER-003 | Haute    | Objet   | Supply Closet | CAM06  | 2    | Toute nuit    | 10%    | Observer      | Une boîte de crayons apparaît                                       | Crayons oubliés                       | crayons.wav     | crayons.js       | LOST011  | —       | —        | **JER-001**   |
+| X JER-004 | Haute    | IA      | Backstage     | CAM07  | 2    | 02h00         | 7%     | Observer 8s   | Bonnie tient un crayon                                              | Bonnie continue le dessin             | scratch.wav     | bonnie_draw.js   | —        | —       | TAPE010  | **JER-003**   |
+| X JER-005 | Haute    | Overlay | Dining Area   | CAM01  | 3    | 03h00         | 6%     | Retour caméra | Un dessin est accroché au mur                                       | Personne ne l'avait vu                | —               | drawing_wall.js  | DRAW02   | NEWS010 | —        | **JER-004**   |
+| JER-006 | Moyenne  | Son     | Supply Closet | CAM07  | 2    | Toute nuit    | 9%     | Silence       | Bruit de crayon sur papier                                          | Jeremy dessine                        | pencil_loop.wav | audio_draw.js    | —        | —       | —        | **JER-003**   |
+| X JER-007 | Haute    | Objet   | Supply Closet | CAM06  | 3    | Toute nuit    | 8%     | Observer      | Une gomme est posée sur le sol, un dessin d'anniversaire est effacé | Quelqu'un corrige                     | eraser.wav      | eraser.js        | LOST012  | —       | —        | **JER-002**   |
+| JER-008 | Haute    | Décor   | Supply Closet | CAM07  | 3    | 01h00         | 6%     | Observer      | Deux feuilles sont au sol                                           | Dessins abandonnés                    | paper.wav       | papers.js        | DRAW03   | —       | —        | **JER-007**   |
+| X JER-009 | Haute    | IA      | West Hall     | CAM07  | 4    | 02h30         | 4%     | Retour caméra | Bonnie tourne une feuille                                           | Le dessin continue                    | page.wav        | bonnie_page.js   | —        | —       | TAPE011  | **JER-008**   |
+| X JER-010 | Haute    | Objet   | Backstage     | CAM01  | 4    | Toute nuit    | 5%     | Observer      | Un dessin d'enfant est posé sur une table                           | Aucun adulte ne l'a vu                | —               | drawing_table.js | LOST013  | NEWS011 | —        | **JER-009**   |
+| JER-011 | Haute    | Objet   | Backstage     | CAM01  | 4    | Toute nuit    | 5%     | Observer      | Dessin d'un soleil                                                  | Un souvenir heureux avant le drame    | —               | —                | LOST000  | NEWS000 | —        | **JER-010**   |
+| X JER-012 | Haute    | Objet   | Backstage     | CAM01  | 4    | Toute nuit    | 5%     | Observer      | Dessin de Freddy                                                    | Jeremy admirait les animatroniques    | —               | —                | LOST000  | NEWS000 | —        | **JER-011**   |
+| X JER-013 | Haute    | Objet   | Backstage     | CAM01  | 4    | Toute nuit    | 5%     | Observer      | Dessin de Bonnie                                                    | Bonnie devient son refuge             | —               | —                | LOST000  | NEWS000 | —        | **JER-012**   |
+| X JER-014 | Haute    | Objet   | Backstage     | CAM01  | 4    | Toute nuit    | 5%     | Observer      | Dessin d'une maison                                                 | Il voulait rentrer chez lui           | —               | —                | LOST000  | NEWS000 | —        | **JER-013**   |
+| X JER-015 | Haute    | Objet   | Backstage     | CAM01  | 4    | Toute nuit    | 5%     | Observer      | Dessin d'une famille                                                | Les parents ne reviendront jamais     | —               | —                | LOST000  | NEWS000 | —        | **JER-014**   |
+| JER-016 | Haute    | Objet   | Backstage     | CAM01  | 4    | Toute nuit    | 5%     | Observer      | Dessin de cinq enfants                                              | Première allusion aux victimes        | —               | —                | LOST000  | NEWS000 | —        | **JER-015**   |
+| JER-017 | Haute    | Objet   | Backstage     | CAM01  | 4    | Toute nuit    | 5%     | Observer      | Dessin barré                                                        | Quelqu'un tente d'effacer le souvenir | —               | —                | LOST000  | NEWS000 | —        | **JER-016**   |
+| JER-018 | Haute    | Objet   | Backstage     | CAM01  | 4    | Toute nuit    | 5%     | Observer      | Dessin déchiré                                                      | La mémoire se fragmente               | —               | —                | LOST000  | NEWS000 | —        | **JER-017**   |
+| JER-019 | Haute    | Objet   | Backstage     | CAM01  | 4    | Toute nuit    | 5%     | Observer      | Dessin inachevé                                                     | Le souvenir reste bloqué              | —               | —                | LOST000  | NEWS000 | —        | **JER-018**   |
+| JER-020 | Haute    | Objet   | Backstage     | CAM01  | 4    | Toute nuit    | 5%     | Observer      | Feuille totalement blanche                                          | Le souvenir s'efface                  | —               | —                | LOST000  | NEWS000 | —        | **JER-019**   |
+| JER-021 | Moyenne  | Objet   | Supply Closet | CAM06  | 3    | Toute nuit    | 10%    | Observer      | Crayon bleu au sol                                                  | Jeremy a commencé son dessin          | paper.wav       | crayon_blue.js   | LOST014  | —       | —        | **JER-003**   |
+| JER-022 | Moyenne  | Objet   | Supply Closet | CAM06  | 3    | Toute nuit    | 8%     | Observer      | Crayon rouge cassé                                                  | Quelqu'un s'est interrompu            | crack.wav       | crayon_red.js    | LOST015  | —       | —        | **JER-021**   |
+| JER-023 | Moyenne  | Objet   | Supply Closet | CAM06  | 4    | Toute nuit    | 7%     | Retour caméra | Le crayon vert disparaît                                            | Le souvenir s'efface                  | whoosh.wav      | crayon_green.js  | LOST016  | —       | —        | **JER-022**   |
+| JER-024 | Haute    | Décor   | Supply Closet | CAM06  | 4    | Retour caméra | 6%     | Retour caméra | Les crayons changent de place                                       | Une présence continue le dessin       | paper.wav       | crayons_move.js  | DRAW04   | —       | TAPE012  | **JER-023**   |
+| JER-025 | Haute    | Objet   | Supply Closet | CAM06  | 5    | Toute nuit    | 5%     | Observer      | Un seul crayon reste sur la table                                   | Il ne reste qu'un souvenir            | pencil.wav      | last_crayon.js   | LOST017  | NEWS012 | —        | **JER-024**   |
+| JER-026 | Haute    | IA      | Backstage     | CAM07  | 3    | 01h30         | 8%     | Observer 8s   | Bonnie regarde un dessin                                            | Il contemple l'œuvre de Jeremy        | breath.wav      | bonnie_look.js   | —        | —       | TAPE013  | **JER-005**   |
+| JER-027 | Haute    | IA      | Backstage     | CAM07  | 3    | 02h30         | 7%     | Observer 8s   | Bonnie dessine                                                      | Le dessin continue sans personne      | scratch.wav     | bonnie_draw2.js  | —        | —       | TAPE014  | **JER-026**   |
+| JER-028 | Haute    | IA      | Backstage     | CAM07  | 4    | 01h00         | 6%     | Retour caméra | Bonnie tient une feuille                                            | Il protège un souvenir                | paper.wav       | bonnie_sheet.js  | —        | —       | TAPE015  | **JER-027**   |
+| JER-029 | Haute    | IA      | Backstage     | CAM07  | 4    | 03h00         | 5%     | Retour caméra | Bonnie baisse la tête devant un dessin                              | Comme un instant de recueillement     | servo.wav       | bonnie_head.js   | —        | NEWS013 | —        | **JER-028**   |
+| JER-030 | Haute    | IA      | Backstage     | CAM07  | 5    | 04h00         | 4%     | Observer 10s  | Bonnie repose doucement le crayon                                   | Le dessin est enfin terminé           | drop.wav        | bonnie_finish.js | DRAW05   | NEWS014 | TAPE016  | **JER-029**   |
+
+
+
+Série "Terminal"
+| Réaliser| ID      | Commande  | Contenu                      |
+| ------- | ------- | --------- | ---------------------------- |
+| X | JER-031 | DRAWINGS.LOG | Inventaire des dessins retrouvés |
+| X |  JER-032 | LOST_ART     | Matériel scolaire oublié         |
+| X |  JER-033 | CLEANING     | Dessins retirés des murs         |
+| X |  JER-034 | CHILDREN_ART | Exposition interne des dessins   |
+| X |  JER-035 | SCANNER      | Archives de dessins numérisés    |
+
+
+Journaux
+| ID          | Titre                                                         |
+| ----------- | ------------------------------------------------------------- |
+| NEWS_JER_01 | « Les décorations du restaurant sont renouvelées »            |
+| NEWS_JER_02 | « Les dessins des enfants remplacés par de nouveaux modèles » |
+| NEWS_JER_03 | « Les murs repeints après plusieurs dégradations »            |
+
+Cassettes
+| ID          | Contenu                                                                                                                         |
+| ----------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| TAPE_JER_01 | Consignes pour installer un concours de dessin                                                                                  |
+| TAPE_JER_02 | Rappel de retirer les feuilles laissées sur les tables après fermeture                                                          |
+| TAPE_JER_03 | Enregistrement interrompu d'un employé disant : *« Il y a encore des dessins ce matin... pourtant on les avait tous retirés. »* |
+
+
+| ID      | Priorité | Type    | Salle       | Caméra | Nuit | Heure         | Chance | Déclencheur   | Description                            | Lore                                    | Son           | Script JS        | Terminal  | Journal | Cassette | RequiresEvent |
+| ------- | -------- | ------- | ----------- | ------ | ---- | ------------- | ------ | ------------- | -------------------------------------- | --------------------------------------- | ------------- | ---------------- | --------- | ------- | -------- | ------------- |
+| X SUS-001 | Haute    | Objet   | Dining Area | CAM01  | 1    | Toute nuit    | 18%    | Observer      | Gamelle métallique sous une table      | Appartient au chien                     | bowl.wav      | bowl.js          | LOST021   | —       | —        | —             |
+| X SUS-002 | Haute    | Objet   | Dining Area | CAM01  | 2    | 01h00         | 10%    | Retour caméra | Laisse rouge oubliée                   | Dernière promenade                      | chain.wav     | leash.js         | LOST022   | NEWS021 | —        | **SUS-001**   |
+| SUS-003 | Haute    | Son     | Kitchen     | Audio  | 2    | 02h15         | 5%     | Écoute CAM06  | Aboiement très lointain                | Faux espoir                             | dog_far.wav   | audioDog.js      | —         | —       | TAPE021  | **SUS-002**   |
+| SUS-004 | Haute    | IA      | Kitchen     | Audio  | 3    | 03h00         | 4%     | Écoute 10 s   | Chica tourne la tête vers une porte    | Elle « entend » quelque chose           | metal.wav     | chicaTurn.js     | —         | —       | —        | **SUS-003**   |
+| X SUS-005 | Haute    | Overlay | Dining Area | CAM01  | 3    | Toute nuit    | 7%     | Observer      | Cupcake légèrement déplacé             | Chica protège un souvenir               | ceramic.wav   | cupcake.js       | REPORT021 | —       | —        | **SUS-004**   |
+| SUS-006 | Haute    | Objet   | East Hall   | CAM04  | 3    | 01h30         | 6%     | Observer      | ???               | Objet perdu                             | bell.wav      | collar.js        | LOST023   | NEWS022 | —        | **SUS-002**   |
+| SUS-007 | Moyenne  | Son     | Bureau      | —      | 4    | 02h45         | 3%     | Silence       | Petit jappement très faible            | Souvenir                                | puppy.wav     | puppy.js         | —         | —       | —        | **SUS-003**   |
+| SUS-008 | Haute    | Overlay | Kitchen     | Audio  | 4    | Toute nuit    | 5%     | Retour écoute | Bruit de gamelle déplacée              | Quelqu'un nourrit encore le chien       | bowl_move.wav | bowlMove.js      | CLEAN021  | —       | —        | **SUS-006**   |
+| SUS-009 | Haute    | Objet   | Dining Area | CAM01  | 5    | Toute nuit    | 4%     | Observer      | Ruban jaune au sol                     | Susie                                   | cloth.wav     | ribbon.js        | LOST024   | —       | TAPE022  | **SUS-008**   |
+| SUS-010 | Haute    | IA      | Stage       | CAM01  | 5    | 04h00         | 2%     | Retour caméra | Chica regarde le joueur sans bouger    | Confusion avec Michael                  | breathe.wav   | chicaStare.js    | —         | —       | —        | **SUS-009**   |
+| SUS-011 | Moyenne  | Objet   | Dining Area | CAM01  | 2    | Toute nuit    | 8%     | Observer      | Gamelle déplacée                       | Quelqu'un est revenu                    | bowl.wav      | bowlMoved.js     | LOST025   | —       | —        | **SUS-001**   |
+| SUS-012 | Moyenne  | Objet   | Dining Area | CAM01  | 2    | Toute nuit    | 7%     | Observer      | Laisse au sol                          | Dernière promenade                      | chain.wav     | leashFloor.js    | LOST026   | —       | —        | **SUS-002**   |
+| X SUS-013 | Moyenne  | Objet   | East Hall   | CAM04  | 3    | Toute nuit    | 6%     | Observer      | Collier usé                            | Objet jamais récupéré                   | bell.wav      | collarOld.js     | LOST027   | —       | —        | **SUS-006**   |
+| X SUS-014 | Moyenne  | Décor   | East Hall   | CAM04  | 3    | Toute nuit    | 5%     | Observer      | Empreintes de pattes poussiéreuses     | Vieilles traces                         | step.wav      | pawprints.js     | REPORT022 | —       | —        | **SUS-013**   |
+| SUS-015 | Moyenne  | Objet   | Dining Area | CAM01  | 4    | Toute nuit    | 5%     | Observer      | Petite balle jaune sous une chaise     | Jouet oublié                            | ball.wav      | ball.js          | LOST028   | NEWS023 | —        | **SUS-014**   |
+| SUS-016 | Haute    | Overlay | Dining Area | CAM01  | 3    | Retour caméra | 6%     | Retour caméra | Cupcake orienté vers la caméra         | Il semble observer                      | ceramic.wav   | cupcakeLook.js   | REPORT023 | —       | —        | **SUS-005**   |
+| SUS-017 | Haute    | Overlay | Dining Area | CAM01  | 3    | Toute nuit    | 5%     | Observer      | Cupcake regarde la porte               | Il attend quelqu'un                     | ceramic.wav   | cupcakeDoor.js   | REPORT024 | —       | —        | **SUS-016**   |
+| SUS-018 | Haute    | Overlay | Dining Area | CAM01  | 4    | Retour caméra | 4%     | Retour caméra | Cupcake disparaît une seconde          | Impossible à expliquer                  | whoosh.wav    | cupcakeGone.js   | REPORT025 | —       | —        | **SUS-017**   |
+| SUS-019 | Haute    | Overlay | Dining Area | CAM01  | 4    | Retour caméra | 4%     | Retour caméra | Cupcake revient à sa place             | Rien n'a changé...                      | ceramic.wav   | cupcakeBack.js   | REPORT026 | —       | —        | **SUS-018**   |
+| SUS-020 | Haute    | Objet   | Dining Area | CAM01  | 5    | Toute nuit    | 3%     | Observer      | Cupcake légèrement fissuré             | Même lui se détériore                   | crack.wav     | cupcakeCrack.js  | REPORT027 | NEWS024 | —        | **SUS-019**   |
+| SUS-021 | Moyenne  | Son     | Kitchen     | Audio  | 3    | Toute nuit    | 6%     | Écoute        | Gamelle métallique déplacée            | Quelqu'un est dans la cuisine           | bowl_move.wav | kitchenBowl.js   | CLEAN022  | —       | —        | **SUS-008**   |
+| SUS-022 | Moyenne  | Son     | Kitchen     | Audio  | 3    | Toute nuit    | 5%     | Écoute        | Placard ouvert                         | Une recherche silencieuse               | cupboard.wav  | cupboard.js      | CLEAN023  | —       | —        | **SUS-021**   |
+| SUS-023 | Moyenne  | Son     | Kitchen     | Audio  | 4    | Toute nuit    | 5%     | Écoute        | Couverts qui tombent                   | Bruit métallique inquiétant             | cutlery.wav   | cutlery.js       | CLEAN024  | —       | —        | **SUS-022**   |
+| SUS-024 | Moyenne  | Son     | Kitchen     | Audio  | 4    | Toute nuit    | 4%     | Écoute        | Eau qui coule                          | Quelqu'un utilise l'évier               | water.wav     | water.js         | CLEAN025  | —       | —        | **SUS-023**   |
+| SUS-025 | Haute    | Son     | Kitchen     | Audio  | 5    | Toute nuit    | 3%     | Silence       | Petit halètement très discret          | Comme un chien fatigué                  | pant.wav      | pant.js          | CLEAN026  | —       | TAPE023  | **SUS-024**   |
+| X SUS-026 | Haute    | IA      | Restroom       | CAM01  | 3    | 02h00         | 6%     | Retour caméra | Chica regarde la cuisine               | Elle cherche quelque chose              | servo.wav     | chicaKitchen.js  | —         | —       | —        | **SUS-004**   |
+| X SUS-027 | Haute    | IA      | Stage       | CAM01  | 4    | 02h30         | 5%     | Retour caméra | Chica protège le Cupcake               | Elle garde un souvenir                  | breathe.wav   | chicaCupcake.js  | —         | NEWS025 | —        | **SUS-016**   |
+| X SUS-028 | Haute    | IA      | Stage       | CAM01  | 4    | 03h00         | 4%     | Observer 10 s | Chica baisse la tête                   | Comme si elle pleurait                  | servo.wav     | chicaHeadDown.js | —         | —       | TAPE024  | **SUS-027**   |
+| X SUS-029 | Haute    | IA      | Stage       | CAM01  | 5    | 03h30         | 3%     | Silence       | Chica semble écouter                   | Elle entend encore le chien             | static.wav    | chicaListen.js   | —         | —       | —        | **SUS-028**   |
+| X SUS-030 | Haute    | IA      | Stage       | CAM01  | 5    | 04h30         | 2%     | Retour caméra | Chica s'arrête devant une porte fermée | Elle attend toujours le retour de Susie | door.wav      | chicaDoor.js     | REPORT028 | NEWS026 | TAPE025  | **SUS-029**   |
+
+
+
+Série "Terminal"
+| Réaliser| ID      | Commande  | Contenu                      |
+| ------- | ------- | --------- | ---------------------------- |
+| X | SUS-031 | PETS.LOG    | Signalements d'animaux dans le restaurant                   |
+| X | SUS-032 | LOST_PETS   | Objet trouvé : collier rouge                                |
+| X | SUS-033 | KITCHEN.LOG | Bruits nocturnes signalés par les employés                  |
+| X | SUS-034 | COOKING    | Gamelle retrouvée plusieurs matins de suite                 |
+| X | SUS-035 | REPORT_87   | Employé affirmant avoir entendu un chien après la fermeture |
+
+
+Journaux
+| ID          | Titre                                                              |
+| ----------- | ------------------------------------------------------------------ |
+| X NEWS_SUS_01 | « Les employés évoquent des bruits inexpliqués dans les cuisines » |
+| X NEWS_SUS_02 | « La direction dément toute présence d'animaux »                   |
+| X NEWS_SUS_03 | « Les inspections sanitaires ne révèlent aucune anomalie »         |
+
+
+Cassettes
+| ID          | Contenu                                                                      |
+| ----------- | ---------------------------------------------------------------------------- |
+| X TAPE_SUS_01 | Consignes : ne jamais laisser de nourriture après la fermeture.
+| X TAPE_SUS_02 | Employé : *« La gamelle était encore déplacée ce matin »*
+| X TAPE_SUS_03 | Enregistrement interrompu : un aboiement lointain suivi d'un grésillement, puis la voix d'un superviseur : *« Effacez cette bande. »
+
+
+| ID      | Priorité | Type    | Salle           | Caméra    | Nuit | Heure         | Chance | Déclencheur   | Description                               | Lore                                  | Son          | Script JS          | Terminal  | Journal | Cassette | RequiresEvent |
+| ------- | -------- | ------- | --------------- | --------- | ---- | ------------- | ------ | ------------- | ----------------------------------------- | ------------------------------------- | ------------ | ------------------ | --------- | ------- | -------- | ------------- |
+| FRT-001 | Critique | Objet   | Pirate Cove     | CAM05     | 2    | 02h00–02h30   | 8%     | Observer 5 s  | Petite voiture rouge apparaît             | Jouet préféré de Fritz                | toy_roll.wav | car_memory.js      | LOST031   | —       | —        | —             |
+| FRT-002 | Critique | IA      | Pirate Cove     | CAM05     | 2    | 02h00         | 5%     | Retour caméra | Foxy pousse doucement la voiture          | Fritz continue de jouer               | wheel.wav    | foxy_car.js        | —         | —       | —        | **FRT-001**   |
+| FRT-003 | Haute    | Overlay | Pirate Cove     | CAM05     | 2    | Toute nuit    | 12%    | Retour caméra | La voiture change de position             | Souvenir vivant                       | —            | overlay_car.js     | LOST032   | —       | —        | **FRT-002**   |
+| FRT-004 | Haute    | Objet   | Pirate Cove     | CAM05     | 3    | 01h45         | 6%     | Observer      | Bateau pirate miniature                   | Jeu abandonné                         | wood.wav     | boat.js            | LOST033   | NEWS031 | —        | **FRT-003**   |
+| FRT-005 | Haute    | Objet   | Pirate Cove     | CAM05     | 3    | Toute nuit    | 9%     | Observer      | Coffre à trésor entrouvert                | Fritz jouait aux pirates              | creak.wav    | chest.js           | REPORT031 | —       | TAPE031  | **FRT-004**   |
+| FRT-006 | Haute    | Son     | Bureau          | —         | 2    | 02h20         | 7%     | Silence       | Petite voiture qui roule                  | Fritz traverse le couloir             | toy_car.wav  | toy_audio.js       | —         | —       | —        | **FRT-001**   |
+| FRT-007 | Haute    | IA      | Pirate Cove     | CAM05     | 3    | 03h00         | 4%     | Observer 10 s | Foxy ramasse le bateau                    | Le souvenir évolue                    | wood.wav     | foxy_boat.js       | —         | —       | —        | **FRT-004**   |
+| FRT-008 | Haute    | Décor   | Pirate Cove     | CAM05     | 3    | Toute nuit    | 6%     | Observer      | Trois cubes en bois apparaissent          | Jeu d'enfant                          | block.wav    | cubes.js           | LOST034   | —       | —        | **FRT-007**   |
+| FRT-009 | Haute    | Overlay | West Hall       | CAM02     | 4    | Toute nuit    | 5%     | Retour caméra | Petite voiture dans le couloir            | Le souvenir sort de Pirate Cove       | wheel.wav    | hallway.js         | REPORT032 | NEWS032 | —        | **FRT-006**   |
+| FRT-010 | Critique | IA      | Pirate Cove     | CAM05     | 5    | 03h30         | 2%     | Retour caméra | Foxy aligne soigneusement tous les jouets | Fritz termine sa partie               | toys.wav     | final_play.js      | —         | —       | TAPE032  | **FRT-029**   |
+| FRT-011 | Moyenne  | Objet   | **West Hall**   | **CAM02** | 2    | Toute nuit    | 8%     | Observer      | Voiture rouge                             | Jouet favori de Fritz                 | toy_roll.wav | red_car.js         | LOST035   | —       | —        | **FRT-001**   |
+| FRT-012 | Moyenne  | Objet   | Pirate Cove     | CAM05     | 3    | Toute nuit    | 7%     | Observer      | Bateau pirate                             | Pirate Cove devient un terrain de jeu | wood.wav     | pirate_boat.js     | LOST036   | —       | —        | **FRT-004**   |
+| FRT-013 | Moyenne  | Objet   | **Dining Area** | **CAM01** | 3    | Toute nuit    | 6%     | Observer      | Coffre miniature                          | Chasse au trésor imaginaire           | creak.wav    | mini_chest.js      | LOST037   | —       | —        | **FRT-005**   |
+| FRT-014 | Moyenne  | Objet   | **West Hall**   | **CAM02** | 3    | Toute nuit    | 5%     | Observer      | Cube en bois                              | Construction interrompue              | block.wav    | cube.js            | LOST038   | —       | —        | **FRT-008**   |
+| FRT-015 | Moyenne  | Objet   | **Dining Area** | **CAM01** | 4    | Toute nuit    | 4%     | Observer      | Figurine pirate                           | Le capitaine du jeu                   | figurine.wav | pirate_figure.js   | LOST039   | NEWS033 | —        | **FRT-013**   |
+| FRT-016 | Haute    | Overlay | **West Hall**   | **CAM02** | 3    | Retour caméra | 6%     | Retour caméra | La voiture avance seule                   | Le jeu continue                       | wheel.wav    | car_move.js        | REPORT033 | —       | —        | **FRT-003**   |
+| FRT-017 | Haute    | Overlay | **Dining Area** | **CAM01** | 4    | Retour caméra | 5%     | Retour caméra | Le bateau change d'étagère                | Quelqu'un joue encore                 | wood.wav     | boat_move.js       | REPORT034 | —       | —        | **FRT-012**   |
+| FRT-018 | Haute    | Overlay | **West Hall**   | **CAM02** | 4    | Retour caméra | 5%     | Retour caméra | Un cube disparaît                         | La construction change                | block.wav    | cube_disappear.js  | REPORT035 | —       | —        | **FRT-014**   |
+| FRT-019 | Haute    | Overlay | Pirate Cove     | CAM05     | 5    | Retour caméra | 4%     | Retour caméra | Le coffre est refermé                     | La partie est terminée                | creak.wav    | chest_close.js     | REPORT036 | —       | —        | **FRT-013**   |
+| FRT-020 | Haute    | Overlay | Pirate Cove     | CAM05     | 5    | 05h55         | 3%     | Heure         | Tous les objets reviennent à leur place   | Comme si rien ne s'était passé        | reset.wav    | toys_reset.js      | REPORT037 | —       | TAPE033  | **FRT-019**   |
+| FRT-021 | Haute    | IA      | Pirate Cove     | CAM05     | 3    | 02h30         | 6%     | Observer 8 s  | Foxy regarde la voiture                   | Il surveille le jouet                 | servo.wav    | foxy_watch_car.js  | —         | —       | —        | **FRT-002**   |
+| FRT-022 | Haute    | IA      | Pirate Cove     | CAM05     | 3    | 03h00         | 5%     | Observer 8 s  | Foxy pousse le bateau                     | Le jeu continue                       | wood.wav     | foxy_push_boat.js  | —         | —       | —        | **FRT-007**   |
+| FRT-023 | Haute    | IA      | Pirate Cove     | CAM05     | 4    | 02h30         | 5%     | Observer 8 s  | Foxy ramasse un cube                      | Il construit quelque chose            | block.wav    | foxy_cube.js       | —         | —       | —        | **FRT-014**   |
+| FRT-024 | Haute    | IA      | Pirate Cove     | CAM05     | 4    | 03h30         | 4%     | Retour caméra | Foxy laisse tomber un jouet               | Comme un enfant distrait              | drop.wav     | foxy_drop.js       | —         | NEWS034 | —        | **FRT-023**   |
+| FRT-025 | Haute    | IA      | Pirate Cove     | CAM05     | 5    | 03h45         | 3%     | Observer 10 s | Foxy regarde le coffre ouvert             | Il cherche un trésor                  | creak.wav    | foxy_chest.js      | —         | —       | TAPE034  | **FRT-019**   |
+| FRT-026 | Haute    | Décor   | Pirate Cove     | CAM05     | 4    | Toute nuit    | 5%     | Retour caméra | Tour de cubes construite                  | Un enfant est passé par là            | block.wav    | tower_build.js     | REPORT038 | —       | —        | **FRT-023**   |
+| FRT-027 | Haute    | Overlay | Pirate Cove     | CAM05     | 4    | Retour caméra | 5%     | Retour caméra | Tour écroulée                             | Personne ne l'a vue tomber            | crash.wav    | tower_fall.js      | REPORT039 | —       | —        | **FRT-026**   |
+| FRT-028 | Haute    | Objet   | **Dining Area** | **CAM01** | 5    | Toute nuit    | 4%     | Observer      | Voiture sous une table                    | Fritz s'est caché en jouant           | wheel.wav    | car_under_table.js | LOST040   | —       | —        | **FRT-016**   |
+| FRT-029 | Haute    | Objet   | Pirate Cove     | CAM05     | 5    | Toute nuit    | 3%     | Observer      | Trésor sorti du coffre                    | Le jeu touche à sa fin                | coins.wav    | treasure.js        | REPORT040 | NEWS035 | TAPE035  | **FRT-019**   |
+| FRT-030 | Critique | Décor   | Pirate Cove     | CAM05     | 5    | 05h55         | 2%     | Heure         | Jouets parfaitement rangés                | Fritz a terminé de jouer              | toys.wav     | toys_sorted.js     | REPORT041 | NEWS036 | TAPE036  | **FRT-020**   |
+
+
+
+Série "Terminal"
+| Réaliser| ID      | Commande  | Contenu                      |
+| ------- | ------- | --------- | ---------------------------- |
+| X | FRT-031 | TOYS.LOG   | Inventaire des jouets retrouvés |
+| X | FRT-032 | PIRATE.LOG | Historique de Pirate Cove       |
+| X | FRT-033 | LOST_TOYS  | Jouets jamais récupérés         |
+| X | FRT-034 | MAINT_05   | Réparations de Pirate Cove      |
+| X | FRT-035 | STAGE_PROP | Accessoires de spectacle        |
+
+| ID          | Titre                                                           |
+| ----------- | --------------------------------------------------------------- |
+| X NEWS_FRT_01 | « Les parents réclament plusieurs jouets oubliés »              |
+| X NEWS_FRT_02 | « Les employés découvrent des objets déplacés pendant la nuit » |
+| X NEWS_FRT_03 | « Pirate Cove fermé temporairement pour inspection »            |
+
+Cassettes
+| ID          | Contenu                                                                      |
+| ----------- | ---------------------------------------------------------------------------- |
+| X TAPE_FRT_01 | Consignes de rangement des jouets après chaque représentation.               |
+| X TAPE_FRT_02 | Employé : *« Qui a sorti tous les jouets ? On avait tout rangé hier soir… »* |
+| X TAPE_FRT_03 | Bruits de petites roues, un rire d'enfant très bref, puis une coupure nette. |

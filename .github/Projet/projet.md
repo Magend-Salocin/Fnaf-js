@@ -1,6 +1,38 @@
 Description du Projet FNAF
 C'est une implémentation web interactive de "Five Nights at Freddy's 1", créée par Nicolas Berger. Un jeu d'horreur classique où tu dois survivre 5 nuits en gérant des ressources limitées face à des animatroniques agressifs.
 
+
+Fnaf 3d
+https://www.youtube.com/watch?v=nxiM1f1AUJc
+https://www.youtube.com/watch?v=2Y-LG1OeoTg
+https://the-fnaf-fan-game.fandom.com/wiki/Five_Nights_at_Freddy%27s:_In_Real_Time
+https://the-fnaf-fan-game.fandom.com/wiki/Supply_Closet_(Five_Nights_at_Freddy%27s:_In_Real_Time)
+
+Ressource
+https://game-icons.net/
+https://www.spriters-resource.com/pc_computer/fivenightsatfreddys/
+https://freddy-fazbears-pizza.fandom.com/wiki/Five_Nights_at_Freddy%27s_Wiki
+
+
+
+
+audio fr
+https://www.youtube.com/watch?v=nxiM1f1AUJc
+
+treejs assembly
+https://www.reddit.com/r/threejs/comments/1s3a7bm/first_month_working_on_my_star_fox_inspired_game/
+https://dev.to/m1kc3b/from-2500-to-1000000-particles-supercharging-a-threejs-demo-with-webassembly-24b
+
+
+
+https://www.youtube.com/watch?v=DvSqlVTBcaE
+
+https://www.snokido.fr/jeu/five-nights-at-freddys
+
+
+Convert image to ascci
+https://manytools.org/hacker-tools/convert-images-to-ascii-art/go/
+
 🎮 Concept du Jeu
 Tu joues le rôle d'un gardien de nuit dans une pizzeria animée. Chaque nuit (12h AM à 6h AM), des animatroniques s'échappent et tentent d'attaquer. Tu dois:
 
