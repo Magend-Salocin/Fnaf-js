@@ -5,17 +5,17 @@
     "type": "sequence",
     "steps": [
         {
-            "text": "\n╔══════════════════════════════════════════════════════════════╗\n║               INVENTAIRE DÉCORATION                         ║\n╚══════════════════════════════════════════════════════════════╝\n\nROUGE      ████████████████████ 37\n\nBLEU       ███████████████████████ 42\n\nVERT       █████████ 18\n\nJAUNE      █ 1\n",
+            "text": "╔══════════════════════════════════════════════════════════════╗\n║         FAZBEAR ENTERTAINMENT - INVENTORY v3.2               ║\n║              INVENTAIRE DES DÉCORATIONS                      ║\n╚══════════════════════════════════════════════════════════════╝\n\n> CHARGEMENT DES DONNÉES...\n\n════════════════════════════════════════════════════════════════\n\nCOULEUR    STOCK                     UNITÉS\n\nROUGE      ████████████████████         37\n\nBLEU       ███████████████████████      42\n\nVERT       █████████                    18\n\nJAUNE      █                            01\n\n════════════════════════════════════════════════════════════════\n\nRÉSUMÉ\n\nDernier inventaire ............ 26/06\n\nÉcart détecté ................. 01 article\n\nEmplacement enregistré ........ INCONNU\n\n════════════════════════════════════════════════════════════════",
             "delay": 0,
             "glitch": false,
             "flash": false
         },
         {
             "text": "\nObjet détecté : BALLON JAUNE\nPosition :      SALLE PRINCIPALE\nAucune demandede décoration enregistrée.\n ",
-            "delay": 9200,
+            "delay": 1500,
             "glitch": true,
             "flash": true,
-            "flashDuration": 2000
+            "flashDuration": 3000
         }
     ]
 }

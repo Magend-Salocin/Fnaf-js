@@ -1,57 +1,268 @@
 📁 DOSSIER 01 — GABRIEL (Freddy)
-Victime
+# DOSSIER 01 — GABRIEL
 
-Nom : Gabriel
+## Informations générales
 
-Animatronique : Freddy Fazbear
+| Élément | Valeur |
+| --- | --- |
+| Nom | Gabriel |
+| Animatronique associé | Freddy Fazbear |
+| Thème principal | L'anniversaire qui ne s'est jamais terminé |
+| Émotion dominante | L'attente, la solitude, l'abandon |
+| Palette de couleurs | Jaune / Orange chaud → Brun avec le temps |
+| Salle principale | Show Stage |
+| Salles secondaires | Dining Area, East Hall, Backstage (rarement) |
 
-Thème émotionnel : L'anniversaire qui ne s'est jamais terminé.
+---
 
-Couleur dominante : Jaune / Orange chaud devenant brun avec le temps.
+# Note d'intention
 
-Salle principale :
+## Philosophie narrative
 
-Show Stage
-Dining Area
-East Hall
-Backstage (très rarement)
-Philosophie narrative
+Contrairement aux autres enfants :
 
-Contrairement à Fritz qui est "actif" (Foxy joue), Gabriel est passif.
+- **Jeremy** crée.
+- **Susie** cherche.
+- **Fritz** joue.
+- **Gabriel** attend.
 
-Il attend.
+Gabriel est le souvenir le plus immobile
+du restaurant.
 
-Toutes ses anomalies parlent :
+Il ne cherche pas à communiquer.
 
-d'une fête interrompue ;
-d'un anniversaire ;
-d'une chaise vide ;
-d'un enfant absent.
+Il ne cherche pas à être retrouvé.
 
-Freddy ne fait presque rien.
+Il reste simplement présent.
 
-Il regarde.
+Comme une fête qui aurait été interrompue
+avant son dernier moment.
 
-Il attend quelqu'un.
+---
 
-Série "Le regard de Freddy"
+# Concept du personnage
 
-Ces anomalies sont essentielles.
+## L'anniversaire qui ne s'est jamais terminé
 
-Freddy ne poursuit pas le joueur.
+Gabriel est lié à un événement précis :
 
-Il regarde.
+Une fête.
+
+Un anniversaire.
+
+Un moment qui aurait dû être heureux.
+
+Mais quelque chose a empêché sa conclusion.
+
+Depuis, le restaurant tente de reproduire
+cette journée encore et encore.
+
+Les lumières s'allument.
+
+La musique démarre.
+
+Les tables sont préparées.
+
+Les décorations sont installées.
+
+Mais l'anniversaire ne se termine jamais.
+
+---
+
+# Freddy Fazbear
+
+## Le regard de Freddy
+
+Freddy n'est pas une menace active.
+
+Il ne poursuit pas.
+
+Il n'attaque pas.
+
+Il observe.
 
 Toujours.
 
-Série "Le Temps"
+Ses anomalies reposent sur
+une seule sensation :
 
-Le restaurant essaye de refaire la fête.
+Être regardé.
 
-Il échoue.
+---
+
+## Série "Le Regard de Freddy"
+
+Ces événements sont centrés sur
+la perception du joueur.
+
+Freddy apparaît :
+
+- légèrement tourné vers une table vide ;
+- immobile sur la scène ;
+- face à une chaise déplacée ;
+- regardant une zone où personne ne se trouve.
+
+Le joueur finit par comprendre :
+
+Freddy ne regarde pas le joueur.
+
+Il regarde quelqu'un qui n'est plus là.
+
+---
+
+# Mécanique gameplay — Le regard
+
+## Principe
+
+Freddy ne réagit pas comme les autres
+animatroniques.
+
+Il ne cherche pas une position.
+
+Il cherche un souvenir.
+
+Son comportement est basé sur
+l'observation.
+
+Le joueur remarque progressivement
+que Freddy est souvent orienté
+vers les mêmes endroits.
+
+---
+
+## Exemples d'anomalies
+
+### La chaise vide
+
+Dans la Dining Area :
+
+Une chaise apparaît toujours
+à la même place.
+
+Une place réservée.
+
+Une assiette.
+
+Un gobelet.
+
+Mais personne ne vient.
+
+Freddy regarde cette chaise
+depuis la scène.
+
+---
+
+### La table d'anniversaire
+
+Une table peut apparaître préparée
+pendant quelques secondes :
+
+- gâteau ;
+- assiettes ;
+- chapeaux de fête ;
+- bougies éteintes.
+
+Puis tout disparaît.
+
+Comme si le restaurant
+avait essayé de recommencer.
+
+---
+
+### La scène vide
+
+Sur le Show Stage :
+
+Freddy est parfois présent.
+
+Les autres animatroniques sont absents.
+
+La musique joue pourtant.
+
+Comme si la représentation
+attendait encore son public.
+
+---
+
+# Symbolique
+
+## Freddy
+
+Freddy représente le souvenir
+qui refuse d'avancer.
+
+Il n'est pas violent.
+
+Il est bloqué.
+
+Il est le dernier élément
+d'une fête qui continue sans invités.
+
+---
+
+## La couleur
+
+### Jaune / Orange chaud
+
+Le bonheur.
+
+Les anniversaires.
+
+Les souvenirs d'enfance.
+
+La lumière d'un moment heureux.
+
+### Brun
+
+Le temps.
+
+L'abandon.
+
+Les souvenirs qui vieillissent.
+
+La couleur de Gabriel évolue
+comme le restaurant lui-même :
+
+un souvenir chaleureux
+devenu une archive oubliée.
+
+---
+
+# Série "Le Temps"
+
+## Le restaurant qui recommence
+
+Le restaurant tente constamment
+de reproduire l'anniversaire.
+
+Mais chaque tentative échoue.
+
+Les éléments apparaissent,
+puis disparaissent.
+
+La musique démarre,
+mais personne ne chante.
+
+Les bougies sont présentes,
+mais jamais allumées.
+
+Le gâteau est préparé,
+mais jamais mangé.
+
+---
+
+## Philosophie
+
+Le problème n'est pas que
+la fête est terminée.
+
+Le problème est qu'elle
+continue encore.
+
 
 
 ----
+
 
 | ID      | Priorité | Type    | Salle       | Caméra | Nuit | Heure      | Chance | Déclencheur   | Description                                | Lore                        | Son          | Script JS         | Terminal  | Journal | Cassette | RequiresEvent |
 | ------- | -------- | ------- | ----------- | ------ | ---- | ---------- | ------ | ------------- | ------------------------------------------ | --------------------------- | ------------ | ----------------- | --------- | ------- | -------- | ------------- |
@@ -91,23 +302,17 @@ Série "Les Sons"
 
 Série "Terminal"
 
-| ID      | Commande  | Contenu                      |
-| ------- | --------- | ---------------------------- |
-| GAB-031 | PARTY.LOG | Liste des anniversaires      |
-| GAB-032 | TABLES    | Nombre de couverts préparés  |
-| GAB-033 | BALLOON   | Inventaire des ballons       |
-| GAB-034 | LOST      | Casquette jamais récupérée   |
-| GAB-035 | GUESTS    | Liste incomplète des invités |
+| Réaliser| ID      | Commande  | Contenu                      |
+| ------- | ------- | --------- | ---------------------------- |
+| X | GAB-031 | PARTY     | Liste des anniversaires      |
+| X | GAB-032 | TABLES    | Nombre de couverts préparés  |
+| X | GAB-033 | BALLOON   | Inventaire des ballons       |
+| X | GAB-034 | LOST      | Casquette jamais récupérée   |
+| X | GAB-035 | GUESTS    | Liste incomplète des invités |
 
 
 🎨 Liste complète des assets à produire
 
-
-PARTY.LOG
-GUESTS.LOG
-LOST_OBJECTS.LOG
-TABLE_LAYOUT.LOG
-EVENT_ARCHIVE.LOG
 
 Journaux
 NEWS_GAB_01 — « Une fête d'anniversaire tourne court »

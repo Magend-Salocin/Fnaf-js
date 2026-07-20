@@ -1,0 +1,7 @@
+{
+    "command": "MEMORY",
+    "markFound": "MEMORY",
+    "type": "text",
+    "text": "╔══════════════════════════════════════════════════════════════╗\n║                  MEMORY RECOVERY                            ║\n╚══════════════════════════════════════════════════════════════╝\n\n> ANALYSE DES SOUVENIRS...\n\n════════════════════════════════════════════════════════════════\n\nSEGMENT 01\n\nGabriel\n\nÉtat :\nSTABLE\n\nAncrage :\nANNIVERSAIRE\n\n\n════════════════════════════════════════════════════════════════\n\nSEGMENT 02\n\nJeremy\n\nÉtat :\nSTABLE\n\nAncrage :\nDESSINS\n\n\n════════════════════════════════════════════════════════════════\n\nSEGMENT 03\n\nSusie\n\nÉtat :\nSTABLE\n\nAncrage :\nANIMAL\n\n\n════════════════════════════════════════════════════════════════\n\nSEGMENT 04\n\nFritz\n\nÉtat :\nSTABLE\n\nAncrage :\nJEU\n\n\n════════════════════════════════════════════════════════════════\n\nSEGMENT 05\n\n...\n\nChargement...\n\n...\n\nErreur.\n\nAucun souvenir associé.\n\nRecherche alternative :\n\nÉmotions détectées :\n\nColère\n\nPeur\n\nAttachement\n\nConfusion\n\n\nSouvenir :\n\nVIDE\n\n\n════════════════════════════════════════════════════════════════\n\nCONCLUSION :\n\nImpossible de restaurer une mémoire inexistante.\n\n█",
+    "glitch": false
+}

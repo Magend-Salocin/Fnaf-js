@@ -1,0 +1,56 @@
+> LECTURE DE L'ENREGISTREMENT...
+
+[BRUIT DE BANDE MAGNÉTIQUE]
+
+[VOIX D'UN EMPLOYÉ - FORMATION]
+
+"Bonjour et bienvenue dans le protocole
+de fermeture de Pirate Cove.
+
+Avant de quitter votre poste,
+assurez-vous que tous les accessoires
+utilisés pendant les représentations
+sont correctement rangés."
+
+[PAUSE]
+
+"Les jouets destinés aux enfants doivent
+être replacés dans les bacs prévus à cet effet.
+
+Les figurines pirates dans le coffre bleu.
+
+Les petits bateaux sur l'étagère du fond.
+
+Les accessoires de scène derrière le rideau."
+
+[BRUIT DE PAPIERS]
+
+"Il est important de vérifier que rien
+ne reste sur le sol.
+
+Les enfants ont tendance à laisser leurs
+jouets partout après les spectacles."
+
+[PAUSE]
+
+"Si un objet est retrouvé hors de son
+emplacement habituel, merci de le signaler
+dans le rapport de maintenance."
+
+[COURTE PAUSE]
+
+"Ne replacez pas un objet dont
+l'origine n'est pas confirmée."
+
+[BRUIT DE STATIQUE]
+
+"Certains accessoires peuvent appartenir
+à des collections privées."
+
+[PAUSE]
+
+"Merci de votre coopération.
+
+Bonne fermeture."
+
+[FIN DE BANDE]

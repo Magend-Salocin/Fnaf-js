@@ -1,0 +1,7 @@
+{
+    "command": "MAINT_05",
+    "markFound": "MAINT_05",
+    "type": "text",
+    "text": "╔══════════════════════════════════════════════════════════════╗\n║          FAZBEAR ENTERTAINMENT - MAINT_05                   ║\n║          RAPPORT MAINTENANCE - PIRATE COVE                  ║\n╚══════════════════════════════════════════════════════════════╝\n\n> OUVERTURE DU RAPPORT\n\n════════════════════════════════════════════════════════════════\n\nZONE : PIRATE COVE\n\nInterventions :\n\n✓ Réparation rideau\n\n✓ Remplacement câble audio\n\n✓ Vérification mécanisme\n\n✓ Nettoyage scène\n\n════════════════════════════════════════════════════════════════\n\nANOMALIES\n\nMécanisme activé .......... 03 fois\n\nCause ..................... inconnue\n\nDernier technicien ........ [ARCHIVÉ]\n\n════════════════════════════════════════════════════════════════\n\nNOTE\n\nLe système continue de recevoir\ndes commandes d'ouverture de\nrideau.\n\nAucune commande n'a été envoyée\ndepuis la console principale.\n\n════════════════════════════════════════════════════════════════\n\nRapport terminé.\n\n█",
+    "glitch": false
+}

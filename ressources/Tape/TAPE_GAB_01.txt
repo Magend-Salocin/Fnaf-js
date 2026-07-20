@@ -1,0 +1,62 @@
+> LECTURE DE L'ENREGISTREMENT...
+
+[BRUIT DE BANDE MAGNÉTIQUE]
+
+[AMBIANCE DE SALLE EN PRÉPARATION]
+
+[BRUIT DE BALLONS ET DE PAPIERS]
+
+[VOIX D'UN EMPLOYÉ]
+
+"Bonjour équipe Fazbear."
+
+"Cet enregistrement concerne
+la préparation des anniversaires
+privés dans la salle principale."
+
+[BRUIT DE DÉPLACEMENT DE TABLE]
+
+"Avant l'arrivée des invités,
+vérifiez que chaque élément
+est correctement installé."
+
+[PAUSE]
+
+"Les décorations doivent être
+placées autour de la table."
+
+"Le gâteau doit être positionné
+uniquement quelques minutes avant
+le début de la célébration."
+
+[BRUIT DE BOÎTE OUVERTE]
+
+"Les cadeaux doivent rester
+dans la zone prévue."
+
+"Ne jamais déplacer les objets
+personnels des enfants."
+
+[PAUSE]
+
+"Une attention particulière doit
+être portée à la chaise réservée
+à l'enfant qui fête son anniversaire."
+
+[STATIQUE LÉGÈRE]
+
+"Cette place doit toujours être
+visible depuis la scène."
+
+[COURTE PAUSE]
+
+"Freddy et les autres personnages
+doivent être prêts avant l'arrivée
+des familles."
+
+[BRUIT DE MUSIQUE D'ANNIVERSAIRE AU LOIN]
+
+"Une fête réussie commence par
+une bonne préparation."
+
+[FIN DE BANDE]

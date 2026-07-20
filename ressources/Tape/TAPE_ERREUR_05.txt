@@ -1,0 +1,153 @@
+> LECTURE DU FICHIER RECOVER.LOG...
+
+[BRUIT DE DÉMARRAGE SYSTÈME]
+
+[VOIX ROBOTIQUE]
+
+"Analyse des souvenirs résiduels."
+
+"Chargement des profils émotionnels."
+
+[BRUIT DE DONNÉES]
+
+"Profil : Gabriel."
+
+"Mémoire détectée."
+
+"Ancrage : anniversaire."
+
+[VALIDÉ]
+
+"Profil : Jeremy."
+
+"Mémoire détectée."
+
+"Ancrage : dessins."
+
+[VALIDÉ]
+
+"Profil : Susie."
+
+"Mémoire détectée."
+
+"Ancrage : animal."
+
+[VALIDÉ]
+
+"Profil : Fritz."
+
+"Mémoire détectée."
+
+"Ancrage : jeu."
+
+[VALIDÉ]
+
+[LONG SILENCE]
+
+"Recherche profil supplémentaire."
+
+...
+
+"Analyse..."
+
+...
+
+"Analyse..."
+
+...
+
+"Erreur."
+
+[BRUIT D'ALERTE]
+
+"Aucun souvenir trouvé."
+
+[PAUSE]
+
+"Nouvelle méthode."
+
+"Recherche émotionnelle."
+
+[STATIQUE]
+
+"Colère."
+
+"Détectée."
+
+"Confusion."
+
+"Détectée."
+
+"Attachement."
+
+"Détecté."
+
+[PAUSE]
+
+"Souvenir associé..."
+
+...
+
+"Introuvable."
+
+[STATIQUE FORTE]
+
+[VOIX D'ENFANT TRÈS FAIBLE]
+
+"Je suis là."
+
+[COUPURE]
+
+[REPRISE DU SYSTÈME]
+
+"Erreur."
+
+"Présence détectée."
+
+"Origine : inconnue."
+
+"Nom :"
+
+...
+
+...
+
+"NON DISPONIBLE."
+
+[LONG SILENCE]
+
+[VOIX AUTOMATIQUE]
+
+"Création d'une nouvelle catégorie."
+
+[BRUIT D'ÉCRITURE]
+
+Catégorie :
+
+ANOMALIE
+
+[PAUSE]
+
+[VOIX D'ENFANT]
+
+"Ce n'est pas mon nom."
+
+[COUPURE BRUTALE]
+
+════════════════════════════════════════════════════════════════
+
+FIN DE L'ENREGISTREMENT
+
+Fichier restauré :
+
+1%
+
+Données récupérées :
+
+Aucune.
+
+Présence détectée :
+
+OUI.
+
+█

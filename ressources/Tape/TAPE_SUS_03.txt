@@ -1,0 +1,76 @@
+> LECTURE DE L'ENREGISTREMENT...
+
+[BRUIT DE STATIQUE]
+
+[AMBIANCE DE CUISINE FERMÉE]
+
+[HORLOGE AU LOIN]
+
+[BRUIT LÉGER MÉTALLIQUE]
+
+...
+
+[ABOIEMENT LOINTAIN]
+
+[COUPURE AUDIO]
+
+[GRÉSILLEMENT]
+
+[REPRISE PARTIELLE]
+
+[VOIX D'UN SUPERVISEUR - ÉLOIGNÉE]
+
+"...tu as enregistré ça ?"
+
+[PAUSE]
+
+[VOIX D'UN EMPLOYÉ]
+
+"Oui."
+
+"Je pensais que vous deviez
+être au courant."
+
+[STATIQUE]
+
+[SUPERVISEUR]
+
+"Non."
+
+[LONG SILENCE]
+
+"Vous n'avez rien entendu."
+
+[BRUIT DE BANDE]
+
+"Vous n'avez rien enregistré."
+
+[PAUSE]
+
+"Cette bande n'existe pas."
+
+[GRÉSILLEMENT]
+
+[SUPERVISEUR - PLUS FORT]
+
+"Effacez cette bande."
+
+[COUPURE]
+
+════════════════════════════════════════════════════════════════
+
+ERREUR
+
+Fichier incomplet.
+
+Dernière action détectée :
+
+SUPPRESSION DEMANDÉE
+
+Résultat :
+
+ÉCHEC
+
+════════════════════════════════════════════════════════════════
+
+Fin de la cassette.

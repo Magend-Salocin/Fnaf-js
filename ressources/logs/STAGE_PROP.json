@@ -1,0 +1,7 @@
+{
+    "command": "STAGE_PROP",
+    "markFound": "STAGE_PROP",
+    "type": "text",
+    "text": "╔══════════════════════════════════════════════════════════════╗\n║         FAZBEAR ENTERTAINMENT - STAGE_PROP                  ║\n║            ACCESSOIRES DE SPECTACLE                         ║\n╚══════════════════════════════════════════════════════════════╝\n\n> INVENTAIRE DES ACCESSOIRES\n\n════════════════════════════════════════════════════════════════\n\nOBJET                  QUANTITÉ\n\nChapeau pirate             03\n\nCarte au trésor            02\n\nÉpée plastique             04\n\nCoffre miniature           01\n\nDrapeau rouge              01\n\n════════════════════════════════════════════════════════════════\n\nVÉRIFICATION\n\nAccessoires présents ...... 11\n\nAccessoires déplacés ...... 02\n\nAccessoires manquants ..... 01\n\n════════════════════════════════════════════════════════════════\n\nOBJET MANQUANT\n\nDrapeau rouge\n\nDernière localisation :\n\nPirate Cove\n\n════════════════════════════════════════════════════════════════\n\nNOTE AUTOMATIQUE\n\nL'accessoire a été retrouvé\nsur scène après fermeture.\n\nPosition :\n\nCentre du décor.\n\n════════════════════════════════════════════════════════════════\n\nFin du fichier.\n\n█",
+    "glitch": false
+}

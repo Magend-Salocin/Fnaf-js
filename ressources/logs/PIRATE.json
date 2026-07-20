@@ -1,0 +1,7 @@
+{
+    "command": "PIRATE",
+    "markFound": "PIRATE",
+    "type": "text",
+    "text": "╔══════════════════════════════════════════════════════════════╗\n║          FAZBEAR ENTERTAINMENT - PIRATE.LOG v1.9            ║\n║             HISTORIQUE DE PIRATE COVE                       ║\n╚══════════════════════════════════════════════════════════════╝\n\n> CHARGEMENT DES DONNÉES...\n\n════════════════════════════════════════════════════════════════\n\nDATE       ÉVÉNEMENT\n\n12/06      Rideau replacé\n\n18/06      Accessoires déplacés\n\n25/06      Son de scène détecté\n\n26/06      Ouverture rideau impossible\n\n════════════════════════════════════════════════════════════════\n\nÉTAT DE LA ZONE\n\nRideau ................. Fonctionnel\n\nÉclairage .............. Désactivé\n\nAudio .................. Instable\n\nAccès personnel ........ Limité\n\n════════════════════════════════════════════════════════════════\n\nNOTE\n\nPirate Cove ne fait plus partie\ndes zones actives du restaurant.\n\nCependant...\n\nLe système détecte encore\ndes activités de scène.\n\n════════════════════════════════════════════════════════════════\n\nRetour au terminal.\n\n█",
+    "glitch": false
+}

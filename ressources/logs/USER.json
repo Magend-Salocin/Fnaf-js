@@ -1,0 +1,7 @@
+{
+    "command": "USER",
+    "markFound": "USER",
+    "type": "text",
+    "text": "╔══════════════════════════════════════════════════════════════╗\n║                    USER DATABASE                            ║\n╚══════════════════════════════════════════════════════════════╝\n\n\nUTILISATEUR ACTUEL :\n\nChargement...\n\n\n...\n\n\nUNKNOWN\n\n\n════════════════════════════════════════════════════════════════\n\nTentative de récupération :\n\nAncien utilisateur :\n\nMICHAEL AFTON\n\n\nCorrection automatique :\n\n...\n\n\nWILLIAM AFTON\n\n\n════════════════════════════════════════════════════════════════\n\nERREUR :\n\nCorrespondance impossible.\n\n\nAnalyse comportementale :\n\nUtilisateur :\n\nNON IDENTIFIÉ\n\n\n════════════════════════════════════════════════════════════════\n\nNouvelle valeur enregistrée :\n\n\"IT'S HIM\"\n\n\n█",
+    "glitch": false
+}

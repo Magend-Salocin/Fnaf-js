@@ -1,0 +1,70 @@
+
+> LECTURE DE L'ENREGISTREMENT...
+
+[BRUIT DE PORTE QUI S'OUVRE]
+
+[AMBIANCE DU RESTAURANT AVANT OUVERTURE]
+
+[PAS RAPIDES]
+
+[EMPLOYÉ - CONFUS]
+
+"Attendez..."
+
+[PAUSE]
+
+"Non."
+
+[BRUIT DE PAPIERS]
+
+"Ce n'est pas possible."
+
+[FEUILLES DÉPLACÉES]
+
+"Il y a encore des dessins
+ce matin..."
+
+[LONG SILENCE]
+
+"Pourtant on les avait tous
+retirés."
+
+[BRUIT D'UNE FEUILLE POSÉE SUR UNE TABLE]
+
+"J'ai moi-même vidé les tables
+hier soir."
+
+"J'ai vérifié les murs."
+
+"J'ai rangé les crayons."
+
+[PAUSE]
+
+"Alors pourquoi..."
+
+[STATIQUE]
+
+"...il y en a de nouveaux ?"
+
+[BRUIT DE FEUILLE FROISSÉE]
+
+"Ce n'est même pas le même papier."
+
+[RESPIRATION]
+
+"Quelqu'un les a faits pendant
+la nuit."
+
+[LONG SILENCE]
+
+[VOIX PLUS BASSE]
+
+"Mais il n'y avait personne."
+
+[BRUIT DE BANDE]
+
+[VOIX D'UN SUPERVISEUR AU LOIN]
+
+"Coupez l'enregistrement."
+
+[COUPURE]

@@ -1,0 +1,7 @@
+{
+    "command": "RECOVER",
+    "markFound": "RECOVER",
+    "type": "text",
+    "text": "╔══════════════════════════════════════════════════════════════╗\n║                 RECOVERY SYSTEM                             ║\n╚══════════════════════════════════════════════════════════════╝\n\n\nRecherche fichiers perdus...\n\n...\n\nFichier :\nNAME.DAT\n\nRésultat :\nCORROMPU\n\n\nFichier :\nFAMILY.DAT\n\nRésultat :\nABSENT\n\n\nFichier :\nMEMORIES.DAT\n\nRésultat :\nABSENT\n\n\nFichier :\nPHOTO.DAT\n\nRésultat :\nABSENT\n\n\n════════════════════════════════════════════════════════════════\n\nDernier fichier détecté :\n\nCHILD_05\n\n\nRestauration :\n\n0%\n\n\n1%\n\n...\n\n\nÉchec.\n\n\n════════════════════════════════════════════════════════════════\n\nMESSAGE AUTOMATIQUE :\n\nNous pouvons restaurer les données.\n\nNous ne pouvons pas restaurer\nce qui n'a jamais été enregistré.\n\n\n════════════════════════════════════════════════════════════════\n\nNouvelle entrée :\n\nCHILD_05\n\nStatut :\n\nPRÉSENCE CONFIRMÉE\n\n\nNom :\n\n...\n\n\n...\n\nCassidy\n\n█",
+    "glitch": false
+}

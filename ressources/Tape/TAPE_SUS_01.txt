@@ -1,0 +1,54 @@
+> LECTURE DE L'ENREGISTREMENT...
+
+[BRUIT DE BANDE MAGNÉTIQUE]
+
+[VOIX D'UN EMPLOYÉ - FORMATION]
+
+"Bienvenue dans le protocole
+de fermeture des cuisines Fazbear."
+
+[BRUIT DE PAPIERS]
+
+"Avant de quitter votre poste,
+vous devez vérifier que toutes
+les surfaces ont été nettoyées."
+
+[PAUSE]
+
+"Tous les aliments doivent être
+rangés dans les zones prévues
+à cet effet."
+
+"Ne laissez jamais de nourriture
+ouverte après la fermeture."
+
+[BRUIT DE FOURNITURES POSÉES]
+
+"Les restes alimentaires peuvent
+attirer des nuisibles."
+
+"Vérifiez également sous les tables,
+derrière les équipements et près
+des zones de stockage."
+
+[PAUSE]
+
+"Si vous trouvez un objet qui
+n'appartient pas à la cuisine,
+ne le déplacez pas."
+
+"Signalez-le immédiatement
+à votre responsable."
+
+[STATIQUE LÉGÈRE]
+
+"Fazbear Entertainment rappelle
+que les cuisines doivent rester
+vides après les heures d'ouverture."
+
+[COURTE PAUSE]
+
+"Aucun personnel non autorisé
+ne doit rester dans cette zone."
+
+[FIN DE BANDE]

@@ -1,0 +1,202 @@
+# TAPE_CAS_08 — « RECONNAISSANCE »
+## GOOD ENDING
+
+**Durée estimée : 3 min 30**
+
+```text
+╔══════════════════════════════════════════════════════════════╗
+║              FAZBEAR AUDIO ARCHIVE                          ║
+║                    TAPE_CAS_08                              ║
+║                  FINAL MEMORY FILE                          ║
+╚══════════════════════════════════════════════════════════════╝
+
+> RESTAURATION DU DERNIER FRAGMENT...
+
+[BRUIT DE SERVEUR]
+
+[HORLOGE INTERNE]
+
+[VOIX AUTOMATIQUE]
+
+"Processus :
+RÉPARATION MÉMOIRE."
+
+[PAUSE]
+
+"Analyse des profils existants."
+
+Gabriel.
+
+Statut :
+Mémoire stable.
+
+Jeremy.
+
+Statut :
+Mémoire stable.
+
+Susie.
+
+Statut :
+Mémoire stable.
+
+Fritz.
+
+Statut :
+Mémoire stable.
+
+[LONG SILENCE]
+
+Cinquième profil.
+
+...
+
+Recherche.
+
+...
+
+Erreur.
+
+[STATIQUE]
+
+[VOIX AUTOMATIQUE PLUS FAIBLE]
+
+"Nouvelle méthode."
+
+"Ne pas rechercher un souvenir."
+
+"Rechercher une présence."
+
+[BRUIT DE DONNÉES]
+
+...
+
+Présence trouvée.
+
+[PAUSE]
+
+Identité :
+
+INCONNUE.
+
+[LONG SILENCE]
+
+...
+
+[BRUIT DE TERMINAL]
+
+Modification du fichier.
+
+Ancienne valeur :
+
+ANOMALIE.
+
+Nouvelle valeur :
+
+ENFANT.
+
+[STATIQUE]
+
+[VOIX D'ENFANT]
+
+"Pourquoi ?"
+
+[PAUSE]
+
+[VOIX SYSTÈME]
+
+"Parce que tu étais là."
+
+[LONG SILENCE]
+
+[VOIX D'ENFANT]
+
+"Vous m'avez oubliée."
+
+[VOIX SYSTÈME]
+
+"Oui."
+
+[PAUSE]
+
+"Mais l'oubli n'efface pas l'existence."
+
+[BRUIT DE MÉMOIRE]
+
+"Création d'un nouvel ancrage."
+
+...
+
+Recherche objet associé.
+
+Échec.
+
+Recherche souvenir associé.
+
+Échec.
+
+Recherche émotion associée.
+
+Trouvé.
+
+[PAUSE]
+
+Émotion :
+
+COLÈRE.
+
+PEUR.
+
+SOLITUDE.
+
+...
+
+ATTACHEMENT.
+
+[STATIQUE LÉGÈRE]
+
+[VOIX D'ENFANT]
+
+"Je ne veux plus être une erreur."
+
+[VOIX SYSTÈME]
+
+"Tu ne l'es plus."
+
+[BRUIT DE GOLDEN FREDDY]
+
+[VOIX D'ENFANT]
+
+"Alors où est ma place ?"
+
+[LONG SILENCE]
+
+[VOIX SYSTÈME]
+
+"Avec les autres."
+
+[COUPURE]
+
+════════════════════════════════════════════════════════════════
+
+MISE À JOUR :
+
+DOSSIER 05
+
+STATUT :
+
+RESTAURÉ
+
+NOM :
+
+NON ARCHIVÉ
+
+IDENTITÉ :
+
+RECONNUE
+
+════════════════════════════════════════════════════════════════
+
+FIN DU FICHIER
+
+█

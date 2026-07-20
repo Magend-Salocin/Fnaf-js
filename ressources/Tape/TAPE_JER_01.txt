@@ -1,0 +1,60 @@
+> LECTURE DE L'ENREGISTREMENT...
+
+[BRUIT DE BANDE MAGNÉTIQUE]
+
+[VOIX D'UN EMPLOYÉ - FORMATION]
+
+"Bonjour.
+
+Cet enregistrement concerne
+l'installation du concours de
+dessin organisé par Fazbear
+Entertainment."
+
+[BRUIT DE PAPIERS]
+
+"Avant l'ouverture du restaurant,
+installez les tables d'activité
+dans la zone prévue."
+
+"Chaque enfant doit recevoir :
+
+- une feuille blanche ;
+- des crayons de couleur ;
+- des feutres adaptés."
+
+[PAUSE]
+
+"Les dessins terminés peuvent
+être affichés sur les panneaux
+prévus à cet effet."
+
+[BRUIT D'ACCROCHAGE]
+
+"Assurez-vous que les noms et
+les dates soient correctement
+inscrits au dos des feuilles."
+
+[PAUSE]
+
+"Les enfants aiment voir leurs
+créations exposées."
+
+"Cette activité permet aux jeunes
+visiteurs de laisser une trace
+personnelle dans le restaurant."
+
+[STATIQUE LÉGÈRE]
+
+"À la fin de chaque journée,
+les dessins doivent être triés."
+
+"Les œuvres sélectionnées seront
+conservées dans les archives."
+
+[COURTE PAUSE]
+
+"Les autres devront être retirées
+avant la fermeture."
+
+[FIN DE BANDE]

@@ -1,5 +1,5 @@
 DOSSIER 04 — FRITZ
-Victime
+
 
 | Élément            | Valeur                             |
 | ------------------ | ---------------------------------- |
@@ -28,6 +28,182 @@ Est-ce Foxy ?
 Est-ce un souvenir ?
 
 Ou est-ce le restaurant qui se souvient ?
+
+
+# Note d'intention
+
+## Philosophie narrative
+
+Fritz est le seul enfant dont les souvenirs
+ne restent jamais immobiles.
+
+Contrairement aux autres :
+
+- **Gabriel** attend.
+- **Jeremy** crée.
+- **Susie** cherche.
+- **Fritz** joue.
+
+Son souvenir n'est pas un lieu.
+Ce n'est pas un objet.
+Ce n'est pas une attente.
+
+C'est un mouvement.
+
+---
+
+# Concept du personnage
+
+## Les souvenirs vivants
+
+Fritz introduit une nouvelle forme
+d'anomalie :
+
+Les **Souvenirs Vivants**.
+
+Contrairement aux autres phénomènes du restaurant,
+les anomalies de Fritz ne sont pas simplement
+des apparitions.
+
+Ce sont des fragments d'événements.
+
+Des moments qui semblent continuer
+même après avoir disparu.
+
+---
+
+## Le principe
+
+Le restaurant ne montre jamais Fritz.
+
+Il montre seulement ce qu'il a laissé derrière lui.
+
+Des jouets.
+
+Des accessoires.
+
+Des traces de jeu.
+
+Des objets qui semblent chercher
+leur place.
+
+Le joueur ne rencontre pas un enfant.
+
+Il rencontre une partie de son enfance
+qui refuse de s'arrêter.
+
+---
+
+# Mécanique gameplay — Souvenirs Vivants
+
+## Pirate Cove comme mémoire active
+
+Pirate Cove n'est pas seulement une salle.
+
+C'est un espace qui se souvient.
+
+Certains événements peuvent apparaître
+uniquement sous certaines conditions.
+
+Ils ne sont pas garantis.
+
+Ils ne sont pas toujours identiques.
+
+Le joueur doit observer pour les découvrir.
+
+---
+
+## Exemple de souvenir vivant
+
+### Événement : La voiture rouge
+
+Entre **02h00 et 02h30** :
+
+Si le joueur observe suffisamment longtemps
+Pirate Cove, il peut voir :
+
+- Foxy sortir lentement de l'obscurité ;
+- pousser une petite voiture rouge ;
+- déplacer le jouet jusqu'au coffre de la scène.
+
+La scène ne ressemble pas à une attaque.
+
+Elle ressemble à un enfant qui continue de jouer.
+
+---
+
+## Variante du souvenir
+
+Lors d'une autre nuit :
+
+À **02h12**, le joueur peut revenir sur
+Pirate Cove et découvrir :
+
+- la voiture déjà déplacée ;
+- le coffre ouvert ;
+- aucun mouvement visible.
+
+Puis un bref glitch apparaît.
+
+Pendant une fraction de seconde :
+
+la scène revient à son état initial.
+
+La voiture reprend sa position d'origine.
+
+Comme si le souvenir était rembobiné.
+
+---
+
+# Philosophie de la mécanique
+
+Le joueur doit se poser une question :
+
+> Est-ce que Foxy bouge ?
+
+Ou :
+
+> Est-ce que Fritz continue de jouer à travers lui ?
+
+---
+
+# Symbolique
+
+## Foxy
+
+Foxy représente l'énergie qui refuse
+de disparaître.
+
+Il n'est pas seulement agressif.
+
+Il est impatient.
+
+Comme un enfant qui attend
+la prochaine partie.
+
+Son mouvement constant rappelle
+que Fritz n'a jamais accepté
+que le jeu soit terminé.
+
+---
+
+## Les objets
+
+Les objets deviennent les véritables
+traces de Fritz.
+
+Exemples :
+
+- une voiture déplacée ;
+- un bateau retourné ;
+- des figurines replacées ;
+- un coffre ouvert.
+
+Chaque objet raconte une action
+qui n'a jamais eu de conclusion.
+
+|-----------------------------------------------------------------------------------------------------------------|
+
 
 # Tableau de Production
 
@@ -67,13 +243,13 @@ Ou est-ce le restaurant qui se souvient ?
 
 
 Série "Terminal"
-| ID      | Commande   | Contenu                         |
-| ------- | ---------- | ------------------------------- |
-| FRT-031 | TOYS.LOG   | Inventaire des jouets retrouvés |
-| FRT-032 | PIRATE.LOG | Historique de Pirate Cove       |
-| FRT-033 | LOST_TOYS  | Jouets jamais récupérés         |
-| FRT-034 | MAINT_05   | Réparations de Pirate Cove      |
-| FRT-035 | STAGE_PROP | Accessoires de spectacle        |
+| Réaliser| ID      | Commande  | Contenu                      |
+| ------- | ------- | --------- | ---------------------------- |
+| X | FRT-031 | TOYS.LOG   | Inventaire des jouets retrouvés |
+| X | FRT-032 | PIRATE.LOG | Historique de Pirate Cove       |
+| X | FRT-033 | LOST_TOYS  | Jouets jamais récupérés         |
+| X | FRT-034 | MAINT_05   | Réparations de Pirate Cove      |
+| X | FRT-035 | STAGE_PROP | Accessoires de spectacle        |
 
 
 Inventaire des jouets retrouvés après fermeture.
@@ -108,16 +284,16 @@ Journaux
 
 | ID          | Titre                                                           |
 | ----------- | --------------------------------------------------------------- |
-| NEWS_FRT_01 | « Les parents réclament plusieurs jouets oubliés »              |
-| NEWS_FRT_02 | « Les employés découvrent des objets déplacés pendant la nuit » |
-| NEWS_FRT_03 | « Pirate Cove fermé temporairement pour inspection »            |
+| X NEWS_FRT_01 | « Les parents réclament plusieurs jouets oubliés »              |
+| X NEWS_FRT_02 | « Les employés découvrent des objets déplacés pendant la nuit » |
+| X NEWS_FRT_03 | « Pirate Cove fermé temporairement pour inspection »            |
 
 Cassettes
 | ID          | Contenu                                                                      |
 | ----------- | ---------------------------------------------------------------------------- |
-| TAPE_FRT_01 | Consignes de rangement des jouets après chaque représentation.               |
-| TAPE_FRT_02 | Employé : *« Qui a sorti tous les jouets ? On avait tout rangé hier soir… »* |
-| TAPE_FRT_03 | Bruits de petites roues, un rire d'enfant très bref, puis une coupure nette. |
+| X TAPE_FRT_01 | Consignes de rangement des jouets après chaque représentation.               |
+| X TAPE_FRT_02 | Employé : *« Qui a sorti tous les jouets ? On avait tout rangé hier soir… »* |
+| X TAPE_FRT_03 | Bruits de petites roues, un rire d'enfant très bref, puis une coupure nette. |
 
 
 Voiture rouge (FRT-001)
@@ -147,3 +323,54 @@ Je pense que Fritz devrait introduire une mécanique unique dans Les Mensonges :
 Contrairement aux autres anomalies qui apparaissent simplement, certaines anomalies de Fritz seraient de véritables micro-scènes. Par exemple, entre 2 h 00 et 2 h 30, si le joueur observe suffisamment longtemps Pirate Cove, Foxy pousse lentement la voiture rouge jusqu'au coffre. Lors d'une autre partie, le joueur peut revenir à 2 h 12 et voir directement la voiture déjà déplacée, suivie d'un bref glitch qui remet instantanément la scène dans son état normal.
 
 Ainsi, les souvenirs semblent continuer d'exister même lorsque le joueur ne regarde pas. Le restaurant devient un personnage à part entière, avec une mémoire qui fonctionne indépendamment du joueur. C'est une mécanique qui colle parfaitement à la vision de Les Mensonges et qui donnera envie aux joueurs de revisiter les nuits pour découvrir toutes les variantes cachées.
+
+|-----------------------------------------------------------------------------------------------------------------|
+
+Révélation finale
+Le restaurant se souvient
+
+La véritable anomalie de Fritz
+n'est pas Foxy.
+
+C'est Pirate Cove.
+
+La salle semble conserver
+des fragments d'événements passés.
+
+Elle ne rejoue pas une scène.
+
+Elle la continue.
+
+Le joueur finit par comprendre :
+
+Foxy ne poursuit peut-être pas
+les visiteurs.
+
+Il cherche peut-être simplement
+à terminer une partie commencée
+il y a longtemps.
+
+Résumé du rôle narratif
+
+Fritz est la mémoire en mouvement
+du restaurant.
+
+Jeremy laisse des traces.
+
+Susie laisse une attente.
+
+Gabriel laisse une présence.
+
+Fritz laisse une action.
+
+Son souvenir ne demande pas
+à être retrouvé.
+
+Il demande simplement
+à continuer de jouer.
+
+Le restaurant n'est plus seulement
+un lieu hanté.
+
+Il devient un endroit capable
+de se souvenir.

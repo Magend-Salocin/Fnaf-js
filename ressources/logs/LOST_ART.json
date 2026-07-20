@@ -1,0 +1,7 @@
+{
+    "command": "LOST_ART",
+    "markFound": "LOST_ART",
+    "type": "text",
+    "text": "╔══════════════════════════════════════════════════════════════╗\n║          FAZBEAR ENTERTAINMENT - LOST_ART                   ║\n║           OBJETS SCOLAIRES OUBLIÉS                          ║\n╚══════════════════════════════════════════════════════════════╝\n\n> OUVERTURE : LOST_ART.LOG\n\n════════════════════════════════════════════════════════════════\n\nOBJET                  QUANTITÉ\n\nBoîte de crayons            02\n\nFeutres                     01\n\nCahier de dessin            01\n\nFeuille blanche             14\n\n════════════════════════════════════════════════════════════════\n\nOBSERVATION\n\nUne boîte de crayons est\nsignalée déplacée chaque nuit.\n\nAucun employé concerné.\n\n════════════════════════════════════════════════════════════════\n\nRetour au terminal.\n\n█",
+    "glitch": false
+}

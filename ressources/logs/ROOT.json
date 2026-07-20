@@ -1,0 +1,7 @@
+{
+    "command": "ROOT",
+    "markFound": "ROOT",
+    "type": "text",
+    "text": "╔══════════════════════════════════════════════════════════════╗\n║                  ROOT ACCESS LOG                            ║\n╚══════════════════════════════════════════════════════════════╝\n\n> OUVERTURE DU FICHIER ROOT.LOG\n\n════════════════════════════════════════════════════════════════\n\nSYSTÈME :\nFAZBEAR ENTERTAINMENT SYS\n\nACCÈS :\nADMINISTRATEUR\n\n════════════════════════════════════════════════════════════════\n\nHISTORIQUE DES ACTIONS :\n\n[DATE INCONNUE]\n\nSuppression :\nFichier enfant_05\n\nRésultat :\nRÉUSSI\n\n\n[DATE INCONNUE]\n\nSuppression :\nArchive mémoire associée\n\nRésultat :\nRÉUSSI\n\n\n[DATE INCONNUE]\n\nSuppression :\nNom utilisateur\n\nRésultat :\nÉCHEC\n\n\n════════════════════════════════════════════════════════════════\n\nNOUVELLE ENTRÉE AUTOMATIQUE :\n\nTentative de restauration détectée.\n\nAuteur :\n\nUNKNOWN\n\n\nAction :\n\nRECOVER\n\n\n════════════════════════════════════════════════════════════════\n\nErreur :\n\nLe fichier supprimé tente d'exister.\n\n",
+    "glitch": false
+}

@@ -315,6 +315,14 @@
     flex-direction:column;
     gap:2px;
     margin-bottom:10px;
+    height:500px;
+    overflow-y:auto;
+    scrollbar-width:none;
+    -ms-overflow-style:none;
+}
+
+.retro-shell-log::-webkit-scrollbar{
+    display:none;
 }
 
 .retro-shell-line{

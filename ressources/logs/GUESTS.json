@@ -5,17 +5,17 @@
     "type": "sequence",
     "steps": [
         {
-            "text": "\n\n> OUVERTURE DU Réservation 26/06 GUESTS.LOG...\n\nAnalyse de la réservation...\n\n✓ Jeremy\n\n✓ Susie\n\n✓ Fritz\n\n✓ Gabriel\n--------------------------------------------------------------\nINVITÉS PRÉVUS ......... 4\n\nINVITÉS PRÉSENTS ....... 4\n--------------------------------------------------------------\n",
+            "text": "╔══════════════════════════════════════════════════════════════╗\n║         FAZBEAR ENTERTAINMENT - GUESTS.LOG v1.6              ║\n║              LISTE DES INVITÉS - RÉSERVATION                 ║\n╚══════════════════════════════════════════════════════════════╝\n\n> OUVERTURE : GUESTS_26-06.LOG\n\n════════════════════════════════════════════════════════════════\n\nAnalyse de la réservation...\n\n✓ Jeremy      ............ ENREGISTRÉ\n\n✓ Susie       ............ ENREGISTRÉ\n\n✓ Fritz       ............ ENREGISTRÉ\n\n✓ Gabriel     ............ ENREGISTRÉ\n\n════════════════════════════════════════════════════════════════\n\nRÉSUMÉ\n\nInvités prévus ............ 04\n\nInvités enregistrés ....... 04\n\nAbsences .................. 00\n\nAucune anomalie détectée.\n\n════════════════════════════════════════════════════════════════\n",
             "delay": 0,
             "glitch": false,
             "flash": false
         },
         {
-            "text": "\nERREUR\n\n□ ???????? \n\nUne réservation est incomplète.\n\nLe système attend toujours\nle dernier invité.\n\n ",
-            "delay": 9200,
+            "text": "\nERREUR\n\n□ ???????? \n\nUne réservation est incomplète.\n\nLe système attend toujours\nle dernier invité.\n\n5 invités enregistrés.\n\n ",
+            "delay": 1300,
             "glitch": true,
             "flash": true,
-            "flashDuration": 2000
+            "flashDuration": 3000
         }
     ]
 }

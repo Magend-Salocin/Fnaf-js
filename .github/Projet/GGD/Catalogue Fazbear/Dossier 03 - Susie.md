@@ -11,6 +11,158 @@ DOSSIER 03 — SUSIE
 | Salles secondaires | East Hall, Restrooms, Show Stage                |
 
 
+# Note d'intention
+
+## Philosophie narrative
+
+Contrairement aux autres enfants :
+
+- **Gabriel** attend.
+- **Jeremy** crée.
+- **Fritz** joue.
+- **Susie** cherche.
+
+Susie n'est pas liée à un objet.
+Elle n'est pas liée à une activité.
+Elle est liée à une promesse.
+
+Elle cherche encore quelque chose
+qu'on lui a fait croire possible.
+
+Quelque chose qui devrait revenir.
+
+Quelque chose qui devrait être retrouvé.
+
+---
+
+# Concept du personnage
+
+## L'espoir comme prison
+
+Susie représente la forme la plus dangereuse
+de manipulation :
+
+donner une raison de continuer.
+
+Là où les autres enfants sont enfermés
+dans un souvenir précis, Susie reste attachée
+à une attente.
+
+Elle pense qu'il existe encore une chance.
+
+Le restaurant entretient cette illusion.
+
+---
+
+## Le chien absent
+
+Le joueur ne voit jamais le chien.
+
+Il n'existe que par des traces :
+
+- un collier qui tinte ;
+- une gamelle déplacée ;
+- un bruit de griffes sur le sol ;
+- un aboiement lointain ;
+- Chica qui semble réagir à quelque chose.
+
+La présence la plus importante du personnage
+est justement celle qui n'est jamais montrée.
+
+---
+
+# La Kitchen — Un espace de doute
+
+## Concept gameplay
+
+La Kitchen devient une zone unique.
+
+Contrairement aux autres caméras :
+
+- aucune image ;
+- aucune présence visible ;
+- uniquement du son.
+
+Le joueur doit interpréter ce qu'il entend.
+
+La caméra CAM06 ne montre rien,
+mais elle devient l'un des endroits
+les plus importants du jeu.
+
+---
+
+## Philosophie de la peur
+
+L'horreur ne vient pas de ce que le joueur voit.
+
+Elle vient de ce qu'il imagine.
+
+Chaque bruit peut avoir plusieurs explications :
+
+Un collier qui tombe.
+
+→ Un objet oublié ?
+
+→ Une présence ?
+
+→ Un souvenir ?
+
+Une gamelle déplacée.
+
+→ Une erreur humaine ?
+
+→ Quelque chose qui cherche encore ?
+
+Un aboiement.
+
+→ Un animal ?
+
+→ Une illusion ?
+
+→ Une mémoire qui revient ?
+
+---
+
+# Symbolique
+
+## Chica
+
+Chica représente la recherche d'une réponse.
+
+Elle n'est pas seulement une animatronique.
+
+Elle devient un rappel constant de cette attente.
+
+Ses déplacements donnent l'impression
+qu'elle cherche quelque chose dans le restaurant.
+
+Mais personne ne sait quoi.
+
+---
+
+## La couleur
+
+### Jaune pâle
+
+L'innocence.
+
+Les souvenirs heureux.
+
+Les anniversaires.
+
+La confiance.
+
+### Blanc
+
+L'absence.
+
+Le vide.
+
+Ce qui reste après la perte.
+
+La transition de couleur représente
+le passage d'un souvenir heureux
+à une absence impossible à accepter.
 
 
 # Proposition d'amélioration : faire de la cuisine un **espace de doute**
@@ -51,6 +203,7 @@ Susie doute.
 
 Et c'est précisément ce qu'Afton voulait.
 
+|-----------------------------------------------------------------------------------------------------------------|
 
 # Tableau de Production
 
@@ -90,59 +243,29 @@ Et c'est précisément ce qu'Afton voulait.
 
 
 Série "Terminal"
-| ID      | Commande    | Contenu                                                     |
-| ------- | ----------- | ----------------------------------------------------------- |
-| SUS-031 | PETS.LOG    | Signalements d'animaux dans le restaurant                   |
-| SUS-032 | LOST_PETS   | Objet trouvé : collier rouge                                |
-| SUS-033 | KITCHEN.LOG | Bruits nocturnes signalés par les employés                  |
-| SUS-034 | CLEANING    | Gamelle retrouvée plusieurs matins de suite                 |
-| SUS-035 | REPORT_87   | Employé affirmant avoir entendu un chien après la fermeture |
+| Réaliser| ID      | Commande  | Contenu                      |
+| ------- | ------- | --------- | ---------------------------- |
+| X | SUS-031 | PETS.LOG    | Signalements d'animaux dans le restaurant                   |
+| X | SUS-032 | LOST_PETS   | Objet trouvé : collier rouge                                |
+| X | SUS-033 | KITCHEN.LOG | Bruits nocturnes signalés par les employés                  |
+| X | SUS-034 | COOKING    | Gamelle retrouvée plusieurs matins de suite                 |
+| X | SUS-035 | REPORT_87   | Employé affirmant avoir entendu un chien après la fermeture |
 
-
-PETS.LOG
-
-Historique de plaintes concernant un animal aperçu dans le restaurant après la fermeture.
-
-LOST_PETS.LOG
-
-Inventaire :
-
-Collier rouge
-Gamelle
-Laisse
-
-Aucun propriétaire revenu.
-
-KITCHEN.LOG
-
-Signalements de bruits nocturnes provenant de la cuisine alors qu'elle est vide.
-
-CLEANING.LOG
-
-Rapports des agents de nettoyage :
-
-« La gamelle revient toujours au même endroit. »
-
-REPORT_87
-
-Déclaration d'un employé :
-
-« J'aurais juré avoir entendu un chien cette nuit... mais les portes étaient verrouillées. »
 
 Journaux
 | ID          | Titre                                                              |
 | ----------- | ------------------------------------------------------------------ |
-| NEWS_SUS_01 | « Les employés évoquent des bruits inexpliqués dans les cuisines » |
-| NEWS_SUS_02 | « La direction dément toute présence d'animaux »                   |
-| NEWS_SUS_03 | « Les inspections sanitaires ne révèlent aucune anomalie »         |
+| X NEWS_SUS_01 | « Les employés évoquent des bruits inexpliqués dans les cuisines » |
+| X NEWS_SUS_02 | « La direction dément toute présence d'animaux »                   |
+| X NEWS_SUS_03 | « Les inspections sanitaires ne révèlent aucune anomalie »         |
 
 
 Cassettes
-| ID          | Contenu                                                                                                                               |
-| ----------- | ------------------------------------------------------------------------------------------------------------------------------------- |
-| TAPE_SUS_01 | Consignes : ne jamais laisser de nourriture après la fermeture.                                                                       |
-| TAPE_SUS_02 | Employé : *« La gamelle était encore déplacée ce matin. »*                                                                            |
-| TAPE_SUS_03 | Enregistrement interrompu : un aboiement lointain suivi d'un grésillement, puis la voix d'un superviseur : *« Effacez cette bande. »* |
+| ID          | Contenu                                                                      |
+| ----------- | ---------------------------------------------------------------------------- |
+| X TAPE_SUS_01 | Consignes : ne jamais laisser de nourriture après la fermeture.
+| X TAPE_SUS_02 | Employé : *« La gamelle était encore déplacée ce matin »*
+| X TAPE_SUS_03 | Enregistrement interrompu : un aboiement lointain suivi d'un grésillement, puis la voix d'un superviseur : *« Effacez cette bande. »
 
 Chaîne de Découverte (Lore Flow)
 Gamelle (SUS-001)
@@ -172,3 +295,44 @@ Le joueur comprend que Fazbear a volontairement supprimé tous les rapports lié
 # Prompt
 
 SUS-026 : Conserver exactement l'image d'origine, avec le même cadrage, la même perspective, les mêmes proportions (16:9), le même éclairage, les mêmes textures et tous les éléments du décor inchangés. Ne pas ajouter de texte, d'interface ou d'objets supplémentaires. La cuisine doit rester entièrement hors champ, invisible au bout du couloir. Ajouter uniquement Chica, un animatronique jaune de style années 80, placée tout au fond du couloir, dans l'angle supérieur droit de l'image. Elle est de dos ou en trois-quarts dos, tournée vers la droite, comme si elle regardait dans une pièce située hors champ (la cuisine). Son attitude suggère qu'elle cherche quelque chose. Chica doit être immobile, légèrement penchée vers la droite, sans regarder la caméra. Elle doit apparaître plus petite en raison de la distance, parfaitement intégrée à la perspective et à l'éclairage de la scène. Aucun autre élément de l'image ne doit être modifié.
+
+
+|-----------------------------------------------------------------------------------------------------------------|
+
+Révélation finale
+Le dernier signal
+
+Le joueur finit par comprendre que
+le chien n'est peut-être pas le mystère.
+
+Le vrai mystère est :
+
+Pourquoi Fazbear veut-il autant
+que Susie continue d'espérer ?
+
+Chaque preuve est volontairement
+incomplète.
+
+Chaque son disparaît.
+
+Chaque rapport est classé.
+
+Résumé du rôle narratif
+
+Susie est la mémoire émotionnelle du restaurant.
+
+Jeremy laisse des traces.
+
+Fritz laisse des souvenirs.
+
+Gabriel laisse une présence.
+
+Susie laisse une attente.
+
+Le restaurant ne lui donne jamais
+ce qu'elle cherche.
+
+Il lui donne seulement assez de signes
+pour qu'elle continue de chercher.
+
+Et c'est exactement ce qu'Afton voulait.

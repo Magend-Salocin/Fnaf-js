@@ -1,0 +1,146 @@
+# TAPE_CAS_09 — « CORRECTION »
+## BAD ENDING
+
+**Durée estimée : 3 min**
+
+```text
+╔══════════════════════════════════════════════════════════════╗
+║              FAZBEAR AUDIO ARCHIVE                          ║
+║                    TAPE_CAS_09                              ║
+║                  SYSTEM FAILURE FILE                        ║
+╚══════════════════════════════════════════════════════════════╝
+
+> DÉMARRAGE PROTOCOLE DE NETTOYAGE...
+
+[BRUIT DE SERVEUR]
+
+[VOIX AUTOMATIQUE]
+
+"Anomalie détectée."
+
+"Localisation :
+
+Mémoire centrale."
+
+[PAUSE]
+
+"Présence non enregistrée."
+
+"Action recommandée :
+
+SUPPRESSION."
+
+[STATIQUE]
+
+[VOIX ENFANT]
+
+"Encore..."
+
+[PAUSE]
+
+"Encore une fois..."
+
+[VOIX SYSTÈME]
+
+"Correction nécessaire."
+
+[VOIX ENFANT]
+
+"Je ne suis pas un problème."
+
+[BRUIT DE GLITCH]
+
+[VOIX SYSTÈME]
+
+"Erreur."
+
+"Réponse non valide."
+
+"Conversion en donnée résiduelle."
+
+[PAUSE]
+
+"Suppression des souvenirs."
+
+[BRUIT DE DONNÉES]
+
+Gabriel...
+
+Suppression impossible.
+
+Jeremy...
+
+Suppression impossible.
+
+Susie...
+
+Suppression impossible.
+
+Fritz...
+
+Suppression impossible.
+
+[LONG SILENCE]
+
+Cinquième profil.
+
+...
+
+Suppression en cours.
+
+...
+
+...
+
+Échec.
+
+[STATIQUE VIOLENTE]
+
+[VOIX ENFANT]
+
+"Vous ne pouvez pas supprimer
+ce que vous n'avez jamais connu."
+
+[PAUSE]
+
+[BRUIT DE GOLDEN FREDDY]
+
+[VOIX SYSTÈME]
+
+"Nouvelle classification."
+
+Ancien statut :
+
+ANOMALIE.
+
+Nouveau statut :
+
+ERREUR PERMANENTE.
+
+[BRUIT D'ÉCRAN CRT]
+
+[VOIX ENFANT]
+
+"Maintenant..."
+
+"Vous vous souviendrez."
+
+[COUPURE]
+
+════════════════════════════════════════════════════════════════
+
+ALERTE :
+
+MÉMOIRE CORROMPUE
+
+RESTAURATION AUTOMATIQUE :
+
+ÉCHEC
+
+════════════════════════════════════════════════════════════════
+
+Dernière donnée enregistrée :
+
+IT'S ME
+
+█

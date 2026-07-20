@@ -301,12 +301,19 @@ class RetroTerminal {
         const log = terminal.content.querySelector(".retro-shell-log");
         const input = terminal.content.querySelector(".retro-shell-input");
 
+        // Fonction utilitaire pour scroller vers le bas
+        const scrollToBottom = () => {
+            setTimeout(() => {
+                log.scrollTop = log.scrollHeight;
+            }, 0);
+        };
+
         const printLine = (text, lineClass = "") => {
             const line = document.createElement("div");
             line.className = `retro-shell-line ${lineClass}`.trim();
             line.textContent = text;
             log.appendChild(line);
-            log.scrollTop = log.scrollHeight;
+            scrollToBottom();
             return line;
         };
 
@@ -320,10 +327,11 @@ class RetroTerminal {
             const wrapper = document.createElement("div");
             wrapper.className = `retro-shell-line ${lineClass}`.trim();
             log.appendChild(wrapper);
+            scrollToBottom();
 
             if (!typewriterEnabled) {
                 wrapper.textContent = text;
-                log.scrollTop = log.scrollHeight;
+                scrollToBottom();
                 onDone?.();
                 return wrapper;
             }
@@ -348,7 +356,7 @@ class RetroTerminal {
 
                 i += 1;
 
-                log.scrollTop = log.scrollHeight;
+                scrollToBottom();
 
                 if (i % 2 === 0 && typeof playSound === "function") {
                     playSound("terminal-keyboard-typing");
@@ -397,13 +405,17 @@ class RetroTerminal {
                     if (step.flash) {
 
                         const node = printLine(step.text || "", cls);
+                        scrollToBottom();
 
                         setTimeout(() => {
                             node.remove();
+                            scrollToBottom();
                         }, step.flashDuration || 1000);
 
                     } else {
-                        typeOut(step.text || "", cls);
+                        typeOut(step.text || "", cls, () => {
+                            scrollToBottom();
+                        });
                     }
 
                 }, elapsed);
@@ -416,6 +428,7 @@ class RetroTerminal {
         const handleClear = () => {
 
             log.innerHTML = "";
+            scrollToBottom();
 
             if (typeof playSound === "function") {
                 playSound("camera_toggle");

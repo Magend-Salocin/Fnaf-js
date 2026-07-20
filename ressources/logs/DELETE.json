@@ -1,0 +1,7 @@
+{
+    "command": "DELETE",
+    "markFound": "DELETE",
+    "type": "text",
+    "text": "╔══════════════════════════════════════════════════════════════╗\n║                DELETE HISTORY                               ║\n╚══════════════════════════════════════════════════════════════╝\n\n> ARCHIVE DES SUPPRESSIONS\n\n════════════════════════════════════════════════════════════════\n\nANOMALIE 001\n\nCRT GLITCH\n\nStatut :\n\nSUPPRIMÉ\n\n\nANOMALIE 002\n\nMESSAGE :\nIT'S ME\n\nStatut :\n\nSUPPRIMÉ\n\n\nANOMALIE 003\n\nGOLDEN FREDDY\n\nStatut :\n\nSUPPRIMÉ\n\n\n════════════════════════════════════════════════════════════════\n\nVÉRIFICATION...\n\n...\n\n...\n\nLes anomalies sont revenues.\n\n\n════════════════════════════════════════════════════════════════\n\nNouvelle ligne détectée :\n\nANOMALIE 005\n\nNom :\n\nOUBLI\n\n\nStatut :\n\nIMPOSSIBLE À SUPPRIMER\n\n\n█",
+    "glitch": false
+}

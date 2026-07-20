@@ -1,0 +1,7 @@
+{
+    "command": "TOYS",
+    "markFound": "TOYS",
+    "type": "text",
+    "text": "╔══════════════════════════════════════════════════════════════╗\n║           FAZBEAR ENTERTAINMENT - TOYS.LOG v2.0             ║\n║             INVENTAIRE DES JOUETS RETROUVÉS                 ║\n╚══════════════════════════════════════════════════════════════╝\n\n> OUVERTURE : TOYS.LOG\n\n════════════════════════════════════════════════════════════════\n\nZONE              OBJET              STATUT\n\nPirate Cove       Bateau miniature    RETROUVÉ\n\nDining Area       Figurines pirates   RETROUVÉES\n\nWest Hall         Ballon rouge        NON RÉCLAMÉ\n\nBackstage         Dés en plastique    RETROUVÉS\n\n════════════════════════════════════════════════════════════════\n\nRÉSUMÉ\n\nObjets enregistrés .......... 24\n\nObjets archivés ............. 23\n\nDéplacement non autorisé .... 01\n\n════════════════════════════════════════════════════════════════\n\nOBSERVATION\n\nCertains objets semblent être\nretrouvés dans des zones\ndifférentes de leur emplacement\nd'origine.\n\nAucune manipulation humaine\nn'a été enregistrée.\n\n════════════════════════════════════════════════════════════════\n\nFin du fichier.\n\n█",
+    "glitch": false
+}

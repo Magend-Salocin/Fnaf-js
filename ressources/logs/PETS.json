@@ -1,0 +1,7 @@
+{
+    "command": "PETS",
+    "markFound": "PETS",
+    "type": "text",
+    "text": "╔══════════════════════════════════════════════════════════════╗\n║          FAZBEAR ENTERTAINMENT - PETS.LOG v1.8              ║\n║        SIGNALEMENTS D'ANIMAUX - SITE PRINCIPAL              ║\n╚══════════════════════════════════════════════════════════════╝\n\n> OUVERTURE : PETS.LOG\n\n════════════════════════════════════════════════════════════════\n\nDATE      TYPE          LOCALISATION\n\n03/06     Chien ?       Parking\n\n15/06     Chien ?       East Hall\n\n26/06     Chien ?       Kitchen\n\n════════════════════════════════════════════════════════════════\n\nRÉSUMÉ\n\nSignalements ............... 03\n\nPrésence confirmée ......... 00\n\n════════════════════════════════════════════════════════════════\n\nNOTE\n\nAucune trace d'animal n'a été\nretrouvée lors des inspections.\n\nLes signalements restent\nnon confirmés.\n\n════════════════════════════════════════════════════════════════\n\nFin du fichier.\n\n█",
+    "glitch": false
+}

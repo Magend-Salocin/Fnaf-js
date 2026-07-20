@@ -1,0 +1,7 @@
+{
+    "command": "LOST001",
+    "markFound": "LOST001",
+    "type": "text",
+    "text": "╔══════════════════════════════════════════════════════════════╗\n║              DOSSIER OBJET PERDU : LOST001                   ║\n╚══════════════════════════════════════════════════════════════╝\n\nObjet ................. Chaise enfant\n\nLocalisation .......... Zone repas\n\nStatut ................ Déplacée puis retrouvée\n\nRéclamation ........... Aucune\n\n════════════════════════════════════════════════════════════════\n\nAnnotation sécurité :\n\n\"Mouvement non expliqué.\"\n\n════════════════════════════════════════════════════════════════\n\nFIN DU DOSSIER",
+    "glitch": false
+}

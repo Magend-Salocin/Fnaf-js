@@ -1,0 +1,124 @@
+> RESTAURATION AUTOMATIQUE...
+
+[BRUIT DE TERMINAL]
+
+[CLAVIER]
+
+[VOIX D'UN EMPLOYÉ ADMINISTRATIF]
+
+"Recherche des dossiers victimes
+associés à l'incident."
+
+[BRUIT DE DISQUE DUR]
+
+"Premier dossier..."
+
+"Gabriel."
+
+[CLIC]
+
+"Informations confirmées."
+
+[PAUSE]
+
+"Deuxième dossier..."
+
+"Jeremy."
+
+"Informations confirmées."
+
+[CLIC]
+
+"Troisième dossier..."
+
+"Susie."
+
+"Informations confirmées."
+
+[CLIC]
+
+"Quatrième dossier..."
+
+"Fritz."
+
+"Informations confirmées."
+
+[LONG SILENCE]
+
+[CLAVIER PLUS RAPIDE]
+
+"Cinquième dossier..."
+
+[PAUSE]
+
+"Chargement..."
+
+...
+
+"Échec."
+
+[BRUIT D'ERREUR]
+
+"Nouvelle tentative."
+
+...
+
+"Échec."
+
+[STATIQUE]
+
+[VOIX PLUS BASSE]
+
+"Le dossier existe."
+
+"Mais aucune donnée associée."
+
+[PAUSE]
+
+"Nom..."
+
+[CLAVIER]
+
+"Non renseigné."
+
+"Âge..."
+
+"Non renseigné."
+
+"Famille..."
+
+"Non renseigné."
+
+"Responsable légal..."
+
+...
+
+"Non renseigné."
+
+[LONG SILENCE]
+
+[BRUIT DE FEUILLE]
+
+"Comment peut-on avoir un dossier..."
+
+"...sans personne dedans ?"
+
+[STATIQUE]
+
+[UNE AUTRE VOIX APPARAÎT]
+
+"Supprimez cette entrée."
+
+[EMPLOYÉ]
+
+"Qui a demandé ça ?"
+
+[PAUSE]
+
+...
+
+[VOIX INCONNUE]
+
+"Elle n'était jamais censée être retrouvée."
+
+[COUPURE]

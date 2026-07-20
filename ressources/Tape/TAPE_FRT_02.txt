@@ -1,0 +1,66 @@
+> LECTURE DE L'ENREGISTREMENT...
+
+[BRUIT DE CAMÉRA DE SURVEILLANCE]
+
+[PORTE QUI S'OUVRE]
+
+[EMPLOYÉ - FATIGUÉ]
+
+"Non..."
+
+[PAUSE]
+
+"Non, non, non..."
+
+[BRUIT DE JOUETS QUI BOUGENT]
+
+"Qui a sorti tous les jouets ?"
+
+[LONG SILENCE]
+
+"On avait tout rangé hier soir..."
+
+[BRUIT D'OBJETS POSÉS SUR UNE TABLE]
+
+"Les figurines étaient dans le coffre."
+
+"Le bateau était sur l'étagère."
+
+"Les accessoires étaient derrière
+le rideau."
+
+[PAUSE]
+
+"Je sais que ce n'est pas un enfant.
+La salle est fermée depuis des heures."
+
+[BRUIT DE PAS]
+
+"Quelqu'un aurait dû passer par ici..."
+
+[STATIQUE]
+
+"Mais le rapport de sécurité dit
+qu'il n'y a eu aucune ouverture."
+
+[PAUSE]
+
+"Je vais refaire l'inventaire."
+
+[BRUIT D'UN PETIT OBJET QUI TOMBE]
+
+"..."
+
+"Très bien."
+
+"Très drôle."
+
+[VOIX PLUS BASSE]
+
+"Si quelqu'un est là..."
+
+[LONG SILENCE]
+
+"...arrêtez de déplacer les jouets."
+
+[FIN D'ENREGISTREMENT]

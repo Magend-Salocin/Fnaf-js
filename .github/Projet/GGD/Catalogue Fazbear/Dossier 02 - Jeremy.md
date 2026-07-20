@@ -11,21 +11,95 @@ DOSSIER 02 — JEREMY
 | Salles secondaires | Supply Closet, West Hall, Dining Area |
 
 
-Philosophie
+# Note d'intention
+
+## Philosophie narrative
 
 Contrairement à Gabriel qui attend...
 
 Jeremy crée encore.
 
-Il termine des dessins.
+Il ne cherche pas à s'échapper.
+Il ne cherche pas à attaquer.
+Il ne cherche pas à être retrouvé.
 
-Il replace des feuilles.
+Il continue simplement ce qu'il faisait avant.
+
+Il termine des dessins commencés.
+
+Il replace des feuilles oubliées.
 
 Il cherche ses crayons.
 
-Le restaurant essaye de terminer ses dessins.
+Il corrige des détails qui n'étaient pas finis.
 
-Mais il n'y arrive jamais.
+Le restaurant tente de préserver ses souvenirs,
+mais il ne comprend pas que ces souvenirs
+ne veulent pas être archivés.
+
+Ils veulent continuer.
+
+---
+
+## Concept du personnage
+
+Jeremy représente une présence basée sur la création.
+
+Là où les autres enfants sont liés à un lieu
+ou à un événement précis, Jeremy est lié aux traces
+qu'il laisse derrière lui.
+
+Le joueur ne voit jamais Jeremy.
+
+Il voit :
+
+- des feuilles déplacées ;
+- des dessins terminés pendant la nuit ;
+- des crayons replacés au mauvais endroit ;
+- des murs qui refusent de rester vides.
+
+La question n'est pas :
+
+> "Où est Jeremy ?"
+
+Mais :
+
+> "Qui continue de créer à sa place ?"
+
+---
+
+# Symbolique
+
+## Le dessin inachevé
+
+Un dessin inachevé représente une histoire arrêtée trop tôt.
+
+Chaque feuille abandonnée est une tentative
+de terminer quelque chose qui ne pourra jamais l'être.
+
+Le restaurant cherche à effacer ces traces.
+
+Mais chaque suppression crée une nouvelle apparition.
+
+---
+
+## Bonnie
+
+Bonnie n'est pas seulement une animatronique.
+
+Il devient le symbole d'une création qui continue
+sans son créateur.
+
+Les couleurs, les formes et les dessins associés
+à Jeremy finissent par se mélanger à son identité.
+
+Le joueur ne sait plus si :
+
+- Jeremy dessine Bonnie ;
+- Bonnie reproduit les souvenirs de Jeremy ;
+- ou si le restaurant tente de terminer l'œuvre seul.
+
+|-----------------------------------------------------------------------------------------------------------------|
 
 | ID      | Priorité | Type    | Salle         | Caméra | Nuit | Heure         | Chance | Déclencheur   | Description                                                         | Lore                                  | Son             | JS               | Terminal | Journal | Cassette | RequiresEvent |
 | ------- | -------- | ------- | ------------- | ------ | ---- | ------------- | ------ | ------------- | ------------------------------------------------------------------- | ------------------------------------- | --------------- | ---------------- | -------- | ------- | -------- | ------------- |
@@ -63,36 +137,14 @@ Mais il n'y arrive jamais.
 
 
 Série "Terminal"
-| ID      | Commande     | Contenu                          |
-| ------- | ------------ | -------------------------------- |
-| JER-031 | DRAWINGS.LOG | Inventaire des dessins retrouvés |
-| JER-032 | LOST_ART     | Matériel scolaire oublié         |
-| JER-033 | CLEANING     | Dessins retirés des murs         |
-| JER-034 | CHILDREN_ART | Exposition interne des dessins   |
-| JER-035 | SCANNER      | Archives de dessins numérisés    |
+| Réaliser| ID      | Commande  | Contenu                      |
+| ------- | ------- | --------- | ---------------------------- |
+| X | JER-031 | DRAWINGS.LOG | Inventaire des dessins retrouvés |
+| X |  JER-032 | LOST_ART     | Matériel scolaire oublié         |
+| X |  JER-033 | CLEANING     | Dessins retirés des murs         |
+| X |  JER-034 | CHILDREN_ART | Exposition interne des dessins   |
+| X |  JER-035 | SCANNER      | Archives de dessins numérisés    |
 
-
-
-Terminal
-DRAWINGS.LOG
-
-Inventaire des dessins retirés des murs.
-
-LOST_ART.LOG
-
-Liste des cahiers, feuilles et crayons jamais réclamés.
-
-SCANNER.LOG
-
-Archives de dessins d'enfants numérisés avant rénovation.
-
-CHILDREN_ART.LOG
-
-Planning d'une exposition jamais réalisée.
-
-CLEANING.LOG
-
-Ordres internes : retirer les dessins après "l'incident".
 
 Journaux
 | ID          | Titre                                                         |
@@ -131,3 +183,48 @@ Cassette : "Retirez les dessins."
         │
         ▼
 Dessin de cinq enfants (JER-016)
+
+
+|-----------------------------------------------------------------------------------------------------------------|
+
+Révélation finale
+JER-016 — Le dernier dessin
+
+Le dernier dessin retrouvé n'est pas un dessin d'enfant classique.
+
+Il représente cinq enfants.
+
+Aucun nom.
+
+Aucune date.
+
+Aucune signature.
+
+Seulement cinq silhouettes dessinées au crayon.
+
+Une seule chose est différente :
+
+Une sixième silhouette apparaît légèrement effacée derrière eux.
+
+Le système classe le fichier :
+
+ARCHIVE INCOMPLÈTE
+
+Mais Jeremy continue d'essayer de la terminer.
+
+Résumé du rôle narratif
+
+Jeremy est la mémoire créative du restaurant.
+
+Il ne hante pas les lieux.
+
+Il les complète.
+
+Chaque nuit, Fazbear tente de nettoyer,
+remplacer et archiver ses créations.
+
+Chaque nuit, quelque chose recommence.
+
+Le restaurant voulait conserver les dessins.
+
+Il a accidentellement conservé le dessinateur.

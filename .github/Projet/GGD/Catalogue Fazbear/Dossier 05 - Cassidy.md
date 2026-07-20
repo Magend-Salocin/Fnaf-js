@@ -66,6 +66,31 @@ Tableau de Production
 | CAS-009 | Haute    | Audio         | Bureau   | 5    | 04h00      | 2%         | Silence              | Respiration proche                      | Cassidy est dans le bureau   | —                   | breathe_child.wav | breathe.js        | —         | TAPE050  | Très rare             |
 | CAS-010 | Critique | Hallucination | Toutes   | 5    | Toute nuit | Conditions | Fin lore             | Golden Freddy disparaît avant d'être vu | Elle hésite                  | golden_shadow.png   | fade.wav          | vanish.js         | —         | —        | Bonne ou mauvaise fin |
 
+# Série Event — CASSIDY / GOLDEN FREDDY
+
+| ID | Priorité | Type | Salle | Caméra | Nuit | Heure | Chance | Déclencheur | Description | Lore | Son | Script JS | Terminal | Journal | Cassette | RequiresEvent |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| CAS-001 | Critique | Glitch CRT | Toutes | Toutes | 1-5 | Toute nuit | Variable | Ouverture caméra | L'écran affiche une ligne parasite pendant 1 seconde | Cassidy tente d'exister dans le système | crt_pop.wav | cassidy_glitch.js | — | — | — | — |
+| CAS-002 | Haute | Texte | Toutes | Caméra active | 1-5 | Toute nuit | 1% | Changement caméra rapide | Le texte "IT'S ME" apparaît pendant une frame | Première tentative de communication | whisper.wav | itsme.js | — | — | — | CAS-001 |
+| CAS-003 | Haute | Audio | Bureau | — | 2-5 | 02:00 | 2% | Silence prolongé | Un murmure enfantin incompréhensible apparaît dans le bureau | Cassidy cherche un contact | whisper01.wav | whisper.js | — | — | TAPE_CAS_02 | CAS-002 |
+| CAS-004 | Critique | Terminal | Terminal | — | 2-5 | Toute nuit | Variable | Lecture fichiers système | Une ligne du terminal change seule | Cassidy modifie les archives | type.wav | terminal_corrupt.js | USER.LOG | — | — | CAS-001 |
+| CAS-005 | Haute | Glitch mémoire | Toutes | Toutes | 2-5 | Toute nuit | 3% | Observation longue | Une caméra revient quelques secondes en arrière | Le restaurant rejoue une mémoire impossible | memory_fail.wav | memory_loop.js | MEMORY.LOG | — | — | CAS-004 |
+| CAS-006 | Critique | Hallucination | Bureau | — | 3-5 | Retour bureau | 0,5% | Fermeture caméra | Golden Freddy apparaît assis sur la chaise | Cassidy observe Michael | golden_presence.wav | golden_visit.js | SYS_ERR | — | — | CAS-003 |
+| CAS-007 | Haute | Overlay visage | Toutes | Toutes | 3-5 | Toute nuit | 2% | Scan caméra | Un visage d'enfant apparaît une frame | Fragment d'identité perdu | static_burst.wav | face_flash.js | — | — | — | CAS-005 |
+| CAS-008 | Haute | Audio inversé | Bureau | — | 3-5 | 03:00 | 2% | Absence de bruit | Une voix inversée prononce un message incomplet | Cassidy tente de parler sans être comprise | reversed_voice.wav | reverse_audio.js | — | — | TAPE_CAS_03 | CAS-003 |
+| CAS-009 | Critique | Terminal vivant | Terminal | — | 4-5 | Toute nuit | Variable | Lecture ROOT.LOG | Le curseur écrit seul "WHO AM I ?" | Le système cherche son identité | keyboard.wav | root_write.js | ROOT.LOG | — | — | CAS-004 |
+| CAS-010 | Haute | Caméra impossible | Toutes | CAM01 | 4-5 | Toute nuit | 1% | Changement caméra | Golden Freddy apparaît dans une caméra inexistante | Cassidy dépasse les limites du restaurant | crt_noise.wav | golden_camera.js | — | — | — | CAS-006 |
+| CAS-011 | Haute | Faux souvenir | Dining Area | CAM02 | 4-5 | 04:00 | 2% | Observation salle | Une cinquième chaise apparaît à table | Les autres enfants ressentent un manque | distant_hum.wav | fifth_place.js | — | NEWS_GAB_03 | — | CAS-005 |
+| CAS-012 | Haute | Faux souvenir | Backstage | CAM05 | 4-5 | Toute nuit | 2% | Observation Bonnie | Bonnie tient une feuille avec cinq enfants dessinés | Jeremy conserve une trace indirecte | paper.wav | missing_child.js | — | — | — | CAS-011 |
+| CAS-013 | Haute | Faux souvenir | Kitchen | CAM06 | 4-5 | Toute nuit | 2% | Audio uniquement | Un cinquième bruit de pas apparaît | Susie ressent une présence oubliée | footsteps.wav | kitchen_memory.js | — | — | — | CAS-011 |
+| CAS-014 | Haute | Faux souvenir | Pirate Cove | CAM05 | 4-5 | 02:12 | 2% | Observation Foxy | Foxy place cinq jouets au lieu de quatre | Fritz se souvient sans comprendre | toy_move.wav | five_toys.js | — | — | — | CAS-011 |
+| CAS-015 | Critique | Mémoire centrale | Terminal | — | 5 | Toute nuit | Script | Collection archives complète | Le terminal affiche un cinquième dossier vide | Révélation du profil inconnu | memory_fail.wav | missing_profile.js | MEMORY.LOG | — | TAPE_CAS_06 | CAS-009 |
+| CAS-016 | Critique | Rencontre | Bureau | — | 5 | 04:00 | Condition | Méfiance élevée | Golden Freddy apparaît sans jumpscare | Cassidy cherche William dans Michael | child_breath.wav | golden_meeting.js | — | — | — | CAS-015 |
+| CAS-017 | Critique | Dialogue système | Terminal | — | 5 | Variable | Condition | Lecture ROOT.LOG | Le terminal répond directement au joueur | Cassidy découvre l'enquêteur | type.wav | cassidy_chat.js | ROOT.LOG | — | — | CAS-016 |
+| CAS-018 | Critique | Révélation | Toutes | Toutes | 5 | 05:00 | Condition | Tous les dossiers trouvés | Message : "YOU ARE NOT HIM" | Cassidy commence à comprendre son erreur | static.wav | identity_reveal.js | USER.LOG | — | TAPE_CAS_07 | CAS-017 |
+| CAS-019 | Critique | Fin alternative | Terminal | — | 5 | Fin nuit | Condition | Bonne enquête | Le système restaure le dossier Cassidy | Cassidy devient une victime reconnue | golden_fade.wav | good_end.js | RECOVER.LOG | — | TAPE_CAS_08 | CAS-018 |
+| CAS-020 | Critique | Fin alternative | Toutes | Toutes | 5 | Fin nuit | Condition | Mauvaise enquête | Golden Freddy devient une erreur permanente | Cassidy refuse d'être oubliée | reboot.wav | bad_end.js | DELETE.LOG | — | TAPE_CAS_09 | CAS-018 |
+
 Série "Les Erreurs"
 
 Cassidy ne produit jamais une anomalie complète.

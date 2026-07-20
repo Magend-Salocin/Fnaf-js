@@ -1,0 +1,7 @@
+{
+    "command": "KITCHEN",
+    "markFound": "KITCHEN",
+    "type": "text",
+    "text": "╔══════════════════════════════════════════════════════════════╗\n║        FAZBEAR ENTERTAINMENT - KITCHEN.LOG                  ║\n║            RAPPORT AUDIO - CUISINE                          ║\n╚══════════════════════════════════════════════════════════════╝\n\n> ANALYSE DES ENREGISTREMENTS\n\n════════════════════════════════════════════════════════════════\n\n02:11    Métal déplacé\n\n02:13    Tintement léger\n\n02:14    Bruit non identifié\n\n02:15    Silence\n\n════════════════════════════════════════════════════════════════\n\nCAMÉRA\n\nFlux vidéo ............... INDISPONIBLE\n\nEnregistrement ........... AUDIO UNIQUEMENT\n\n════════════════════════════════════════════════════════════════\n\nNOTE\n\nLa source des bruits n'a\npas pu être identifiée.\n\n════════════════════════════════════════════════════════════════\n\nFin du rapport.\n\n█",
+    "glitch": false
+}

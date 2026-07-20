@@ -5,17 +5,17 @@
     "type": "sequence",
     "steps": [
         {
-            "text": "\n╔══════════════════════════════════════════════════════════════╗\n║                PLAN DE LA SALLE                             ║\n╚══════════════════════════════════════════════════════════════╝\n\n            TABLE ANNIVERSAIRE\n\n          ○────○────○\n\n          │          │\n\n          ○────○────○\n\n                 ▲\n             CHAISE DÉPLACÉE\n\n--------------------------------------------------------------\n\nDernière vérification :     26/06\n\nSignalement maintenance :   AUCUN\n\n\n",
+            "text": "╔══════════════════════════════════════════════════════════════╗\n║          FAZBEAR ENTERTAINMENT - ROOM MAP v1.4               ║\n║              PLAN DE LA SALLE D'ANNIVERSAIRE                 ║\n╚══════════════════════════════════════════════════════════════╝\n\n> CHARGEMENT DU PLAN...\n\n════════════════════════════════════════════════════════════════ \n\n              TABLE ANNIVERSAIRE\n                 ○────○────○\n                 │         │\n                 ○────○────○\n                      ▲\n               CHAISE DÉPLACÉE\n\n════════════════════════════════════════════════════════════════\n\nÉTAT DE LA PIÈCE\nDernière inspection ......... 26/06\nMobilier .................... Conforme\nSignalement maintenance ..... AUCUN\nOccupation actuelle ......... AUCUNE\n════════════════════════════════════════════════════════════════",
             "delay": 0,
             "glitch": false,
             "flash": false
         },
         {
-            "text": "\nTemps écoulé :  11 ans\n ",
-            "delay": 9200,
+            "text": "\n\nAVERTISSEMENT\n\nLe mobilier ne correspond pas\nà la configuration enregistrée.\n\nAucun membre du personnel\nn'a signalé de modification.\n\nNouvelle analyse recommandée.\n ",
+            "delay": 14000,
             "glitch": true,
             "flash": true,
-            "flashDuration": 2000
+            "flashDuration": 3000
         }
     ]
 }

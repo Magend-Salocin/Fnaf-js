@@ -1,0 +1,7 @@
+{
+    "command": "LOST_PETS",
+    "markFound": "LOST_PETS",
+    "type": "text",
+    "text": "╔══════════════════════════════════════════════════════════════╗\n║         FAZBEAR ENTERTAINMENT - LOST_PETS                   ║\n║             OBJETS TROUVÉS - CLIENTS                        ║\n╚══════════════════════════════════════════════════════════════╝\n\n> CONSULTATION DES OBJETS\n\n════════════════════════════════════════════════════════════════\n\nOBJET                     STATUT\n\nCollier rouge             NON RÉCLAMÉ\n\nMédaille métallique       ABSENTE\n\nLaisse en nylon           AUCUNE\n\n════════════════════════════════════════════════════════════════\n\nOBSERVATION\n\nLe collier est retrouvé\nrégulièrement hors de son\nemplacement de stockage.\n\nAucun accès enregistré.\n\n════════════════════════════════════════════════════════════════\n\nRetour au terminal...\n\n█",
+    "glitch": false
+}

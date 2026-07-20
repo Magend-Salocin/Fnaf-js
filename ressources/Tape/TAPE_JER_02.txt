@@ -1,0 +1,57 @@
+> LECTURE DE L'ENREGISTREMENT...
+
+[BRUIT DE RESTAURANT VIDE]
+
+[VOIX D'UN RESPONSABLE]
+
+"Petit rappel pour l'équipe de nuit."
+
+[PAUSE]
+
+"Les feuilles laissées sur les
+tables après fermeture doivent
+être retirées."
+
+[BRUIT DE PAPIERS]
+
+"Les crayons doivent retourner
+dans les boîtes de rangement."
+
+"Les feutres doivent être comptés."
+
+"Les dessins terminés doivent
+être placés dans les archives."
+
+[PAUSE]
+
+"Nous avons remarqué plusieurs
+oublis ces dernières semaines."
+
+[BRUIT DE FEUILLES QUI BOUGENT]
+
+"Certains employés laissent
+encore les activités en place
+jusqu'au lendemain."
+
+[SOUPIR]
+
+"Le restaurant doit être prêt
+pour les prochains visiteurs."
+
+[PAUSE]
+
+"Merci de vérifier chaque table."
+
+"Y compris celles qui ne sont
+plus utilisées."
+
+[STATIQUE]
+
+"Il n'est pas nécessaire de
+conserver chaque dessin."
+
+[LONG SILENCE]
+
+"Merci."
+
+[FIN DE BANDE]

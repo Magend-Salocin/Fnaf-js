@@ -1,0 +1,93 @@
+> LECTURE DE L'ENREGISTREMENT...
+
+[BRUIT DE RESTAURANT APRÈS FERMETURE]
+
+[HORLOGE]
+
+[BRUIT DE TABLES DÉPLACÉES]
+
+[VOIX D'UN EMPLOYÉ]
+
+"Procédure de fermeture après
+une réservation anniversaire."
+
+[PAUSE]
+
+"Étape un :
+
+Éteindre les décorations."
+
+[BRUIT D'INTERRUPTEUR]
+
+"Étape deux :
+
+Retirer les assiettes et les
+restes de nourriture."
+
+[BRUIT DE VAISSELLE]
+
+"Étape trois :
+
+Récupérer les cadeaux oubliés."
+
+[PAUSE]
+
+"Étape quatre :
+
+Vérifier que tous les invités
+ont quitté le bâtiment."
+
+[LONG SILENCE]
+
+[BRUIT DE PAPIER]
+
+"Liste des invités..."
+
+[PAUSE]
+
+"Un instant."
+
+[STATIQUE]
+
+"Cette liste est incorrecte."
+
+[BRUIT DE FEUILLE]
+
+"Il manque un nom."
+
+[LONG SILENCE]
+
+[VOIX PLUS BASSE]
+
+"Pourtant la fête est terminée."
+
+[BRUIT DE MUSIQUE D'ANNIVERSAIRE QUI DÉMARRE AU LOIN]
+
+"Coupez ça."
+
+[PAUSE]
+
+"La musique ne devrait plus être
+active."
+
+[BRUIT DE PAS RAPIDES]
+
+[SUPERVISEUR]
+
+"Fermez la salle."
+
+[EMPLOYÉ]
+
+"Mais Freddy est encore sur scène."
+
+[LONG SILENCE]
+
+[SUPERVISEUR]
+
+"Laissez-le."
+
+[STATIQUE FORTE]
+
+"Il attend."
+
+[COUPURE]

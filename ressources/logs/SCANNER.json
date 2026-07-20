@@ -1,0 +1,7 @@
+{
+    "command": "SCANNER",
+    "markFound": "SCANNER",
+    "type": "text",
+    "text": "╔══════════════════════════════════════════════════════════════╗\n║         FAZBEAR ENTERTAINMENT - SCANNER                     ║\n║           ARCHIVES NUMÉRISÉES DES DESSINS                   ║\n╚══════════════════════════════════════════════════════════════╝\n\n> ANALYSE DES FICHIERS\n\n════════════════════════════════════════════════════════════════\n\nFichiers archivés ............ 27\n\nImages corrompues ............ 00\n\nNouveaux fichiers ............ 01\n\n════════════════════════════════════════════════════════════════\n\nHorodatage du dernier scan :\n\n03:17\n\nRestaurant fermé.\n\n════════════════════════════════════════════════════════════════\n\nERREUR\n\nLe document analysé n'a\njamais été numérisé.\n\n════════════════════════════════════════════════════════════════\n\nRetour au terminal...\n\n█",
+    "glitch": false
+}

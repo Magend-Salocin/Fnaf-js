@@ -1,0 +1,7 @@
+{
+    "command": "LOST_TOYS",
+    "markFound": "LOST_TOYS",
+    "type": "text",
+    "text": "╔══════════════════════════════════════════════════════════════╗\n║          FAZBEAR ENTERTAINMENT - LOST_TOYS                  ║\n║             OBJETS NON RÉCUPÉRÉS                            ║\n╚══════════════════════════════════════════════════════════════╝\n\n> RECHERCHE DANS LES ARCHIVES\n\n════════════════════════════════════════════════════════════════\n\nOBJET                 DERNIÈRE POSITION\n\nBateau pirate         Pirate Cove\n\nFigurine renard       Inconnue\n\nYo-yo rouge           West Hall\n\nPetit coffre          Inconnue\n\n════════════════════════════════════════════════════════════════\n\nRÉSULTAT\n\nObjets retrouvés .......... 00\n\nObjets localisés .......... 02\n\nObjets perdus ............. 02\n\n════════════════════════════════════════════════════════════════\n\nAVERTISSEMENT\n\nUn objet apparaît dans les\narchives sans date d'entrée.\n\nNom du fichier :\n\nFRT_TOY_FINAL\n\n════════════════════════════════════════════════════════════════\n\nFin de recherche.\n\n█",
+    "glitch": false
+}

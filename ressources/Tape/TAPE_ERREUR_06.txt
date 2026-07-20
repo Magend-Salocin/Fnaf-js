@@ -1,0 +1,151 @@
+> RESTAURATION DU MODULE MÉMOIRE...
+
+[BRUIT DE SERVEURS]
+
+[CLAVIER]
+
+[VOIX AUTOMATIQUE]
+
+"Initialisation du programme :
+RECONSTRUCTION DES SOUVENIRS."
+
+[PAUSE]
+
+"Objectif :
+
+Restaurer les profils émotionnels
+des victimes associées."
+
+[BRUIT DE DONNÉES]
+
+"Chargement des fragments disponibles."
+
+...
+
+"Profil un."
+
+"Ancrage trouvé."
+
+"Souvenir :
+Anniversaire."
+
+[VALIDÉ]
+
+...
+
+"Profil deux."
+
+"Ancrage trouvé."
+
+"Souvenir :
+Création artistique."
+
+[VALIDÉ]
+
+...
+
+"Profil trois."
+
+"Ancrage trouvé."
+
+"Souvenir :
+Animal domestique."
+
+[VALIDÉ]
+
+...
+
+"Profil quatre."
+
+"Ancrage trouvé."
+
+"Souvenir :
+Jeu."
+
+[VALIDÉ]
+
+[LONG SILENCE]
+
+"Profil cinq."
+
+...
+
+"Recherche d'ancrage."
+
+...
+
+"Recherche d'ancrage."
+
+...
+
+"Échec."
+
+[BRUIT D'ERREUR]
+
+"Nouvelle tentative."
+
+"Recherche dans les objets."
+
+...
+
+"Aucun objet associé."
+
+"Recherche dans les archives familiales."
+
+...
+
+"Aucun résultat."
+
+"Recherche dans les souvenirs des autres profils."
+
+...
+
+[STATIQUE]
+
+"Fragment détecté."
+
+[PAUSE]
+
+"Origine :
+inconnue."
+
+"Contenu :
+incomplet."
+
+[BRUIT DE LECTURE]
+
+[VOIX D'ENFANT MULTIPLE, DÉFORMÉE]
+
+"Il manque quelqu'un."
+
+[COUPURE]
+
+[VOIX AUTOMATIQUE]
+
+"Correction."
+
+"Phrase invalide."
+
+"Suppression."
+
+...
+
+[PAUSE]
+
+"Échec de suppression."
+
+[STATIQUE]
+
+"Le souvenir refuse de disparaître."
+
+════════════════════════════════════════════════════════════════
+
+RÉSULTAT :
+
+4 profils restaurés.
+
+1 profil impossible.
+
+État :
+
+NON IDENTIFIÉ

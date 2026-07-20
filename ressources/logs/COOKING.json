@@ -1,0 +1,7 @@
+{
+    "command": "COOKING",
+    "markFound": "COOKING",
+    "type": "text",
+    "text": "╔══════════════════════════════════════════════════════════════╗\n║          FAZBEAR ENTERTAINMENT - CLEANING                   ║\n║          RAPPORT D'ENTRETIEN - CUISINE                      ║\n╚══════════════════════════════════════════════════════════════╝\n\n> OUVERTURE DU RAPPORT\n\n════════════════════════════════════════════════════════════════\n\nDATE      OBSERVATION\n\n24/06     Gamelle déplacée\n\n25/06     Gamelle déplacée\n\n26/06     Gamelle déplacée\n\n════════════════════════════════════════════════════════════════\n\nRÉSUMÉ\n\nObjet concerné ............ Gamelle inox\n\nPosition d'origine ........ Cuisine\n\nCause ..................... Inconnue\n\n════════════════════════════════════════════════════════════════\n\nAucune intervention\ndu personnel n'a été\nenregistrée.\n\n════════════════════════════════════════════════════════════════\n\nRetour au terminal...\n\n█",
+    "glitch": false
+}

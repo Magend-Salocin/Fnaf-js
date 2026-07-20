@@ -1,0 +1,51 @@
+> RÉCUPÉRATION D'UNE BANDE ENDOMMAGÉE...
+
+[GRÉSILLEMENT]
+
+[BRUIT DE FOND INCONNU]
+
+...
+
+[STATIQUE]
+
+[VOIX ENFANTINE - TRÈS FAIBLE]
+
+"...Hello ?"
+
+[PAUSE]
+
+...
+
+[BRUIT DE BANDE]
+
+[VOIX PLUS LOIN]
+
+"Est-ce que quelqu'un..."
+
+[COUPURE]
+
+[STATIQUE FORTE]
+
+...
+
+[REPRISE AUDIO]
+
+[VOIX ENFANTINE]
+
+"Vous m'entendez ?"
+
+[LONG SILENCE]
+
+[BRUIT DE FREQUENCE]
+
+[VOIX D'ADULTE - INCOMPRÉHENSIBLE]
+
+"..."
+
+[STATIQUE]
+
+[VOIX ENFANTINE]
+
+"Je suis encore là."
+
+[COUPURE IMMÉDIATE]

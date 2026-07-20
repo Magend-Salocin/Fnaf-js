@@ -1,0 +1,65 @@
+> LECTURE DE L'ENREGISTREMENT...
+
+[BRUIT DE PORTE DE CUISINE]
+
+[PAS SUR LE SOL]
+
+[EMPLOYÉ - FATIGUÉ]
+
+"Je comprends pas..."
+
+[PAUSE]
+
+"La gamelle était encore déplacée
+ce matin."
+
+[BRUIT MÉTALLIQUE]
+
+"Elle était là."
+
+[OBJET POSÉ SUR UNE TABLE]
+
+"Exactement au milieu de la cuisine."
+
+[PAUSE]
+
+"Je l'ai rangée hier soir."
+
+"Comme tous les soirs."
+
+[BRUIT DE FRIGO AU LOIN]
+
+"Personne n'a accès ici pendant
+la nuit."
+
+[LONG SILENCE]
+
+"J'ai demandé aux autres employés."
+
+"Ils pensent tous que quelqu'un
+fait une blague."
+
+[PETIT RIRE NERVEUX]
+
+"Mais personne ne veut dire
+que c'est lui."
+
+[PAUSE]
+
+"Le plus étrange..."
+
+[STATIQUE]
+
+"...c'est qu'elle est toujours
+propre."
+
+[LONG SILENCE]
+
+"Comme si quelqu'un l'avait utilisée
+et remise à sa place."
+
+[BRUIT DE BANDE QUI SAUTE]
+
+"Je vais prévenir la direction."
+
+[FIN D'ENREGISTREMENT]

@@ -1,0 +1,7 @@
+{
+    "command": "DRAWINGS",
+    "markFound": "DRAWINGS",
+    "type": "text",
+    "text": "╔══════════════════════════════════════════════════════════════╗\n║        FAZBEAR ENTERTAINMENT - DRAWINGS.LOG v2.4            ║\n║           INVENTAIRE DES DESSINS ENFANTS                    ║\n╚══════════════════════════════════════════════════════════════╝\n\n> OUVERTURE : DRAWINGS.LOG\n\n════════════════════════════════════════════════════════════════\n\nDATE      DESSINS   ÉTAT\n\n12/06        08     ARCHIVÉS\n\n18/06        11     ARCHIVÉS\n\n26/06        07     ARCHIVÉS\n\n--/--        01     NON IDENTIFIÉ\n\n════════════════════════════════════════════════════════════════\n\nRÉSUMÉ\n\nDessins enregistrés .......... 27\n\nDessins archivés ............. 26\n\nOrigine inconnue ............. 01\n\n════════════════════════════════════════════════════════════════\n\nNOTE SYSTÈME\n\nLe dernier dessin ne correspond\nà aucune réservation connue.\n\nAucun auteur enregistré.\n\n════════════════════════════════════════════════════════════════\n\nFin du fichier.\n\n█",
+    "glitch": false
+}
