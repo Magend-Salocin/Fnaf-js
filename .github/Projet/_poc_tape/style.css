@@ -50,7 +50,7 @@
   background: var(--void);
 }
 
-.tape-scene[hidden]{ display: none; }
+.tape-scene[hidden]{ display: block; }
 
 .scene-room{
   position: absolute;

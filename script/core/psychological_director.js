@@ -1,10 +1,10 @@
 /*
- * Psychological Director AI
+ * IA Directeur Psychologique
  *
  * Objectif:
- * - Estimer un etat mental du joueur en temps reel
- * - Ajuster discretement la pression (agressivite, bruit camera, faux relachements)
- * - Declencher des anomalies rares (Golden Freddy comme symptome)
+ * - Estimer l'etat mental du joueur en temps reel.
+ * - Ajuster discretement la pression (agressivite, bruit camera, faux relachements).
+ * - Declencher des anomalies rares (Golden Freddy comme symptome).
  */
 (function attachPsychologicalDirector(globalScope) {
   'use strict';
@@ -17,6 +17,10 @@
     return Math.random() < probability;
   }
 
+  /**
+   * Parametres de base du directeur.
+   * Chaque valeur peut etre ajustee pour changer le rythme psychologique.
+   */
   const DIRECTOR_DEFAULTS = Object.freeze({
     enabled: true,
     updateIntervalSeconds: 1,
@@ -33,10 +37,17 @@
     attentionDecayPerSecond: 0.04
   });
 
+  /**
+   * Objet principal du directeur.
+   * Il joue le role d'une classe singleton exposee globalement.
+   */
   const director = {
     enabled: DIRECTOR_DEFAULTS.enabled,
     config: { ...DIRECTOR_DEFAULTS },
 
+    /**
+     * Etat mental estime du joueur (normalise entre 0 et 1).
+     */
     state: {
       fear: 0.25,
       stress: 0.2,
@@ -45,6 +56,10 @@
       attention: 0.5
     },
 
+    /**
+     * Sorties runtime calculees a partir de l'etat mental.
+     * Ces valeurs pilotent les systemes visuels/gameplay.
+     */
     runtime: {
       cameraNoise: 1,
       cameraJitter: 1,
@@ -55,6 +70,9 @@
       pendingIntervention: null
     },
 
+    /**
+     * Metriques de comportement collectees pendant la partie.
+     */
     metrics: {
       timeSinceInput: 0,
       timeInCamera: 0,
@@ -68,12 +86,19 @@
       lastCameraId: null
     },
 
+    /**
+     * Timers internes utilises pour lisser les decisions.
+     */
     timers: {
       accumulator: 0,
       nextPhoneInterventionAt: 0,
       nextGoldenFlickerAt: 0
     },
 
+    /**
+     * Reinitialise completement le directeur au debut d'une nuit.
+     * @param {number} nightNumber Numero de la nuit courante.
+     */
     resetForNewNight(nightNumber) {
       const normalizedNight = clamp((Number(nightNumber) || 1) / 6, 0, 1);
 
@@ -107,6 +132,10 @@
       this.timers.nextGoldenFlickerAt = 8;
     },
 
+    /**
+     * Met a jour le modele psychologique selon le delta temps.
+     * @param {number} dtSeconds Delta temps en secondes.
+     */
     update(dtSeconds) {
       if (!this.enabled) return;
       if (typeof gameEnd !== 'undefined' && gameEnd) return;
@@ -189,6 +218,10 @@
       this.metrics.timeInCamera = 0;
     },
 
+    /**
+     * Planifie une apparition fugace de type Golden Freddy.
+     * L'effet est volontairement rare et ambigu.
+     */
     planGoldenFlicker() {
       if (this.timers.nextGoldenFlickerAt > 0) {
         this.timers.nextGoldenFlickerAt -= 1;
@@ -207,6 +240,10 @@
       }
     },
 
+    /**
+     * Planifie une intervention de type Phone Guy pour stabiliser
+     * ponctuellement la pression mentale.
+     */
     planPhoneIntervention() {
       if (this.timers.nextPhoneInterventionAt > 0) {
         this.timers.nextPhoneInterventionAt -= 1;
@@ -222,12 +259,21 @@
       this.timers.nextPhoneInterventionAt = this.config.phoneInterventionCooldownSeconds;
     },
 
+    /**
+     * Consomme l'intervention planifiee (lecture unique).
+     * @returns {{type: string, variant: string}|null}
+     */
     consumeIntervention() {
       const pending = this.runtime.pendingIntervention;
       this.runtime.pendingIntervention = null;
       return pending;
     },
 
+    /**
+     * Consomme un flicker Golden Freddy sur la camera donnee.
+     * @param {string} cameraId Identifiant de la camera active.
+     * @returns {boolean} true si un flicker doit etre affiche.
+     */
     consumeGoldenFlicker(cameraId) {
       if (!this.runtime.pendingGoldenFlicker) return false;
       if (!cameraId) return false;
@@ -240,6 +286,10 @@
       return true;
     },
 
+    /**
+     * Retourne le profil de distorsion a appliquer au rendu camera.
+     * @returns {{noiseMultiplier: number, jitterMultiplier: number}}
+     */
     getCameraDistortionProfile() {
       return {
         noiseMultiplier: this.runtime.cameraNoise,
@@ -247,10 +297,19 @@
       };
     },
 
+    /**
+     * Retourne le niveau d'instabilite des lumieres (0..1).
+     * @returns {number}
+     */
     getLightInstability() {
       return this.runtime.lightInstability;
     },
 
+    /**
+     * Calcule un delta d'agressivite contextuel pour un animatronique.
+     * @param {string} animatronicName Nom de l'animatronique.
+     * @returns {number}
+     */
     getAggressionDelta(animatronicName) {
       const roleWeight = {
         Freddy: 0.8,
@@ -264,6 +323,11 @@
       return Math.round(clamp(rawDelta, -this.config.maxAggressionDelta, this.config.maxAggressionDelta));
     },
 
+    /**
+     * Indique si l'attaque doit etre annulee en fakeout.
+     * @param {string} animatronicName Nom de l'animatronique.
+     * @returns {boolean}
+     */
     shouldFakeoutAttack(animatronicName) {
       const base = this.config.fakeoutBaseChance;
       const foxyPenalty = animatronicName === 'Foxy' ? 0.02 : 0;
@@ -271,12 +335,19 @@
       return chance(probability);
     },
 
+    /**
+     * Signale une action utilisateur generique (input).
+     */
     notifyUserInput() {
       this.metrics.timeSinceInput = 0;
       this.metrics.rapidActionsWindow = clamp(this.metrics.rapidActionsWindow + 0.4, 0, 8);
       this.state.attention = clamp(this.state.attention + 0.03, 0, 1);
     },
 
+    /**
+     * Signale l'ouverture/fermeture du moniteur camera.
+     * @param {boolean} isOpen true si la camera vient de s'ouvrir.
+     */
     notifyCameraToggle(isOpen) {
       this.notifyUserInput();
       if (isOpen) {
@@ -284,6 +355,10 @@
       }
     },
 
+    /**
+     * Signale un changement de camera observee.
+     * @param {string} cameraId Camera active.
+     */
     notifyCameraSwitch(cameraId) {
       this.notifyUserInput();
       if (cameraId && cameraId !== this.metrics.lastCameraId) {
@@ -293,6 +368,11 @@
       this.state.confidence = clamp(this.state.confidence + 0.01, 0, 1);
     },
 
+    /**
+     * Signale un changement d'etat d'une porte.
+     * @param {string} side Cote de la porte.
+     * @param {boolean} isClosed true si la porte est fermee.
+     */
     notifyDoorToggle(side, isClosed) {
       void side;
       this.notifyUserInput();
@@ -304,6 +384,11 @@
       }
     },
 
+    /**
+     * Signale un changement d'etat d'une lumiere.
+     * @param {string} side Cote de la lumiere.
+     * @param {boolean} isOn true si la lumiere est allumee.
+     */
     notifyLightChange(side, isOn) {
       void side;
       this.notifyUserInput();
@@ -314,6 +399,10 @@
       }
     },
 
+    /**
+     * Signale le resultat d'une tentative d'attaque animatronique.
+     * @param {{blocked?: boolean, success?: boolean}} payload
+     */
     notifyAttackAttempt(payload) {
       const blocked = Boolean(payload?.blocked);
       const success = Boolean(payload?.success);
@@ -330,12 +419,19 @@
       }
     },
 
+    /**
+     * Signale un quasi-incident (near miss) pour augmenter la tension.
+     */
     notifyNearMiss() {
       this.metrics.nearMissCount += 1;
       this.state.stress = clamp(this.state.stress + 0.04, 0, 1);
       this.state.fear = clamp(this.state.fear + 0.03, 0, 1);
     },
 
+    /**
+     * Retourne l'etat utile au debug.
+     * @returns {object}
+     */
     getDebugState() {
       return {
         enabled: this.enabled,
@@ -345,6 +441,7 @@
     }
   };
 
+  // Initialisation par defaut avant exposition globale.
   director.resetForNewNight(1);
   globalScope.PsychologicalDirector = director;
 })(window);
