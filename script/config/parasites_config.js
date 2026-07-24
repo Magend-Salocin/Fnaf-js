@@ -4,403 +4,314 @@
  */
 
 const PARASITES_CONFIG = {
-  // Stage - Couleurs froides / Vert classique
+  // Stage - Très lumineux, très stable, très propre
   '1a': {
     name: 'Show Stage',
     enabled: true,
-    jitterX: 0.6,      // Intensité du tremblement horizontal
-    jitterY: 0.4,      // Intensité du tremblement vertical
-    flicker: { min: 0.97, max: 1.03}, // Variation de l'opacité globale
+    jitterX: 0.4,
+    jitterY: 0.3,
 
-    horizontalLines: {
-      enabled: true,
-      strokeStyle: 'rgba(255, 255, 255, 0.03)',
-      lineWidth: 1,
-      spacing: 6,
+    flicker:{
+        min:0.985,
+        max:1.015
     },
 
-    whiteNoise: {
-      enabled: true,
-      density: 1200,    // très propre
-      size: 1,
-      colorType: 'white',
-      alphaRange: { min: 0.05, max: 0.55 },
-      hueSaturation: { hue: 0, saturationRange: 0 },
+    horizontalLines:{
+        enabled:true,
+        spacing:6,
+        lineWidth:1,
+        strokeStyle:'rgba(255,255,255,0.025)'
     },
 
-    verticalLines: {
-      enabled: false
+    whiteNoise:{
+        enabled:true,
+        density:950,
+        size:1,
+        alphaRange:{min:0.02,max:0.18}
     },
 
-    horizontalBands: {
-      enabled: true,
-      density: 220,
-      minHeight: 2,
-      maxHeight: 6,
-      minAlpha: 0.015,
-      maxAlpha: 0.06,
-      color: 'white'
+    verticalLines:{
+        enabled:false
     },
 
-    randomHorizontalLines: {
-      enabled: false,
-    },
+    horizontalBands:{
+        enabled:true,
+        density:260,
+        minHeight:2,
+        maxHeight:5,
+        minAlpha:0.01,
+        maxAlpha:0.035
+    }
   },
 
-  // Dining Area - Parasites rouges/chauds
+  // Dining Area - Stable, un peu de bruit, léger tremblement
   '1b': {
     name: 'Dining Area',
     enabled: true,
-    jitterX: 0.8,
-    jitterY: 0.5,
-    flicker: { min: 0.95, max: 1.05 },
+    jitterX:0.7,
+    jitterY:0.5,
 
-    horizontalLines: {
-      enabled: true,
-      strokeStyle: 'rgba(255,255,255,0.04)',
-      lineWidth: 1,
-      spacing: 5,
+    flicker:{
+        min:0.98,
+        max:1.03
     },
 
-    whiteNoise: {
-      enabled: true,
-      density: 600,
-      size: 1,
-      colorType: 'white',
-      alphaRange: { min: 0.05, max: 0.55 },
-      hueSaturation: { hue: 0, saturationRange: 0 },
+    horizontalLines:{
+        enabled:true,
+        spacing:5,
+        lineWidth:1,
+        strokeStyle:'rgba(255,255,255,0.03)'
     },
 
-    verticalLines: {
-      enabled: true,
-      density: 600,
-      strokeStyle: 'rgba(255,255,255,0.05)',
+    whiteNoise:{
+        enabled:true,
+        density:760,
+        size:1,
+        alphaRange:{min:0.03,max:0.22}
     },
 
-    horizontalBands: {
-      enabled: true,
-      density: 180,
-      minHeight: 2,
-      maxHeight: 8,
-      minAlpha: 0.02,
-      maxAlpha: 0.08,
-      color: 'white'
+    verticalLines:{
+        enabled:true,
+        density:900,
+        strokeStyle:'rgba(255,255,255,0.03)'
     },
 
-    randomHorizontalLines: {
-      enabled: true,
-      density: 700,
-      strokeStyle: 'rgba(255,255,255,0.04)',
-    },
+    horizontalBands:{
+        enabled:true,
+        density:220,
+        minHeight:2,
+        maxHeight:6,
+        minAlpha:0.015,
+        maxAlpha:0.05
+    }
   },
 
-  // Pirate Cove - Parasites bleus/glitch extrême
+  // Pirate Cove - Très sombre, très bruyant, très instable
   '1c': {
     name: 'Pirate Cove',
     enabled: true,
-    jitterX: 1.8,
-    jitterY: 1.2,
-    flicker: { min: 0.88, max: 1.12 },
+    jitterX:2.3,
+    jitterY:1.8,
 
-    horizontalLines: {
-      enabled: true,
-      strokeStyle: 'rgba(255,255,255,0.07)',
-      lineWidth: 1,
-      spacing: 4,
+    flicker:{
+        min:0.94,
+        max:1.08
     },
 
-    whiteNoise: {
-      enabled: true,
-      density: 300,
-      size: 1.2,
-      colorType: 'white',
-      alphaRange: { min: 0.05, max: 0.55 },
-      hueSaturation: { hue: 0, saturationRange: 0 },
+    horizontalLines:{
+        enabled:true,
+        spacing:3,
+        lineWidth:1,
+        strokeStyle:'rgba(255,255,255,0.05)'
     },
 
-    verticalLines: {
-      enabled: true,
-      density: 380,
-      strokeStyle: 'rgba(255,255,255,0.08)',
+    whiteNoise:{
+        enabled:true,
+        density:320,
+        size:1.2,
+        alphaRange:{min:0.05,max:0.30}
     },
 
-    horizontalBands: {
-      enabled: true,
-      density: 140,
-      minHeight: 2,
-      maxHeight: 10,
-      minAlpha: 0.02,
-      maxAlpha: 0.10,
-      color: 'white'
+    verticalLines:{
+        enabled:true,
+        density:600,
+        strokeStyle:'rgba(255,255,255,0.05)'
     },
 
-    randomHorizontalLines: {
-      enabled: true,
-      density: 180,
-      strokeStyle: 'rgba(120,170,255,0.12)',
-    },
+    horizontalBands:{
+        enabled:true,
+        density:130,
+        minHeight:3,
+        maxHeight:9,
+        minAlpha:0.03,
+        maxAlpha:0.09
+    }
   },
 
   // West Hall - Parasites discrets
   '2a': {
     name: 'West Hall',
     enabled: true,
-    jitterX: 0.5,
-    jitterY: 0.3,
-    flicker: { min: 0.97, max: 1.02 },
+    jitterX:0.5,
+    jitterY:0.4,
 
-    horizontalLines: {
-      enabled: true,
-      strokeStyle: 'rgba(255,255,255,0.025)',
-      lineWidth: 1,
-      spacing: 7,
+    flicker:{
+        min:0.985,
+        max:1.02
     },
 
-    whiteNoise: {
-      enabled: true,
-      density: 1200,    // très propre
-      size: 1,
-      colorType: 'white',
-      alphaRange: { min: 0.05, max: 0.55 },
-      hueSaturation: { hue: 0, saturationRange: 0 },
+    horizontalLines:{
+        enabled:true,
+        spacing:7,
+        lineWidth:1,
+        strokeStyle:'rgba(255,255,255,0.02)'
     },
 
-    verticalLines: { enabled: false },
-
-    horizontalBands: {
-      enabled: true,
-      density: 250,
-      minHeight: 1,
-      maxHeight: 4,
-      minAlpha: 0.01,
-      maxAlpha: 0.04,
-      color: 'white'
+    whiteNoise:{
+        enabled:true,
+        density:1100,
+        size:1,
+        alphaRange:{min:0.02,max:0.16}
     },
 
-    randomHorizontalLines: {
-      enabled: false,
+    verticalLines:{
+        enabled:false
     },
+
+    horizontalBands:{
+        enabled:true,
+        density:300,
+        minHeight:2,
+        maxHeight:4,
+        minAlpha:0.01,
+        maxAlpha:0.03
+    }
   },
 
   // West Hall Corner
   '2b': {
     name: 'West Hall Corner',
     enabled: true,
-    jitterX: 0.7,
-    jitterY: 0.4,
-    flicker: { min: 0.96, max: 1.03 },
+    jitterX:0.8,
+    jitterY:0.5,
 
-    horizontalLines: {
-      enabled: true,
-      strokeStyle: 'rgba(255,255,255,0.03)',
-      lineWidth: 1,
-      spacing: 6,
+    flicker:{
+        min:0.98,
+        max:1.03
     },
 
-    whiteNoise: {
-      enabled: true,
-      density: 600,
-      size: 1,
-      colorType: 'white',
-      alphaRange: { min: 0.05, max: 0.55 },
-      hueSaturation: { hue: 0, saturationRange: 0 },
+    whiteNoise:{
+        density:720,
+        size:1,
+        alphaRange:{min:0.03,max:0.20}
     },
 
-    verticalLines: {
-      enabled: true,
-      density: 700,
-      strokeStyle: 'rgba(255,255,255,0.04)',
-    },
-
-    horizontalBands: {
-      enabled: true,
-      density: 200,
-      minHeight: 2,
-      maxHeight: 6,
-      minAlpha: 0.015,
-      maxAlpha: 0.06,
-      color: 'white'
-    },
-
-    randomHorizontalLines: {
-      enabled: false,
-    },
+    horizontalBands:{
+        density:220,
+        minHeight:2,
+        maxHeight:5,
+        minAlpha:0.015,
+        maxAlpha:0.045
+    }
   },
 
   // Supply Closet - Parasites jaunes/chauds
   '3': {
     name: 'Supply Closet',
     enabled: true,
-    jitterX: 1.0,
-    jitterY: 0.7,
-    flicker: { min: 0.93, max: 1.07 },
+    jitterX:1.2,
+    jitterY:0.8,
 
-    horizontalLines: {
-      enabled: true,
-      strokeStyle: 'rgba(255,255,255,0.05)',
-      lineWidth: 1,
-      spacing: 5,
+    flicker:{
+        min:0.97,
+        max:1.05
     },
 
-    whiteNoise: {
-      enabled: true,
-      density: 600,
-      size: 1.1,
-      colorType: 'white',
-      alphaRange: { min: 0.05, max: 0.55 },
-      hueSaturation: { hue: 0, saturationRange: 0 },
+    whiteNoise:{
+        density:520,
+        size:1.1,
+        alphaRange:{min:0.04,max:0.25}
     },
 
-    verticalLines: {
-      enabled: true,
-      density: 520,
-      strokeStyle: 'rgba(255,255,255,0.06)',
-    },
-
-    horizontalBands: {
-      enabled: true,
-      density: 160,
-      minHeight: 2,
-      maxHeight: 8,
-      minAlpha: 0.02,
-      maxAlpha: 0.08,
-      color: 'white'
-    },
-
-    randomHorizontalLines: {
-      enabled: false,
-    },
+    horizontalBands:{
+        density:180,
+        minHeight:3,
+        maxHeight:8,
+        minAlpha:0.02,
+        maxAlpha:0.07
+    }
   },
 
   // East Hall
   '4a': {
     name: 'East Hall',
     enabled: true,
-    jitterX: 0.6,
-    jitterY: 0.4,
-    flicker: { min: 0.97, max: 1.02 },
+    jitterX:0.6,
+    jitterY:0.4,
 
-    horizontalLines: {
-      enabled: true,
-      strokeStyle: 'rgba(255,255,255,0.03)',
-      lineWidth: 1,
-      spacing: 6,
+    flicker:{
+        min:0.985,
+        max:1.02
     },
 
-    whiteNoise: {
-      enabled: true,
-      density: 1200,    // très propre
-      size: 1,
-      colorType: 'white',
-      alphaRange: { min: 0.05, max: 0.55 },
-      hueSaturation: { hue: 0, saturationRange: 0 },
+    whiteNoise:{
+        density:1050,
+        size:1,
+        alphaRange:{min:0.02,max:0.16}
     },
 
-    verticalLines: { enabled: false },
-
-    horizontalBands: {
-      enabled: true,
-      density: 240,
-      minHeight: 1,
-      maxHeight: 5,
-      minAlpha: 0.01,
-      maxAlpha: 0.05,
-      color: 'white'
-    },
-
-    randomHorizontalLines: {
-      enabled: false,
-    },
+    horizontalBands:{
+        density:280,
+        minHeight:2,
+        maxHeight:4,
+        minAlpha:0.01,
+        maxAlpha:0.03
+    }
   },
 
   // East Hall Corner
   '4b': {
     name: 'East Hall Corner',
     enabled: true,
-    jitterX: 0.9,
-    jitterY: 0.6,
-    flicker: { min: 0.95, max: 1.04 },
+    jitterX:1.0,
+    jitterY:0.7,
 
-    horizontalLines: {
-      enabled: true,
-      strokeStyle: 'rgba(255,255,255,0.04)',
-      lineWidth: 1,
-      spacing: 5,
+    flicker:{
+        min:0.975,
+        max:1.04
     },
 
-    whiteNoise: {
-      enabled: true,
-      density: 600,
-      size: 1.1,
-      colorType: 'white',
-      alphaRange: { min: 0.05, max: 0.55 },
-      hueSaturation: { hue: 0, saturationRange: 0 },
+    whiteNoise:{
+        density:620,
+        size:1.1,
+        alphaRange:{min:0.03,max:0.22}
     },
 
-    verticalLines: {
-      enabled: true,
-      density: 620,
-      strokeStyle: 'rgba(255,255,255,0.05)',
-    },
-
-    horizontalBands: {
-      enabled: true,
-      density: 180,
-      minHeight: 2,
-      maxHeight: 7,
-      minAlpha: 0.015,
-      maxAlpha: 0.065,
-      color: 'white'
-    },
-
-    randomHorizontalLines: {
-      enabled: false,
-    },
+    horizontalBands:{
+        density:190,
+        minHeight:2,
+        maxHeight:7,
+        minAlpha:0.02,
+        maxAlpha:0.06
+    }
   },
 
-  // Backstage - Parasites violets/instables
+  // Backstage - Sombre, bruyant, moyennement instable
   '5': {
     name: 'Backstage',
     enabled: true,
-    jitterX: 1.5,
-    jitterY: 1.0,
-    flicker: { min: 0.90, max: 1.10 },
+    jitterX:1.8,
+    jitterY:1.4,
 
-    horizontalLines: {
-      enabled: true,
-      strokeStyle: 'rgba(255,255,255,0.06)',
-      lineWidth: 1,
-      spacing: 4,
+    flicker:{
+        min:0.95,
+        max:1.07
     },
 
-    whiteNoise: {
-      enabled: true,
-      density: 80,      // énorme bruit
-      size: 1.3,
-      colorType: 'white',
-      alphaRange: { min: 0.05, max: 0.55 },
-      hueSaturation: { hue: 0, saturationRange: 0 },
+    horizontalLines:{
+        spacing:4,
+        strokeStyle:'rgba(255,255,255,0.05)'
     },
 
-    verticalLines: {
-      enabled: true,
-      density: 340,
-      strokeStyle: 'rgba(255,255,255,0.08)',
+    whiteNoise:{
+        density:360,
+        size:1.2,
+        alphaRange:{min:0.05,max:0.28}
     },
 
-    horizontalBands: {
-      enabled: true,
-      density: 120,
-      minHeight: 3,
-      maxHeight: 12,
-      minAlpha: 0.03,
-      maxAlpha: 0.12,
-      color: 'white'
+    verticalLines:{
+        enabled:true,
+        density:700,
+        strokeStyle:'rgba(255,255,255,0.05)'
     },
 
-    randomHorizontalLines: {
-      enabled: false,
-    },
+    horizontalBands:{
+        density:150,
+        minHeight:3,
+        maxHeight:10,
+        minAlpha:0.03,
+        maxAlpha:0.08
+    }
   },
 
   // Kitchen
@@ -432,74 +343,61 @@ const PARASITES_CONFIG = {
     },
   },
 
-  // Restroom
+  // Restroom - Très sombre, très bruyant, très instable
   '7': {
     name: 'Restroom',
     enabled: true,
+    jitterX:1.4,
+    jitterY:1.0,
 
-    // Caméra assez stable
-    jitterX: 6.2,
-    jitterY: 6.9,
-
-    // Très léger pompage vidéo
-    flicker: {
-      min: 0.6,
-      max: 1.5,
+    flicker:{
+        min:0.965,
+        max:1.05
     },
 
-    horizontalLines: {
-      enabled: true,
-      strokeStyle: 'rgba(255,255,255,0.045)',
-      lineWidth: 1,
-      spacing: 4,
+    horizontalLines:{
+        enabled:true,
+        spacing:4,
+        lineWidth:1,
+        strokeStyle:'rgba(255,255,255,0.04)'
     },
 
-    whiteNoise: {
-      enabled: true,
-      density: 300,
-      size: 1.0,
-      colorType: 'white',
-      alphaRange: {
-        min: 0.05,
-        max: 0.55,
-      },
-      hueSaturation: {
-        hue: 0,
-        saturationRange: 0,
-      },
+    whiteNoise:{
+        enabled:true,
+        density:480,
+        size:1.1,
+        alphaRange:{
+            min:0.04,
+            max:0.24
+        }
     },
 
-    verticalLines: {
-      enabled: true,
-      density: 420,
-      strokeStyle: 'rgba(255,255,255,0.07)',
+    verticalLines:{
+        enabled:true,
+        density:750,
+        strokeStyle:'rgba(255,255,255,0.04)'
     },
 
-    horizontalBands: {
-      enabled: true,
-      density: 200,
-      minHeight: 2,
-      maxHeight: 6,
-      minAlpha: 0.02,
-      maxAlpha: 0.07,
-      color: 'white'
-    },
-
-    randomHorizontalLines: {
-      enabled: false,
-    },
+    horizontalBands:{
+        enabled:true,
+        density:170,
+        minHeight:3,
+        maxHeight:8,
+        minAlpha:0.02,
+        maxAlpha:0.07
+    }
   },
 
-  // The Office
+  // The Office - Très stable, très propre (écran numérique)
   'office': {
     name: 'The Office',
     enabled: true,
-    jitterX: 1.2,      // Très léger au bureau
-    jitterY: 0.8,
-    flicker: { min: 0.90, max: 1.08 },
+    jitterX: 0.2,
+    jitterY: 0.1,
+    flicker: { min: 0.99, max: 1.01 },
 
     horizontalLines: {
-      enabled: false,   // Pas de lignes au bureau
+      enabled: false,
     },
 
     whiteNoise: {
@@ -507,7 +405,7 @@ const PARASITES_CONFIG = {
     },
 
     verticalLines: {
-      enabled: false,   // Pas de lignes verticales
+      enabled: false,
     },
 
     horizontalBands: {
