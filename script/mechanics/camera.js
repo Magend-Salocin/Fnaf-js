@@ -442,55 +442,11 @@ function drawWithCamera(ctx, camera) {
       // Dessine les overlays d'événements aléatoires
       RandomEvents.drawActiveOverlay(ctx, camera, room);
 
-
-
-      // Les parasites doivent être rendus dans l'espace de la room, pas dans le canvas global.
+      // Dessine les parasites selon la configuration de la caméra
+      const parasiteConfig = getParasiteConfigByRoom(roomKey);
       const viewWidth = room.width;
       const viewHeight = room.height;
-      const pixelSize = Math.max(1, 1 / scale);
-      const jitterX = (Math.random() - 0.5) * (pixelSize * 2.2);
-      const jitterY = (Math.random() - 0.5) * (pixelSize * 1.6);
-      const overlayFlicker = 0.8 + Math.random() * 0.35;
-
-      ctx.save();
-      ctx.beginPath();
-      ctx.rect(0, 0, viewWidth, viewHeight);
-      ctx.clip();
-      ctx.translate(jitterX, jitterY);
-      ctx.globalAlpha = overlayFlicker;
-
-      // 2. Lignes horizontales (interférences)
-      ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
-      ctx.lineWidth = pixelSize;
-      for (let y = 0; y < viewHeight; y += 4) {
-        ctx.beginPath();
-        ctx.moveTo(0, y);
-        ctx.lineTo(viewWidth, y);
-        ctx.stroke();
-      }
-
-      // 3. Bruit blanc (parasites)
-      const noiseCount = Math.max(600, Math.floor((viewWidth * viewHeight) / 450));
-      for (let i = 0; i < noiseCount; i++) {
-        const x = Math.random() * viewWidth;
-        const y = Math.random() * viewHeight;
-        const alpha = Math.random() * 0.7;
-        // Variation de couleur : parfois gris, parfois teinté de vert/bleu (effet "vieille caméra")
-        const hue = 120 + Math.random() * 60; // Teinte verte/bleue
-        ctx.fillStyle = `hsla(${hue}, 100%, 80%, ${alpha})`;
-        ctx.fillRect(x, y, pixelSize * 1.5, pixelSize * 1.5);
-      }
-
-      // 4. Ajout de lignes verticales aléatoires (parasites)
-      const verticalLineCount = Math.max(5, Math.floor(viewWidth / 220));
-      for (let i = 0; i < verticalLineCount; i++) {
-        const x = Math.random() * viewWidth;
-        ctx.strokeStyle = `rgba(255, 255, 255, ${Math.random() * 0.3})`;
-        ctx.beginPath();
-        ctx.moveTo(x, 0);
-        ctx.lineTo(x, viewHeight);
-        ctx.stroke();
-      }
+      drawParasites(ctx, parasiteConfig, viewWidth, viewHeight, scale);
 
       ctx.restore();
     }
