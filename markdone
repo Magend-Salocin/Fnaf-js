@@ -1,0 +1,317 @@
+# Rapport d'Analyse Architecturale - FNAF-JS
+
+## 0) Contexte et périmètre
+Analyse réalisée sur l'architecture actuelle du projet front-end JavaScript (chargement script direct dans le navigateur, sans bundler, sans modules ES import/export).
+
+Points de référence principaux:
+- Entrée HTML et ordre de chargement: [index.html](index.html#L373)
+- Configuration globale du runtime: [script/config/game.js](script/config/game.js#L1)
+- Source unique salles/caméras/parasites: [script/config/ROOMS_CONFIG.js](script/config/ROOMS_CONFIG.js#L8)
+- Génération des API legacy: [script/config/data.js](script/config/data.js#L4)
+- Boucle de jeu: [script/game.js](script/game.js#L28)
+
+## 1) Vue d'ensemble de l'architecture
+Le projet suit une architecture script globale orientée feature, avec séparation par dossiers mais couplage via état partagé global.
+
+Organisation macro:
+- config: données statiques et paramètres runtime
+- core: moteurs transverses (audio, événements aléatoires, gif, langue)
+- mechanics: logique gameplay (caméra, portes, énergie, nuit, IA animatroniques)
+- render: transitions et séquences visuelles (start, win, game over)
+- missingChildren: sous-système terminal/lore narratif
+- debug: instrumentation manuelle
+
+Diagramme ASCII - Architecture logique:
+
+  Browser DOM + Canvas
+          |
+          v
+  index.html (ordre de chargement)
+          |
+          +--> config/*.js  (état, données, mappings)
+          +--> core/*.js    (services transverses)
+          +--> mechanics/*.js (gameplay runtime)
+          +--> render.js    (transitions/effets)
+          +--> game.js      (gameLoop)
+          +--> main.js      (events utilisateur + boot)
+
+Dépendances externes:
+- Aucune dépendance package manager (pas de npm, pas de build tool)
+- Dépendance forte au DOM, Canvas 2D, Audio HTML5, LocalStorage
+
+## 2) Organisation du code
+### 2.1 Point d'entrée et bootstrap
+- Ordre de chargement explicite via balises script: [index.html](index.html#L373)
+- Initialisation UI/langue + preload au DOMContentLoaded: [script/main.js](script/main.js#L4)
+- Démarrage effectif de la nuit après transition: [script/game.js](script/game.js#L99)
+
+### 2.2 Configuration et données
+- Etat global runtime (nuit, horloge, flags, caméra active, énergie): [script/config/game.js](script/config/game.js#L1)
+- Configuration maître des salles (nouvelle architecture): [script/config/ROOMS_CONFIG.js](script/config/ROOMS_CONFIG.js#L8)
+- Génération rétrocompatible de rooms, roomsArray, cameras: [script/config/data.js](script/config/data.js#L4)
+- Mapping images caméra et office + preload: [script/config/assets.js](script/config/assets.js#L15)
+- Data des événements aléatoires: [script/config/random_events_data.js](script/config/random_events_data.js#L1)
+
+### 2.3 Logique gameplay
+- Mécanique caméra et rendu des salles: [script/mechanics/camera.js](script/mechanics/camera.js#L170)
+- IA animatroniques + chemins + attaques: [script/mechanics/animatronic.js](script/mechanics/animatronic.js#L1)
+- Gestion de nuit, reset, difficulté, phone call: [script/mechanics/night.js](script/mechanics/night.js#L4)
+- Portes/lumières et image office dynamique: [script/mechanics/door.js](script/mechanics/door.js#L1)
+- Drain énergétique et affichage HUD: [script/mechanics/power.js](script/mechanics/power.js#L13)
+- Séquences de transition/jumpscare/game over: [script/render.js](script/render.js#L1)
+
+### 2.4 Services transverses
+- Audio mixer + lecture/stop + ambiance: [script/core/sounds.js](script/core/sounds.js#L1)
+- Moteur d'événements aléatoires: [script/core/random_events_engine.js](script/core/random_events_engine.js#L213)
+- Effets parasites analogiques: [script/config/parasites_config.js](script/config/parasites_config.js#L75)
+- Localisation UI: [script/core/language.js](script/core/language.js#L2)
+- GIF player canvas natif: [script/core/gifPlayer.js](script/core/gifPlayer.js#L1)
+- Terminal lore: [script/missingChildren/lore-core.js](script/missingChildren/lore-core.js#L1)
+
+## 3) Relations entre composants (dépendances, interactions, flux)
+### 3.1 Flux de dépendance principal
+1. index charge config, puis core, puis mechanics, puis game/main.
+2. main branche les listeners utilisateur.
+3. render/game orchestrent transitions puis boucle gameLoop.
+4. gameLoop appelle onCamera, énergie, horloge, tours IA.
+5. mechanics interagit avec core (audio, random events), config (rooms/cameras), render (jumpscares).
+
+Diagramme ASCII - Flux d'appel runtime:
+
+  DOMContentLoaded
+       |
+       v
+  setupLanguageScreen + preloadImages
+       |
+       v
+  Start -> transitionScreen -> gamestart -> startNight
+       |
+       v
+  setInterval(gameLoop, 60 FPS)
+       |
+       +--> drainPowerByUsage / updatePowerDisplay
+       +--> onCamera -> drawWithCamera -> RandomEvents + drawParasites
+       +--> gestion temps -> onNewTurn -> animatronics.move()
+       +--> per-minute attack checks -> animatronics.attack()
+
+### 3.2 Couplages structurants
+- Couplage fort par globals partagés: rooms, roomsArray, cameras, power, activeView, gameTime, animatronics.
+- Couplage temporel: l'ordre des scripts dans index est indispensable au fonctionnement.
+- Couplage DOM direct dans la logique métier (ex: animatronic.draw écrit dans le DOM): [script/mechanics/animatronic.js](script/mechanics/animatronic.js#L361)
+
+### 3.3 Flux de données critiques
+- ROOMS (master) -> builders -> rooms/roomsArray/cameras: [script/config/ROOMS_CONFIG.js](script/config/ROOMS_CONFIG.js#L597)
+- rooms mutation en temps réel par déplacements IA: [script/mechanics/animatronic.js](script/mechanics/animatronic.js#L85)
+- caméra active -> sélection image -> overlays -> parasites -> canvas: [script/mechanics/camera.js](script/mechanics/camera.js#L372)
+- état énergie dérivé de portes/lumières/caméra: [script/mechanics/power.js](script/mechanics/power.js#L1)
+
+## 4) Patterns et principes
+### 4.1 Patterns détectés
+- Data-Driven Configuration: très présent avec ROOMS et RANDOM_EVENTS.
+- State Machine: FoxyPhase et transitions de phase: [script/mechanics/foxy.js](script/mechanics/foxy.js#L10)
+- Facade/Namespace global: RandomEvents expose une API compacte: [script/core/random_events_engine.js](script/core/random_events_engine.js#L352)
+- Strategy partielle: scareFunction injectée dans Animatronic.
+- Observer orienté DOM: listeners clavier/souris/clic dans main.
+
+### 4.2 SOLID, DRY, KISS, Clean Architecture
+- S (Single Responsibility): partiellement respecté. Certains fichiers sont trop larges (camera.js mélange input, état, rendu, debug).
+- O (Open/Closed): meilleur côté données (ROOMS, RANDOM_EVENTS), plus faible côté logique conditionnelle en if/switch.
+- L/I/D: peu applicable strictement sans interfaces/modules; dépendance forte aux globals (D faiblement respecté).
+- DRY: amélioré pour salles/caméras (ROOMS_CONFIG). Encore des duplications audio/IDs et données event.
+- KISS: logique lisible mais beaucoup de responsabilité dans quelques scripts.
+- Clean Architecture: séparation partielle (config/core/mechanics), mais frontières domain/infrastructure encore poreuses (DOM dans métier).
+
+## 5) Structure classes/fonctions (responsabilités, couplage, cohésion)
+### 5.1 Classe Animatronic
+Responsabilités actuelles:
+- Déplacement, attaque, état IA
+- Effets sonores
+- Manipulation de rooms
+- Écriture UI (cam colors)
+
+Conséquence:
+- Cohésion moyenne (mélange domain + presentation)
+- Couplage élevé à rooms, doors, playSound, DOM
+
+Exemple:
+    // Mutation de l'état global room + UI dans la même méthode
+    rooms[nextRoomKey][this.getKey()] = 1;
+    rooms[nextRoomKey].occupy = 1;
+    document.getElementById('cam'+ Room).style.background= color;
+
+### 5.2 Module caméra
+Responsabilités actuelles:
+- Activation caméra
+- Gestion consommation caméra/recharge
+- Pan auto et pan manuel
+- Rendu room + overlays + parasites
+- Statut debug
+
+Constat:
+- Couplage très élevé
+- Risque de régression lors des modifications
+
+### 5.3 Module nuit
+- Bonne encapsulation de la progression de nuit via classe Night
+- Mais dépend encore de globals externes (isVocalEnd, power, gameLoopInterval)
+
+## 6) Flux d'exécution de l'application
+### 6.1 Démarrage
+1. Chargement séquentiel scripts depuis index.
+2. DOMContentLoaded: langue + préchargement assets.
+3. Start déclenche transition visuelle puis gamestart.
+4. gamestart lance startNight et setInterval gameLoop.
+
+### 6.2 Boucle principale
+- A 60 FPS:
+  - drain énergie
+  - rendu selon activeView
+  - update caméra/random events
+  - update horloge in-game
+  - actions IA par minute/tour
+  - fin de nuit à 6AM ou power 0
+
+### 6.3 Chemins de fin
+- Victory path: transitionEndNight
+- Defeat power path: transitionEndNightFreddy
+- Defeat attack path: scare function animatronic
+
+## 7) Gestion des données
+### 7.1 Création
+- Données statiques initialisées au chargement (ROOMS, RANDOM_EVENTS_RAW, gameSounds)
+- Objets runtime créés au démarrage nuit (Night, reset states)
+
+### 7.2 Transformation
+- ROOMS -> rooms/roomsArray/cameras via builders
+- RANDOM_EVENTS_RAW -> RANDOM_EVENTS par normalisation
+
+### 7.3 Stockage
+- Mémoire JS globale principalement
+- LocalStorage pour préférences langue/audio et progression lore
+
+### 7.4 Transmission
+- Principalement par accès direct aux variables globales
+- Peu de passage explicite de dépendances
+
+## 8) Points forts et faiblesses
+### 8.1 Points forts
+- Migration vers une source unique des salles réussie: [script/config/ROOMS_CONFIG.js](script/config/ROOMS_CONFIG.js#L8)
+- API legacy préservée sans rupture: [script/config/data.js](script/config/data.js#L4)
+- Système audio structuré par catégories/mixers
+- Moteur d'événements data-driven extensible
+- State machine Foxy claire et testable conceptuellement
+
+### 8.2 Faiblesses / risques / dette technique
+1. Couplage global fort + dépendance à l'ordre de chargement script.
+2. Mélange logique métier et DOM dans plusieurs modules.
+3. Incohérences de données dans random events:
+- cameraId invalide 1b5: [script/config/random_events_data.js](script/config/random_events_data.js#L38)
+- ID dupliqué CHICA-002 (écrasement de clé objet): [script/config/random_events_data.js](script/config/random_events_data.js#L196)
+- même ID redéfini plus bas: [script/config/random_events_data.js](script/config/random_events_data.js#L214)
+4. Incohérence sonore:
+- playSound("scare2") alors que IDs catalogués en scare_2: [script/render.js](script/render.js#L264)
+- arrêt sur la même clé invalide: [script/render.js](script/render.js#L272)
+- définition des IDs audio: [script/config/data.js](script/config/data.js#L57)
+5. Problème potentiel de pile canvas:
+- restore double dans drawWithCamera: [script/mechanics/camera.js](script/mechanics/camera.js#L451) et [script/mechanics/camera.js](script/mechanics/camera.js#L454)
+- restore sans save correspondant dans drawOfficeView: [script/mechanics/camera.js](script/mechanics/camera.js#L580)
+6. ID audio dupliqué garble_2: [script/config/data.js](script/config/data.js#L73) et [script/config/data.js](script/config/data.js#L74)
+7. Code dupliqué non chargé ou obsolète:
+- script/mechanics/sounds.js ressemble à un duplicat de core/sounds.js (risque de divergence future)
+
+## 9) Recommandations concrètes
+### 9.1 Court terme (sécurisation)
+1. Corriger incohérences de données et IDs:
+- random_events_data: cameraId 1b5, roomLabel typo, IDs dupliqués
+- render: scare2 -> scare_2
+- data.js: renommer second garble_2 en garble_3
+2. Corriger stack canvas:
+- équilibrer save/restore dans drawWithCamera et drawOfficeView
+3. Ajouter un validateur de config au boot:
+- unicité des IDs event/audio
+- cohérence roomLabel -> cameraId existant
+- cohérence des clés audio référencées
+
+### 9.2 Moyen terme (modularité)
+1. Introduire un GameState unique (objet store) au lieu de globals dispersés.
+2. Séparer domain logic et rendering:
+- domain: IA, énergie, transitions d'état
+- adapters: DOM/Canvas/Audio
+3. Créer un EventBus léger:
+- camera:switched, animatronic:moved, power:changed, night:ended
+
+### 9.3 Long terme (maintenabilité/performances)
+1. Migrer vers modules ES natifs (import/export) pour expliciter dépendances.
+2. Introduire tests unitaires sur:
+- builders ROOMS
+- machine d'état Foxy
+- règles de déclenchement random events
+3. Réduire coût per-frame:
+- cache de sélecteurs DOM
+- limiter recomposition HTML debug à fréquence plus faible
+- contrôler logs console en production
+
+Plan cible ASCII:
+
+  app/
+    domain/
+      night/
+      animatronics/
+      power/
+      rooms/
+    application/
+      usecases/
+      event-bus/
+    infrastructure/
+      audio/
+      canvas/
+      dom/
+      storage/
+    config/
+      rooms/
+      events/
+
+## Exemples de code illustratifs
+Exemple A - Bonne évolution data-driven (source unique -> API legacy):
+
+    // script/config/data.js
+    var rooms = buildRoomsStateFromConfig(ROOMS);
+    const roomsArray = buildRoomsArrayFromConfig(ROOMS);
+    const cameras = buildCamerasFromConfig(ROOMS);
+
+Exemple B - Couplage fort métier + UI à réduire:
+
+    // script/mechanics/animatronic.js
+    rooms[nextRoomKey][this.getKey()] = 1;
+    rooms[nextRoomKey].occupy = 1;
+    document.getElementById('cam'+ Room).style.background= color;
+
+Exemple C - Façade service bien définie:
+
+    // script/core/random_events_engine.js
+    const RandomEvents = {
+      preload,
+      update,
+      notifyCameraSwitch,
+      drawActiveOverlay,
+      resetForNewNight
+    };
+
+## Résumé exécutif
+Le projet présente une architecture pragmatique orientée gameplay, efficace pour itérer rapidement. La refonte récente de la configuration des salles vers une source unique est une amélioration majeure qui réduit la duplication et sécurise l'évolution. En revanche, le cœur runtime reste fortement couplé aux variables globales et au DOM, avec plusieurs incohérences de données qui peuvent provoquer des bugs silencieux.
+
+La priorité doit être de fiabiliser la base (validation de config, correction des incohérences, équilibrage canvas save/restore), puis de découpler progressivement domaine et rendu via un store central et des modules explicites.
+
+## Note globale architecture
+Note: 6.8 / 10
+
+Justification:
+- +2.0: Bonne séparation en dossiers et lisibilité globale des features.
+- +1.8: Data-driven en nette progression grâce à ROOMS_CONFIG.
+- +1.0: Services transverses utiles (audio, random events, localisation).
+- +0.8: Mécanique gameplay riche et extensible.
+- -1.4: Couplage global élevé, dépendance ordre de script.
+- -0.8: Mélange responsabilités domaine/rendu/DOM.
+- -0.6: Incohérences de données identifiées (IDs/labels/refs audio).
+
+Verdict: base solide pour un jeu browser script-first, avec un potentiel élevé si le découplage et la validation des données sont industrialisés sur les prochaines itérations.

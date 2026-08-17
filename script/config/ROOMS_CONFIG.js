@@ -233,6 +233,7 @@ const ROOMS = {
       c: 0
     },
     video: {
+      
       name: 'West Hall',
       enabled: true,
       jitterX: 0.5,

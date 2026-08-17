@@ -1,0 +1,24 @@
+{
+  "name": "fnaf-js-electron",
+  "version": "1.0.0",
+  "description": "FNAF Remake",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder"
+  },
+  "build": {
+    "appId": "com.fnaf.remake",
+    "productName": "FNAF Remake",
+    "directories": {
+      "output": "dist"
+    },
+    "win": {
+      "target": "nsis"
+    }
+  },
+  "devDependencies": {
+    "electron": "^43.4.0",
+    "electron-builder": "^26.15.3"
+  }
+}
