@@ -246,6 +246,7 @@ function hangupPhoneFromPanel() {
  */
 function startNight(nightNumber) {
 
+  _night = nightNumber;
   currentNight = new Night(nightNumber);
 
   currentNight.resetAnimatronics();
@@ -263,6 +264,9 @@ function startNight(nightNumber) {
   resetCameraState();
   if (typeof RandomEvents !== 'undefined') {
     RandomEvents.resetForNewNight(); // Réinitialise l'état des événements aléatoires
+  }
+  if (typeof TapeScene !== 'undefined') {
+    TapeScene.reset(); // Éjecte toute cassette en cours et referme le lecteur
   }
 
   updatePowerDisplay();
@@ -360,11 +364,14 @@ function clearRoomsState() {
 /**
  * Met fin au jeu, désactive les portes et bloque le jeu.
  */
-function nightEndGame() { 
+function nightEndGame() {
   // Désactive les portes et bloque le jeu
   hideDoors();
   updateOfficeLookControls();
   stopAllSounds();
+  if (typeof TapeScene !== 'undefined' && TapeScene.isOpen()) {
+    TapeScene.close(); // La scène ne doit pas masquer un jumpscare / écran de fin
+  }
 }
 
 /**
@@ -377,10 +384,6 @@ function endGameAt6AM() {
     clearInterval(gameLoopInterval);
     console.log(`Fin de la nuit ${_night} a 6AM.`);
 
-    _night++;
-    if (_night > MAX_NIGHT) {
-      _night = 1; // Réinitialise à la première nuit si toutes les nuits sont terminées
-    }
     stopAllSounds();
     currentNight.resetAnimatronics();
     transitionEndNight(_night);

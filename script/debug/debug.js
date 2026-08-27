@@ -2,11 +2,6 @@
 // Écouteurs d'événements
 function setupDebugEventListeners() {
 
-  /*Debug*/
-  /*document.getElementById('debug-game-over-0').addEventListener('click', () => _transitionFreddy());
-  document.getElementById('debug-game-over-1').addEventListener('click', () => _endGameAt5h50());
-*/
-
   /* DEBUG - Boutons Foxy */
   document.getElementById('debug-foxy-phase1').addEventListener('click', () => debugFoxyPhase1());
   document.getElementById('debug-foxy-phase2').addEventListener('click', () => debugFoxyPhase2());
@@ -16,18 +11,21 @@ function setupDebugEventListeners() {
 
 }
 
-/* DEBUG */
-function _transitionFreddy(){
-
-  chica.forceMoveToRoom("safe");
-  /*
-    power = 0;
-    gameTime.hours = 5 ;
-    gameTime.minutes = 30;
-  */
+/**
+ * DEBUG - Déclenche immédiatement le game over "panne de courant + Freddy"
+ * en vidant la jauge d'énergie. La gameLoop détecte power < 1 et lance
+ * transitionEndNightFreddy() au prochain tick.
+ */
+function debugGameOverFreddy() {
+  power = 0;
 }
 
-function _endGameAt5h50(){
+/**
+ * DEBUG - Fait gagner la nuit en cours en avançant l'horloge à 6h00.
+ * La gameLoop détecte gameTime.hours >= 6 et lance transitionEndNight()
+ * au prochain tick.
+ */
+function debugWinNight() {
   gameTime.hours = 6;
   gameTime.minutes = 0;
 }

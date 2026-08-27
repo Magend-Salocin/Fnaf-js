@@ -1,4 +1,8 @@
 .debug-toggle-btn {
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 101;
 	background-color: #222;
 	color: #ff8800;
 	border: 1px solid #ff8800;

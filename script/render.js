@@ -213,6 +213,10 @@ function chicaJumpScare() {
     animatronicJumpScare("scare_1", "chika_jumpscare");
 }
 
+function freddyJumpScare() {
+    animatronicJumpScare("scare_2", "rightside_freddy_scare");
+}
+
 
 /**
  * Gère la séquence de fin de nuit lorsque le joueur n'a plus d'énergie (power = 0).
@@ -261,7 +265,7 @@ function transitionEndNightFreddy() {
     // Déclenche le jump scare de Freddy après 34 secondes
     setTimeout(function() {
         if(!gameWin){
-            playSound("scare2");
+            playSound("scare_2");
             drawOfficeViewByPicture("power_down_freddy_scare");
         }
     }, 34000);
@@ -269,7 +273,7 @@ function transitionEndNightFreddy() {
     // Transition vers l'écran de fin après 35,3 secondes
     setTimeout(function() {
         if(!gameWin){
-            stopSound("scare2");
+            stopSound("scare_2");
             playSound("game_over_static");
             drawOfficeViewByPicture("game_over_trans");
         }

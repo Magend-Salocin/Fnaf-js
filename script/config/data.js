@@ -60,6 +60,9 @@ const gameSounds = [
     { id: "run_sound", element: document.querySelector('.run-sound'), category: "movement", description: "Course normale", mixVolume: 1.2 },
     { id: "run_fast", element: document.querySelector('.run-fast'), category: "movement", description: "Course rapide", mixVolume: 1.3 },
 
+    // Cassettes (lecteur audio du bureau)
+    { id: "tape_frt_01", element: document.querySelector('.tape-frt-01'), category: "call", description: "Cassette FRT-01 — Protocole de fermeture Pirate Cove", mixVolume: 1.0 },
+
     // Appels téléphoniques
     { id: "call_1", element: document.querySelector('.call1'), category: "call", description: "Appel 1", mixVolume: 1.0 },
     { id: "call_2", element: document.querySelector('.call2'), category: "call", description: "Appel 2", mixVolume: 1.0 },
