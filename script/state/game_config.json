@@ -1,0 +1,51 @@
+{
+  "nightAiLevels": {
+    "1": {
+      "freddy": 0,
+      "bonnie": 15,
+      "chica": 5,
+      "foxy": 0
+    },
+    "2": {
+      "freddy": 0,
+      "bonnie": 6,
+      "chica": 6,
+      "foxy": 8
+    },
+    "3": {
+      "freddy": 1,
+      "bonnie": 7,
+      "chica": 7,
+      "foxy": 4
+    },
+    "4": {
+      "freddy": 2,
+      "bonnie": 8,
+      "chica": 8,
+      "foxy": 6
+    },
+    "5": {
+      "freddy": 3,
+      "bonnie": 9,
+      "chica": 9,
+      "foxy": 8
+    },
+    "6": {
+      "freddy": 4,
+      "bonnie": 10,
+      "chica": 10,
+      "foxy": 12
+    }
+  },
+  "powerSystem": {
+    "BASE_USAGE": 1,
+    "MAX_USAGE": 5,
+    "DRAIN_PER_SECOND": {
+      "1": 0.09,
+      "2": 0.27,
+      "3": 0.4,
+      "4": 0.65,
+      "5": 0.9
+    }
+  }
+}

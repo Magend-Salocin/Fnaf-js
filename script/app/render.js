@@ -107,8 +107,16 @@ function transitionScreen(night) {
  * - 10 000 ms (10 s) :
  *   Réinitialise l'opacité des éléments et prépare le jeu pour la nuit suivante
  *   ou affiche les crédits si le jeu est terminé.
+ *
+ * Avant tout ça, si au moins un journal a été débloqué (cf. Collectibles),
+ * la visionneuse JournalViewer s'affiche en premier : la séquence
+ * ci-dessous ne démarre qu'une fois le joueur sur "Continuer".
  */
 function transitionEndNight(night) {
+    JournalViewer.open(() => runNightEndSequence(night));
+}
+
+function runNightEndSequence(night) {
     nightEndGame(); // Bloque le jeu et désactive les portes
 
     drawOfficeViewByPicture("game_win");
@@ -141,13 +149,19 @@ function transitionEndNight(night) {
         nightLabel.classList.add('display-1');
 
 
+        const lang = window.selectedLanguage || window.FNAF_DEFAULT_LANGUAGE || 'fr';
+        const allTranslations = window.FNAF_TRANSLATIONS || {};
+        const t = allTranslations[lang] || allTranslations[window.FNAF_DEFAULT_LANGUAGE] || {};
+        const nightWord = t.transition?.nightLabel || 'Night';
+        const customNightComplete = t.transition?.customNightComplete || 'Custom Night Complete';
+
         if (night < MAX_NIGHT) {
             nightCount.innerHTML = night + 1;
             startLabel.innerHTML = '12:00 AM';
-            nightLabel.innerHTML = `Night <span id="night-count">${night + 1}</span>`;
+            nightLabel.innerHTML = `${nightWord} <span id="night-count">${night + 1}</span>`;
         } else {
             startLabel.innerHTML = '6:00 AM';
-            nightLabel.innerHTML = 'Custom Night Complete';
+            nightLabel.innerHTML = customNightComplete;
         }
     }, 4500);
 
@@ -274,7 +288,7 @@ function transitionEndNightFreddy() {
     setTimeout(function() {
         if(!gameWin){
             stopSound("scare_2");
-            playSound("game_over_static");
+            playSound("gameover_static");
             drawOfficeViewByPicture("game_over_trans");
         }
     }, 35300);

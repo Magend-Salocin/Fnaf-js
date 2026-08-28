@@ -14,6 +14,7 @@
 	<link rel="stylesheet" href="style/retro-terminal.css">
 	<link rel="stylesheet" href="style/debug.css">
 	<link rel="stylesheet" href="style/tape.css">
+	<link rel="stylesheet" href="style/journal.css">
 
 </head>
 <body>
@@ -34,7 +35,7 @@
 	<div class="transition display-0">
 		<img src="images/game/transition_screen.png" alt="">
 		<h2 class="display-0" id="transition-start">12:00 AM</h2>
-		<h2 class="display-0" id="transition-night">Night <span id="night-count">1</span></h2>
+		<h2 class="display-0" id="transition-night"><span id="transition-night-label">Night</span> <span id="night-count">1</span></h2>
 	</div>
 
   	<!-- preloader -->
@@ -96,7 +97,7 @@
 		
 
 			<!-- Panneaux de contrôle -->
-			<button id="computer-panel" class="clickable" type="button" aria-label="Computer panel">
+			<button id="computer-panel" class="clickable" type="button" aria-label="Panneau ordinateur">
 				<div id="computer-panel-label" class="computer-panel-label">SECURITY PC</div>
 				<div class="computer-panel-row">
 					<div id="computer-panel-status" class="computer-panel-status">IDLE</div>
@@ -106,7 +107,7 @@
 			</button>
 
 			<!-- Panneau de téléphone -->
-			<button id="phone-panel" class="clickable" type="button" aria-label="Phone panel">
+			<button id="phone-panel" class="clickable" type="button" aria-label="Panneau telephone">
 				<div id="phone-panel-label" class="phone-panel-label">OFFICE PHONE</div>
 				<div class="phone-panel-row">
 					<div id="phone-panel-status" class="phone-panel-status">INCOMING CALL</div>
@@ -116,7 +117,7 @@
 			</button>
 
 			<!-- Panneau de caméras -->
-			<button id="camera-panel" class="clickable" type="button" aria-label="Camera panel">
+			<button id="camera-panel" class="clickable" type="button" aria-label="Panneau camera">
 				<div id="camera-panel-label" class="camera-panel-label">CAM SYSTEM</div>
 				<div class="camera-panel-row">
 					<div id="camera-panel-status" class="camera-panel-status">READY</div>
@@ -126,7 +127,7 @@
 			</button>
 
 			<!-- Panneau du lecteur de cassettes -->
-			<button id="tape-panel" class="clickable" type="button" aria-label="Tape panel">
+			<button id="tape-panel" class="clickable" type="button" aria-label="Panneau lecteur cassette">
 				<div id="tape-panel-label" class="tape-panel-label">TAPE DECK</div>
 				<div class="tape-panel-row">
 					<div id="tape-panel-status" class="tape-panel-status">READY</div>
@@ -190,7 +191,7 @@
 			<button id="volume-btn" onclick="toggleVolumePanel()" title="Volume">🔊</button>
 			<div id="volume-panel" class="hidden">
 				<div class="volume-row volume-row-main">
-					<span class="volume-row-title">Master</span>
+					<span class="volume-row-title">General</span>
 					<span id="volume-label">40%</span>
 					<input
 						type="range"
@@ -199,7 +200,7 @@
 						min="0" max="100" value="40"
 						oninput="onVolumeSliderChange(this.value)"
 					>
-					<button id="volume-mute-btn" onclick="toggleMute()" title="Mute">🔈</button>
+					<button id="volume-mute-btn" onclick="toggleMute()" title="Muet">🔈</button>
 				</div>
 
 				<div class="volume-row">
@@ -286,101 +287,166 @@
 	<!--
 		Scène "lecteur de cassettes" : masquée par défaut, pilotée uniquement
 		via TapeScene.open()/close() (script/mechanics/tape.js), déclenchées
-		par le bouton #tape-panel.
+		par le bouton #tape-panel. Mise en page adaptée de
+		vx90-magnetic-analyzer-test.html (voir style/tape.css).
 	-->
 	<section id="tape-scene" class="tape-scene" hidden aria-hidden="true">
 
-		<div class="scene-room">
+		<div class="vx90-overlay">
+			<section class="vx90" id="tape-player" data-state="EMPTY">
 
-			<div class="doorway doorway-left" aria-hidden="true"><div class="cobweb cobweb-tl"></div></div>
-			<div class="doorway doorway-right" aria-hidden="true"><div class="cobweb cobweb-tr"></div></div>
+				<header class="vx90-header">
+					<div class="vx90-brand">
+						<span class="vx90-led"></span>
+						<div><strong>ANALYSEUR MAGNÉTIQUE</strong><small>VX-90 / UNITÉ DE TRAITEMENT DE BANDE</small></div>
+					</div>
+					<div class="vx90-header-status">
+						<span>UNITÉ 04</span><span class="status-online">● EN LIGNE</span>
+						<button type="button" class="vx90-close" id="scene-close" aria-label="Fermer la scène">✕</button>
+					</div>
+				</header>
 
-			<div class="ceiling-lamp" aria-hidden="true">
-				<div class="lamp-cord"></div>
-				<div class="lamp-globe"></div>
-				<div class="lamp-glow"></div>
-			</div>
+				<main class="vx90-body">
 
-			<div class="hanging-wires" aria-hidden="true">
-				<span></span><span></span><span></span><span></span><span></span>
-			</div>
-
-			<div class="wall-board" aria-hidden="true">
-				<div class="board-note note-1"></div>
-				<div class="board-note note-2"></div>
-				<div class="board-note note-3"></div>
-				<div class="board-note note-4"></div>
-				<div class="board-note note-5"></div>
-			</div>
-
-			<div class="desk">
-
-				<div class="crt-monitor crt-left" aria-hidden="true">
-					<div class="crt-screen"><div class="crt-scanline"></div></div>
-				</div>
-
-				<!-- Étagère à cassettes : remplie dynamiquement par tape.js -->
-				<div class="tape-rack" id="tape-rack" aria-label="Cassettes disponibles"></div>
-
-				<!-- Lecteur de cassettes -->
-				<div class="player" id="tape-player" data-state="EMPTY">
-
-					<div class="player-shell">
-
-						<div class="player-vents" aria-hidden="true"></div>
-
-						<div class="player-window">
-							<div class="reel reel-left" id="reel-left"></div>
-							<div class="reel reel-right" id="reel-right"></div>
-						</div>
+					<section class="vx90-column">
+						<div class="panel-title"><span>SOURCE MAGNÉTIQUE</span><small>ENTRÉE A</small></div>
 
 						<!-- Zone de dépôt : seule zone valide pour le Drag & Drop -->
-						<div class="player-slot" id="player-slot">
-							<div class="slot-opening"></div>
-							<div class="slot-hint">INSÉRER LA BANDE</div>
+						<div class="cassette-stage" id="player-slot">
+							<div class="slot-hint" id="slot-empty-hint">
+								<span class="slot-hint-icon">⇩</span>
+								<span>GLISSER UNE CASSETTE ICI</span>
+							</div>
+
+							<div class="cassette" id="cassette-visual" hidden>
+								<div class="cassette-screws screw-1"></div><div class="cassette-screws screw-2"></div>
+								<div class="cassette-screws screw-3"></div><div class="cassette-screws screw-4"></div>
+								<div class="cassette-label">
+									<strong id="cassette-title"></strong>
+									<small id="cassette-subtitle"></small>
+								</div>
+								<div class="cassette-window">
+									<div class="reel reel-left" id="reel-left"><div class="reel-core"></div></div>
+									<div class="tape-line"></div>
+									<div class="reel reel-right" id="reel-right"><div class="reel-core"></div></div>
+								</div>
+								<div class="cassette-bottom"><span>TYPE II</span><span>ANALOGIQUE</span></div>
+							</div>
 						</div>
 
-						<div class="player-panel">
-							<span class="led led-red" id="led-red" title="Absence de bande"></span>
-							<span class="led led-green" id="led-green" title="Bande prête"></span>
-
-							<button type="button" class="ctrl-btn ctrl-play" id="btn-play" disabled>
-								<span class="ctrl-icon">▶</span><span class="ctrl-text">PLAY</span>
-							</button>
-							<button type="button" class="ctrl-btn ctrl-stop" id="btn-stop" disabled>
-								<span class="ctrl-icon">■</span><span class="ctrl-text">STOP</span>
-							</button>
+						<div class="source-status">
+							<div><label>SUPPORT</label><strong id="cassette-status-media">—</strong></div>
+							<div><label>ÉTAT</label><strong id="cassette-status-condition">—</strong></div>
+							<div><label>PROTECTION</label><strong>INCONNUE</strong></div>
 						</div>
+
+						<!-- Étagère à cassettes : remplie dynamiquement par tape.js -->
+						<div class="vx-panel">
+							<div class="panel-title"><span>BIBLIOTHÈQUE DE BANDES</span><small>ÉTAGÈRE</small></div>
+							<div class="tape-rack" id="tape-rack" aria-label="Cassettes disponibles"></div>
+						</div>
+					</section>
+
+					<section class="vx90-column" aria-hidden="true">
+						<div class="vx-panel">
+							<div class="panel-title"><span>MONITEUR DE SIGNAL</span><small>OSC-01</small></div>
+							<div class="scope"><div class="scope-grid"></div><div class="wave wave-1"></div><div class="wave wave-2"></div>
+							<div class="scope-marker marker-left"></div><div class="scope-marker marker-right"></div></div>
+							<div class="scope-footer"><span>CH-A <b>0.72V</b></span><span>FRÉQ <b>4.7 KHZ</b></span><span>BRUIT <b>18%</b></span></div>
+						</div>
+						<div class="vx-panel">
+							<div class="panel-title"><span>ANALYSEUR DE FRÉQUENCE</span><small>SPC-02</small></div>
+							<div class="spectrum">
+								<i style="--h:20%"></i><i style="--h:32%"></i><i style="--h:45%"></i><i style="--h:25%"></i>
+								<i style="--h:62%"></i><i style="--h:38%"></i><i style="--h:82%"></i><i style="--h:48%"></i>
+								<i style="--h:30%"></i><i style="--h:72%"></i><i style="--h:92%"></i><i style="--h:42%"></i>
+								<i style="--h:25%"></i><i style="--h:55%"></i><i style="--h:34%"></i><i style="--h:67%"></i>
+							</div>
+							<div class="frequency-scale"><span>20Hz</span><span>100Hz</span><span>1KHz</span><span>5KHz</span><span>20KHz</span></div>
+						</div>
+					</section>
+
+					<section class="vx90-column" aria-hidden="true">
+						<div class="vx-panel meters-panel">
+							<div class="panel-title"><span>MONITEUR DE NIVEAU</span><small>VU-02</small></div>
+							<div class="vu-row"><label>G</label><div class="vu-meter"><i></i></div><b>-08</b></div>
+							<div class="vu-row"><label>D</label><div class="vu-meter"><i></i></div><b>-11</b></div>
+						</div>
+						<div class="vx-panel">
+							<div class="panel-title"><span>DIAGNOSTIC BANDE</span><small>SYS</small></div>
+							<div class="diagnostic-line"><span>TÊTE DE LECTURE</span><strong class="ok">OK</strong></div>
+							<div class="diagnostic-line"><span>MOTEUR</span><strong class="ok">780 TR/MIN</strong></div>
+							<div class="diagnostic-line"><span>SUIVI BANDE</span><strong class="warning">INSTABLE</strong></div>
+							<div class="diagnostic-line"><span>BRUIT</span><strong class="danger">ÉLEVÉ</strong></div>
+						</div>
+						<div class="anomaly-box"><span class="anomaly-led"></span><div><strong>ANOMALIE</strong><small>FRÉQUENCE NON STANDARD</small></div></div>
+					</section>
+
+				</main>
+
+				<footer class="vx90-controls">
+					<div class="transport">
+						<button type="button" class="transport-button play" id="btn-play" disabled>
+							<span>▶</span><small>LECTURE</small>
+						</button>
+						<button type="button" class="transport-button" id="btn-stop" disabled>
+							<span>■</span><small>ARRÊT</small>
+						</button>
 					</div>
-
-					<div class="player-plate">MODÈLE VX-90 · REC / PLAY</div>
-				</div>
-
-				<div class="desk-fan" aria-hidden="true">
-					<div class="fan-cage">
-						<div class="fan-blades"></div>
-						<div class="fan-hub"></div>
+					<div class="counter">
+						<span>POSITION</span>
+						<strong id="tape-counter">00:00</strong>
+						<div class="tape-progress"><i id="tape-progress-fill"></i></div>
 					</div>
-					<div class="fan-stand"></div>
-				</div>
+					<div class="machine-status">
+						<span><i class="led led-green" id="led-green" title="Bande prête"></i>PRÊT</span>
+						<span><i class="led led-red" id="led-red" title="Absence de bande"></i>VIDE</span>
+					</div>
+				</footer>
 
-				<div class="crt-monitor crt-right" aria-hidden="true">
-					<div class="crt-screen"><div class="crt-scanline"></div></div>
-				</div>
-
-				<div class="desk-cup" aria-hidden="true"></div>
-			</div>
-
-			<div class="floor-checker" aria-hidden="true"></div>
-
-			<div class="scene-vignette" aria-hidden="true"></div>
-			<div class="scene-grain" aria-hidden="true"></div>
+				<div class="vx90-footer">FAZBEAR ENTERTAINMENT // SYSTÈME DE TRAITEMENT D'ARCHIVES <span>MODÈLE VX-90</span></div>
+			</section>
 		</div>
-
-		<button type="button" class="scene-close" id="scene-close" aria-label="Fermer la scène">✕</button>
 	</section>
 
+	<!--
+		Scène "journaux" : affichée automatiquement à la fin d'une nuit
+		réussie (cf. transitionEndNight() dans script/app/render.js), avant
+		la séquence de victoire, si au moins un journal a été débloqué par
+		un événement aléatoire (champ `journal`, cf. Collectibles). Pilotée
+		par script/mechanics/journal.js.
+	-->
+	<section id="journal-scene" class="journal-scene" hidden aria-hidden="true">
+		<div class="journal-overlay">
+			<section class="journal-reader">
 
+				<header class="journal-header">
+					<span class="journal-header-title">ARCHIVES DE PRESSE</span>
+					<span class="journal-page-indicator" id="journal-page-indicator">1 / 1</span>
+				</header>
+
+				<div class="journal-body">
+					<div class="journal-image-wrap" id="journal-image-wrap" hidden>
+						<img class="journal-image" id="journal-image" alt="">
+					</div>
+
+					<div class="journal-article">
+						<h2 class="journal-title" id="journal-title"></h2>
+						<div class="journal-date" id="journal-date"></div>
+						<p class="journal-text" id="journal-article"></p>
+						<p class="journal-caption" id="journal-caption"></p>
+						<div class="journal-source" id="journal-source"></div>
+					</div>
+				</div>
+
+				<footer class="journal-footer">
+					<button type="button" class="journal-nav-btn" id="journal-prev" aria-label="Journal précédent">◀ PRÉCÉDENT</button>
+					<button type="button" class="journal-continue-btn" id="journal-continue">CONTINUER</button>
+					<button type="button" class="journal-nav-btn" id="journal-next" aria-label="Journal suivant">SUIVANT ▶</button>
+				</footer>
+			</section>
+		</div>
+	</section>
 
 
 	<!-- audios -->
@@ -471,6 +537,8 @@
 		<!-- terminal divers -->
 		<audio preload="auto" class="terminal-keyboard-typing" src="audio/terminal-keyboard-typing.mp3"></audio>
 		<audio preload="auto" class="terminal-start" src="audio/terminal-start.mp3"></audio>
+		<audio preload="auto" class="terminal-glitch" src="audio/static2.wav"></audio>
+		<audio preload="auto" class="terminal-static" src="audio/static.wav"></audio>
 
 		<!-- Hidden -->
 		<audio preload="auto" class="chair" src="audio/hidden/chair.mp3"></audio>
@@ -480,40 +548,44 @@
 
 	<!-- script -->
 	<div id="script">
-		<script src="script/config/translations.js"></script>
-		<script src="script/config/game.js"></script>
-		<script src="script/config/ROOMS_CONFIG.js"></script>
-		<script src="script/config/data.js"></script>
-		<script src="script/config/assets.js"></script>
-		<script src="script/config/logs_database.js"></script>
-		<script src="script/config/parasites_config.js"></script>
-		<script src="script/config/random_events_data.js"></script>
-		
-		<script src="script/core/random_events_engine.js"></script>
-		<script src="script/core/gifPlayer.js"></script>
-		<script src="script/core/sounds.js"></script>	
-		<script src="script/core/language.js"></script>	
-		
-		<script src="script/missingChildren/retroTerminal.js"></script>	
-		<script src="script/missingChildren/lore-core.js"></script>	
-		<script src="script/missingChildren/lore-night1.js"></script>	
-		
+		<script src="script/loaders/translations.js"></script>
+		<script src="script/state/game_state.js"></script>
+		<script src="script/loaders/rooms_config.js"></script>
+		<script src="script/loaders/data.js"></script>
+		<script src="script/loaders/assets.js"></script>
+		<script src="script/loaders/logs_database.js"></script>
+		<script src="script/loaders/parasites_config.js"></script>
+		<script src="script/loaders/random_events_data.js"></script>
+		<script src="script/loaders/tapes_data.js"></script>
+		<script src="script/loaders/journals_data.js"></script>
 
-		<script src="script/render.js"></script>
-		
-		<script src="script/mechanics/ihm.js"></script>	
+		<script src="script/core/collectibles.js"></script>
+		<script src="script/core/random_events_engine.js"></script>
+		<script src="script/core/gif_player.js"></script>
+		<script src="script/core/sounds.js"></script>
+		<script src="script/core/language.js"></script>
+
+		<script src="script/lore/retro_terminal.js"></script>
+		<script src="script/lore/lore_core.js"></script>
+		<script src="script/lore/lore_night1.js"></script>
+
+
+		<script src="script/app/render.js"></script>
+
+		<script src="script/mechanics/ihm.js"></script>
 		<script src="script/mechanics/foxy.js"></script>
 		<script src="script/mechanics/animatronic.js"></script>
 		<script src="script/mechanics/door.js"></script>
 		<script src="script/mechanics/camera.js"></script>
 		<script src="script/mechanics/tape.js"></script>
+		<script src="script/mechanics/journal.js"></script>
 
 		<script src="script/mechanics/power.js"></script>
-		<script src="script/mechanics/night.js"></script>	
+		<script src="script/mechanics/night.js"></script>
 
-		<script src="script/game.js"></script>
-		
-		<script src="script/main.js"></script>
+		<script src="script/app/game_loop.js"></script>
+
+		<script src="script/app/main.js"></script>
 		<script src="script/debug/debug.js"></script>
 		<script src="script/debug/debug_foxy.js"></script>
 	</div>

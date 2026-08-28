@@ -5,20 +5,22 @@ Analyse réalisée sur l'architecture actuelle du projet front-end JavaScript (c
 
 Points de référence principaux:
 - Entrée HTML et ordre de chargement: [index.html](index.html#L373)
-- Configuration globale du runtime: [script/config/game.js](script/config/game.js#L1)
-- Source unique salles/caméras/parasites: [script/config/ROOMS_CONFIG.js](script/config/ROOMS_CONFIG.js#L8)
-- Génération des API legacy: [script/config/data.js](script/config/data.js#L4)
-- Boucle de jeu: [script/game.js](script/game.js#L28)
+- Configuration globale du runtime: [script/state/game_state.js](script/state/game_state.js#L1)
+- Source unique salles/caméras/parasites: [script/loaders/rooms_config.js](script/loaders/rooms_config.js#L8)
+- Génération des API legacy: [script/loaders/data.js](script/loaders/data.js#L4)
+- Boucle de jeu: [script/app/game_loop.js](script/app/game_loop.js#L28)
 
 ## 1) Vue d'ensemble de l'architecture
 Le projet suit une architecture script globale orientée feature, avec séparation par dossiers mais couplage via état partagé global.
 
-Organisation macro:
-- config: données statiques et paramètres runtime
-- core: moteurs transverses (audio, événements aléatoires, gif, langue)
+Organisation macro (réorganisée depuis ce rapport, voir historique git) :
+- config: données statiques pures (JSON uniquement, aucun .js)
+- loaders: un loader .js par fichier JSON de config/ (chargement XHR synchrone)
+- state: état runtime global (nuit, horloge, énergie, canvas)
+- core: moteurs transverses (audio, événements aléatoires, gif, langue) ; core/unused: features complètes mais non chargées dans index.html
 - mechanics: logique gameplay (caméra, portes, énergie, nuit, IA animatroniques)
-- render: transitions et séquences visuelles (start, win, game over)
-- missingChildren: sous-système terminal/lore narratif
+- app: orchestration (boucle de jeu, bootstrap, transitions/jumpscares/game over)
+- lore: sous-système terminal/lore narratif
 - debug: instrumentation manuelle
 
 Diagramme ASCII - Architecture logique:
@@ -28,12 +30,13 @@ Diagramme ASCII - Architecture logique:
           v
   index.html (ordre de chargement)
           |
-          +--> config/*.js  (état, données, mappings)
+          +--> loaders/*.js (charge config/*.json en synchrone)
+          +--> state/game_state.js (état global runtime)
           +--> core/*.js    (services transverses)
           +--> mechanics/*.js (gameplay runtime)
-          +--> render.js    (transitions/effets)
-          +--> game.js      (gameLoop)
-          +--> main.js      (events utilisateur + boot)
+          +--> app/render.js    (transitions/effets)
+          +--> app/game_loop.js (gameLoop)
+          +--> app/main.js      (events utilisateur + boot)
 
 Dépendances externes:
 - Aucune dépendance package manager (pas de npm, pas de build tool)
@@ -42,15 +45,15 @@ Dépendances externes:
 ## 2) Organisation du code
 ### 2.1 Point d'entrée et bootstrap
 - Ordre de chargement explicite via balises script: [index.html](index.html#L373)
-- Initialisation UI/langue + preload au DOMContentLoaded: [script/main.js](script/main.js#L4)
-- Démarrage effectif de la nuit après transition: [script/game.js](script/game.js#L99)
+- Initialisation UI/langue + preload au DOMContentLoaded: [script/app/main.js](script/app/main.js#L4)
+- Démarrage effectif de la nuit après transition: [script/app/game_loop.js](script/app/game_loop.js#L99)
 
 ### 2.2 Configuration et données
-- Etat global runtime (nuit, horloge, flags, caméra active, énergie): [script/config/game.js](script/config/game.js#L1)
-- Configuration maître des salles (nouvelle architecture): [script/config/ROOMS_CONFIG.js](script/config/ROOMS_CONFIG.js#L8)
-- Génération rétrocompatible de rooms, roomsArray, cameras: [script/config/data.js](script/config/data.js#L4)
-- Mapping images caméra et office + preload: [script/config/assets.js](script/config/assets.js#L15)
-- Data des événements aléatoires: [script/config/random_events_data.js](script/config/random_events_data.js#L1)
+- Etat global runtime (nuit, horloge, flags, caméra active, énergie): [script/state/game_state.js](script/state/game_state.js#L1)
+- Configuration maître des salles (nouvelle architecture): [script/loaders/rooms_config.js](script/loaders/rooms_config.js#L8)
+- Génération rétrocompatible de rooms, roomsArray, cameras: [script/loaders/data.js](script/loaders/data.js#L4)
+- Mapping images caméra et office + preload: [script/loaders/assets.js](script/loaders/assets.js#L15)
+- Data des événements aléatoires: [script/loaders/random_events_data.js](script/loaders/random_events_data.js#L1)
 
 ### 2.3 Logique gameplay
 - Mécanique caméra et rendu des salles: [script/mechanics/camera.js](script/mechanics/camera.js#L170)
@@ -58,15 +61,15 @@ Dépendances externes:
 - Gestion de nuit, reset, difficulté, phone call: [script/mechanics/night.js](script/mechanics/night.js#L4)
 - Portes/lumières et image office dynamique: [script/mechanics/door.js](script/mechanics/door.js#L1)
 - Drain énergétique et affichage HUD: [script/mechanics/power.js](script/mechanics/power.js#L13)
-- Séquences de transition/jumpscare/game over: [script/render.js](script/render.js#L1)
+- Séquences de transition/jumpscare/game over: [script/app/render.js](script/app/render.js#L1)
 
 ### 2.4 Services transverses
 - Audio mixer + lecture/stop + ambiance: [script/core/sounds.js](script/core/sounds.js#L1)
 - Moteur d'événements aléatoires: [script/core/random_events_engine.js](script/core/random_events_engine.js#L213)
-- Effets parasites analogiques: [script/config/parasites_config.js](script/config/parasites_config.js#L75)
+- Effets parasites analogiques: [script/loaders/parasites_config.js](script/loaders/parasites_config.js#L75)
 - Localisation UI: [script/core/language.js](script/core/language.js#L2)
-- GIF player canvas natif: [script/core/gifPlayer.js](script/core/gifPlayer.js#L1)
-- Terminal lore: [script/missingChildren/lore-core.js](script/missingChildren/lore-core.js#L1)
+- GIF player canvas natif: [script/core/gif_player.js](script/core/gif_player.js#L1)
+- Terminal lore: [script/lore/lore_core.js](script/lore/lore_core.js#L1)
 
 ## 3) Relations entre composants (dépendances, interactions, flux)
 ### 3.1 Flux de dépendance principal
@@ -100,7 +103,7 @@ Diagramme ASCII - Flux d'appel runtime:
 - Couplage DOM direct dans la logique métier (ex: animatronic.draw écrit dans le DOM): [script/mechanics/animatronic.js](script/mechanics/animatronic.js#L361)
 
 ### 3.3 Flux de données critiques
-- ROOMS (master) -> builders -> rooms/roomsArray/cameras: [script/config/ROOMS_CONFIG.js](script/config/ROOMS_CONFIG.js#L597)
+- ROOMS (master) -> builders -> rooms/roomsArray/cameras: [script/loaders/rooms_config.js](script/loaders/rooms_config.js#L597)
 - rooms mutation en temps réel par déplacements IA: [script/mechanics/animatronic.js](script/mechanics/animatronic.js#L85)
 - caméra active -> sélection image -> overlays -> parasites -> canvas: [script/mechanics/camera.js](script/mechanics/camera.js#L372)
 - état énergie dérivé de portes/lumières/caméra: [script/mechanics/power.js](script/mechanics/power.js#L1)
@@ -195,8 +198,8 @@ Constat:
 
 ## 8) Points forts et faiblesses
 ### 8.1 Points forts
-- Migration vers une source unique des salles réussie: [script/config/ROOMS_CONFIG.js](script/config/ROOMS_CONFIG.js#L8)
-- API legacy préservée sans rupture: [script/config/data.js](script/config/data.js#L4)
+- Migration vers une source unique des salles réussie: [script/loaders/rooms_config.js](script/loaders/rooms_config.js#L8)
+- API legacy préservée sans rupture: [script/loaders/data.js](script/loaders/data.js#L4)
 - Système audio structuré par catégories/mixers
 - Moteur d'événements data-driven extensible
 - State machine Foxy claire et testable conceptuellement
@@ -205,19 +208,19 @@ Constat:
 1. Couplage global fort + dépendance à l'ordre de chargement script.
 2. Mélange logique métier et DOM dans plusieurs modules.
 3. Incohérences de données dans random events:
-- cameraId invalide 1b5: [script/config/random_events_data.js](script/config/random_events_data.js#L38)
-- ID dupliqué CHICA-002 (écrasement de clé objet): [script/config/random_events_data.js](script/config/random_events_data.js#L196)
-- même ID redéfini plus bas: [script/config/random_events_data.js](script/config/random_events_data.js#L214)
+- cameraId invalide 1b5: [script/loaders/random_events_data.js](script/loaders/random_events_data.js#L38)
+- ID dupliqué CHICA-002 (écrasement de clé objet): [script/loaders/random_events_data.js](script/loaders/random_events_data.js#L196)
+- même ID redéfini plus bas: [script/loaders/random_events_data.js](script/loaders/random_events_data.js#L214)
 4. Incohérence sonore:
-- playSound("scare2") alors que IDs catalogués en scare_2: [script/render.js](script/render.js#L264)
-- arrêt sur la même clé invalide: [script/render.js](script/render.js#L272)
-- définition des IDs audio: [script/config/data.js](script/config/data.js#L57)
+- playSound("scare2") alors que IDs catalogués en scare_2: [script/app/render.js](script/app/render.js#L264)
+- arrêt sur la même clé invalide: [script/app/render.js](script/app/render.js#L272)
+- définition des IDs audio: [script/loaders/data.js](script/loaders/data.js#L57)
 5. Problème potentiel de pile canvas:
 - restore double dans drawWithCamera: [script/mechanics/camera.js](script/mechanics/camera.js#L451) et [script/mechanics/camera.js](script/mechanics/camera.js#L454)
 - restore sans save correspondant dans drawOfficeView: [script/mechanics/camera.js](script/mechanics/camera.js#L580)
-6. ID audio dupliqué garble_2: [script/config/data.js](script/config/data.js#L73) et [script/config/data.js](script/config/data.js#L74)
+6. ID audio dupliqué garble_2: [script/loaders/data.js](script/loaders/data.js#L73) et [script/loaders/data.js](script/loaders/data.js#L74)
 7. Code dupliqué non chargé ou obsolète:
-- script/mechanics/sounds.js ressemble à un duplicat de core/sounds.js (risque de divergence future)
+- ~~script/mechanics/sounds.js ressemble à un duplicat de core/sounds.js~~ — supprimé lors de la réorganisation de script/ (voir historique git).
 
 ## 9) Recommandations concrètes
 ### 9.1 Court terme (sécurisation)
@@ -274,7 +277,7 @@ Plan cible ASCII:
 ## Exemples de code illustratifs
 Exemple A - Bonne évolution data-driven (source unique -> API legacy):
 
-    // script/config/data.js
+    // script/loaders/data.js
     var rooms = buildRoomsStateFromConfig(ROOMS);
     const roomsArray = buildRoomsArrayFromConfig(ROOMS);
     const cameras = buildCamerasFromConfig(ROOMS);

@@ -2,7 +2,7 @@
    LORE CORE — Moteur partagé pour toutes les nuits
 
    Chaque nuit s'enregistre via LoreCore.registerNight(n, config)
-   dans un fichier séparé (lore-night1.js, lore-night2.js, ...).
+   dans un fichier séparé (lore_night1.js, lore_night2.js, ...).
 
    config = {
        commands: {

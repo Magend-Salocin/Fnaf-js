@@ -4,10 +4,31 @@
 
 const LogsDatabase = {};
 
+/**
+ * Charge logs_database.json (liste LOG_FILES) de facon SYNCHRONE,
+ * pour la meme raison que les autres loaders de script/loaders :
+ * preloadLogs() ci-dessous en a besoin des son execution. Pour
+ * ajouter/retirer un log, edite le JSON — pas ce fichier.
+ */
+function loadLogFilesSync() {
+  try {
+    const xhr = new XMLHttpRequest();
+    xhr.open("GET", "script/config/logs_database.json", false);
+    xhr.send(null);
+    // En file://, un chargement reussi renvoie status 0 (pas de vrai code HTTP).
+    if (xhr.status !== 0 && xhr.status !== 200) {
+      console.error(`[LogsDatabase] logs_database.json : statut HTTP ${xhr.status}`);
+      return [];
+    }
+    return JSON.parse(xhr.responseText).logFiles;
+  } catch (err) {
+    console.error("[LogsDatabase] Impossible de charger logs_database.json", err);
+    return [];
+  }
+}
+
 // Liste des logs disponibles côté serveur (fichiers dans ressources/logs)
-const LOG_FILES = [
-  'ARCHIVE','BALLOON','CAMLOG','CHILDREN_ART','CLEANING','CLOSED','COOKING','DELETE','DRAWINGS','GUESTS','KITCHEN','LOGS','LOST','LOST001','LOST_ART','LOST_OBJECTS','LOST_PETS','LOST_TOYS','MAINT_05','MEMORY','PARTY','PETS','PIRATE','RECOVER','REPORT_87','ROOT','SCANNER','STAFF','STAGE_PROP','SUDO','TABLES','TOYS','USER','WHOAMI'
-];
+const LOG_FILES = loadLogFilesSync();
 
 // Précharge tous les fichiers JSON dans ressources/logs au démarrage.
 // Cela évite que le premier appel synchrone à `getLog` retourne null

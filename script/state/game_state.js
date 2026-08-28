@@ -2,14 +2,31 @@
 let _night = 1;
 const MAX_NIGHT = 6;
 
-const NIGHT_AI_LEVELS = {
-  1: { freddy: 0, bonnie: 15, chica: 5, foxy: 0 },
-  2: { freddy: 0, bonnie: 6, chica: 6, foxy: 8 },
-  3: { freddy: 1, bonnie: 7, chica: 7, foxy: 4 },
-  4: { freddy: 2, bonnie: 8, chica: 8, foxy: 6 },
-  5: { freddy: 3, bonnie: 9, chica: 9, foxy: 8 },
-  6: { freddy: 4, bonnie: 10, chica: 10, foxy: 12 }
-};
+/**
+ * Charge game_config.json (NIGHT_AI_LEVELS, POWER_SYSTEM) de facon
+ * SYNCHRONE, pour la meme raison que les autres loaders JSON du
+ * projet : ces constantes doivent etre pretes avant la suite du
+ * script. Pour ajuster la difficulte, edite le JSON — pas ce fichier.
+ */
+function loadGameConfigSync() {
+  try {
+    const xhr = new XMLHttpRequest();
+    xhr.open("GET", "script/state/game_config.json", false);
+    xhr.send(null);
+    // En file://, un chargement reussi renvoie status 0 (pas de vrai code HTTP).
+    if (xhr.status !== 0 && xhr.status !== 200) {
+      console.error(`[Game] game_config.json : statut HTTP ${xhr.status}`);
+      return { nightAiLevels: {}, powerSystem: { BASE_USAGE: 1, MAX_USAGE: 5, DRAIN_PER_SECOND: {} } };
+    }
+    return JSON.parse(xhr.responseText);
+  } catch (err) {
+    console.error("[Game] Impossible de charger game_config.json", err);
+    return { nightAiLevels: {}, powerSystem: { BASE_USAGE: 1, MAX_USAGE: 5, DRAIN_PER_SECOND: {} } };
+  }
+}
+
+const _gameConfigData = loadGameConfigSync();
+const NIGHT_AI_LEVELS = _gameConfigData.nightAiLevels;
 
 // Variables pour la gestion du temps (heures:minutes)
 let gameTime = { hours: 0, minutes: 0 }; // Temps actuel dans le jeu (00:00 à 23:59)
@@ -35,15 +52,8 @@ let power = 100;
 let currentPowerUsageLevel = 1;
 
 const POWER_SYSTEM = Object.freeze({
-  BASE_USAGE: 1,
-  MAX_USAGE: 5,
-  DRAIN_PER_SECOND: Object.freeze({
-    1: 0.09,//1: 0.18,
-    2: 0.27,
-    3: 0.4,
-    4: 0.65,
-    5: 0.9
-  })
+  ..._gameConfigData.powerSystem,
+  DRAIN_PER_SECOND: Object.freeze(_gameConfigData.powerSystem.DRAIN_PER_SECOND)
 });
 
 const POWER_DISPLAY_CACHE = {

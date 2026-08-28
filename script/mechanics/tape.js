@@ -14,17 +14,23 @@ const TapeScene = (() => {
 
   /* -------------------------------------------------------------------
    * 1. Données des cassettes
-   *    -> Pour ajouter une cassette : une entrée ici + son entrée dans
-   *       gameSounds (script/config/data.js) référençant le fichier audio.
+   *    -> Le catalogue complet vient de TAPES_LIBRARY (script/config/
+   *       tapes_data.json, chargé par script/loaders/tapes_data.js).
+   *       Seules les cassettes débloquées par un événement aléatoire
+   *       (champ `tape`, cf. Collectibles.unlockTape() dans
+   *       random_events_engine.js) apparaissent sur l'étagère.
    * ------------------------------------------------------------------- */
-  const TAPES = [
-    {
-      id: "tape_frt_01",
-      title: "FRT-01",
-      soundId: "tape_frt_01",
-      description: "Protocole de fermeture — Pirate Cove"
-    }
-  ];
+  function getAvailableTapes(){
+    return TAPES_LIBRARY
+      .filter(tape => Collectibles.isTapeUnlocked(tape.code))
+      .map(tape => ({
+        id: tape.code,
+        title: tape.title,
+        soundId: tape.soundId,
+        description: tape.description,
+        condition: tape.condition
+      }));
+  }
 
   /* -------------------------------------------------------------------
    * 2. Machine à états du lecteur
@@ -39,7 +45,6 @@ const TapeScene = (() => {
 
   let currentState = STATE.EMPTY;
   let currentTape   = null;   // données de la cassette actuellement insérée
-  let insertedCardEl = null;  // élément DOM de la cassette dans la fente
 
   /* -------------------------------------------------------------------
    * 3. Références DOM (résolues à l'initialisation)
@@ -48,17 +53,25 @@ const TapeScene = (() => {
 
   function cacheDom(){
     els = {
-      scene:      document.getElementById("tape-scene"),
-      rack:       document.getElementById("tape-rack"),
-      player:     document.getElementById("tape-player"),
-      slot:       document.getElementById("player-slot"),
-      reelLeft:   document.getElementById("reel-left"),
-      reelRight:  document.getElementById("reel-right"),
-      ledRed:     document.getElementById("led-red"),
-      ledGreen:   document.getElementById("led-green"),
-      btnPlay:    document.getElementById("btn-play"),
-      btnStop:    document.getElementById("btn-stop"),
-      closeBtn:   document.getElementById("scene-close")
+      scene:            document.getElementById("tape-scene"),
+      rack:             document.getElementById("tape-rack"),
+      player:           document.getElementById("tape-player"),
+      slot:             document.getElementById("player-slot"),
+      slotHint:         document.getElementById("slot-empty-hint"),
+      cassetteVisual:   document.getElementById("cassette-visual"),
+      cassetteTitle:    document.getElementById("cassette-title"),
+      cassetteSubtitle: document.getElementById("cassette-subtitle"),
+      statusMedia:      document.getElementById("cassette-status-media"),
+      statusCondition:  document.getElementById("cassette-status-condition"),
+      reelLeft:         document.getElementById("reel-left"),
+      reelRight:        document.getElementById("reel-right"),
+      ledRed:           document.getElementById("led-red"),
+      ledGreen:         document.getElementById("led-green"),
+      btnPlay:          document.getElementById("btn-play"),
+      btnStop:          document.getElementById("btn-stop"),
+      closeBtn:         document.getElementById("scene-close"),
+      counter:          document.getElementById("tape-counter"),
+      progressFill:     document.getElementById("tape-progress-fill")
     };
   }
 
@@ -68,7 +81,13 @@ const TapeScene = (() => {
   function renderRack(){
     els.rack.innerHTML = "";
 
-    TAPES.forEach(tape => {
+    // Exclut la cassette actuellement dans le lecteur : rappeler cette
+    // fonction pendant une lecture (ex: à la réouverture de la scène)
+    // ne doit pas la faire apparaître en double sur l'étagère.
+    const availableTapes = getAvailableTapes()
+      .filter(tape => !currentTape || tape.id !== currentTape.id);
+
+    availableTapes.forEach(tape => {
       const card = document.createElement("div");
       card.className = "tape-card";
       card.dataset.tapeId = tape.id;
@@ -143,7 +162,7 @@ const TapeScene = (() => {
     if (currentState !== STATE.EMPTY) return; // lecteur occupé : dépôt ignoré
 
     const tapeId = e.dataTransfer.getData("text/plain");
-    const tape = TAPES.find(t => t.id === tapeId);
+    const tape = getAvailableTapes().find(t => t.id === tapeId);
     if (!tape) return;
 
     const cardEl = els.rack.querySelector(`.tape-card[data-tape-id="${tapeId}"]`);
@@ -154,6 +173,8 @@ const TapeScene = (() => {
 
   /* -------------------------------------------------------------------
    * 7. Insertion de la cassette
+   *    La petite carte de l'étagère disparaît (fondu) pendant que le
+   *    grand visuel de cassette apparaît dans la zone de dépôt.
    * ------------------------------------------------------------------- */
   function insertTape(tape, cardEl){
     currentTape = tape;
@@ -161,21 +182,12 @@ const TapeScene = (() => {
     lockRack(true);
     shakePlayer();
 
-    // On retire la carte de l'étagère et on la place visuellement dans la fente
-    cardEl.remove();
-    insertedCardEl = cardEl;
-    insertedCardEl.classList.add("tape-inserted");
-    insertedCardEl.draggable = false;
-    els.slot.appendChild(insertedCardEl);
+    cardEl.classList.add("dragging"); // réutilise le fondu existant (opacity .35)
 
-    // Animation d'insertion : glisse dans la fente
-    requestAnimationFrame(() => {
-      insertedCardEl.style.transform = "translateY(-34px)";
-      insertedCardEl.style.opacity = "0.95";
-    });
-
-    // Fin de l'animation d'insertion -> lecteur prêt
+    // Fin de l'animation de retrait -> la carte disparaît, la cassette apparaît
     window.setTimeout(() => {
+      cardEl.remove();
+      showCassetteVisual(tape);
       setState(STATE.READY);
 
       // Lecture automatique après un court délai
@@ -183,6 +195,26 @@ const TapeScene = (() => {
         startPlayback();
       }, 500);
     }, 450);
+  }
+
+  /**
+   * Affiche le grand visuel de cassette dans la zone de dépôt, avec le
+   * titre/la description de la cassette insérée.
+   */
+  function showCassetteVisual(tape){
+    els.slotHint.hidden = true;
+    els.cassetteTitle.textContent = tape.title;
+    els.cassetteSubtitle.textContent = tape.description || "";
+    els.cassetteVisual.hidden = false;
+    els.statusMedia.textContent = tape.title;
+    els.statusCondition.textContent = tape.condition || "INCONNU";
+  }
+
+  function hideCassetteVisual(){
+    els.cassetteVisual.hidden = true;
+    els.slotHint.hidden = false;
+    els.statusMedia.textContent = "—";
+    els.statusCondition.textContent = "—";
   }
 
   /* -------------------------------------------------------------------
@@ -195,6 +227,8 @@ const TapeScene = (() => {
     if (audioElement) {
       audioElement.removeEventListener("ended", onPlaybackEnded);
       audioElement.addEventListener("ended", onPlaybackEnded);
+      audioElement.removeEventListener("timeupdate", onPlaybackTimeUpdate);
+      audioElement.addEventListener("timeupdate", onPlaybackTimeUpdate);
     }
 
     playSound(currentTape.soundId);
@@ -205,14 +239,40 @@ const TapeScene = (() => {
     setState(STATE.STOPPED);
   }
 
+  /**
+   * Met à jour le compteur de position et la barre de progression du
+   * bandeau de contrôle à partir du temps réel de lecture audio.
+   */
+  function onPlaybackTimeUpdate(e){
+    const audioElement = e.currentTarget;
+    els.counter.textContent = formatCounterTime(audioElement.currentTime);
+    els.progressFill.style.width = audioElement.duration
+      ? `${(audioElement.currentTime / audioElement.duration) * 100}%`
+      : "0%";
+  }
+
+  function formatCounterTime(seconds){
+    const total = Math.floor(seconds || 0);
+    const mm = String(Math.floor(total / 60)).padStart(2, "0");
+    const ss = String(total % 60).padStart(2, "0");
+    return `${mm}:${ss}`;
+  }
+
+  function resetCounter(){
+    els.counter.textContent = "00:00";
+    els.progressFill.style.width = "0%";
+  }
+
   function stopCurrentAudio(){
     if (!currentTape) return;
 
     const audioElement = getSoundById(currentTape.soundId);
     if (audioElement) {
       audioElement.removeEventListener("ended", onPlaybackEnded);
+      audioElement.removeEventListener("timeupdate", onPlaybackTimeUpdate);
     }
     stopSound(currentTape.soundId);
+    resetCounter();
   }
 
   /* -------------------------------------------------------------------
@@ -242,23 +302,9 @@ const TapeScene = (() => {
     stopCurrentAudio();
     playSound("tape_eject");
 
-    if (insertedCardEl){
-      insertedCardEl.style.transform = "translateY(0)";
-      insertedCardEl.style.opacity = "0";
-
-      window.setTimeout(() => {
-        insertedCardEl.classList.remove("tape-inserted");
-        insertedCardEl.style.transform = "";
-        insertedCardEl.style.opacity = "";
-        insertedCardEl.draggable = true;
-        insertedCardEl.addEventListener("dragstart", onDragStart);
-        insertedCardEl.addEventListener("dragend", onDragEnd);
-        els.rack.appendChild(insertedCardEl);
-        insertedCardEl = null;
-      }, 300);
-    }
-
+    hideCassetteVisual();
     currentTape = null;
+    renderRack(); // reconstruit l'étagère (la cassette éjectée y réapparaît)
     lockRack(false);
     setState(STATE.EMPTY);
   }
@@ -340,6 +386,18 @@ const TapeScene = (() => {
   /* -------------------------------------------------------------------
    * 14. API publique
    * ------------------------------------------------------------------- */
+  /**
+   * Résout un libellé de panneau ("tape.*") dans la langue active, avec
+   * repli sur l'anglais si la traduction est absente (même logique que
+   * setPhonePanelState() dans night.js).
+   */
+  function getPanelLabel(key, fallback){
+    const lang = window.selectedLanguage || window.FNAF_DEFAULT_LANGUAGE || 'fr';
+    const allTranslations = window.FNAF_TRANSLATIONS || {};
+    const t = allTranslations[lang] || allTranslations[window.FNAF_DEFAULT_LANGUAGE] || {};
+    return t.panels?.[key] || fallback;
+  }
+
   function setTapePanelFooter(text){
     const footerEl = document.getElementById('tape-panel-footer');
     if (footerEl) footerEl.textContent = text;
@@ -347,9 +405,11 @@ const TapeScene = (() => {
 
   function open(){
     if (!els.scene) cacheDom();
+    renderRack(); // reflète les cassettes débloquées depuis la dernière ouverture
+    lockRack(currentState !== STATE.EMPTY);
     els.scene.hidden = false;
     els.scene.setAttribute("aria-hidden", "false");
-    setTapePanelFooter('CLICK TO CLOSE');
+    setTapePanelFooter(getPanelLabel('tapeFooterClose', 'CLICK TO CLOSE'));
   }
 
   function close(){
@@ -359,7 +419,7 @@ const TapeScene = (() => {
       els.scene.hidden = true;
       els.scene.setAttribute("aria-hidden", "true");
     }
-    setTapePanelFooter('CLICK TO OPEN');
+    setTapePanelFooter(getPanelLabel('tapeFooter', 'CLICK TO OPEN'));
   }
 
   function isOpen(){
@@ -374,11 +434,8 @@ const TapeScene = (() => {
   function reset(){
     stopCurrentAudio();
 
-    if (insertedCardEl) {
-      insertedCardEl.remove();
-      insertedCardEl = null;
-    }
     currentTape = null;
+    if (els.cassetteVisual) hideCassetteVisual();
 
     if (els.rack) {
       renderRack();
@@ -434,6 +491,12 @@ function updateTapePanelState(isPlaying){
   const statusEl = document.getElementById('tape-panel-status');
   if (!panel || !statusEl) return;
 
+  const lang = window.selectedLanguage || window.FNAF_DEFAULT_LANGUAGE || 'fr';
+  const allTranslations = window.FNAF_TRANSLATIONS || {};
+  const t = allTranslations[lang] || allTranslations[window.FNAF_DEFAULT_LANGUAGE] || {};
+  const playingLabel = t.panels?.tapePlaying || 'PLAYING';
+  const readyLabel = t.panels?.tapeStatus || 'READY';
+
   panel.classList.toggle('tape-playing', isPlaying);
-  statusEl.textContent = isPlaying ? 'PLAYING' : 'READY';
+  statusEl.textContent = isPlaying ? playingLabel : readyLabel;
 }

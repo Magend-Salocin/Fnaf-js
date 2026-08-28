@@ -1,0 +1,415 @@
+[
+  {
+    "id": "menu_start",
+    "selector": ".menu-start",
+    "category": "ambiance",
+    "description": "Musique du menu principal",
+    "mixVolume": 1
+  },
+  {
+    "id": "ambience1",
+    "selector": ".ambience1",
+    "category": "ambiance",
+    "description": "Ambiance alternative",
+    "mixVolume": 0.8
+  },
+  {
+    "id": "ambience2",
+    "selector": ".ambience2",
+    "category": "ambiance",
+    "description": "Ambiance générale",
+    "mixVolume": 0.9
+  },
+  {
+    "id": "buzz_fan",
+    "selector": ".Buzz-fan",
+    "category": "ambiance",
+    "description": "Bruit du ventilateur",
+    "mixVolume": 0.5
+  },
+  {
+    "id": "circus",
+    "selector": ".circus",
+    "category": "ambiance",
+    "description": "Musique de cirque",
+    "mixVolume": 0.7
+  },
+  {
+    "id": "pirate_song",
+    "selector": ".pirate-song",
+    "category": "ambiance",
+    "description": "Chanson pirate",
+    "mixVolume": 0.6
+  },
+  {
+    "id": "cold_presc",
+    "selector": ".cold-presc",
+    "category": "ambiance",
+    "description": "Ambiance froide",
+    "mixVolume": 0.8
+  },
+  {
+    "id": "menu_start2",
+    "selector": ".menu-start2",
+    "category": "ambiance",
+    "description": "Musique du menu principal 2",
+    "mixVolume": 0.5
+  },
+  {
+    "id": "camera_toggle",
+    "selector": ".camera-toggle",
+    "category": "camera",
+    "description": "Son de bascule des caméras",
+    "mixVolume": 1
+  },
+  {
+    "id": "camera_put_down",
+    "selector": ".camera-put-down",
+    "category": "camera",
+    "description": "Son de dépôt des caméras",
+    "mixVolume": 0.9
+  },
+  {
+    "id": "camera_cycle",
+    "selector": ".camera-cycle",
+    "category": "camera",
+    "description": "Son de cycle des caméras",
+    "mixVolume": 0.7
+  },
+  {
+    "id": "camera_static",
+    "selector": ".camera-static",
+    "category": "camera",
+    "description": "Son statique des caméras",
+    "mixVolume": 0.5
+  },
+  {
+    "id": "light_on",
+    "selector": ".light-on",
+    "category": "door",
+    "description": "Allumage de la lumière",
+    "mixVolume": 1
+  },
+  {
+    "id": "door_sound",
+    "selector": ".door-sound",
+    "category": "door",
+    "description": "Ouverture/fermeture de porte",
+    "mixVolume": 1.2
+  },
+  {
+    "id": "door_light_disabled",
+    "selector": ".door-light-disabled",
+    "category": "door",
+    "description": "Erreur de porte",
+    "mixVolume": 1
+  },
+  {
+    "id": "door_pounding",
+    "selector": ".door-pounding",
+    "category": "door",
+    "description": "Coup sur la porte",
+    "mixVolume": 1.5
+  },
+  {
+    "id": "win_sound",
+    "selector": ".win-sound",
+    "category": "victory",
+    "description": "Son de victoire",
+    "mixVolume": 1
+  },
+  {
+    "id": "win_cheer",
+    "selector": ".win-cheer",
+    "category": "victory",
+    "description": "Applaudissements",
+    "mixVolume": 0.8
+  },
+  {
+    "id": "power_out",
+    "selector": ".powerout-sound",
+    "category": "gameover",
+    "description": "Coupure de courant",
+    "mixVolume": 1
+  },
+  {
+    "id": "power_jingle",
+    "selector": ".powerout-jingle",
+    "category": "gameover",
+    "description": "Jingle de Freddy",
+    "mixVolume": 1.2
+  },
+  {
+    "id": "scare_1",
+    "selector": ".scare-1",
+    "category": "gameover",
+    "description": "Jump scare 1",
+    "mixVolume": 1.5
+  },
+  {
+    "id": "scare_2",
+    "selector": ".scare-2",
+    "category": "gameover",
+    "description": "Jump scare 2",
+    "mixVolume": 1.5
+  },
+  {
+    "id": "window_scare",
+    "selector": ".window-scare",
+    "category": "gameover",
+    "description": "Jump scare de la fenêtre",
+    "mixVolume": 1.4
+  },
+  {
+    "id": "gameover_static",
+    "selector": ".gameover-static",
+    "category": "gameover",
+    "description": "Son statique de game over",
+    "mixVolume": 0.7
+  },
+  {
+    "id": "gameover_static2",
+    "selector": ".gameover-static2",
+    "category": "gameover",
+    "description": "Son statique alternatif",
+    "mixVolume": 0.7
+  },
+  {
+    "id": "kitchen_b",
+    "selector": ".kitchen-b",
+    "category": "kitchen",
+    "description": "Son de cuisine 1",
+    "mixVolume": 0.9
+  },
+  {
+    "id": "kitchen_c",
+    "selector": ".kitchen-c",
+    "category": "kitchen",
+    "description": "Son de cuisine 2",
+    "mixVolume": 0.9
+  },
+  {
+    "id": "kitchen_f",
+    "selector": ".kitchen-f",
+    "category": "kitchen",
+    "description": "Son de cuisine 3",
+    "mixVolume": 1
+  },
+  {
+    "id": "kitchen_drawer",
+    "selector": ".kitchen-drawer",
+    "category": "kitchen",
+    "description": "Son de tiroir",
+    "mixVolume": 1.1
+  },
+  {
+    "id": "move_sound",
+    "selector": ".move-sound",
+    "category": "movement",
+    "description": "Pas normaux",
+    "mixVolume": 1
+  },
+  {
+    "id": "run_sound",
+    "selector": ".run-sound",
+    "category": "movement",
+    "description": "Course normale",
+    "mixVolume": 1.2
+  },
+  {
+    "id": "run_fast",
+    "selector": ".run-fast",
+    "category": "movement",
+    "description": "Course rapide",
+    "mixVolume": 1.3
+  },
+  {
+    "id": "tape_frt_01",
+    "selector": ".tape-frt-01",
+    "category": "call",
+    "description": "Cassette FRT-01 — Protocole de fermeture Pirate Cove",
+    "mixVolume": 1
+  },
+  {
+    "id": "call_1",
+    "selector": ".call1",
+    "category": "call",
+    "description": "Appel 1",
+    "mixVolume": 1
+  },
+  {
+    "id": "call_2",
+    "selector": ".call2",
+    "category": "call",
+    "description": "Appel 2",
+    "mixVolume": 1
+  },
+  {
+    "id": "call_3",
+    "selector": ".call3",
+    "category": "call",
+    "description": "Appel 3",
+    "mixVolume": 1
+  },
+  {
+    "id": "call_4",
+    "selector": ".call4",
+    "category": "call",
+    "description": "Appel 4",
+    "mixVolume": 1
+  },
+  {
+    "id": "call_5",
+    "selector": ".call5",
+    "category": "call",
+    "description": "Appel 5",
+    "mixVolume": 1
+  },
+  {
+    "id": "robot_voice",
+    "selector": ".robot-voice",
+    "category": "voice",
+    "description": "Voix robotique",
+    "mixVolume": 0.9
+  },
+  {
+    "id": "garble_1",
+    "selector": ".garble1",
+    "category": "voice",
+    "description": "Voix brouillée 1",
+    "mixVolume": 0.8
+  },
+  {
+    "id": "garble_2",
+    "selector": ".garble2",
+    "category": "voice",
+    "description": "Voix brouillée 2",
+    "mixVolume": 0.8
+  },
+  {
+    "id": "garble_3",
+    "selector": ".garble3",
+    "category": "voice",
+    "description": "Voix brouillée 3",
+    "mixVolume": 0.8
+  },
+  {
+    "id": "whispering",
+    "selector": ".whispering",
+    "category": "voice",
+    "description": "Chuchotements",
+    "mixVolume": 0.6
+  },
+  {
+    "id": "breath_1",
+    "selector": ".breath1",
+    "category": "breath",
+    "description": "Respiration 1",
+    "mixVolume": 0.5
+  },
+  {
+    "id": "breath_2",
+    "selector": ".breath2",
+    "category": "breath",
+    "description": "Respiration 2",
+    "mixVolume": 0.5
+  },
+  {
+    "id": "breath_3",
+    "selector": ".breath3",
+    "category": "breath",
+    "description": "Respiration 3",
+    "mixVolume": 0.5
+  },
+  {
+    "id": "breath_4",
+    "selector": ".breath4",
+    "category": "breath",
+    "description": "Respiration 4",
+    "mixVolume": 0.5
+  },
+  {
+    "id": "laugh_girl1",
+    "selector": ".laugh-girl1",
+    "category": "misc",
+    "description": "Rire de fille 1",
+    "mixVolume": 0.9
+  },
+  {
+    "id": "laugh_girl1d",
+    "selector": ".laugh-girl1d",
+    "category": "misc",
+    "description": "Rire de fille 1 (version différente)",
+    "mixVolume": 0.9
+  },
+  {
+    "id": "laugh_girl2d",
+    "selector": ".laugh-girl2d",
+    "category": "misc",
+    "description": "Rire de fille 2 (version différente)",
+    "mixVolume": 0.9
+  },
+  {
+    "id": "laugh_girl8d",
+    "selector": ".laugh-girl8d",
+    "category": "misc",
+    "description": "Rire de fille 8 (version différente)",
+    "mixVolume": 0.9
+  },
+  {
+    "id": "tape_eject",
+    "selector": ".tape-eject",
+    "category": "misc",
+    "description": "Éjection de cassette",
+    "mixVolume": 1
+  },
+  {
+    "id": "party_favor",
+    "selector": ".party-favor",
+    "category": "misc",
+    "description": "Son de fête",
+    "mixVolume": 1
+  },
+  {
+    "id": "knock",
+    "selector": ".knock",
+    "category": "misc",
+    "description": "Coup frappé",
+    "mixVolume": 1.3
+  },
+  {
+    "id": "terminal-keyboard-typing",
+    "selector": ".terminal-keyboard-typing",
+    "category": "misc",
+    "description": "Sons de frappe au clavier du terminal",
+    "mixVolume": 0.8
+  },
+  {
+    "id": "terminal-start",
+    "selector": ".terminal-start",
+    "category": "misc",
+    "description": "Son de démarrage du terminal",
+    "mixVolume": 1
+  },
+  {
+    "id": "terminal-glitch",
+    "selector": ".terminal-glitch",
+    "category": "misc",
+    "description": "Glitch sonore du terminal",
+    "mixVolume": 0.8
+  },
+  {
+    "id": "terminal-static",
+    "selector": ".terminal-static",
+    "category": "misc",
+    "description": "Statique du terminal (evenement idle)",
+    "mixVolume": 0.7
+  },
+  {
+    "id": "chair",
+    "selector": ".chair",
+    "category": "misc",
+    "description": "Chaise",
+    "mixVolume": 0.8
+  }
+]

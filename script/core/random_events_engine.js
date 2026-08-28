@@ -183,6 +183,14 @@ function triggerEvent(event) {
     ? Infinity
     : DEFAULT_EVENT_DISPLAY_SECONDS;
 
+  // Débloque la cassette/le journal associés, de façon persistante
+  // (cf. script/core/collectibles.js — contrairement à l'état ci-dessus,
+  // remis à zéro chaque nuit, ce déblocage reste acquis pour la partie).
+  if (typeof Collectibles !== 'undefined') {
+    if (event.tape) Collectibles.unlockTape(event.tape);
+    if (event.journal) Collectibles.unlockJournal(event.journal);
+  }
+
   //console.log(`[RandomEvents] Déclenché : ${event.id} — ${event.description}`);
 }
 

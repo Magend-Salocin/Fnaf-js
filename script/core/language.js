@@ -10,6 +10,9 @@ function applyLanguage(lang) {
   document.getElementById('lang-en-btn').textContent = t.languageEnButton;
   document.getElementById('game-title').innerHTML = t.gameTitle;
   document.getElementById('start-game').textContent = t.startGame;
+  if (t.transition) {
+    document.getElementById('transition-night-label').textContent = t.transition.nightLabel;
+  }
   if (typeof updatePowerDisplay === 'function') {
     updatePowerDisplay(true);
   } else {
@@ -28,6 +31,10 @@ function applyLanguage(lang) {
     document.getElementById('camera-panel-label').textContent = t.panels.cameraLabel;
     document.getElementById('camera-panel-status').textContent = t.panels.cameraStatus;
     document.getElementById('camera-panel-footer').textContent = t.panels.cameraFooter;
+
+    document.getElementById('tape-panel-label').textContent = t.panels.tapeLabel;
+    document.getElementById('tape-panel-status').textContent = t.panels.tapeStatus;
+    document.getElementById('tape-panel-footer').textContent = t.panels.tapeFooter;
   }
 
   document.getElementById('room-dining-area').textContent = t.rooms.diningArea;

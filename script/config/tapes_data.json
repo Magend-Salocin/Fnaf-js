@@ -1,0 +1,86 @@
+[
+  {
+    "code": "TAPE_FRT_01",
+    "title": "FRT-01",
+    "description": "Protocole de fermeture — Pirate Cove",
+    "soundId": "tape_frt_01",
+    "condition": "DÉGRADÉ"
+  },
+  {
+    "code": "TAPE_FRT_02",
+    "title": "FRT-02",
+    "description": "Jouets sortis pendant la nuit",
+    "soundId": "camera_static",
+    "condition": "INSTABLE"
+  },
+  {
+    "code": "TAPE_FRT_03",
+    "title": "FRT-03",
+    "description": "Bande endommagée — rire d'enfant",
+    "soundId": "camera_static",
+    "condition": "ENDOMMAGÉE"
+  },
+  {
+    "code": "TAPE_GAB_01",
+    "title": "GAB-01",
+    "description": "Préparation des anniversaires privés",
+    "soundId": "camera_static",
+    "condition": "STABLE"
+  },
+  {
+    "code": "TAPE_GAB_02",
+    "title": "GAB-02",
+    "description": "Consignes d'animation — Freddy",
+    "soundId": "camera_static",
+    "condition": "STABLE"
+  },
+  {
+    "code": "TAPE_GAB_03",
+    "title": "GAB-03",
+    "description": "Procédure de fermeture — anniversaire",
+    "soundId": "camera_static",
+    "condition": "DÉGRADÉ"
+  },
+  {
+    "code": "TAPE_JER_01",
+    "title": "JER-01",
+    "description": "Installation du concours de dessin",
+    "soundId": "camera_static",
+    "condition": "STABLE"
+  },
+  {
+    "code": "TAPE_JER_02",
+    "title": "JER-02",
+    "description": "Rappel de rangement — équipe de nuit",
+    "soundId": "camera_static",
+    "condition": "STABLE"
+  },
+  {
+    "code": "TAPE_JER_03",
+    "title": "JER-03",
+    "description": "Dessins réapparus au matin",
+    "soundId": "camera_static",
+    "condition": "INSTABLE"
+  },
+  {
+    "code": "TAPE_SUS_01",
+    "title": "SUS-01",
+    "description": "Protocole de fermeture — cuisines",
+    "soundId": "camera_static",
+    "condition": "STABLE"
+  },
+  {
+    "code": "TAPE_SUS_02",
+    "title": "SUS-02",
+    "description": "Gamelle déplacée durant la nuit",
+    "soundId": "camera_static",
+    "condition": "DÉGRADÉ"
+  },
+  {
+    "code": "TAPE_SUS_03",
+    "title": "SUS-03",
+    "description": "Enregistrement non autorisé",
+    "soundId": "camera_static",
+    "condition": "CORROMPUE"
+  }
+]

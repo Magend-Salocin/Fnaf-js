@@ -91,18 +91,26 @@ function updateCameraPanelState(isOpen) {
     return;
   }
 
+  const lang = window.selectedLanguage || window.FNAF_DEFAULT_LANGUAGE || 'fr';
+  const allTranslations = window.FNAF_TRANSLATIONS || {};
+  const t = allTranslations[lang] || allTranslations[window.FNAF_DEFAULT_LANGUAGE] || {};
+  const onlineLabel = t.panels?.cameraOnline || 'ONLINE';
+  const closeLabel = t.panels?.cameraFooterClose || 'CLICK TO CLOSE';
+  const readyLabel = t.panels?.cameraStatus || 'READY';
+  const openLabel = t.panels?.cameraFooter || 'CLICK TO OPEN';
+
   if (isOpen) {
     panel.classList.remove('camera-closing');
     panel.classList.add('camera-open');
-    statusEl.textContent = 'ONLINE';
-    footerEl.textContent = 'CLICK TO CLOSE';
+    statusEl.textContent = onlineLabel;
+    footerEl.textContent = closeLabel;
     return;
   }
 
   panel.classList.remove('camera-open');
   panel.classList.add('camera-closing');
-  statusEl.textContent = 'READY';
-  footerEl.textContent = 'CLICK TO OPEN';
+  statusEl.textContent = readyLabel;
+  footerEl.textContent = openLabel;
 
   setTimeout(() => {
     panel.classList.remove('camera-closing');
@@ -421,6 +429,16 @@ function drawWithCamera(ctx, camera) {
           break;
       }
       console.log(`Foxy phase: ${foxy.foxyInstance.getStatus().phase}, imageKey: ${imageKey}`);
+    }
+
+    // Cam 4B (East Hall Corner) : l'affiche au mur change chaque nuit et
+    // dépend de la langue choisie (cf. images/rooms/4b_east_hall_corner/
+    // hidden/{fr,en}/4b_b0_c0_f0_dN.*). Retombe sur l'image par défaut si
+    // la variante de la nuit/langue n'a pas encore été produite.
+    if (roomKey === '4b' && roomData.b === 0 && roomData.c === 0 && roomData.f === 0) {
+      const posterNight = Math.min((typeof _night !== 'undefined' ? _night : 1), 5);
+      const posterLang = window.selectedLanguage || window.FNAF_DEFAULT_LANGUAGE || 'fr';
+      imageKey = `4b_b0_c0_f0_d${posterNight}_${posterLang}`;
     }
 
     const cameraImages = loadedCameraImages[roomKey] || {};

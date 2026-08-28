@@ -1,0 +1,732 @@
+{
+  "roomIdsOrder": [
+    "safe",
+    "1a",
+    "1b",
+    "1c",
+    "2a",
+    "2b",
+    "3",
+    "4a",
+    "4b",
+    "5",
+    "6",
+    "7"
+  ],
+  "rooms": {
+    "3": {
+      "id": 6,
+      "roomName": "Supply Closet",
+      "cameraName": "Cam 3",
+      "image": "images/rooms/3_supply_closet/3_b0_c0_f0.jpg",
+      "width": 1200,
+      "height": 720,
+      "cameraOffset": 0,
+      "maxCameraOffset": 800,
+      "connectedTo": [
+        {
+          "roomId": 5,
+          "doorId": null
+        },
+        {
+          "roomId": 8,
+          "doorId": null
+        }
+      ],
+      "camera": {
+        "maxUsageTime": 15,
+        "available": true
+      },
+      "gameplay": {
+        "occupy": 0,
+        "f": 0,
+        "b": 0,
+        "c": 0
+      },
+      "video": {
+        "name": "Supply Closet",
+        "enabled": true,
+        "jitterX": 1.2,
+        "jitterY": 0.8,
+        "flicker": {
+          "min": 0.97,
+          "max": 1.05
+        },
+        "whiteNoise": {
+          "density": 520,
+          "size": 1.1,
+          "alphaRange": {
+            "min": 0.04,
+            "max": 0.25
+          }
+        },
+        "horizontalBands": {
+          "density": 180,
+          "minHeight": 3,
+          "maxHeight": 8,
+          "minAlpha": 0.02,
+          "maxAlpha": 0.07
+        }
+      }
+    },
+    "5": {
+      "id": 8,
+      "roomName": "Backstage",
+      "cameraName": "Cam 5",
+      "image": "images/rooms/5_backstage/5_b0_c0_f0.jpg",
+      "width": 1200,
+      "height": 720,
+      "cameraOffset": 0,
+      "maxCameraOffset": 800,
+      "connectedTo": [
+        {
+          "roomId": 6,
+          "doorId": null
+        },
+        {
+          "roomId": 4,
+          "doorId": null
+        }
+      ],
+      "camera": {
+        "maxUsageTime": 15,
+        "available": true
+      },
+      "gameplay": {
+        "occupy": 0,
+        "f": 0,
+        "b": 0,
+        "c": 0
+      },
+      "video": {
+        "name": "Backstage",
+        "enabled": true,
+        "jitterX": 1.8,
+        "jitterY": 1.4,
+        "flicker": {
+          "min": 0.95,
+          "max": 1.07
+        },
+        "horizontalLines": {
+          "spacing": 4,
+          "strokeStyle": "rgba(255,255,255,0.05)"
+        },
+        "whiteNoise": {
+          "density": 360,
+          "size": 1.2,
+          "alphaRange": {
+            "min": 0.05,
+            "max": 0.28
+          }
+        },
+        "verticalLines": {
+          "enabled": true,
+          "density": 700,
+          "strokeStyle": "rgba(255,255,255,0.05)"
+        },
+        "horizontalBands": {
+          "density": 150,
+          "minHeight": 3,
+          "maxHeight": 10,
+          "minAlpha": 0.03,
+          "maxAlpha": 0.08
+        }
+      }
+    },
+    "6": {
+      "id": 11,
+      "roomName": "Kitchen",
+      "cameraName": "Cam 6",
+      "image": "images/rooms/6_kitchen/6_b0_c0_f0.png",
+      "width": 1600,
+      "height": 720,
+      "cameraOffset": 0,
+      "maxCameraOffset": -1,
+      "connectedTo": [
+        {
+          "roomId": 9,
+          "doorId": null
+        },
+        {
+          "roomId": 0,
+          "doorId": null
+        }
+      ],
+      "camera": {
+        "maxUsageTime": 99,
+        "available": true
+      },
+      "gameplay": {
+        "occupy": 0,
+        "f": 0,
+        "b": 0,
+        "c": 0
+      },
+      "video": {
+        "name": "Kitchen",
+        "enabled": false,
+        "jitterX": 0,
+        "jitterY": 0,
+        "flicker": {
+          "min": 0,
+          "max": 0
+        },
+        "horizontalLines": {
+          "enabled": false
+        },
+        "whiteNoise": {
+          "enabled": false
+        },
+        "verticalLines": {
+          "enabled": false
+        },
+        "horizontalBands": {
+          "enabled": false
+        },
+        "randomHorizontalLines": {
+          "enabled": false
+        }
+      }
+    },
+    "7": {
+      "id": 12,
+      "roomName": "Restroom",
+      "cameraName": "Cam 7",
+      "image": "images/rooms/7_restroom/7_b0_c0_f0.jpg",
+      "width": 1200,
+      "height": 720,
+      "cameraOffset": 0,
+      "maxCameraOffset": 800,
+      "connectedTo": [
+        {
+          "roomId": 3,
+          "doorId": null
+        }
+      ],
+      "camera": {
+        "maxUsageTime": 15,
+        "available": true
+      },
+      "gameplay": {
+        "occupy": 0,
+        "f": 0,
+        "b": 0,
+        "c": 0
+      },
+      "video": {
+        "name": "Restroom",
+        "enabled": true,
+        "jitterX": 1.4,
+        "jitterY": 1,
+        "flicker": {
+          "min": 0.965,
+          "max": 1.05
+        },
+        "horizontalLines": {
+          "enabled": true,
+          "spacing": 4,
+          "lineWidth": 1,
+          "strokeStyle": "rgba(255,255,255,0.04)"
+        },
+        "whiteNoise": {
+          "enabled": true,
+          "density": 480,
+          "size": 1.1,
+          "alphaRange": {
+            "min": 0.04,
+            "max": 0.24
+          }
+        },
+        "verticalLines": {
+          "enabled": true,
+          "density": 750,
+          "strokeStyle": "rgba(255,255,255,0.04)"
+        },
+        "horizontalBands": {
+          "enabled": true,
+          "density": 170,
+          "minHeight": 3,
+          "maxHeight": 8,
+          "minAlpha": 0.02,
+          "maxAlpha": 0.07
+        }
+      }
+    },
+    "safe": {
+      "id": 0,
+      "roomName": "The Office",
+      "cameraName": "The Office",
+      "image": "images/rooms/the_office/default.png",
+      "width": 1600,
+      "height": 720,
+      "cameraOffset": 0,
+      "maxCameraOffset": 0,
+      "isOffice": true,
+      "connectedTo": [],
+      "camera": {
+        "maxUsageTime": 99,
+        "available": true
+      },
+      "gameplay": {
+        "occupy": 0,
+        "f": 0,
+        "b": 0,
+        "c": 0
+      },
+      "video": {
+        "name": "The Office",
+        "enabled": true,
+        "jitterX": 0.2,
+        "jitterY": 0.1,
+        "flicker": {
+          "min": 0.99,
+          "max": 1.01
+        },
+        "horizontalLines": {
+          "enabled": false
+        },
+        "whiteNoise": {
+          "enabled": false
+        },
+        "verticalLines": {
+          "enabled": false
+        },
+        "horizontalBands": {
+          "enabled": false
+        },
+        "randomHorizontalLines": {
+          "enabled": false
+        }
+      }
+    },
+    "1a": {
+      "id": 1,
+      "roomName": "Show Stage",
+      "cameraName": "Cam 1A",
+      "image": "images/rooms/1a_show_stage/1a_b0_c0_f0.jpg",
+      "width": 1200,
+      "height": 720,
+      "cameraOffset": 0,
+      "maxCameraOffset": 800,
+      "connectedTo": [
+        {
+          "roomId": 3,
+          "doorId": null
+        }
+      ],
+      "camera": {
+        "maxUsageTime": 15,
+        "available": true
+      },
+      "gameplay": {
+        "occupy": 1,
+        "f": 1,
+        "b": 1,
+        "c": 1
+      },
+      "video": {
+        "name": "Show Stage",
+        "enabled": true,
+        "jitterX": 0.4,
+        "jitterY": 0.3,
+        "flicker": {
+          "min": 0.985,
+          "max": 1.015
+        },
+        "horizontalLines": {
+          "enabled": true,
+          "spacing": 6,
+          "lineWidth": 1,
+          "strokeStyle": "rgba(255,255,255,0.025)"
+        },
+        "whiteNoise": {
+          "enabled": true,
+          "density": 950,
+          "size": 1,
+          "alphaRange": {
+            "min": 0.02,
+            "max": 0.18
+          }
+        },
+        "verticalLines": {
+          "enabled": false
+        },
+        "horizontalBands": {
+          "enabled": true,
+          "density": 260,
+          "minHeight": 2,
+          "maxHeight": 5,
+          "minAlpha": 0.01,
+          "maxAlpha": 0.035
+        }
+      }
+    },
+    "1b": {
+      "id": 3,
+      "roomName": "Dining Area",
+      "cameraName": "Cam 1B",
+      "image": "images/rooms/1b_dining_area/1b_b0_c0_f0.jpg",
+      "width": 1200,
+      "height": 720,
+      "cameraOffset": 0,
+      "maxCameraOffset": 800,
+      "connectedTo": [
+        {
+          "roomId": 1,
+          "doorId": null
+        },
+        {
+          "roomId": 5,
+          "doorId": null
+        },
+        {
+          "roomId": 7,
+          "doorId": null
+        }
+      ],
+      "camera": {
+        "maxUsageTime": 15,
+        "available": true
+      },
+      "gameplay": {
+        "occupy": 0,
+        "f": 0,
+        "b": 0,
+        "c": 0
+      },
+      "video": {
+        "name": "Dining Area",
+        "enabled": true,
+        "jitterX": 0.7,
+        "jitterY": 0.5,
+        "flicker": {
+          "min": 0.98,
+          "max": 1.03
+        },
+        "horizontalLines": {
+          "enabled": true,
+          "spacing": 5,
+          "lineWidth": 1,
+          "strokeStyle": "rgba(255,255,255,0.03)"
+        },
+        "whiteNoise": {
+          "enabled": true,
+          "density": 760,
+          "size": 1,
+          "alphaRange": {
+            "min": 0.03,
+            "max": 0.22
+          }
+        },
+        "verticalLines": {
+          "enabled": true,
+          "density": 900,
+          "strokeStyle": "rgba(255,255,255,0.03)"
+        },
+        "horizontalBands": {
+          "enabled": true,
+          "density": 220,
+          "minHeight": 2,
+          "maxHeight": 6,
+          "minAlpha": 0.015,
+          "maxAlpha": 0.05
+        }
+      }
+    },
+    "1c": {
+      "id": 7,
+      "roomName": "Pirate Cove",
+      "cameraName": "Cam 1C",
+      "image": "images/rooms/1c_pirate_cove/1c_b0_c0_f0_00.jpg",
+      "width": 1200,
+      "height": 720,
+      "cameraOffset": 0,
+      "maxCameraOffset": 800,
+      "connectedTo": [
+        {
+          "roomId": 3,
+          "doorId": null
+        }
+      ],
+      "camera": {
+        "maxUsageTime": 15,
+        "available": true
+      },
+      "gameplay": {
+        "occupy": 0,
+        "f": 0,
+        "b": 0,
+        "c": 0
+      },
+      "video": {
+        "name": "Pirate Cove",
+        "enabled": true,
+        "jitterX": 2.3,
+        "jitterY": 1.8,
+        "flicker": {
+          "min": 0.94,
+          "max": 1.08
+        },
+        "horizontalLines": {
+          "enabled": true,
+          "spacing": 3,
+          "lineWidth": 1,
+          "strokeStyle": "rgba(255,255,255,0.05)"
+        },
+        "whiteNoise": {
+          "enabled": true,
+          "density": 320,
+          "size": 1.2,
+          "alphaRange": {
+            "min": 0.05,
+            "max": 0.3
+          }
+        },
+        "verticalLines": {
+          "enabled": true,
+          "density": 600,
+          "strokeStyle": "rgba(255,255,255,0.05)"
+        },
+        "horizontalBands": {
+          "enabled": true,
+          "density": 130,
+          "minHeight": 3,
+          "maxHeight": 9,
+          "minAlpha": 0.03,
+          "maxAlpha": 0.09
+        }
+      }
+    },
+    "2a": {
+      "id": 2,
+      "roomName": "West Hall A",
+      "cameraName": "Cam 2A",
+      "image": "images/rooms/2a_west_hall/2a_b0_c0_f0.jpg",
+      "width": 1200,
+      "height": 720,
+      "cameraOffset": 0,
+      "maxCameraOffset": 800,
+      "connectedTo": [
+        {
+          "roomId": 1,
+          "doorId": 0
+        },
+        {
+          "roomId": 4,
+          "doorId": null
+        }
+      ],
+      "camera": {
+        "maxUsageTime": 15,
+        "available": true
+      },
+      "gameplay": {
+        "occupy": 0,
+        "f": 0,
+        "b": 0,
+        "c": 0
+      },
+      "video": {
+        "name": "West Hall",
+        "enabled": true,
+        "jitterX": 0.5,
+        "jitterY": 0.4,
+        "flicker": {
+          "min": 0.985,
+          "max": 1.02
+        },
+        "horizontalLines": {
+          "enabled": true,
+          "spacing": 7,
+          "lineWidth": 1,
+          "strokeStyle": "rgba(255,255,255,0.02)"
+        },
+        "whiteNoise": {
+          "enabled": true,
+          "density": 1100,
+          "size": 1,
+          "alphaRange": {
+            "min": 0.02,
+            "max": 0.16
+          }
+        },
+        "verticalLines": {
+          "enabled": false
+        },
+        "horizontalBands": {
+          "enabled": true,
+          "density": 300,
+          "minHeight": 2,
+          "maxHeight": 4,
+          "minAlpha": 0.01,
+          "maxAlpha": 0.03
+        }
+      }
+    },
+    "2b": {
+      "id": 4,
+      "roomName": "West Hall B",
+      "cameraName": "Cam 2B",
+      "image": "images/rooms/2b_west_hall_corner/2b_b0_c0_f0.jpg",
+      "width": 1200,
+      "height": 720,
+      "cameraOffset": 0,
+      "maxCameraOffset": 800,
+      "connectedTo": [
+        {
+          "roomId": 3,
+          "doorId": null
+        },
+        {
+          "roomId": 0,
+          "doorId": 1
+        }
+      ],
+      "camera": {
+        "maxUsageTime": 15,
+        "available": true
+      },
+      "gameplay": {
+        "occupy": 0,
+        "f": 0,
+        "b": 0,
+        "c": 0
+      },
+      "video": {
+        "name": "West Hall Corner",
+        "enabled": true,
+        "jitterX": 0.8,
+        "jitterY": 0.5,
+        "flicker": {
+          "min": 0.98,
+          "max": 1.03
+        },
+        "whiteNoise": {
+          "density": 720,
+          "size": 1,
+          "alphaRange": {
+            "min": 0.03,
+            "max": 0.2
+          }
+        },
+        "horizontalBands": {
+          "density": 220,
+          "minHeight": 2,
+          "maxHeight": 5,
+          "minAlpha": 0.015,
+          "maxAlpha": 0.045
+        }
+      }
+    },
+    "4a": {
+      "id": 9,
+      "roomName": "East Hall A",
+      "cameraName": "Cam 4A",
+      "image": "images/rooms/4a_east_hall/4a_b0_c0_f0.jpg",
+      "width": 1200,
+      "height": 720,
+      "cameraOffset": 0,
+      "maxCameraOffset": 800,
+      "connectedTo": [
+        {
+          "roomId": 3,
+          "doorId": null
+        },
+        {
+          "roomId": 10,
+          "doorId": null
+        }
+      ],
+      "camera": {
+        "maxUsageTime": 15,
+        "available": true
+      },
+      "gameplay": {
+        "occupy": 0,
+        "f": 0,
+        "b": 0,
+        "c": 0
+      },
+      "video": {
+        "name": "East Hall",
+        "enabled": true,
+        "jitterX": 0.6,
+        "jitterY": 0.4,
+        "flicker": {
+          "min": 0.985,
+          "max": 1.02
+        },
+        "whiteNoise": {
+          "density": 1050,
+          "size": 1,
+          "alphaRange": {
+            "min": 0.02,
+            "max": 0.16
+          }
+        },
+        "horizontalBands": {
+          "density": 280,
+          "minHeight": 2,
+          "maxHeight": 4,
+          "minAlpha": 0.01,
+          "maxAlpha": 0.03
+        }
+      }
+    },
+    "4b": {
+      "id": 10,
+      "roomName": "East Hall B",
+      "cameraName": "Cam 4B",
+      "image": "images/rooms/4b_east_hall_corner/4b_b0_c0_f0.jpg",
+      "width": 1200,
+      "height": 720,
+      "cameraOffset": 0,
+      "maxCameraOffset": 800,
+      "connectedTo": [
+        {
+          "roomId": 9,
+          "doorId": null
+        },
+        {
+          "roomId": 0,
+          "doorId": null
+        }
+      ],
+      "camera": {
+        "maxUsageTime": 15,
+        "available": true
+      },
+      "gameplay": {
+        "occupy": 0,
+        "f": 0,
+        "b": 0,
+        "c": 0
+      },
+      "video": {
+        "name": "East Hall Corner",
+        "enabled": true,
+        "jitterX": 1,
+        "jitterY": 0.7,
+        "flicker": {
+          "min": 0.975,
+          "max": 1.04
+        },
+        "whiteNoise": {
+          "density": 620,
+          "size": 1.1,
+          "alphaRange": {
+            "min": 0.03,
+            "max": 0.22
+          }
+        },
+        "horizontalBands": {
+          "density": 190,
+          "minHeight": 2,
+          "maxHeight": 7,
+          "minAlpha": 0.02,
+          "maxAlpha": 0.06
+        }
+      }
+    }
+  }
+}
