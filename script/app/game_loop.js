@@ -36,6 +36,11 @@ function gameLoop() {
       onCamera();
     }
 
+    // Le jeu est terminé (jumpscare / game over) : on fige entièrement
+    // l'horloge et l'affichage du tour, plutôt que de continuer à les
+    // mettre à jour en arrière-plan derrière l'écran de fin.
+    if (gameEnd) return;
+
     // Gestion du temps (heures:minutes)
     ticksSinceLastMinute++;
     if (ticksSinceLastMinute >= TICKS_PER_MINUTE) {

@@ -2,7 +2,7 @@
   "nightAiLevels": {
     "1": {
       "freddy": 0,
-      "bonnie": 15,
+      "bonnie": 5,
       "chica": 5,
       "foxy": 0
     },

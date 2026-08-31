@@ -30,6 +30,52 @@ function debugWinNight() {
   gameTime.minutes = 0;
 }
 
+/**
+ * DEBUG - Ouvre immédiatement l'écran des journaux (JournalViewer), le
+ * même que celui affiché en fin de nuit réussie (cf. transitionEndNight()
+ * dans render.js), sans attendre 6h00. N'affiche rien si aucun journal
+ * n'a encore été débloqué.
+ */
+function debugShowJournals() {
+  JournalViewer.open(() => {});
+  debugRefreshJournalsStatus();
+}
+
+/**
+ * DEBUG - Débloque tous les journaux du jeu (Collectibles.unlockJournal
+ * pour chaque entrée de JOURNALS_LIBRARY), pour pouvoir tester l'écran
+ * de fin de nuit sans avoir à déclencher chaque événement aléatoire.
+ */
+function debugUnlockAllJournals() {
+  JOURNALS_LIBRARY.forEach(journal => Collectibles.unlockJournal(journal.code));
+  console.log(`[DEBUG] ${JOURNALS_LIBRARY.length} journaux débloqués`);
+  debugRefreshJournalsStatus();
+}
+
+/**
+ * Affiche dans le panneau de debug la liste des journaux débloqués
+ * jusqu'ici (persistant, cf. Collectibles).
+ */
+function debugRefreshJournalsStatus() {
+  const statusDiv = document.getElementById('debug-journals-status');
+  if (!statusDiv) return;
+
+  const unlockedCodes = Collectibles.getUnlockedJournals();
+  const unlocked = JOURNALS_LIBRARY.filter(journal => unlockedCodes.includes(journal.code));
+
+  const list = unlocked.length
+    ? unlocked.map(journal => `- ${journal.code} : ${journal.title || '(sans titre)'}`).join('<br/>')
+    : '(aucun journal débloqué)';
+
+  statusDiv.innerHTML = `
+    <div style="font-weight: bold;">
+      JOURNAUX : ${unlocked.length} / ${JOURNALS_LIBRARY.length}
+      <br/>${list}
+    </div>
+  `;
+  statusDiv.style.display = 'block';
+}
+
 
 
 function toggleDebugPanel() {

@@ -10,14 +10,14 @@
     }
 
     .retro-terminal{
-        background:#050505;
-        border:2px solid #00ff66;
+        background:var(--rc-bg-void, #050505);
+        border:2px solid var(--rc-green, #00ff66);
         box-shadow:
-            0 0 15px #00ff66,
+            0 0 15px var(--rc-green, #00ff66),
             0 0 40px rgba(0,255,102,.3),
             inset 0 0 25px rgba(0,255,102,.15);
-        color:#00ff66;
-        font-family:Consolas, "Courier New", monospace;
+        color:var(--rc-green, #00ff66);
+        font-family:var(--rc-font-mono, Consolas, "Courier New", monospace);
         overflow:hidden;
         position:relative;
         max-width:95vw;
@@ -28,14 +28,7 @@
         content:'';
         position:absolute;
         inset:0;
-        background:
-            repeating-linear-gradient(
-                to bottom,
-                rgba(255,255,255,.03) 0px,
-                rgba(255,255,255,.03) 1px,
-                transparent 2px,
-                transparent 4px
-            );
+        background:var(--rc-scanlines);
         pointer-events:none;
         z-index:2;
     }
@@ -56,7 +49,7 @@
         justify-content:space-between;
         align-items:center;
         padding:10px 15px;
-        border-bottom:1px solid #00ff66;
+        border-bottom:1px solid var(--rc-green, #00ff66);
         background:#00180a;
         font-size:14px;
         text-transform:uppercase;
@@ -66,14 +59,14 @@
     .retro-close{
         background:none;
         border:none;
-        color:#00ff66;
+        color:var(--rc-green, #00ff66);
         cursor:pointer;
         font-size:18px;
         padding:0;
     }
 
     .retro-close:hover{
-        text-shadow:0 0 8px #00ff66;
+        text-shadow:0 0 8px var(--rc-green, #00ff66);
     }
 
     .retro-screen{
@@ -112,7 +105,7 @@
         display:inline-block;
         margin-left:2px;
         animation:retroBlink 1s infinite;
-        text-shadow:0 0 10px #00ff66;
+        text-shadow:0 0 10px var(--rc-green, #00ff66);
     }
 
     @keyframes retroBlink{
@@ -187,7 +180,7 @@
 }
 
 .terminal-choice-card:hover{
-    border-color:#00ff66;
+    border-color:var(--rc-green, #00ff66);
     background:rgba(0,40,15,.45);
 
     box-shadow:
@@ -200,7 +193,7 @@
    ========================= */
 
 .terminal-choice-card.selected{
-    border-color:#00ff66;
+    border-color:var(--rc-green, #00ff66);
 
     background:rgba(0,50,20,.65);
 
@@ -252,15 +245,15 @@
 }
 
 .terminal-choice-status .danger{
-    color:#ff5050;
+    color:var(--rc-red, #ff3838);
 }
 
 .terminal-choice-status .warning{
-    color:#ffd54a;
+    color:var(--rc-amber, #ffad32);
 }
 
 .terminal-choice-status .success{
-    color:#00ff66;
+    color:var(--rc-green, #00ff66);
 }
 
 /* =========================
@@ -359,7 +352,7 @@
 }
 
 .retro-shell-prompt{
-    color:#00ff66;
+    color:var(--rc-green, #00ff66);
     text-shadow:0 0 8px rgba(0,255,102,.8);
 }
 
@@ -368,11 +361,11 @@
     background:transparent;
     border:none;
     outline:none;
-    color:#00ff66;
-    font-family:Consolas, "Courier New", monospace;
+    color:var(--rc-green, #00ff66);
+    font-family:var(--rc-font-mono, Consolas, "Courier New", monospace);
     font-size:16px;
     text-shadow:0 0 5px rgba(0,255,102,.7);
-    caret-color:#00ff66;
+    caret-color:var(--rc-green, #00ff66);
 }
 
 /* =========================================================
@@ -457,7 +450,7 @@
     max-height:80vh;
     overflow-y:auto;
     padding:40px;
-    font-family:Consolas, "Courier New", monospace;
+    font-family:var(--rc-font-mono, Consolas, "Courier New", monospace);
     font-size:18px;
     line-height:2;
     color:#e8e8e8;
@@ -482,13 +475,13 @@
 }
 
 .retro-shell-flash{
-    color:#ff5050;
+    color:var(--rc-red, #ff3838);
     text-shadow:0 0 12px rgba(255,80,80,.9);
 }
 
 .retro-root-error{
     font-size:34px;
     letter-spacing:4px;
-    color:#ff3030;
+    color:var(--rc-red, #ff3838);
     text-shadow:0 0 18px rgba(255,40,40,.9);
 }

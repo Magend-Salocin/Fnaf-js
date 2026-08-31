@@ -52,11 +52,21 @@ class Animatronic {
      * - Si l'animatronic n'est pas dans la saferoom, réinitialise le compteur d'attaque et l'état d'attaque.
      */
     move() {
+        if (this.name === 'Freddy') {
+            // Règle originale FNAF1 : Freddy ne progresse que si le moniteur de
+            // caméras est ouvert, et jamais tant que le joueur regarde
+            // directement la caméra où il se trouve. Ne jamais toucher les
+            // caméras le fige donc indéfiniment.
+            const monitorUp = typeof isUsingCamera !== 'undefined' && isUsingCamera;
+            const watchingHim = typeof activeCamera !== 'undefined' && activeCamera === this.getRoomKey(this.currentRoomId);
+            if (!monitorUp || watchingHim) return;
+        }
+
         this.moveCounter++;
         const moveInterval = 20 - this.aggression * 2;
 
         if (this.moveCounter < moveInterval) return;
-        
+
         if(this.foxyInstance) return; // Si c'est Foxy, on ne déplace pas Foxy pour éviter les conflits de logique
             
         this.moveCounter = 0;
@@ -114,13 +124,15 @@ class Animatronic {
             }
         }
 
-        // Sons de pas et mouvements
-        const possibleSounds = [
-            "move_sound", "move_sound", "move_sound", "run_sound", "run_sound", "run_fast"
-        ];
-        const randomSound = possibleSounds[Math.floor(Math.random() * possibleSounds.length)];
-        playSound(randomSound);
-        
+        // Sons de pas et mouvements (Freddy se déplace silencieusement, sans
+        // bruit de pas détectable, contrairement à Bonnie et Chica)
+        if (this.name !== 'Freddy') {
+            const possibleSounds = [
+                "move_sound", "move_sound", "move_sound", "run_sound", "run_sound", "run_fast"
+            ];
+            const randomSound = possibleSounds[Math.floor(Math.random() * possibleSounds.length)];
+            playSound(randomSound);
+        }
     }
 
     /**

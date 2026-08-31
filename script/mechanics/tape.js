@@ -475,6 +475,8 @@ const TapeScene = (() => {
  * #tape-panel (même logique que showCloseCamera() pour #camera-panel).
  */
 function showCloseTapeScene(){
+  if (gameEnd) return;
+
   if (TapeScene.isOpen()){
     TapeScene.close();
   } else {

@@ -11,6 +11,7 @@
 	<link rel="stylesheet" href="style/timer.css">
 	<link rel="stylesheet" href="style/power-status.css">
 	<link rel="stylesheet" href="style/usage-status.css">
+	<link rel="stylesheet" href="style/retro-console-tokens.css">
 	<link rel="stylesheet" href="style/retro-terminal.css">
 	<link rel="stylesheet" href="style/debug.css">
 	<link rel="stylesheet" href="style/tape.css">
@@ -183,6 +184,16 @@
 
 				<!-- Affichage du Statut des caméras -->
 				<div id="camera-status" class="debug-status-box"></div>
+
+				<!-- Boutons Journaux -->
+				<div class="debug-section">
+					<div class="debug-section-label">— JOURNAUX —</div>
+					<button onclick="debugShowJournals()" class="debug-action-btn debug-action-btn-neutral">Voir les journaux (fin de nuit)</button>
+					<button onclick="debugUnlockAllJournals()" class="debug-action-btn debug-action-btn-neutral">Débloquer tous les journaux</button>
+				</div>
+
+				<!-- Affichage du Statut des journaux -->
+				<div id="debug-journals-status" class="debug-status-box"></div>
 			</div>
 
 		<!-- Volume Control -->
@@ -429,14 +440,6 @@
 					<div class="journal-image-wrap" id="journal-image-wrap" hidden>
 						<img class="journal-image" id="journal-image" alt="">
 					</div>
-
-					<div class="journal-article">
-						<h2 class="journal-title" id="journal-title"></h2>
-						<div class="journal-date" id="journal-date"></div>
-						<p class="journal-text" id="journal-article"></p>
-						<p class="journal-caption" id="journal-caption"></p>
-						<div class="journal-source" id="journal-source"></div>
-					</div>
 				</div>
 
 				<footer class="journal-footer">
@@ -559,6 +562,7 @@
 		<script src="script/loaders/tapes_data.js"></script>
 		<script src="script/loaders/journals_data.js"></script>
 
+		<script src="script/core/config_validator.js"></script>
 		<script src="script/core/collectibles.js"></script>
 		<script src="script/core/random_events_engine.js"></script>
 		<script src="script/core/gif_player.js"></script>

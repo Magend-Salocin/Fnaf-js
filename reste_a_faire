@@ -1,0 +1,152 @@
+# Reste à faire — FNAF-JS
+
+Liste de travail pour finir le jeu, établie à partir de l'analyse du code
+et des sessions de test/débogage récentes. Complète `markdone` (rapport
+d'architecture) qui reste valable pour la partie technique/dette de code.
+
+## 1) Contenu manquant (priorité haute — bloque l'expérience finale)
+
+### Sons des événements aléatoires
+90 des 103 événements aléatoires (`script/config/random_events_data.json`)
+utilisent un son de secours (`laugh_girl1`, rire de fille) faute
+d'enregistrement réel — noms prévus : `wood`, `bell`, `paper`, `servo`,
+`chain`, `ceramic`, etc. Seul `chair` (GAB-001) a un vrai fichier
+(`audio/hidden/chair.mp3`). Pour corriger un son : enregistrer/produire le
+fichier, l'ajouter au catalogue `script/config/game_sounds.json`, puis
+changer le champ `sound` de l'événement concerné pour pointer vers le
+nouvel id.
+
+### Images "cachées" des événements
+Une majorité d'événements référencent une image (`imagePath`) qui n'existe
+pas encore sur le disque (`[RandomEvents] Image introuvable pour ...` dans
+la console à chaque lancement — ~77 occurrences). Le champ `realised` du
+JSON indique lesquels sont censés être terminés côté production ; il faut
+produire les images manquantes ou mettre à jour ce champ au fur et à
+mesure.
+
+### Cassettes
+11 des 12 cassettes (`script/config/tapes_data.json`) utilisent le son de
+secours `camera_static` en attendant leur vraie voix off. Les
+transcriptions existent déjà (`ressources/Tape/TAPE_*.txt`) : il reste à
+enregistrer l'audio, l'ajouter à `game_sounds.json`, puis changer le champ
+`soundId` de la cassette concernée.
+
+### Affiche de la caméra 4B — nuit 5 en français
+Les affiches par nuit de la caméra 4B (East Hall Corner) vont jusqu'à la
+nuit 5 en anglais mais seulement jusqu'à la nuit 4 en français
+(`images/rooms/4b_east_hall_corner/hidden/fr/`). Il manque juste
+`4b_b0_c0_f0_d5.png` — le code retombe déjà proprement sur l'image par
+défaut en attendant.
+
+### Lore/terminal des nuits 2 à 6 — mécanisme corrigé, contenu narratif à écrire
+~~Seule la nuit 1 a son contenu de terminal~~ : corrigé. `LoreCore` avait
+deux bugs qui empêchaient toute commande débloquée par un événement des
+nuits 2 à 6 de fonctionner (`getCurrentNight()` ne lisait jamais la bonne
+variable de nuit, et il n'y avait pas de repli générique quand aucun
+`lore_nightN.js` n'était enregistré). Corrigés dans `script/lore/lore_core.js`
+et `script/lore/lore_night1.js` — désormais, **toute** commande présente
+dans `LOG_FILES` (`script/config/logs_database.json`) fonctionne dès
+qu'un événement aléatoire la débloque, quelle que soit la nuit, en lisant
+directement son contenu dans `ressources/logs/<CMD>.json` (texte, séquence
+animée, verrou horaire `minHour`/`beforeHour`). Au passage, un bug de
+nommage de champ (`sequence` vs `steps`) qui cassait toutes les commandes
+à séquence animée (CLOSED, PARTY, CAMLOG, BALLOON, TABLES, GUESTS,
+LOST_OBJECTS) a aussi été corrigé.
+
+Ce qui reste : ceci ne fournit que le contenu **déjà écrit** dans
+`ressources/logs/`. Si les nuits 2 à 6 doivent avoir leur propre ambiance
+narrative dédiée (comme la nuit 1 avec son thème "Les mensonges", son
+`secretPool` d'indices et son `idleEvent` de glitch ambiant), il reste à
+écrire un `lore_nightN.js` par nuit avec ce contenu spécifique — le
+mécanisme générique n'empêche pas d'en ajouter un, il sert de filet pour
+que le jeu reste jouable/cohérent même sans.
+
+## 2) Fonctionnalités construites mais jamais branchées
+
+- `script/core/unused/analog_video_engine.js` — moteur de rendu caméra
+  "analogique" complet, jamais chargé dans `index.html`.
+- `script/core/unused/psychological_director.js` — IA de difficulté
+  adaptative complète, jamais chargée dans `index.html`.
+- `script/mechanics/camera.js:502-511` — bloc commenté dans
+  `CameraPlaysound()` qui jouerait des sons ambiants aléatoires (rires,
+  respirations, chuchotements) à 20% de chance sur une pièce vide ;
+  actuellement désactivé.
+
+Pour chacun : soit le brancher (l'ajouter à `index.html`, tester), soit le
+supprimer si la direction du jeu a changé. Les garder inertes indéfiniment
+n'apporte rien.
+
+## 3) Bugs de code connus — corrigés
+
+### ~~Pile canvas déséquilibrée~~ (`script/mechanics/camera.js`)
+Corrigé. `drawWithCamera()` n'a plus qu'un seul `ctx.restore()` (retiré
+celui de trop qui s'exécutait dans le `if (camPicture && camPicture.complete)`
+en plus de celui juste après) ; le `ctx.restore()` orphelin de
+`drawOfficeView()` (sans `save()` correspondant) a été supprimé. Vérifié
+en relançant le jeu : `ctx.getTransform()` reste à l'identité après une
+vingtaine de bascules rapides entre caméras et vue bureau, plus aucune
+dérive.
+
+### ~~`// TODO NICO à reprendre`~~ (`script/mechanics/camera.js`)
+Corrigé. La résolution de `imageKey` (auparavant une suite de `if`
+spéciaux pour Foxy puis pour la caméra 4B, en plein milieu de
+`drawWithCamera()`) est maintenant centralisée dans un registre
+`ROOM_IMAGE_KEY_RESOLVERS` (une entrée par caméra ayant besoin d'un cas
+particulier). Ajouter un nouveau cas (ex. une autre pièce avec une affiche
+qui change) ne demande plus qu'une entrée dans ce registre, plus de
+branche supplémentaire dans `drawWithCamera()`.
+
+## 4) Fonctionnalité incomplète : Custom Night
+
+`MAX_NIGHT = 6`, et le texte "Nuit Personnalisée Terminée" / "Custom Night
+Complete" s'affiche après la nuit 6 — mais ce n'est qu'un libellé de fin
+de partie. Il n'existe aucun véritable mode Custom Night (pas d'écran de
+sélection de difficulté par animatronic, pas de nuit 7 jouable). Le
+mécanisme de difficulté par nuit existe déjà (`NIGHT_AI_LEVELS` dans
+`script/state/game_config.json`, utilisé par `night.js`) et pourrait
+servir de base si ce mode est prévu au design.
+
+## 5) À nettoyer avant une version "finale"
+
+- Le panneau de debug (`index.html` lignes ~151-185, scripts
+  `script/debug/debug.js` et `debug_foxy.js`) est chargé sans condition —
+  rien ne le retire d'un build de production. À gater (variable
+  d'environnement, build step) ou retirer avant diffusion.
+- Le commentaire de `transitionEndNight()` dans `script/app/render.js`
+  mentionne un "chèque de paie avec le salaire de la nuit" qui n'a jamais
+  été implémenté — soit construire cet écran, soit corriger le commentaire
+  pour qu'il ne décrive plus une fonctionnalité inexistante.
+
+## 6) Dette technique (recommandations déjà dans `markdone`)
+
+Court terme :
+- ~~Validateur de config au démarrage~~ : fait, voir
+  `script/core/config_validator.js`. Vérifie au chargement : IDs
+  d'événements/sons dupliqués, cohérence roomLabel → cameraId,
+  `requiresEvent`/`terminal`/`journal`/`tape` pointant vers une entrée
+  existante, sons référencés (événements et cassettes) présents dans le
+  catalogue audio. Journalise chaque incohérence en `console.warn` sans
+  bloquer le jeu. Testé avec des données volontairement cassées pour
+  confirmer que chaque vérification détecte bien son cas.
+
+Moyen terme :
+- Un store `GameState` unique plutôt que des variables globales
+  dispersées.
+- Séparer logique de jeu (IA, énergie, transitions) et rendu (DOM/Canvas/
+  Audio).
+- Un event bus léger (`camera:switched`, `power:changed`, `night:ended`…).
+
+Long terme :
+- Migration vers des modules ES natifs (import/export).
+- Tests unitaires (builders de salles, machine à états de Foxy, règles de
+  déclenchement des événements aléatoires).
+- Réduction du coût par frame (cache des sélecteurs DOM, logs limités en
+  production).
+
+---
+
+**Priorité suggérée** : (1) contenu manquant (sons/images/cassettes/lore
+nuits 2-6) puisque c'est ce qui se voit/s'entend le plus en jouant, (2) le
+bug de pile canvas puisqu'il peut dégrader le rendu avec le temps, (3) la
+décision à prendre sur les deux features non branchées et sur Custom
+Night, (4) le nettoyage avant diffusion, (5) la dette technique de fond.

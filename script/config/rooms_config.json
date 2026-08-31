@@ -138,10 +138,10 @@
       "roomName": "Kitchen",
       "cameraName": "Cam 6",
       "image": "images/rooms/6_kitchen/6_b0_c0_f0.png",
-      "width": 1600,
+      "width": 1280,
       "height": 720,
       "cameraOffset": 0,
-      "maxCameraOffset": -1,
+      "maxCameraOffset": 0,
       "connectedTo": [
         {
           "roomId": 9,

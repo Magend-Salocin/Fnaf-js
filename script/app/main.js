@@ -50,6 +50,8 @@ function handleOfficeMouseLook(event) {
 }
 
 function openInfoComputerPanel() {
+  if (gameEnd) return;
+
   RetroTerminal.shell({
       title: "ARCHIVES — ACCÈS NON RÉFÉRENCÉ",
       intro: "Connexion établie...\nTapez HELP pour les commandes publiques.",

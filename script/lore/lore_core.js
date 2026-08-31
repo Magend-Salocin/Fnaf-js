@@ -83,9 +83,11 @@ const LoreCore = (() => {
        --------------------------------------------------------- */
 
     function getCurrentNight() {
+        // _night (script/state/game_state.js) est la variable réellement
+        // maintenue à jour par startNight()/endGameAt6AM() (cf. night.js).
+        if (typeof _night === "number") return _night;
         if (typeof currentNight !== "undefined" && currentNight) {
-            if (typeof currentNight.number === "number") return currentNight.number;
-            if (typeof currentNight.night === "number") return currentNight.night;
+            if (typeof currentNight.nightNumber === "number") return currentNight.nightNumber;
         }
         if (typeof gameTime !== "undefined" && gameTime && typeof gameTime.night === "number") {
             return gameTime.night;
@@ -168,6 +170,42 @@ const LoreCore = (() => {
     }
 
     /* ---------------------------------------------------------
+       COMMANDE GÉNÉRIQUE — pilotée par ressources/logs/<CMD>.json
+       ---------------------------------------------------------
+       Toute commande présente dans LOG_FILES (script/config/
+       logs_database.json) fonctionne de la même façon quelle que soit
+       la nuit, sans avoir besoin d'un handler dédié par nuit : le
+       fichier JSON porte lui-même son comportement (verrou horaire,
+       nom de marquage, texte ou séquence animée), au même format que
+       documenté dans .github/Projet/_editor_log/README.md.
+       --------------------------------------------------------- */
+
+    function runGenericLogCommand(cmd) {
+        const data = getLog(cmd);
+
+        if (!data) {
+            return { text: "ERREUR : LOG NON TROUVÉ", glitch: true };
+        }
+
+        if (typeof data.minHour === "number" && getCurrentHour() < data.minHour) {
+            return {
+                text: data.beforeHour?.text || "AUCUNE DONNÉE DISPONIBLE POUR L'INSTANT.",
+                glitch: data.beforeHour?.glitch ?? false
+            };
+        }
+
+        if (data.markFound !== false) {
+            markFound(typeof data.markFound === "string" ? data.markFound : cmd);
+        }
+
+        return {
+            text: data.text,
+            sequence: data.steps,
+            glitch: data.glitch ?? false
+        };
+    }
+
+    /* ---------------------------------------------------------
        DISPATCH
        --------------------------------------------------------- */
 
@@ -203,11 +241,20 @@ const LoreCore = (() => {
         const night = getCurrentNight();
         const config = nights[night];
 
-        if (!config || !config.commands || !config.commands[cmd]) {
-            return { text: "COMMANDE INCONNUE. Tapez HELP.", glitch: false };
+        // 1. Comportement spécifique à cette nuit, s'il en existe un
+        //    (ex: contenu narratif propre à une nuit donnée).
+        if (config && config.commands && config.commands[cmd]) {
+            return config.commands[cmd](state, ctx);
         }
 
-        return config.commands[cmd](state, ctx);
+        // 2. Repli générique : fonctionne pour n'importe quelle nuit,
+        //    y compris celles qui n'ont pas (encore) de fichier
+        //    lore_nightN.js dédié.
+        if (typeof LOG_FILES !== "undefined" && LOG_FILES.includes(cmd)) {
+            return runGenericLogCommand(cmd);
+        }
+
+        return { text: "COMMANDE INCONNUE. Tapez HELP.", glitch: false };
     }
 
     /* ---------------------------------------------------------

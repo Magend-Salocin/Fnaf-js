@@ -121,6 +121,8 @@ function updateCameraPanelState(isOpen) {
  * Basculer l'affichage de la caméra (ouvrir/fermer)
  */
 function showCloseCamera(){
+  if (gameEnd) return;
+
   const cameraLayout = document.getElementById('cameraLayout');
   // Inverse l'affichage de la caméra
   const willOpen = cameraLayout.style.display !== 'block';
@@ -373,6 +375,46 @@ function drawRoom(ctx, room, cameraOffset = 0) {
 }
 
 /**
+ * Résolveurs de clé d'image spécifiques à certaines caméras, pour les
+ * cas où la simple combinaison `{roomKey}_b{b}_c{c}_f{f}` ne suffit pas
+ * (état scripté d'un animatronic, décor qui change avec la nuit...).
+ * Chaque résolveur reçoit l'état de la pièce (`rooms[roomKey]`) et
+ * retourne soit une clé d'image de substitution, soit `null` pour
+ * garder la clé par défaut. Pour ajouter un cas particulier sur une
+ * nouvelle caméra : une entrée ici, pas une branche de plus dans
+ * drawWithCamera().
+ */
+const ROOM_IMAGE_KEY_RESOLVERS = {
+  // Pirate Cove : l'image suit la phase de Foxy plutôt que la simple
+  // présence b/c/f.
+  '1c': () => {
+    if (typeof foxy === 'undefined' || !foxy.foxyInstance) return null;
+
+    switch (foxy.foxyInstance.getStatus().phase) {
+      case FoxyPhase.INACTIF:       return '1c_b0_c0_f0_00';
+      case FoxyPhase.TETE_SORTIE:   return '1c_b0_c0_f0_01';
+      case FoxyPhase.PRET_A_SORTIR: return '1c_b0_c0_f0_02';
+      case FoxyPhase.COURSE:        return '1c_b0_c0_f0_03';
+      case FoxyPhase.RETRAIT:       return '1c_b0_c0_f0_00';
+      default:                      return null;
+    }
+  },
+
+  // East Hall Corner : l'affiche au mur change chaque nuit et dépend de
+  // la langue choisie (cf. images/rooms/4b_east_hall_corner/hidden/
+  // {fr,en}/4b_b0_c0_f0_dN.*), uniquement quand la pièce est vide.
+  // Si la variante nuit/langue n'existe pas encore, drawWithCamera()
+  // retombe normalement sur l'image par défaut.
+  '4b': (roomData) => {
+    if (roomData.b !== 0 || roomData.c !== 0 || roomData.f !== 0) return null;
+
+    const posterNight = Math.min((typeof _night !== 'undefined' ? _night : 1), 5);
+    const posterLang = window.selectedLanguage || window.FNAF_DEFAULT_LANGUAGE || 'fr';
+    return `4b_b0_c0_f0_d${posterNight}_${posterLang}`;
+  }
+};
+
+/**
  * Dessine la vue de la caméra avec effets visuels
  * @param {CanvasRenderingContext2D} ctx - Contexte de dessin
  * @param {Object} camera - Objet représentant la caméra
@@ -406,40 +448,14 @@ function drawWithCamera(ctx, camera) {
     ctx.translate(offsetX, offsetY);
     ctx.scale(scale, scale);
 
-// TODO NICO à reprendre : la clé d'image doit être déterminée en fonction de l'état de la pièce (présence des animatronics) et de la caméra active
-
-    // Charge l'image en fonction de l'état de la pièce
+    // Clé d'image par défaut, dérivée de l'état de la pièce (présence des
+    // animatronics). Certaines caméras ont besoin d'un état supplémentaire
+    // (phase de Foxy, décor qui change par nuit) : voir
+    // ROOM_IMAGE_KEY_RESOLVERS, pour ne pas avoir à ajouter une branche
+    // ici à chaque nouveau cas particulier.
     let imageKey = `${roomKey}_b${roomData.b}_c${roomData.c}_f${roomData.f}`;
-    if (roomKey === '1c' && typeof foxy.foxyInstance !== 'undefined' && foxy.foxyInstance) {
-      switch (foxy.foxyInstance.getStatus().phase) {
-        case FoxyPhase.INACTIF:
-          imageKey = '1c_b0_c0_f0_00';
-          break;
-        case FoxyPhase.TETE_SORTIE:
-          imageKey = '1c_b0_c0_f0_01';
-          break;
-        case FoxyPhase.PRET_A_SORTIR:
-          imageKey = '1c_b0_c0_f0_02';
-          break;
-        case FoxyPhase.COURSE:
-          imageKey = '1c_b0_c0_f0_03';
-          break;
-        case FoxyPhase.RETRAIT:
-          imageKey = '1c_b0_c0_f0_00';
-          break;
-      }
-      console.log(`Foxy phase: ${foxy.foxyInstance.getStatus().phase}, imageKey: ${imageKey}`);
-    }
-
-    // Cam 4B (East Hall Corner) : l'affiche au mur change chaque nuit et
-    // dépend de la langue choisie (cf. images/rooms/4b_east_hall_corner/
-    // hidden/{fr,en}/4b_b0_c0_f0_dN.*). Retombe sur l'image par défaut si
-    // la variante de la nuit/langue n'a pas encore été produite.
-    if (roomKey === '4b' && roomData.b === 0 && roomData.c === 0 && roomData.f === 0) {
-      const posterNight = Math.min((typeof _night !== 'undefined' ? _night : 1), 5);
-      const posterLang = window.selectedLanguage || window.FNAF_DEFAULT_LANGUAGE || 'fr';
-      imageKey = `4b_b0_c0_f0_d${posterNight}_${posterLang}`;
-    }
+    const customImageKey = ROOM_IMAGE_KEY_RESOLVERS[roomKey]?.(roomData);
+    if (customImageKey) imageKey = customImageKey;
 
     const cameraImages = loadedCameraImages[roomKey] || {};
     const fallbackImageKey = `${roomKey}_b0_c0_f0`;
@@ -465,10 +481,12 @@ function drawWithCamera(ctx, camera) {
       const viewWidth = room.width;
       const viewHeight = room.height;
       drawParasites(ctx, parasiteConfig, viewWidth, viewHeight, scale);
-
-      ctx.restore();
     }
 
+    // Un seul restore ici, pour le save() plus haut — qu'il y ait eu une
+    // image à dessiner ou non (auparavant un restore() supplémentaire
+    // s'exécutait dans le bloc ci-dessus, dépilant un état qui ne lui
+    // appartenait pas).
     ctx.restore();
     // Affiche le nom de la caméra et le temps restant
     ctx.fillStyle = 'white';
@@ -594,8 +612,6 @@ function drawOfficeView(ctx,officeImageKey=null) {
             hideGif();
         }
     }
-
-    ctx.restore();
 }
 
 /**

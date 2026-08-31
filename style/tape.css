@@ -13,19 +13,22 @@
    ===================================================================== */
 
 .tape-scene{
-  --bg-void:      #030404;
-  --panel-dark:   #0c0e0d;
-  --panel-mid:    #1b1e1c;
-  --panel-light:  #292c2a;
-  --border:       #3a3e3b;
-  --border-light: #4c504d;
-  --text-dim:     #656861;
-  --text-mid:     #9d9f98;
-  --text-bright:  #d2d1c7;
-  --green:        #62ff91;
-  --amber:        #ffad32;
-  --red:          #ff3838;
-  --font-mono:    "Courier New", Consolas, monospace;
+  /* Valeurs sourcées depuis les tokens partagés (style/retro-console-tokens.css),
+     communs avec le terminal (retro-terminal.css). Repli en dur au cas où le
+     fichier de tokens ne serait pas chargé. */
+  --bg-void:      var(--rc-bg-void, #030404);
+  --panel-dark:   var(--rc-bg-panel-dark, #0c0e0d);
+  --panel-mid:    var(--rc-bg-panel-mid, #1b1e1c);
+  --panel-light:  var(--rc-bg-panel-light, #292c2a);
+  --border:       var(--rc-border, #3a3e3b);
+  --border-light: var(--rc-border-light, #4c504d);
+  --text-dim:     var(--rc-text-dim, #656861);
+  --text-mid:     var(--rc-text-mid, #9d9f98);
+  --text-bright:  var(--rc-text-bright, #d2d1c7);
+  --green:        var(--rc-green-soft, #62ff91);
+  --amber:        var(--rc-amber, #ffad32);
+  --red:          var(--rc-red, #ff3838);
+  --font-mono:    var(--rc-font-mono, "Courier New", Consolas, monospace);
 
   position: fixed;
   inset: 0;
@@ -64,7 +67,7 @@
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background: repeating-linear-gradient(0deg, rgba(255,255,255,.015) 0 1px, transparent 1px 3px);
+  background: var(--rc-scanlines);
   opacity: .5;
   z-index: 5;
 }

@@ -21,11 +21,6 @@ const JournalViewer = (() => {
       scene:         document.getElementById("journal-scene"),
       imageWrap:     document.getElementById("journal-image-wrap"),
       image:         document.getElementById("journal-image"),
-      title:         document.getElementById("journal-title"),
-      date:          document.getElementById("journal-date"),
-      article:       document.getElementById("journal-article"),
-      caption:       document.getElementById("journal-caption"),
-      source:        document.getElementById("journal-source"),
       pageIndicator: document.getElementById("journal-page-indicator"),
       btnPrev:       document.getElementById("journal-prev"),
       btnNext:       document.getElementById("journal-next"),
@@ -36,14 +31,9 @@ const JournalViewer = (() => {
   function render(){
     const journal = items[index];
 
-    els.title.textContent = journal.title || "";
-    els.date.textContent = journal.date ? `Le ${journal.date}` : "";
-    els.article.textContent = journal.article || "";
-    els.caption.textContent = journal.caption || "";
-    els.source.textContent = journal.source || "";
-
     if (journal.image) {
       els.image.src = journal.image;
+      els.image.alt = journal.title || "";
       els.imageWrap.hidden = false;
     } else {
       els.imageWrap.hidden = true;
