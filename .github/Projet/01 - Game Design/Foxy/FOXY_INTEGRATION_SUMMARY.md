@@ -88,13 +88,18 @@ gameEnd            // Flag indiquant la fin du jeu
 
 ## Niveaux d'IA par Nuit
 
-L'agressivité de base de Foxy augmente avec le niveau d'IA:
-- Nuit 1: IA=0 (Foxy inactif par défaut)
-- Nuit 2: IA=2 (Apparition possible)
-- Nuit 3: IA=4 (Fréquence moyenne)
-- Nuit 4: IA=6 (Fréquent)
-- Nuit 5: IA=8 (Très fréquent)
-- Nuit 6: IA=12 (Cauchemar)
+Le niveau d'IA (`nightAiLevels[nuit].foxy` dans `script/state/game_config.json`) va de 0 à 5, un cran par nuit. Chaque niveau a son propre réglage dans `FOXY_LEVEL_TUNING` (`script/mechanics/foxy.js`) : vitesse d'accumulation de l'agressivité et temps minimum passé dans chaque phase avant de pouvoir passer à la suivante. Ces réglages ont été calibrés par simulation (5000 nuits simulées par niveau) pour que Foxy atteigne sa première course environ au temps ci-dessous après le début de la nuit :
+
+| Nuit | IA (`foxy`) | Temps moyen avant la 1ère course |
+| --- | --- | --- |
+| 1 | 0 | Foxy inactif (aucune course possible) |
+| 2 | 1 | ~6 min |
+| 3 | 2 | ~5 min |
+| 4 | 3 | ~4 min |
+| 5 | 4 | ~3 min |
+| 6 | 5 | ~2 min |
+
+**Bug corrigé (2026-09)** : `Foxy.reset()` remettait `aggressivity` à `150`, une valeur qui se plafonnait immédiatement à `100` (le maximum) dès le premier tick de la nuit — Foxy démarrait donc chaque nuit à son agressivité maximale, quel que soit le niveau d'IA configuré. Nuit 1 et nuit 6 se comportaient de façon quasi identique. `reset()` remet maintenant `aggressivity` à `0`, et c'est la progression définie dans `FOXY_LEVEL_TUNING` qui fait la différence entre les nuits.
 
 ## Points d'Entrée pour Déboguer
 
@@ -121,27 +126,39 @@ L'agressivité de base de Foxy augmente avec le niveau d'IA:
 
 ## Formules et Probabilités
 
-### Transition Phase 1 → Phase 2
+Le mécanisme a 4 phases actives (`INACTIF → TETE_SORTIE → PRET_A_SORTIR → COURSE`), chacune avec sa propre chance de transition par tick. `tuning` désigne l'entrée de `FOXY_LEVEL_TUNING` correspondant au niveau d'IA de la nuit (cf. section précédente).
+
+### Transition INACTIF → TETE_SORTIE
+
 ```javascript
-const transitionChance = (aggressivity / 100) * 0.02 * sqrt(timeSinceLastCheck / 100)
+const transitionChance = (aggressivity / 100) * 0.2 * sqrt(timeSinceLastCheck / 100)
 ```
+
 - Augmente avec l'agressivité
-- Augmente avec le temps depuis la dernière vérification
+- Augmente avec le temps depuis la dernière vérification de Pirate Cove
 - Basée sur probabilité aléatoire
 
-### Transition Phase 2 → Phase 3
+### Transition TETE_SORTIE → PRET_A_SORTIR
+
 ```javascript
-const runChance = (aggressivity / 100) * 0.08
-// Après minimum 20 ticks dans Phase 2
+const prepChance = (aggressivity / 100) * 0.08
+// Après un minimum de tuning.minTeteSortieTicks ticks dans cette phase
 ```
-- Augmente avec l'agressivité
-- Nécessite du temps dans Phase 2
+
+### Transition PRET_A_SORTIR → COURSE
+
+```javascript
+const runChance = (aggressivity / 100) * 0.12
+// Après un minimum de tuning.minPretASortirTicks ticks dans cette phase
+```
 
 ### Augmentation d'Agressivité
+
 ```javascript
-const aggressivityGain = 0.3 + (aiLevel * 0.05)
-aggressivity += aggressivityGain // Par tick
+aggressivity += tuning.aggressivityGain // Par tick, plafonné à 100
 ```
+
+`tuning.aggressivityGain` et les deux minimums de phase ci-dessus viennent de `FOXY_LEVEL_TUNING` (`script/mechanics/foxy.js`) — c'est ce tableau qui contrôle la vitesse à laquelle Foxy devient dangereux, nuit après nuit.
 
 ### Réduction d'Agressivité
 - Vérification de Pirate Cove: -30%

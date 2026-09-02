@@ -17,6 +17,28 @@ const FoxyPhase = {
 };
 
 /**
+ * Réglages par niveau d'IA (0 à 5, un par nuit) : vitesse d'accumulation de
+ * l'agressivité et temps minimum passé dans chaque phase avant de pouvoir
+ * passer à la suivante. Calibrés par simulation pour que Foxy atteigne sa
+ * première course environ 6/5/4/3/2 minutes après le début de la nuit
+ * (niveaux 1 à 5 ; niveau 0 = Foxy inactif, cf. nightAiLevels de la nuit 1).
+ * Un niveau au-delà de 5 réutilise le réglage du niveau 5.
+ */
+const FOXY_LEVEL_TUNING = [
+    { aggressivityGain: 0,    minTeteSortieTicks: 20, minPretASortirTicks: 10 }, // niveau 0
+    { aggressivityGain: 0.18, minTeteSortieTicks: 17, minPretASortirTicks: 8 },  // niveau 1 (nuit 2, ~6 min)
+    { aggressivityGain: 0.27, minTeteSortieTicks: 14, minPretASortirTicks: 7 },  // niveau 2 (nuit 3, ~5 min)
+    { aggressivityGain: 0.43, minTeteSortieTicks: 11, minPretASortirTicks: 5 },  // niveau 3 (nuit 4, ~4 min)
+    { aggressivityGain: 0.79, minTeteSortieTicks: 8,  minPretASortirTicks: 4 },  // niveau 4 (nuit 5, ~3 min)
+    { aggressivityGain: 1.96, minTeteSortieTicks: 5,  minPretASortirTicks: 2 },  // niveau 5 (nuit 6, ~2 min)
+];
+
+function getFoxyTuning(aiLevel) {
+    const index = Math.max(0, Math.min(FOXY_LEVEL_TUNING.length - 1, Math.round(aiLevel)));
+    return FOXY_LEVEL_TUNING[index];
+}
+
+/**
  * Classe Foxy - Gestion du comportement et des phases de Foxy
  */
 class Foxy {
@@ -38,16 +60,17 @@ class Foxy {
      * Met à jour l'état de Foxy en fonction des actions du joueur et du temps
      * @param {boolean} playerCheckedPirateCove - Le joueur a-t-il vérifié Pirate Cove ce tick?
      * @param {boolean} doorClosed - La porte Est est-elle fermée?
-     * @param {number} aiLevel - Niveau d'IA pour cette nuit (0-20)
+     * @param {number} aiLevel - Niveau d'IA pour cette nuit (0-5, cf. FOXY_LEVEL_TUNING)
      * @returns {boolean} true si le joueur survit, false si Game Over
      */
     update(playerCheckedPirateCove, doorClosed, aiLevel = 0) {
         this.timeSinceLastCheck += 1;
         this.timeInCurrentPhase += 1;
 
+        const tuning = getFoxyTuning(aiLevel);
+
         // Augmentation de l'agressivité basée sur le niveau d'IA et le temps
-        const aggressivityGain = 0.3 + (aiLevel * 0.05);
-        this.aggressivity = Math.min(100, this.aggressivity + aggressivityGain);
+        this.aggressivity = Math.min(100, this.aggressivity + tuning.aggressivityGain);
 
         // Gestion du cooldown
         if (this.inCooldown) {
@@ -88,7 +111,7 @@ class Foxy {
             }
         } 
         else if (this.phase === FoxyPhase.TETE_SORTIE) {
-            if (this.timeInCurrentPhase > 20) { // Minimum 20 ticks avant de passer à la course
+            if (this.timeInCurrentPhase > tuning.minTeteSortieTicks) {
                 const prepChance = (this.aggressivity / 100) * 0.08;
                 const randomValue = Math.random();
                 if (this.debugFoxy) {
@@ -105,7 +128,7 @@ class Foxy {
         }
         else if (this.phase === FoxyPhase.PRET_A_SORTIR) {
             // Si la porte Est est fermée, Foxy se retire
-            if (this.timeInCurrentPhase > 10) {
+            if (this.timeInCurrentPhase > tuning.minPretASortirTicks) {
                 const runChance = (this.aggressivity / 100) * 0.12;
                 const randomValue = Math.random();
                 if(this.debugFoxy) {
@@ -200,7 +223,7 @@ class Foxy {
     reset() {
         this.phase = FoxyPhase.INACTIF;
         this.timeSinceLastCheck = 0;
-        this.aggressivity = 150;
+        this.aggressivity = 0;
         this.inCooldown = false;
         this.cooldownTimer = 0;
         this.timeInCurrentPhase = 0;

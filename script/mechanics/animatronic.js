@@ -1,3 +1,15 @@
+/*
+Récapitulatif final (bonnie/chica) :
+
+Nuit	Aggression	Arrive en safe room	Prête à attaquer
+1	3	jamais (reste 1 pièce avant)	—
+2	5	tour 60/72 (~10 min)	tour 63
+3	6	tour 48 (~8 min)	tour 51
+4	7	tour 36 (~6 min)	tour 39
+5	8	tour 24 (~4 min)	tour 27
+6	9	tour 12 (~2 min)	tour 15
+*/
+
 class Animatronic {
 
     constructor(name, scareDoor, startRoomId, aggression, path = null, scareFunction = null) {
@@ -52,6 +64,8 @@ class Animatronic {
      * - Si l'animatronic n'est pas dans la saferoom, réinitialise le compteur d'attaque et l'état d'attaque.
      */
     move() {
+        if (this.aggression === 0) return; // Niveau d'IA 0 : l'animatronic ne bouge pas de la nuit (cf. attack())
+
         if (this.name === 'Freddy') {
             // Règle originale FNAF1 : Freddy ne progresse que si le moniteur de
             // caméras est ouvert, et jamais tant que le joueur regarde
@@ -61,6 +75,11 @@ class Animatronic {
             const watchingHim = typeof activeCamera !== 'undefined' && activeCamera === this.getRoomKey(this.currentRoomId);
             if (!monitorUp || watchingHim) return;
         }
+
+        // Une fois arrivé en safe room, il y reste tant qu'il n'est pas repoussé ou
+        // qu'il n'attaque pas : sinon, à IA élevée, il en ressortirait (chemin qui boucle)
+        // avant même d'avoir eu le temps d'atteindre le seuil d'attaque.
+        if (this.isInSafeRoom()) return;
 
         this.moveCounter++;
         const moveInterval = 20 - this.aggression * 2;
