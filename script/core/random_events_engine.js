@@ -114,6 +114,13 @@ const RANDOM_EVENT_HANDLERS = {
       return false; // annule le déclenchement
     }
     return true;
+  },
+  // CASSIDY-07 (cassette secrète finale) ne peut survenir que si les 6
+  // cassettes secrètes précédentes ont déjà été débloquées — potentiellement
+  // lors de nuits antérieures, donc via Collectibles (persistant) plutôt que
+  // eventRuntimeState (remis à zéro chaque nuit).
+  cassidy_finale: function() {
+    return typeof Collectibles !== 'undefined' && Collectibles.isTapeUnlocked('TAPE_ERREUR_06');
   }
   // Ajoute d'autres handlers ici : chair, balloon, plate, stare, etc.
   // function(event) { ... return true/false; }

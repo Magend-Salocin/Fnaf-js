@@ -1,0 +1,45 @@
+/* =====================================================================
+   Scène "Fin de partie" — lecteur des cinématiques de fin
+   ---------------------------------------------------------------------
+   Affichée à la place de l'écran statique "game_over_end" une fois la
+   nuit 6 terminée (cf. runNightEndSequence() dans script/app/render.js),
+   si les 7 cassettes secrètes Cassidy ont été débloquées ET écoutées
+   (bonne fin) ou non (mauvaise fin) — cf. script/mechanics/ending.js.
+   ===================================================================== */
+
+.ending-scene{
+  position: fixed;
+  inset: 0;
+  z-index: 1100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--rc-bg-void);
+}
+
+.ending-scene[hidden]{ display: none; }
+
+.ending-video{
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.ending-skip-btn{
+  position: absolute;
+  right: 28px;
+  bottom: 28px;
+  font-family: var(--rc-font-mono);
+  font-size: 11px;
+  letter-spacing: 1px;
+  padding: 10px 16px;
+  color: var(--rc-text-mid);
+  background: linear-gradient(#1b1e1c, #0c0e0d);
+  border: 1px solid var(--rc-border-light);
+  cursor: pointer;
+  opacity: .8;
+}
+.ending-skip-btn:hover{
+  color: var(--rc-green);
+  border-color: var(--rc-green);
+  opacity: 1;
+}

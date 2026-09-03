@@ -10,77 +10,126 @@
     "code": "TAPE_FRT_02",
     "title": "FRT-02",
     "description": "Jouets sortis pendant la nuit",
-    "soundId": "camera_static",
+    "soundId": "tape_frt_02",
     "condition": "INSTABLE"
   },
   {
     "code": "TAPE_FRT_03",
     "title": "FRT-03",
     "description": "Bande endommagée — rire d'enfant",
-    "soundId": "camera_static",
+    "soundId": "tape_frt_03",
     "condition": "ENDOMMAGÉE"
   },
   {
     "code": "TAPE_GAB_01",
     "title": "GAB-01",
     "description": "Préparation des anniversaires privés",
-    "soundId": "camera_static",
+    "soundId": "tape_gab_01",
     "condition": "STABLE"
   },
   {
     "code": "TAPE_GAB_02",
     "title": "GAB-02",
     "description": "Consignes d'animation — Freddy",
-    "soundId": "camera_static",
+    "soundId": "tape_gab_02",
     "condition": "STABLE"
   },
   {
     "code": "TAPE_GAB_03",
     "title": "GAB-03",
     "description": "Procédure de fermeture — anniversaire",
-    "soundId": "camera_static",
+    "soundId": "tape_gab_03",
     "condition": "DÉGRADÉ"
   },
   {
     "code": "TAPE_JER_01",
     "title": "JER-01",
     "description": "Installation du concours de dessin",
-    "soundId": "camera_static",
+    "soundId": "tape_jer_01",
     "condition": "STABLE"
   },
   {
     "code": "TAPE_JER_02",
     "title": "JER-02",
     "description": "Rappel de rangement — équipe de nuit",
-    "soundId": "camera_static",
+    "soundId": "tape_jer_02",
     "condition": "STABLE"
   },
   {
     "code": "TAPE_JER_03",
     "title": "JER-03",
     "description": "Dessins réapparus au matin",
-    "soundId": "camera_static",
+    "soundId": "tape_jer_03",
     "condition": "INSTABLE"
   },
   {
     "code": "TAPE_SUS_01",
     "title": "SUS-01",
     "description": "Protocole de fermeture — cuisines",
-    "soundId": "camera_static",
+    "soundId": "tape_sus_01",
     "condition": "STABLE"
   },
   {
     "code": "TAPE_SUS_02",
     "title": "SUS-02",
     "description": "Gamelle déplacée durant la nuit",
-    "soundId": "camera_static",
+    "soundId": "tape_sus_02",
     "condition": "DÉGRADÉ"
   },
   {
     "code": "TAPE_SUS_03",
     "title": "SUS-03",
     "description": "Enregistrement non autorisé",
-    "soundId": "camera_static",
+    "soundId": "tape_sus_03",
+    "condition": "CORROMPUE"
+  },
+  {
+    "code": "TAPE_ERREUR_01",
+    "title": "CAS-01",
+    "description": "Fréquence non identifiée",
+    "soundId": "tape_erreur_01",
+    "condition": "DÉGRADÉ"
+  },
+  {
+    "code": "TAPE_ERREUR_02",
+    "title": "CAS-02",
+    "description": "Une voix d'enfant demande de l'aide",
+    "soundId": "tape_erreur_02",
+    "condition": "INSTABLE"
+  },
+  {
+    "code": "TAPE_ERREUR_03",
+    "title": "CAS-03",
+    "description": "Dialogue impossible entre deux voix",
+    "soundId": "tape_erreur_03",
+    "condition": "INSTABLE"
+  },
+  {
+    "code": "TAPE_ERREUR_04",
+    "title": "CAS-04",
+    "description": "Recherche d'un dossier victime manquant",
+    "soundId": "tape_erreur_04",
+    "condition": "STABLE"
+  },
+  {
+    "code": "TAPE_ERREUR_05",
+    "title": "CAS-05",
+    "description": "Analyse des profils émotionnels — anomalie détectée",
+    "soundId": "tape_erreur_05",
+    "condition": "DÉGRADÉ"
+  },
+  {
+    "code": "TAPE_ERREUR_06",
+    "title": "CAS-06",
+    "description": "Reconstruction des souvenirs — un profil résiste",
+    "soundId": "tape_erreur_06",
+    "condition": "CORROMPUE"
+  },
+  {
+    "code": "TAPE_ERREUR_07",
+    "title": "CAS-07",
+    "description": "Dernier message — accès refusé",
+    "soundId": "tape_erreur_07",
     "condition": "CORROMPUE"
   }
 ]

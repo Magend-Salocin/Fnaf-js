@@ -231,6 +231,132 @@
     "mixVolume": 1
   },
   {
+    "id": "tape_frt_02",
+    "selector": ".tape-frt-02",
+    "category": "call",
+    "description": "Cassette FRT-02 — Jouets sortis pendant la nuit",
+    "mixVolume": 1
+  },
+  {
+    "id": "tape_frt_03",
+    "selector": ".tape-frt-03",
+    "category": "call",
+    "description": "Cassette FRT-03 — Bande endommagée, rire d'enfant",
+    "mixVolume": 1
+  },
+  {
+    "id": "tape_gab_01",
+    "selector": ".tape-gab-01",
+    "category": "call",
+    "description": "Cassette GAB-01 — Préparation des anniversaires privés",
+    "mixVolume": 1
+  },
+  {
+    "id": "tape_gab_02",
+    "selector": ".tape-gab-02",
+    "category": "call",
+    "description": "Cassette GAB-02 — Consignes d'animation, Freddy",
+    "mixVolume": 1
+  },
+  {
+    "id": "tape_gab_03",
+    "selector": ".tape-gab-03",
+    "category": "call",
+    "description": "Cassette GAB-03 — Procédure de fermeture, anniversaire",
+    "mixVolume": 1
+  },
+  {
+    "id": "tape_jer_01",
+    "selector": ".tape-jer-01",
+    "category": "call",
+    "description": "Cassette JER-01 — Installation du concours de dessin",
+    "mixVolume": 1
+  },
+  {
+    "id": "tape_jer_02",
+    "selector": ".tape-jer-02",
+    "category": "call",
+    "description": "Cassette JER-02 — Rappel de rangement, équipe de nuit",
+    "mixVolume": 1
+  },
+  {
+    "id": "tape_jer_03",
+    "selector": ".tape-jer-03",
+    "category": "call",
+    "description": "Cassette JER-03 — Dessins réapparus au matin",
+    "mixVolume": 1
+  },
+  {
+    "id": "tape_sus_01",
+    "selector": ".tape-sus-01",
+    "category": "call",
+    "description": "Cassette SUS-01 — Protocole de fermeture, cuisines",
+    "mixVolume": 1
+  },
+  {
+    "id": "tape_sus_02",
+    "selector": ".tape-sus-02",
+    "category": "call",
+    "description": "Cassette SUS-02 — Gamelle déplacée durant la nuit",
+    "mixVolume": 1
+  },
+  {
+    "id": "tape_sus_03",
+    "selector": ".tape-sus-03",
+    "category": "call",
+    "description": "Cassette SUS-03 — Enregistrement non autorisé",
+    "mixVolume": 1
+  },
+  {
+    "id": "tape_erreur_01",
+    "selector": ".tape-erreur-01",
+    "category": "call",
+    "description": "Cassette secrète CAS-01 — Fréquence non identifiée",
+    "mixVolume": 1
+  },
+  {
+    "id": "tape_erreur_02",
+    "selector": ".tape-erreur-02",
+    "category": "call",
+    "description": "Cassette secrète CAS-02 — Une voix d'enfant demande de l'aide",
+    "mixVolume": 1
+  },
+  {
+    "id": "tape_erreur_03",
+    "selector": ".tape-erreur-03",
+    "category": "call",
+    "description": "Cassette secrète CAS-03 — Dialogue impossible entre deux voix",
+    "mixVolume": 1
+  },
+  {
+    "id": "tape_erreur_04",
+    "selector": ".tape-erreur-04",
+    "category": "call",
+    "description": "Cassette secrète CAS-04 — Recherche d'un dossier victime manquant",
+    "mixVolume": 1
+  },
+  {
+    "id": "tape_erreur_05",
+    "selector": ".tape-erreur-05",
+    "category": "call",
+    "description": "Cassette secrète CAS-05 — Analyse des profils émotionnels, anomalie détectée",
+    "mixVolume": 1
+  },
+  {
+    "id": "tape_erreur_06",
+    "selector": ".tape-erreur-06",
+    "category": "call",
+    "description": "Cassette secrète CAS-06 — Reconstruction des souvenirs, un profil résiste",
+    "mixVolume": 1
+  },
+  {
+    "id": "tape_erreur_07",
+    "selector": ".tape-erreur-07",
+    "category": "call",
+    "description": "Cassette secrète CAS-07 — Dernier message, accès refusé",
+    "mixVolume": 1
+  },
+  {
     "id": "call_1",
     "selector": ".call1",
     "category": "call",

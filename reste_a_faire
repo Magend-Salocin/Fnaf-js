@@ -25,18 +25,37 @@ produire les images manquantes ou mettre à jour ce champ au fur et à
 mesure.
 
 ### Cassettes
-11 des 12 cassettes (`script/config/tapes_data.json`) utilisent le son de
-secours `camera_static` en attendant leur vraie voix off. Les
-transcriptions existent déjà (`ressources/Tape/TAPE_*.txt`) : il reste à
-enregistrer l'audio, l'ajouter à `game_sounds.json`, puis changer le champ
-`soundId` de la cassette concernée.
+~~11 des 12 cassettes (`script/config/tapes_data.json`) utilisent le son de
+secours `camera_static` en attendant leur vraie voix off.~~ : corrigé. Les
+12 fichiers audio (`ressources/Tape/TAPE_*.mp3`) sont enregistrés, déclarés
+dans `game_sounds.json` (ids `tape_frt_01`…`tape_sus_03`) et référencés
+depuis `<audio>` dans `index.html` ; le champ `soundId` de chaque cassette
+pointe désormais vers son propre son.
 
-### Affiche de la caméra 4B — nuit 5 en français
-Les affiches par nuit de la caméra 4B (East Hall Corner) vont jusqu'à la
-nuit 5 en anglais mais seulement jusqu'à la nuit 4 en français
-(`images/rooms/4b_east_hall_corner/hidden/fr/`). Il manque juste
-`4b_b0_c0_f0_d5.png` — le code retombe déjà proprement sur l'image par
-défaut en attendant.
+### Ligne secrète Cassidy et fin de partie (nouveau)
+Les 9 fichiers `ressources/Tape/TAPE_ERREUR_*` (7 cassettes audio + 2
+cinématiques vidéo good/bad ending) sont maintenant câblés :
+- `TAPE_ERREUR_01` à `07` : ajoutées comme cassettes secrètes
+  (`TAPE_ERREUR_01`…`07` dans `tapes_data.json`) débloquées par 7 nouveaux
+  événements aléatoires cachés `CASSIDY-01` à `07` (`random_events_data.json`,
+  déclencheur `Silence` en vue bureau, une par nuit 1-6, la 7e nuit 6
+  uniquement une fois la 6e débloquée — handler `cassidy_finale` dans
+  `random_events_engine.js`).
+- `Collectibles` (`script/core/collectibles.js`) trace maintenant aussi les
+  cassettes réellement écoutées jusqu'au bout (`markTapeListened`/
+  `isTapeListened`, appelé depuis `onPlaybackEnded()` dans `tape.js`), pas
+  seulement débloquées.
+- `TAPE_ERREUR_08`/`09` (bonne/mauvaise fin) sont jouées en plein écran par
+  la nouvelle scène `EndingScene` (`script/mechanics/ending.js` +
+  `style/ending.css`), déclenchée à la fin de la nuit 6 depuis
+  `runNightEndSequence()` (`script/app/render.js`). Bonne fin si les 7
+  cassettes Cassidy ont été écoutées, sinon mauvaise fin.
+- Reste à faire si besoin : ajuster l'équilibrage (nuits/heures/`chance`)
+  des 7 événements `CASSIDY-*` une fois testés en conditions réelles, et
+  éventuellement illustrer ces cassettes (actuellement sans image, type
+  "Son" uniquement).
+
+
 
 ### Lore/terminal des nuits 2 à 6 — mécanisme corrigé, contenu narratif à écrire
 ~~Seule la nuit 1 a son contenu de terminal~~ : corrigé. `LoreCore` avait
@@ -95,6 +114,27 @@ spéciaux pour Foxy puis pour la caméra 4B, en plein milieu de
 particulier). Ajouter un nouveau cas (ex. une autre pièce avec une affiche
 qui change) ne demande plus qu'une entrée dans ce registre, plus de
 branche supplémentaire dans `drawWithCamera()`.
+
+### ~~Foxy repartait à 150 d'agressivité à chaque nuit~~ (`script/mechanics/foxy.js`)
+Corrigé. `Foxy.reset()` remettait `aggressivity` à `150`, une valeur qui se
+plafonnait immédiatement à `100` (le max) dès le premier tick — Foxy
+démarrait donc chaque nuit à son agressivité maximale, quel que soit le
+niveau d'IA configuré (nuit 1 et nuit 6 se comportaient presque pareil).
+`reset()` remet maintenant `aggressivity` à `0`. Au passage, les réglages
+par niveau d'IA (vitesse d'agressivité, temps minimum par phase) ont été
+sortis en tableau `FOXY_LEVEL_TUNING` et calibrés par simulation (5000
+nuits/niveau) pour une première course ~6/5/4/3/2 min après le début de la
+nuit selon la nuit (2 à 6) ; voir `.github/Projet/01 - Game Design/Foxy/FOXY_INTEGRATION_SUMMARY.md`
+pour le détail.
+
+### ~~Animatronic IA=0 continuait de bouger~~ (`script/mechanics/animatronic.js`)
+Corrigé. `move()` ignorait `aggression === 0` et laissait quand même
+l'animatronic progresser lentement (`moveInterval = 20 - aggression * 2`
+ne bloquait rien à 0). Un garde `if (this.aggression === 0) return;` a été
+ajouté en tête de `move()`. Un second bug lié a aussi été corrigé : une
+fois arrivé en safe room, l'animatronic ressortait et reprenait son
+chemin en boucle avant d'atteindre le seuil d'attaque à IA élevée — `move()`
+retourne maintenant immédiatement s'il est déjà en safe room.
 
 ## 4) Fonctionnalité incomplète : Custom Night
 

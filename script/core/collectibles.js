@@ -12,7 +12,7 @@ const Collectibles = (() => {
   const STORAGE_KEY = "fnaf_collectibles_v1";
 
   function defaultState() {
-    return { tapes: [], journals: [] };
+    return { tapes: [], journals: [], listenedTapes: [] };
   }
 
   function loadState() {
@@ -51,6 +51,22 @@ const Collectibles = (() => {
     return state.tapes.includes(code);
   }
 
+  /**
+   * Marque une cassette comme écoutée jusqu'au bout (cf. onPlaybackEnded()
+   * dans script/mechanics/tape.js). Distinct de `unlockTape()` : une
+   * cassette peut être débloquée sans avoir été lue en entier. Utilisé par
+   * la condition de bonne/mauvaise fin (script/mechanics/ending.js).
+   */
+  function markTapeListened(code) {
+    if (!code || state.listenedTapes.includes(code)) return;
+    state.listenedTapes.push(code);
+    saveState();
+  }
+
+  function isTapeListened(code) {
+    return state.listenedTapes.includes(code);
+  }
+
   function isJournalUnlocked(code) {
     return state.journals.includes(code);
   }
@@ -69,6 +85,8 @@ const Collectibles = (() => {
     isTapeUnlocked,
     isJournalUnlocked,
     getUnlockedTapes,
-    getUnlockedJournals
+    getUnlockedJournals,
+    markTapeListened,
+    isTapeListened
   };
 })();

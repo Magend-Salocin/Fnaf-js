@@ -5,11 +5,13 @@ Les autres articles du journal sont volontairement flous et illisibles afin que 
 En haut de l'article, un grand titre en police machine à écrire :
 
 
-« Pirate Cove fermé temporairement pour inspection technique  »
+« Les inspections sanitaires
+confirment la conformité des
+cuisines Fazbear  »
 
 Sous le titre, une petite date discrète :
 
-05/07
+06/07
 
 La mise en page ressemble à un véritable article de journal des années 80 :
 
@@ -20,47 +22,61 @@ aucune étiquette du type "Titre :", "Date :", "Article :", "Description de la p
 uniquement du texte comme dans un véritable journal.
 Texte de l'article
 
-Fazbear Entertainment a annoncé
-la fermeture temporaire de Pirate
-Cove pour une inspection de
-routine.
 
-La direction affirme que cette
-mesure vise uniquement à assurer
-la sécurité des visiteurs et le
-bon fonctionnement des décors.
+Une inspection sanitaire récente
+du Freddy Fazbear's Pizza n'a
+révélé aucune anomalie concernant
+les installations de cuisine.
 
-Les autres attractions du
-restaurant restent accessibles.
+Les inspecteurs ont confirmé que
+les équipements, zones de stockage
+et espaces de préparation
+respectaient les normes en vigueur.
+
+Fazbear Entertainment se félicite
+de ces résultats et assure à ses
+clients un environnement sûr.
+
+════════════════════════════════════════════════════════════════
+
+RÉSULTAT DE L'INSPECTION :
+
+Hygiène ................. Conforme
+
+Équipements ............. Conforme
+
+Stock alimentaire ....... Conforme
+
+Présence animale ........ Aucune
+
+════════════════════════════════════════════════════════════════
+
 
 En bas de l'article, en petits caractères :
 
-« La sécurité de nos visiteurs
-reste notre priorité. »
+«  Aucun problème détecté lors
+de la visite de contrôle.  »
 
 Fazbear Local News
 
-Archive : FZ-NEWS-0705
+Archive : FZ-NEWS-SUS-0706
 
 Photographie
+Photographie officielle prise
+pendant l'inspection.
 
-Photo officielle publiée par
-Fazbear Entertainment.
+On distingue un inspecteur
+consultant une tablette près
+des zones de préparation.
 
-On y voit le rideau de Pirate Cove
-fermé avec un panneau indiquant :
+Sur une étagère au fond de
+l'image, une gamelle métallique
+est visible parmi les équipements
+de cuisine.
 
-"ZONE TEMPORAIREMENT FERMÉE"
+L'inspecteur ne semble pas
+remarquer sa présence.
 
-Cependant, le bas du rideau
-semble légèrement soulevé.
-
-Une petite trace rouge est visible
-sur le sol devant la scène.
-
-La direction affirme qu'il s'agit
-d'une marque provenant d'un
-ancien accessoire de spectacle.
 
 La photo est légèrement floue.
 

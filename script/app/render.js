@@ -176,6 +176,7 @@ function runNightEndSequence(night) {
         } else {
             transition.style.display = 'none';
             drawOfficeViewByPicture('game_over_end');
+            EndingScene.playEnding();
         }
     }, 8000);
 }

@@ -16,6 +16,7 @@
 	<link rel="stylesheet" href="style/debug.css">
 	<link rel="stylesheet" href="style/tape.css">
 	<link rel="stylesheet" href="style/journal.css">
+	<link rel="stylesheet" href="style/ending.css">
 
 </head>
 <body>
@@ -451,6 +452,12 @@
 		</div>
 	</section>
 
+	<!-- Cinématique de fin (bonne/mauvaise fin) : script/mechanics/ending.js -->
+	<section id="ending-scene" class="ending-scene" hidden aria-hidden="true">
+		<video id="ending-video" class="ending-video" playsinline></video>
+		<button type="button" id="ending-skip" class="ending-skip-btn">PASSER ▶</button>
+	</section>
+
 
 	<!-- audios -->
 	<div id="audios">
@@ -534,6 +541,24 @@
 		<audio preload="auto" class="laugh-girl8d" src="audio/Laugh_Giggle_Girl_8d.wav"></audio>
 		<audio preload="auto" class="tape-eject" src="audio/MiniDV_Tape_Eject_1.wav"></audio>
 		<audio preload="auto" class="tape-frt-01" src="ressources/Tape/TAPE_FRT_01.mp3"></audio>
+		<audio preload="auto" class="tape-frt-02" src="ressources/Tape/TAPE_FRT_02.mp3"></audio>
+		<audio preload="auto" class="tape-frt-03" src="ressources/Tape/TAPE_FRT_03.mp3"></audio>
+		<audio preload="auto" class="tape-gab-01" src="ressources/Tape/TAPE_GAB_01.mp3"></audio>
+		<audio preload="auto" class="tape-gab-02" src="ressources/Tape/TAPE_GAB_02.mp3"></audio>
+		<audio preload="auto" class="tape-gab-03" src="ressources/Tape/TAPE_GAB_03.mp3"></audio>
+		<audio preload="auto" class="tape-jer-01" src="ressources/Tape/TAPE_JER_01.mp3"></audio>
+		<audio preload="auto" class="tape-jer-02" src="ressources/Tape/TAPE_JER_02.mp3"></audio>
+		<audio preload="auto" class="tape-jer-03" src="ressources/Tape/TAPE_JER_03.mp3"></audio>
+		<audio preload="auto" class="tape-sus-01" src="ressources/Tape/TAPE_SUS_01.mp3"></audio>
+		<audio preload="auto" class="tape-sus-02" src="ressources/Tape/TAPE_SUS_02.mp3"></audio>
+		<audio preload="auto" class="tape-sus-03" src="ressources/Tape/TAPE_SUS_03.mp3"></audio>
+		<audio preload="auto" class="tape-erreur-01" src="ressources/Tape/TAPE_ERREUR_01.mp3"></audio>
+		<audio preload="auto" class="tape-erreur-02" src="ressources/Tape/TAPE_ERREUR_02.mp3"></audio>
+		<audio preload="auto" class="tape-erreur-03" src="ressources/Tape/TAPE_ERREUR_03.mp3"></audio>
+		<audio preload="auto" class="tape-erreur-04" src="ressources/Tape/TAPE_ERREUR_04.mp3"></audio>
+		<audio preload="auto" class="tape-erreur-05" src="ressources/Tape/TAPE_ERREUR_05.mp3"></audio>
+		<audio preload="auto" class="tape-erreur-06" src="ressources/Tape/TAPE_ERREUR_06.mp3"></audio>
+		<audio preload="auto" class="tape-erreur-07" src="ressources/Tape/TAPE_ERREUR_07.mp3"></audio>
 		<audio preload="auto" class="party-favor" src="audio/PartyFavorraspyPart_AC01__3.wav"></audio>
 		<audio preload="auto" class="knock" src="audio/knock2.wav"></audio>
 
@@ -583,6 +608,7 @@
 		<script src="script/mechanics/camera.js"></script>
 		<script src="script/mechanics/tape.js"></script>
 		<script src="script/mechanics/journal.js"></script>
+		<script src="script/mechanics/ending.js"></script>
 
 		<script src="script/mechanics/power.js"></script>
 		<script src="script/mechanics/night.js"></script>

@@ -236,6 +236,7 @@ const TapeScene = (() => {
   }
 
   function onPlaybackEnded(){
+    if (currentTape) Collectibles.markTapeListened(currentTape.id);
     setState(STATE.STOPPED);
   }
 
