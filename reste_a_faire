@@ -7,22 +7,176 @@ d'architecture) qui reste valable pour la partie technique/dette de code.
 ## 1) Contenu manquant (priorité haute — bloque l'expérience finale)
 
 ### Sons des événements aléatoires
-90 des 103 événements aléatoires (`script/config/random_events_data.json`)
-utilisent un son de secours (`laugh_girl1`, rire de fille) faute
-d'enregistrement réel — noms prévus : `wood`, `bell`, `paper`, `servo`,
-`chain`, `ceramic`, etc. Seul `chair` (GAB-001) a un vrai fichier
-(`audio/hidden/chair.mp3`). Pour corriger un son : enregistrer/produire le
-fichier, l'ajouter au catalogue `script/config/game_sounds.json`, puis
-changer le champ `sound` de l'événement concerné pour pointer vers le
-nouvel id.
+Les 25 sons présents dans `audio/hidden/` sont câblés : déclarés dans
+`script/config/game_sounds.json` (catégorie `misc`, comme `chair`),
+exposés en `<audio>` dans `index.html` (`preload="metadata"` : plusieurs
+fichiers dépassent 5 Mo, inutile de les charger tous au démarrage) et
+référencés par le champ `sound` des événements concernés dans
+`script/config/random_events_data.json`. 49 événements ont ainsi quitté le
+son de secours `laugh_girl1` ; il en reste 41.
+
+| Son | Fichier | Événements couverts |
+| --- | --- | --- |
+| `chair` | `chair.mp3` | GAB-001 |
+| `toy_roll` | `toy_roll.wav` | FRT-001, FRT-011 |
+| `toy_car` | `toy_car.wav` | FRT-006 |
+| `wheel` | `wheel.wav` | FRT-002, FRT-009, FRT-016, FRT-028 |
+| `paper` | `paper.wav` | JER-001, JER-008, JER-021, JER-028, GAB-007 |
+| `pencil` | `pencil.wav` | JER-002, JER-025 |
+| `pencil_loop` | `pencil_loop.mp3` | JER-006 |
+| `block` | `block.wav` | FRT-008, FRT-014, FRT-023, FRT-026 |
+| `crash` | `crash.wav` | FRT-027 |
+| `dog_far` | `dog_far.wav` | SUS-003 |
+| `pant` | `pant.wav` | SUS-025 |
+| `bowl` | `bowl.wav` | SUS-001, SUS-011 |
+| `bowl_move` | `bowl_move.wav` | SUS-008, SUS-021 |
+| `ceramic` | `ceramic.wav` | SUS-005, SUS-016, SUS-017, SUS-019 |
+| `bell` | `bell.wav` | SUS-006, SUS-013 |
+| `chain` | `chain.wav` | SUS-002, SUS-012 |
+| `servo` | `servo.wav` | FRT-021, GAB-012, GAB-013, JER-029, SUS-026, SUS-028 |
+| `clock` | `clock.wav` | GAB-021 |
+| `tick` | `tick.wav` | GAB-022 |
+| `coins` | `coins.mp3` | FRT-029 |
+| `water` | `water.wav` | SUS-024 |
+| `flies` | `flies.wav` | GAB-009 |
+| `flame` | `flame.wav` | GAB-005 |
+| `whoosh` | `whoosh.wav` | JER-023, SUS-018 |
+| `glitch` | `glitch.wav` | GAB-025 |
+
+Les volumes (`mixVolume`) sont un premier réglage à l'oreille (0.6 pour les
+sons censés être lointains ou discrets — `dog_far`, `clock`, `flies`,
+`flame` — jusqu'à 1 pour `crash` et `glitch`), à réajuster en jeu.
+
+Pour ajouter un son manquant : déposer le fichier dans `audio/hidden/`,
+ajouter une entrée dans `game_sounds.json` (`id`, `selector` en
+kebab-case, `category: "misc"`, `description`, `mixVolume`), ajouter la
+ligne `<audio>` correspondante dans le bloc `<!-- Hidden -->` de
+`index.html`, puis remplacer `laugh_girl1` par le nouvel id dans le champ
+`sound` des événements concernés.
+
+#### Sons encore à trouver (41 événements)
+`scratch` et `wood` étaient annoncés comme trouvés dans le tableau de
+production mais aucun fichier n'existe sur le disque : leurs événements
+restent sur `laugh_girl1`.
+
+| Son prévu | Événements |
+| --- | --- |
+| `wood` | FRT-004, FRT-007, FRT-012, FRT-017, FRT-022 |
+| `scratch` | JER-004, JER-027 |
+| `breathe` | GAB-004, GAB-011, GAB-015, SUS-010, SUS-027 |
+| `breath` | JER-026 |
+| `creak` | FRT-005, FRT-013, FRT-019, FRT-025 |
+| `drop` | FRT-024, JER-030 |
+| `crack` | JER-022, SUS-020 |
+| `metal` | SUS-004, GAB-014 |
+| `toys` | FRT-010, FRT-030 |
+| `figurine` | FRT-015 |
+| `puppy` | SUS-007 |
+| `step` | SUS-014 |
+| `cupboard` | SUS-022 |
+| `reverse` | GAB-024 |
+| `reset` | FRT-020 |
+| `clock_error` | GAB-023 |
+| `eraser` | JER-007 |
+| `balloon` | GAB-002 |
+| `crayons` | JER-003 |
+| `drip` | GAB-010 |
+| `page` | JER-009 |
+| `ball` | SUS-015 |
+| `cloth` | SUS-009 |
+
+Deux événements pourraient réutiliser un fichier déjà présent, mais le
+tableau de regroupement ne les listait pas — à trancher : FRT-018 (« Un
+cube disparaît », son prévu `block`) et JER-024 (« Les crayons changent de
+place », son prévu `paper`).
 
 ### Images "cachées" des événements
-Une majorité d'événements référencent une image (`imagePath`) qui n'existe
-pas encore sur le disque (`[RandomEvents] Image introuvable pour ...` dans
-la console à chaque lancement — ~77 occurrences). Le champ `realised` du
-JSON indique lesquels sont censés être terminés côté production ; il faut
-produire les images manquantes ou mettre à jour ce champ au fur et à
-mesure.
+76 événements référencent une image (`imagePath`) qui n'existe pas encore
+sur le disque (`[RandomEvents] Image introuvable pour ...` dans la console
+à chaque lancement). Le champ `realised` du JSON indique lesquels sont
+censés être terminés côté production ; il faut produire les images
+manquantes (au format `<ID>.png`, dans
+`images/rooms/<dossier de la salle>/hidden/`) ou mettre à jour ce champ au
+fur et à mesure.
+
+| ID | Nuit | Salle | Fichier attendu | Description |
+| --- | --- | --- | --- | --- |
+| FRT-001 | 1 | Pirate Cove | `FRT-001.png` | Petite voiture rouge apparaît |
+| FRT-002 | 1 | Pirate Cove | `FRT-002.png` | Foxy pousse doucement la voiture |
+| FRT-003 | 2 | Pirate Cove | `FRT-003.png` | La voiture change de position |
+| FRT-011 | 2 | West Hall | `FRT-011.png` | Voiture rouge |
+| GAB-004 | 2 | Stage | `GAB-004.png` | Freddy regarde une chaise vide |
+| JER-004 | 2 | Backstage | `JER-004.png` | Bonnie tient un crayon |
+| SUS-011 | 2 | Dining Area | `SUS-011.png` | Gamelle déplacée |
+| SUS-012 | 2 | Dining Area | `SUS-012.png` | Laisse au sol |
+| FRT-004 | 3 | Pirate Cove | `FRT-004.png` | Bateau pirate miniature |
+| FRT-005 | 3 | Pirate Cove | `FRT-005.png` | Coffre à trésor entrouvert |
+| FRT-007 | 3 | Pirate Cove | `FRT-007.png` | Foxy ramasse le bateau |
+| FRT-008 | 3 | Pirate Cove | `FRT-008.png` | Trois cubes en bois apparaissent |
+| FRT-012 | 3 | Pirate Cove | `FRT-012.png` | Bateau pirate |
+| FRT-013 | 3 | Dining Area | `FRT-013.png` | Coffre miniature |
+| FRT-014 | 3 | West Hall | `FRT-014.png` | Cube en bois |
+| FRT-016 | 3 | West Hall | `FRT-016.png` | La voiture avance seule |
+| FRT-021 | 3 | Pirate Cove | `FRT-021.png` | Foxy regarde la voiture |
+| FRT-022 | 3 | Pirate Cove | `FRT-022.png` | Foxy pousse le bateau |
+| GAB-011 | 3 | Stage | `GAB-011.png` | Freddy regarde toujours la même chaise |
+| GAB-021 | 3 | Dining Area | `GAB-021.png` | Horloge bloquée à 17h45 |
+| JER-005 | 3 | Dining Area | `JER-005.png` | Un dessin est accroché au mur |
+| JER-021 | 3 | Supply Closet | `JER-021.png` | Crayon bleu au sol |
+| JER-022 | 3 | Supply Closet | `JER-022.png` | Crayon rouge cassé |
+| JER-026 | 3 | Backstage | `JER-026.png` | Bonnie regarde un dessin |
+| JER-027 | 3 | Backstage | `JER-027.png` | Bonnie dessine |
+| SUS-004 | 3 | Kitchen | `SUS-004.png` | Chica tourne la tête vers une porte |
+| SUS-006 | 3 | East Hall | `SUS-006.png` | ??? |
+| SUS-013 | 3 | East Hall | `SUS-013.png` | Collier usé |
+| SUS-014 | 3 | East Hall | `SUS-014.png` | Empreintes de pattes poussiéreuses |
+| SUS-016 | 3 | Dining Area | `SUS-016.png` | Cupcake orienté vers la caméra |
+| SUS-017 | 3 | Dining Area | `SUS-017.png` | Cupcake regarde la porte |
+| FRT-009 | 4 | West Hall | `FRT-009.png` | Petite voiture dans le couloir |
+| FRT-015 | 4 | Dining Area | `FRT-015.png` | Figurine pirate |
+| FRT-017 | 4 | Dining Area | `FRT-017.png` | Le bateau change d'étagère |
+| FRT-018 | 4 | West Hall | `FRT-018.png` | Un cube disparaît |
+| FRT-023 | 4 | Pirate Cove | `FRT-023.png` | Foxy ramasse un cube |
+| FRT-024 | 4 | Pirate Cove | `FRT-024.png` | Foxy laisse tomber un jouet |
+| FRT-026 | 4 | Pirate Cove | `FRT-026.png` | Tour de cubes construite |
+| FRT-027 | 4 | Pirate Cove | `FRT-027.png` | Tour écroulée |
+| GAB-012 | 4 | Stage | `GAB-012.png` | Freddy regarde la caméra quelques secondes |
+| GAB-013 | 4 | Stage | `GAB-013.png` | Freddy baisse légèrement la tête |
+| GAB-022 | 4 | Dining Area | `GAB-022.png` | Horloge repart quelques secondes |
+| GAB-023 | 4 | Dining Area | `GAB-023.png` | Une seconde horloge affiche une autre heure |
+| JER-011 | 4 | Backstage | `JER-011.png` | Dessin d'un soleil |
+| JER-012 | 4 | Backstage | `JER-012.png` | Dessin de Freddy |
+| JER-016 | 4 | Backstage | `JER-016.png` | Dessin de cinq enfants |
+| JER-017 | 4 | Backstage | `JER-017.png` | Dessin barré |
+| JER-018 | 4 | Backstage | `JER-018.png` | Dessin déchiré |
+| JER-019 | 4 | Backstage | `JER-019.png` | Dessin inachevé |
+| JER-020 | 4 | Backstage | `JER-020.png` | Feuille totalement blanche |
+| JER-023 | 4 | Supply Closet | `JER-023.png` | Le crayon vert disparaît |
+| JER-024 | 4 | Supply Closet | `JER-024.png` | Les crayons changent de place |
+| JER-028 | 4 | Backstage | `JER-028.png` | Bonnie tient une feuille |
+| JER-029 | 4 | Backstage | `JER-029.png` | Bonnie baisse la tête devant un dessin |
+| SUS-008 | 4 | Kitchen | `SUS-008.png` | Bruit de gamelle déplacée |
+| SUS-015 | 4 | Dining Area | `SUS-015.png` | Petite balle jaune sous une chaise |
+| SUS-018 | 4 | Dining Area | `SUS-018.png` | Cupcake disparaît une seconde |
+| SUS-019 | 4 | Dining Area | `SUS-019.png` | Cupcake revient à sa place |
+| SUS-027 | 4 | Stage | `SUS-027.png` | Chica protège le Cupcake |
+| SUS-028 | 4 | Stage | `SUS-028.png` | Chica baisse la tête |
+| FRT-010 | 5 | Pirate Cove | `FRT-010.png` | Foxy aligne soigneusement tous les jouets |
+| FRT-019 | 5 | Pirate Cove | `FRT-019.png` | Le coffre est refermé |
+| FRT-020 | 5 | Pirate Cove | `FRT-020.png` | Tous les objets reviennent à leur place |
+| FRT-025 | 5 | Pirate Cove | `FRT-025.png` | Foxy regarde le coffre ouvert |
+| FRT-028 | 5 | Dining Area | `FRT-028.png` | Voiture sous une table |
+| FRT-029 | 5 | Pirate Cove | `FRT-029.png` | Trésor sorti du coffre |
+| FRT-030 | 5 | Pirate Cove | `FRT-030.png` | Jouets parfaitement rangés |
+| GAB-024 | 5 | Stage | `GAB-024.png` | Les aiguilles tournent à l'envers |
+| GAB-025 | 5 | Dining Area | `GAB-025.png` | L'horloge revient à 00:00 |
+| JER-025 | 5 | Supply Closet | `JER-025.png` | Un seul crayon reste sur la table |
+| JER-030 | 5 | Backstage | `JER-030.png` | Bonnie repose doucement le crayon |
+| SUS-009 | 5 | Dining Area | `SUS-009.png` | Ruban jaune au sol |
+| SUS-010 | 5 | Stage | `SUS-010.png` | Chica regarde le joueur sans bouger |
+| SUS-020 | 5 | Dining Area | `SUS-020.png` | Cupcake légèrement fissuré |
+| SUS-029 | 5 | Stage | `SUS-029.png` | Chica semble écouter |
+| SUS-030 | 5 | Stage | `SUS-030.png` | Chica s'arrête devant une porte fermée |
 
 ### Cassettes
 ~~11 des 12 cassettes (`script/config/tapes_data.json`) utilisent le son de

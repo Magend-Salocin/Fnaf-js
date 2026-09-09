@@ -537,5 +537,173 @@
     "category": "misc",
     "description": "Chaise",
     "mixVolume": 0.8
+  },
+  {
+    "id": "toy_roll",
+    "selector": ".toy-roll",
+    "category": "misc",
+    "description": "Petite voiture qui roule",
+    "mixVolume": 0.8
+  },
+  {
+    "id": "toy_car",
+    "selector": ".toy-car",
+    "category": "misc",
+    "description": "Petite voiture qui arrive",
+    "mixVolume": 0.8
+  },
+  {
+    "id": "wheel",
+    "selector": ".wheel",
+    "category": "misc",
+    "description": "Petite voiture qui passe",
+    "mixVolume": 0.8
+  },
+  {
+    "id": "paper",
+    "selector": ".paper",
+    "category": "misc",
+    "description": "Feuille de papier manipulée",
+    "mixVolume": 0.9
+  },
+  {
+    "id": "pencil",
+    "selector": ".pencil",
+    "category": "misc",
+    "description": "Crayon sur du papier",
+    "mixVolume": 0.7
+  },
+  {
+    "id": "pencil_loop",
+    "selector": ".pencil-loop",
+    "category": "misc",
+    "description": "Bruit de crayon en continu",
+    "mixVolume": 0.7
+  },
+  {
+    "id": "block",
+    "selector": ".block",
+    "category": "misc",
+    "description": "Cubes en bois",
+    "mixVolume": 0.8
+  },
+  {
+    "id": "crash",
+    "selector": ".crash",
+    "category": "misc",
+    "description": "Cubes en bois qui s'écroulent",
+    "mixVolume": 1
+  },
+  {
+    "id": "dog_far",
+    "selector": ".dog-far",
+    "category": "misc",
+    "description": "Aboiement lointain",
+    "mixVolume": 0.6
+  },
+  {
+    "id": "pant",
+    "selector": ".pant",
+    "category": "misc",
+    "description": "Halètements de chien",
+    "mixVolume": 0.7
+  },
+  {
+    "id": "bowl",
+    "selector": ".bowl",
+    "category": "misc",
+    "description": "Gamelle métallique",
+    "mixVolume": 0.8
+  },
+  {
+    "id": "bowl_move",
+    "selector": ".bowl-move",
+    "category": "misc",
+    "description": "Gamelle déplacée sur le sol",
+    "mixVolume": 0.8
+  },
+  {
+    "id": "ceramic",
+    "selector": ".ceramic",
+    "category": "misc",
+    "description": "Céramique déplacée (Cupcake)",
+    "mixVolume": 0.8
+  },
+  {
+    "id": "bell",
+    "selector": ".bell",
+    "category": "misc",
+    "description": "Tintement métallique (collier)",
+    "mixVolume": 0.7
+  },
+  {
+    "id": "chain",
+    "selector": ".chain",
+    "category": "misc",
+    "description": "Chaîne / laisse",
+    "mixVolume": 0.8
+  },
+  {
+    "id": "servo",
+    "selector": ".servo",
+    "category": "misc",
+    "description": "Servomoteur d'animatronic",
+    "mixVolume": 0.9
+  },
+  {
+    "id": "clock",
+    "selector": ".clock",
+    "category": "misc",
+    "description": "Horloge qui tourne",
+    "mixVolume": 0.6
+  },
+  {
+    "id": "tick",
+    "selector": ".tick",
+    "category": "misc",
+    "description": "Tic d'horloge isolé",
+    "mixVolume": 0.7
+  },
+  {
+    "id": "coins",
+    "selector": ".coins",
+    "category": "misc",
+    "description": "Pièces qui tombent",
+    "mixVolume": 0.9
+  },
+  {
+    "id": "water",
+    "selector": ".water",
+    "category": "misc",
+    "description": "Goutte / eau qui coule",
+    "mixVolume": 0.7
+  },
+  {
+    "id": "flies",
+    "selector": ".flies",
+    "category": "misc",
+    "description": "Bourdonnement de mouches",
+    "mixVolume": 0.6
+  },
+  {
+    "id": "flame",
+    "selector": ".flame",
+    "category": "misc",
+    "description": "Flamme de bougie",
+    "mixVolume": 0.6
+  },
+  {
+    "id": "whoosh",
+    "selector": ".whoosh",
+    "category": "misc",
+    "description": "Objet qui disparaît",
+    "mixVolume": 0.9
+  },
+  {
+    "id": "glitch",
+    "selector": ".glitch",
+    "category": "misc",
+    "description": "Glitch (horloge qui se remet à zéro)",
+    "mixVolume": 1
   }
 ]

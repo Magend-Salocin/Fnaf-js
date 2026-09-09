@@ -37,7 +37,8 @@
       "powerPanel": {
         "officePrefix": "BUREAU",
         "powerLabel": "PUISSANCE",
-        "batteryFootnote": "BATTERIE // FLUX LIVE"
+        "batteryFootnote": "BATTERIE // FLUX LIVE",
+        "screenLabel": "BATTERIE"
       },
       "usagePanel": {
         "officePrefix": "BUREAU",
@@ -123,7 +124,8 @@
       "powerPanel": {
         "officePrefix": "OFFICE",
         "powerLabel": "POWER",
-        "batteryFootnote": "BATTERY // LIVE FEED"
+        "batteryFootnote": "BATTERY // LIVE FEED",
+        "screenLabel": "BATTERY"
       },
       "usagePanel": {
         "officePrefix": "OFFICE",
