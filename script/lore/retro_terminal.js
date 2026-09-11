@@ -1,3 +1,103 @@
+/**
+ * Sons du terminal.
+ *
+ * Les clips du catalogue sont des ambiances : 8 s pour la frappe, 27 s pour
+ * le demarrage, 34 s pour le parasite. Joues tels quels sur un evenement
+ * d'interface, ils se superposent, ne s'arretent jamais et continuent apres
+ * la fermeture de la fenetre. On n'en joue donc qu'un extrait, de la duree
+ * de l'effet visuel qu'ils accompagnent.
+ */
+const TERMINAL_CUES = Object.freeze({
+    boot:   { id: "terminal-start",           durationMs: 2600 },
+    toggle: { id: "camera_toggle",            durationMs: 500 },
+    typing: { id: "terminal-keyboard-typing", durationMs: 150 },
+    glitch: { id: "terminal-glitch",          durationMs: 420 },
+    noise:  { id: "terminal-static",          durationMs: 520 }
+});
+
+const TerminalAudio = (() => {
+
+    /** Minuteurs de coupure en cours, par identifiant de son. */
+    const timers = new Map();
+
+    function cancelTimer(id) {
+        if (!timers.has(id)) return;
+        clearTimeout(timers.get(id));
+        timers.delete(id);
+    }
+
+    /** Joue un extrait du son, coupe apres sa duree utile. */
+    function play(cue) {
+        if (typeof playSound !== "function") return;
+
+        cancelTimer(cue.id);
+        playSound(cue.id);
+        timers.set(cue.id, setTimeout(() => {
+            stopSound(cue.id);
+            timers.delete(cue.id);
+        }, cue.durationMs));
+    }
+
+    /** Fait tourner le son en boucle jusqu'a l'appel de stop(). */
+    function hold(cue) {
+        if (typeof playSoundLoop !== "function") return;
+
+        cancelTimer(cue.id);
+        playSoundLoop(cue.id);
+    }
+
+    function stop(cue) {
+        cancelTimer(cue.id);
+        if (typeof stopSound === "function") stopSound(cue.id);
+    }
+
+    /**
+     * Coupe ce que la fenetre faisait entendre pendant qu'elle etait
+     * ouverte. Le son de bascule en est exclu : c'est justement celui du
+     * clic de fermeture, il doit pouvoir finir.
+     */
+    function stopAll() {
+        [TERMINAL_CUES.boot, TERMINAL_CUES.typing, TERMINAL_CUES.glitch, TERMINAL_CUES.noise].forEach(stop);
+    }
+
+    return { play, hold, stop, stopAll };
+
+})();
+
+/**
+ * Session du terminal : ce qui survit a la fermeture de la fenetre.
+ *
+ * La fenetre est detruite a chaque fermeture (overlay.remove()), donc rien
+ * ne peut vivre dedans. Le journal affiche et l'historique des commandes
+ * sont gardes ici et rejoues a la reouverture, comme une console qu'on
+ * reduit au lieu de la quitter.
+ */
+const ShellSession = {
+
+    /** Lignes affichees, dans l'ordre : { text, lineClass }. */
+    transcript: [],
+
+    /** Commandes tapees, pour le rappel aux fleches haut/bas. */
+    history: [],
+
+    /** Vrai des la premiere ouverture : evite de rejouer HELP ensuite. */
+    opened: false,
+
+    /** Au-dela, on oublie les plus anciennes lignes. */
+    maxLines: 200,
+
+    record(text, lineClass) {
+        this.transcript.push({ text, lineClass });
+        if (this.transcript.length > this.maxLines) {
+            this.transcript.splice(0, this.transcript.length - this.maxLines);
+        }
+    },
+
+    clear() {
+        this.transcript = [];
+    }
+};
+
 class RetroTerminal {
 
     static show(content, options = {}) {
@@ -29,12 +129,14 @@ class RetroTerminal {
                 <div class="retro-content"></div>
                 <span class="retro-cursor">█</span>
             </div>
+
+            <div class="retro-footer">FAZBEAR ENTERTAINMENT // TERMINAL DE SECURITE <span>MODELE FZ-11</span></div>
         `;
 
         overlay.appendChild(terminal);
         document.body.appendChild(overlay);
 
-        playSound("terminal-start");
+        TerminalAudio.play(TERMINAL_CUES.boot);
 
         const contentNode =
             terminal.querySelector(".retro-content");
@@ -52,6 +154,10 @@ class RetroTerminal {
 
             isClosed = true;
 
+            // Sans cela, le demarrage et les parasites continuent de jouer
+            // dans le bureau une fois la fenetre refermee.
+            TerminalAudio.stopAll();
+
             overlay.remove();
 
             settings.onClose?.();
@@ -61,7 +167,7 @@ class RetroTerminal {
             "click",
             () => {
 
-                playSound("camera_toggle");
+                TerminalAudio.play(TERMINAL_CUES.toggle);
 
                 close();
             }
@@ -154,7 +260,7 @@ class RetroTerminal {
             );
 
             if (withSound) {
-                playSound("terminal-keyboard-typing");
+                TerminalAudio.play(TERMINAL_CUES.typing);
             }
         };
 
@@ -272,8 +378,8 @@ class RetroTerminal {
 
     static shell(options = {}) {
 
-        const history = [];
-        let historyIndex = -1;
+        const history = ShellSession.history;
+        let historyIndex = history.length;
 
         const typewriterEnabled = options.typewriter !== false;
         const typewriterSpeed = options.typewriterSpeed || 16;
@@ -308,13 +414,34 @@ class RetroTerminal {
             }, 0);
         };
 
-        const printLine = (text, lineClass = "") => {
+        const printLine = (text, lineClass = "", remember = true) => {
             const line = document.createElement("div");
             line.className = `retro-shell-line ${lineClass}`.trim();
             line.textContent = text;
             log.appendChild(line);
+            if (remember) ShellSession.record(text, lineClass);
             scrollToBottom();
             return line;
+        };
+
+        /**
+         * Reaffiche le journal conserve, d'un coup et sans bruit : on
+         * retrouve l'ecran tel qu'on l'avait laisse, sans rejouer la
+         * machine a ecrire ligne par ligne.
+         */
+        const replayTranscript = () => {
+            ShellSession.transcript.forEach(entry => {
+                const line = document.createElement("div");
+                line.className = `retro-shell-line ${entry.lineClass}`.trim();
+                // typeOut transforme les sauts de ligne en <br> : on fait
+                // pareil pour que le rendu soit identique a l'original.
+                entry.text.split("\n").forEach((part, index) => {
+                    if (index > 0) line.appendChild(document.createElement("br"));
+                    line.appendChild(document.createTextNode(part));
+                });
+                log.appendChild(line);
+            });
+            scrollToBottom();
         };
 
         /* -----------------------------------------------------
@@ -327,6 +454,7 @@ class RetroTerminal {
             const wrapper = document.createElement("div");
             wrapper.className = `retro-shell-line ${lineClass}`.trim();
             log.appendChild(wrapper);
+            ShellSession.record(text, lineClass);
             scrollToBottom();
 
             if (!typewriterEnabled) {
@@ -339,9 +467,12 @@ class RetroTerminal {
             const chars = text.split("");
             let i = 0;
 
+            TerminalAudio.hold(TERMINAL_CUES.typing);
+
             const tick = () => {
 
                 if (i >= chars.length) {
+                    TerminalAudio.stop(TERMINAL_CUES.typing);
                     onDone?.();
                     return;
                 }
@@ -358,10 +489,6 @@ class RetroTerminal {
 
                 scrollToBottom();
 
-                if (i % 2 === 0 && typeof playSound === "function") {
-                    playSound("terminal-keyboard-typing");
-                }
-
                 setTimeout(tick, typewriterSpeed);
             };
 
@@ -370,18 +497,19 @@ class RetroTerminal {
             return wrapper;
         };
 
-        if (options.intro) {
-            typeOut(options.intro);
-        }
-
-        input.focus();
-
         /* -----------------------------------------------------
            Joue une séquence temporisée dans le log : chaque étape
            apparaît après un délai, lettre par lettre (sauf les
            étapes "flash" qui apparaissent instantanément puis
            disparaissent seules après flashDuration).
            ----------------------------------------------------- */
+        /**
+         * Etapes encore en attente. L'ecran etant efface a chaque commande,
+         * il faut pouvoir les annuler : sinon la fin d'une sequence viendrait
+         * s'ecrire dans l'ecran de la commande suivante.
+         */
+        let sequenceTimers = [];
+
         const playSequence = (sequence = []) => {
 
             let elapsed = 0;
@@ -390,13 +518,11 @@ class RetroTerminal {
 
                 elapsed += step.delay || 0;
 
-                setTimeout(() => {
+                sequenceTimers.push(setTimeout(() => {
 
                     if (step.glitch) {
                         RetroTerminal.glitchPulse(terminal.terminal);
-                        if (typeof playSound === "function") {
-                            playSound("terminal-glitch");
-                        }
+                        TerminalAudio.play(TERMINAL_CUES.glitch);
                     }
 
                     const cls =
@@ -404,7 +530,7 @@ class RetroTerminal {
 
                     if (step.flash) {
 
-                        const node = printLine(step.text || "", cls);
+                        const node = printLine(step.text || "", cls, false);
                         scrollToBottom();
 
                         setTimeout(() => {
@@ -418,8 +544,22 @@ class RetroTerminal {
                         });
                     }
 
-                }, elapsed);
+                }, elapsed));
             });
+        };
+
+        /**
+         * Vide l'écran et le journal conservé, et annule les étapes de
+         * séquence encore en attente.
+         */
+        const clearScreen = () => {
+
+            sequenceTimers.forEach(clearTimeout);
+            sequenceTimers = [];
+
+            log.innerHTML = "";
+            ShellSession.clear();
+            scrollToBottom();
         };
 
         /* -----------------------------------------------------
@@ -427,17 +567,14 @@ class RetroTerminal {
            ----------------------------------------------------- */
         const handleClear = () => {
 
-            log.innerHTML = "";
-            scrollToBottom();
+            clearScreen();
 
             if (typeof playSound === "function") {
-                playSound("camera_toggle");
+                TerminalAudio.play(TERMINAL_CUES.toggle);
             }
         };
 
-        const handleSubmit = () => {
-
-            const raw = input.value;
+        const runCommand = raw => {
 
             if (raw.trim() === "") return;
 
@@ -445,12 +582,15 @@ class RetroTerminal {
 
             history.push(raw);
             historyIndex = history.length;
-            input.value = "";
 
             if (cmdUpper === "CLEAR" || cmdUpper === "CLS") {
                 handleClear();
                 return;
             }
+
+            // Chaque commande repart d'un ecran vide : on ne lit que sa
+            // reponse, et c'est elle qu'on retrouve a la reouverture.
+            clearScreen();
 
             printLine(`> ${raw}`, "retro-shell-echo");
 
@@ -476,9 +616,7 @@ class RetroTerminal {
 
             if (result.glitch) {
                 RetroTerminal.glitchPulse(terminal.terminal);
-                if (typeof playSound === "function") {
-                    playSound("terminal-glitch");
-                }
+                TerminalAudio.play(TERMINAL_CUES.glitch);
             }
 
             if (result.text) {
@@ -489,6 +627,28 @@ class RetroTerminal {
                 setTimeout(() => terminal.close(), 900);
             }
         };
+
+        const handleSubmit = () => {
+            const raw = input.value;
+            if (raw.trim() === "") return;
+
+            input.value = "";
+            runCommand(raw);
+        };
+
+        // Ouverture de la fenetre : soit on retrouve l'ecran laisse en
+        // l'etat, soit c'est la premiere fois et la session s'ouvre sur
+        // l'introduction puis la liste des commandes.
+        if (ShellSession.opened) {
+            replayTranscript();
+        } else {
+            ShellSession.opened = true;
+            if (options.intro) {
+                typeOut(options.intro, "", () => runCommand("HELP"));
+            }
+        }
+
+        input.focus();
 
         /* -----------------------------------------------------
            ÉVÉNEMENT ALÉATOIRE SPONTANÉ (narratif)
@@ -568,9 +728,7 @@ class RetroTerminal {
                 terminal.terminal.classList.remove("retro-static-flicker");
             }, 220);
 
-            if (typeof playSound === "function") {
-                playSound(roll < 0.5 ? "terminal-glitch" : "terminal-static");
-            }
+            TerminalAudio.play(roll < 0.5 ? TERMINAL_CUES.glitch : TERMINAL_CUES.noise);
 
             if (roll < 0.6) {
                 corruptVisibleText(150 + Math.random() * 150);
@@ -595,6 +753,10 @@ class RetroTerminal {
         terminal.close = () => {
             if (idleTimer) clearInterval(idleTimer);
             if (ambientTimer) clearTimeout(ambientTimer);
+            // Une sequence en cours ecrirait dans un journal detache du
+            // document, et reapparaitrait tronquee a la reouverture.
+            sequenceTimers.forEach(clearTimeout);
+            sequenceTimers = [];
             originalClose();
         };
 
@@ -660,9 +822,7 @@ class RetroTerminal {
         overlay.appendChild(screen);
         document.body.appendChild(overlay);
 
-        if (typeof playSound === "function") {
-            playSound("terminal-start");
-        }
+        TerminalAudio.play(TERMINAL_CUES.boot);
 
         let finished = false;
         const lineDelay = options.lineDelay || 1400;
@@ -750,9 +910,7 @@ class RetroTerminal {
 
             if (target) {
                 target.classList.add("retro-glitch-pulse");
-                if (typeof playSound === "function") {
-                    playSound("terminal-keyboard-typing");
-                }
+                TerminalAudio.play(TERMINAL_CUES.typing);
                 setTimeout(() => {
                     target.textContent = morphTo;
                 }, 120);

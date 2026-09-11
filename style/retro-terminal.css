@@ -1,7 +1,29 @@
+/* =====================================================================
+   Terminal d'archives — boitier
+   ---------------------------------------------------------------------
+   Meme materiel que les panneaux du bureau et que le lecteur de cassettes :
+   fond noir, lisere 1px #2a2a2a, en-tete en police pixel, voile de
+   scanlines discret. Ce qui reste propre a l'appareil : le vert phosphore
+   et le monospace du CONTENU. Un terminal affiche des commandes tapees et
+   des rapports entiers — la police pixel y serait illisible, et c'est la
+   couleur de l'ordinateur de securite depuis toujours.
+   ===================================================================== */
+
+.retro-terminal-overlay,
+.retro-root-overlay{
+  --rt-panel:      #080808;
+  --rt-panel-deep: #050505;
+  --rt-raised:     #141414;
+  --rt-border:     #2a2a2a;
+  --rt-text-dim:   #5a6b5e;
+  --rt-green:      var(--rc-green, #00ff66);
+  --rt-chrome-font:'Press Start 2P', monospace;
+}
+
   .retro-terminal-overlay{
         position:fixed;
         inset:0;
-        background:rgba(0,0,0,.88);
+        background:radial-gradient(ellipse at center, rgba(10,22,14,.45), rgba(0,0,0,.96));
         display:flex;
         justify-content:center;
         align-items:center;
@@ -10,12 +32,13 @@
     }
 
     .retro-terminal{
-        background:var(--rc-bg-void, #050505);
-        border:2px solid var(--rc-green, #00ff66);
+        background:var(--rt-panel, #080808);
+        border:1px solid var(--rt-border, #2a2a2a);
+        border-radius:2px;
         box-shadow:
-            0 0 15px var(--rc-green, #00ff66),
-            0 0 40px rgba(0,255,102,.3),
-            inset 0 0 25px rgba(0,255,102,.15);
+            0 0 60px rgba(0,0,0,.95),
+            inset 0 0 18px rgba(0,0,0,.6),
+            inset 0 0 40px rgba(0,255,102,.05);
         color:var(--rc-green, #00ff66);
         font-family:var(--rc-font-mono, Consolas, "Courier New", monospace);
         overflow:hidden;
@@ -28,7 +51,14 @@
         content:'';
         position:absolute;
         inset:0;
-        background:var(--rc-scanlines);
+        background:repeating-linear-gradient(
+            to bottom,
+            rgba(255,255,255,.04) 0,
+            rgba(255,255,255,.04) 1px,
+            transparent 2px,
+            transparent 4px
+        );
+        opacity:.18;
         pointer-events:none;
         z-index:2;
     }
@@ -48,26 +78,54 @@
         display:flex;
         justify-content:space-between;
         align-items:center;
-        padding:10px 15px;
-        border-bottom:1px solid var(--rc-green, #00ff66);
-        background:#00180a;
-        font-size:14px;
+        gap:16px;
+        padding:13px 16px;
+        border-bottom:1px solid var(--rt-border, #2a2a2a);
+        background:var(--rt-panel-deep, #050505);
+        color:var(--rc-green, #00ff66);
+        font-family:var(--rt-chrome-font, monospace);
+        font-size:7px;
         text-transform:uppercase;
-        letter-spacing:1px;
+        letter-spacing:3px;
+        line-height:1.8;
     }
 
     .retro-close{
-        background:none;
-        border:none;
-        color:var(--rc-green, #00ff66);
-        cursor:pointer;
-        font-size:18px;
+        flex:none;
+        width:30px;
+        height:30px;
+        margin:0;
         padding:0;
+        background:var(--rt-raised, #141414);
+        border:1px solid var(--rt-border, #2a2a2a);
+        border-radius:2px;
+        color:var(--rt-text-dim, #5a6b5e);
+        font-family:var(--rt-chrome-font, monospace);
+        font-size:10px;
+        cursor:pointer;
+        transition:color .15s ease, border-color .15s ease;
     }
 
     .retro-close:hover{
-        text-shadow:0 0 8px var(--rc-green, #00ff66);
+        color:var(--rc-green, #00ff66);
+        border-color:var(--rc-green, #00ff66);
     }
+
+    /* Bandeau constructeur, comme sur le lecteur de cassettes : les deux
+       appareils sortent du meme atelier. */
+    .retro-footer{
+        padding:9px 16px;
+        border-top:1px solid var(--rt-border, #2a2a2a);
+        background:#000;
+        color:var(--rt-text-dim, #5a6b5e);
+        font-family:var(--rt-chrome-font, monospace);
+        font-size:6px;
+        letter-spacing:1px;
+        position:relative;
+        z-index:3;
+    }
+
+    .retro-footer span{ float:right; }
 
     .retro-screen{
         padding:20px;
@@ -156,8 +214,9 @@
    ========================= */
 
 .terminal-choice-card{
-    border:2px solid rgba(0,255,102,.55);
-    background:rgba(0,20,8,.35);
+    border:1px solid var(--rt-border, #2a2a2a);
+    background:var(--rt-panel, #080808);
+    box-shadow:inset 0 0 10px rgba(0,0,0,.7);
 
     min-height:220px;
 
@@ -180,12 +239,12 @@
 }
 
 .terminal-choice-card:hover{
-    border-color:var(--rc-green, #00ff66);
-    background:rgba(0,40,15,.45);
+    border-color:rgba(0,255,102,.55);
+    background:var(--rt-raised, #141414);
 
     box-shadow:
-        0 0 12px rgba(0,255,102,.35),
-        inset 0 0 12px rgba(0,255,102,.15);
+        0 0 12px rgba(0,255,102,.18),
+        inset 0 0 12px rgba(0,255,102,.08);
 }
 
 /* =========================
@@ -195,11 +254,11 @@
 .terminal-choice-card.selected{
     border-color:var(--rc-green, #00ff66);
 
-    background:rgba(0,50,20,.65);
+    background:var(--rt-raised, #141414);
 
     box-shadow:
-        0 0 18px rgba(0,255,102,.6),
-        inset 0 0 18px rgba(0,255,102,.15);
+        0 0 16px rgba(0,255,102,.3),
+        inset 0 0 16px rgba(0,255,102,.1);
 
     transform:translateY(-2px);
 }
@@ -208,17 +267,20 @@
    TITRES
    ========================= */
 
+/* Le libelle reste en monospace : il vient des donnees de lore, accents
+   compris, que la police pixel dessinerait en minuscules. */
 .terminal-choice-label{
-    font-size:18px;
+    font-size:15px;
     font-weight:bold;
-    line-height:1.3;
+    line-height:1.4;
 
     margin-bottom:15px;
 
     text-transform:uppercase;
+    letter-spacing:1px;
 
     text-shadow:
-        0 0 6px rgba(0,255,102,.8);
+        0 0 6px rgba(0,255,102,.5);
 }
 
 /* =========================

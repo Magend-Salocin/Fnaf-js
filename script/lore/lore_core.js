@@ -132,22 +132,92 @@ const LoreCore = (() => {
        indice sur une commande cachée pas encore trouvée.
        --------------------------------------------------------- */
 
+    /**
+     * Indique si une commande liee a un evenement aleatoire a ete
+     * deverrouillee. Une commande sans evenement associe est toujours
+     * consideree comme ouverte.
+     */
+    function isUnlockedByEvent(cmd) {
+        if (typeof RandomEvents === "undefined" ||
+            typeof RandomEvents.isTerminalCommandUnlocked !== "function") {
+            return true;
+        }
+        return RandomEvents.isTerminalCommandUnlocked(cmd);
+    }
+
+    /**
+     * Commandes reellement utilisables a cet instant : celles de la nuit
+     * courante, plus les logs dont le verrou horaire est passe et dont
+     * l'evenement de deverrouillage a ete vu.
+     * @returns {string[]} Noms de commandes, par ordre alphabetique
+     */
+    function listAvailableCommands() {
+
+        const night = getCurrentNight();
+        const hour = getCurrentHour();
+        const config = nights[night];
+        const available = new Set(["HELP"]);
+
+        if (config && config.commands) {
+            Object.keys(config.commands).forEach(cmd => available.add(cmd));
+        }
+
+        if (typeof LOG_FILES !== "undefined") {
+            LOG_FILES.forEach(cmd => {
+                const data = typeof getLog === "function" ? getLog(cmd) : null;
+
+                // Verrou horaire porte par le fichier de log lui-meme.
+                if (data && typeof data.minHour === "number" && hour < data.minHour) return;
+
+                if (!isUnlockedByEvent(cmd)) return;
+
+                available.add(cmd);
+            });
+        }
+
+        return [...available].sort();
+    }
+
+    /** Nombre de commandes existantes mais pas encore accessibles. */
+    function countLockedCommands() {
+        if (typeof LOG_FILES === "undefined") return 0;
+
+        const available = new Set(listAvailableCommands());
+        return LOG_FILES.filter(cmd => !available.has(cmd)).length;
+    }
+
+    /** Decoupe une liste en lignes de `perLine` elements. */
+    function toColumns(items, perLine) {
+        const rows = [];
+        for (let i = 0; i < items.length; i += perLine) {
+            rows.push("  " + items.slice(i, i + perLine).join("   "));
+        }
+        return rows;
+    }
+
     function buildHelp() {
 
         const night = getCurrentNight();
         const hour = getCurrentHour();
         const config = nights[night];
 
-        const baseLines = [
-            "COMMANDES DISPONIBLES :",
-            "STATUS, CAMERAS, DOORS, POWER"
-        ];
+        const available = listAvailableCommands();
+        const locked = countLockedCommands();
+
+        const baseLines = ["COMMANDES DISPONIBLES :", ...toColumns(available, 4)];
+
+        if (locked > 0) {
+            baseLines.push("", `${locked} ENTREE(S) D'ARCHIVE ENCORE VERROUILLEE(S).`);
+        }
 
         if (!config || !config.secretPool || config.secretPool.length === 0) {
             return { text: baseLines.join("\n"), glitch: false };
         }
 
-        const candidates = config.secretPool.filter(c => !isFound(c));
+        // On ne souffle que des commandes que le joueur ne peut pas encore
+        // utiliser : suggerer une commande deja listee n'apprend rien.
+        const availableSet = new Set(available);
+        const candidates = config.secretPool.filter(c => !isFound(c) && !availableSet.has(c));
 
         if (candidates.length === 0) {
             return { text: baseLines.join("\n"), glitch: false };
@@ -282,6 +352,8 @@ const LoreCore = (() => {
         resetProgress,
         markFound,
         isFound,
+        listAvailableCommands,
+        countLockedCommands,
         get state() { return state; }
     };
 

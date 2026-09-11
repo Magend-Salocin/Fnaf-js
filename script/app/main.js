@@ -54,7 +54,7 @@ function openInfoComputerPanel() {
   if (gameEnd) return;
 
   RetroTerminal.shell({
-      title: "ARCHIVES — ACCÈS NON RÉFÉRENCÉ",
+      title: "ARCHIVES // ACCES NON REFERENCE",
       intro: "Connexion établie...\nTapez HELP pour les commandes publiques.",
       onCommand: raw => LoreCore.handleCommand(raw),
       idleEvent: () => LoreCore.idleEvent(),
