@@ -5,7 +5,7 @@
     "type": "sequence",
     "steps": [
         {
-            "text": "\n╔══════════════════════════════════════════════════════════════╗\n║                OBJETS TROUVÉS                               ║\n╚══════════════════════════════════════════════════════════════╝\nN°      OBJET               STATUT\n\n442     Veste bleue         RENDUE\n\n443     Voiture             RENDUE\n\n444     Sac à dos           RENDU\n\n445     Casquette           EN ATTENTE\n\n--------------------------------------------------------------\n\nPROPRIÉTAIRE :      INCONNU\nTEMPS D'ATTENTE :   4018 jours\nStatut :            Personne n'est revenu.\n--------------------------------------------------------------\n",
+            "text": "\n╔══════════════════════════════════════════════════════════════╗\n║                OBJETS TROUVÉS                               ║\n╚══════════════════════════════════════════════════════════════╝\nN°      OBJET               STATUT\n\n442     Veste bleue         RENDUE\n\n443     Voiture             RENDUE\n\n444     Sac à dos           RENDU\n\n445     Casquette           EN ATTENTE\n\n--------------------------------------------------------------\n\nPROPRIÉTAIRE :      INCONNU\nTEMPS D'ATTENTE :   4018 jours\nStatut :            Personne n'est revenu.\n\nRetrait réglementaire :  IMPOSSIBLE\nMotif :                  DOSSIER VERROUILLÉ\n--------------------------------------------------------------\n",
             "delay": 0,
             "glitch": false,
             "flash": false

@@ -11,7 +11,7 @@
             "flash": false
         },
         {
-            "text": "\nObjet détecté : BALLON JAUNE\nPosition :      SALLE PRINCIPALE\nAucune demandede décoration enregistrée.\n ",
+            "text": "\nObjet détecté : BALLON JAUNE\nPosition :      SALLE PRINCIPALE\nAucune demande de décoration enregistrée.\n ",
             "delay": 1500,
             "glitch": true,
             "flash": true,
