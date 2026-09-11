@@ -95,6 +95,11 @@ function setupEventListeners() {
 
   document.addEventListener('mousemove', handleOfficeMouseLook);
 
+  /*Objets cliquables du bureau (poste de radio...)*/
+  document.addEventListener('mousemove', handleOfficeHotspotPointerMove);
+  document.addEventListener('mouseleave', handleOfficeHotspotPointerLeave);
+  canvas.addEventListener('click', (event) => handleOfficeHotspotClick(event.clientX, event.clientY));
+
   /*Debug*/
   setupDebugEventListeners();
 }

@@ -1,0 +1,39 @@
+{
+  "enabled": true,
+  "comment": "Objets du bureau que le joueur peut survoler et cliquer directement sur l'image. Coordonnees normalisees (fractions de la largeur/hauteur de l'image source), comme office_screens.json : valables quelle que soit la resolution du rendu, et le survol suit le panoramique du bureau. Une cle d'image absente de `zones` = objet non cliquable sur cette image (power down, jumpscares...). `action` doit correspondre a une entree de OFFICE_HOTSPOT_ACTIONS et `available` (optionnel) a une entree de OFFICE_HOTSPOT_AVAILABILITY (script/mechanics/office_hotspot.js) ; sans `available`, l'objet est toujours cliquable. `attract` (optionnel) fait pulser l'objet meme sans survol, pour signaler qu'il vient de devenir disponible. `tooltip` (optionnel) est une cle de la section `panels` de translations.json, affichee en etiquette au survol : l'objet et le bouton correspondant du HUD disent ainsi la meme chose dans la langue active. Pour calibrer apres un nouveau rendu : reperer le rectangle de l'objet en pixels dans l'image source, puis diviser par la taille de l'image.",
+  "hotspots": [
+    {
+      "id": "radio",
+      "action": "openTapeScene",
+      "zones": {
+        "safe_room_left_light_0_right_light_0": { "x": 0.2806, "y": 0.5486, "width": 0.0875, "height": 0.1653 },
+        "safe_room_left_light_0_right_light_1": { "x": 0.2806, "y": 0.5486, "width": 0.0875, "height": 0.1653 },
+        "safe_room_left_light_1_right_light_0": { "x": 0.2806, "y": 0.5486, "width": 0.0875, "height": 0.1653 },
+        "safe_room_left_light_1_right_light_1": { "x": 0.2806, "y": 0.5486, "width": 0.0875, "height": 0.1653 }
+      }
+    },
+    {
+      "id": "terminal",
+      "action": "openComputerTerminal",
+      "zones": {
+        "safe_room_left_light_0_right_light_0": { "x": 0.3731, "y": 0.5125, "width": 0.0913, "height": 0.2333 },
+        "safe_room_left_light_0_right_light_1": { "x": 0.3731, "y": 0.5125, "width": 0.0913, "height": 0.2333 },
+        "safe_room_left_light_1_right_light_0": { "x": 0.3731, "y": 0.5125, "width": 0.0913, "height": 0.2333 },
+        "safe_room_left_light_1_right_light_1": { "x": 0.3731, "y": 0.5125, "width": 0.0913, "height": 0.2333 }
+      }
+    },
+    {
+      "id": "phone",
+      "action": "hangUpPhone",
+      "available": "phoneCallActive",
+      "attract": true,
+      "tooltip": "phoneFooter",
+      "zones": {
+        "safe_room_left_light_0_right_light_0": { "x": 0.6300, "y": 0.6167, "width": 0.0575, "height": 0.1125 },
+        "safe_room_left_light_0_right_light_1": { "x": 0.6300, "y": 0.6167, "width": 0.0575, "height": 0.1125 },
+        "safe_room_left_light_1_right_light_0": { "x": 0.6300, "y": 0.6167, "width": 0.0575, "height": 0.1125 },
+        "safe_room_left_light_1_right_light_1": { "x": 0.6300, "y": 0.6167, "width": 0.0575, "height": 0.1125 }
+      }
+    }
+  ]
+}

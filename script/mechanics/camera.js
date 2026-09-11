@@ -580,6 +580,9 @@ function drawOfficeViewByPicture(officeImageKey){
 function drawOfficeView(ctx,officeImageKey=null) {
 
   updateOfficeLookAnimation();
+  // La geometrie des objets cliquables n'est valable que pour l'image
+  // effectivement dessinee plus bas : on repart de zero a chaque frame.
+  clearOfficeImageLayout();
 
     ctx.fillStyle = 'darkgray';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -610,6 +613,7 @@ function drawOfficeView(ctx,officeImageKey=null) {
 
           ctx.drawImage(picture, drawX, drawY, drawWidth, drawHeight);
           drawOfficeScreens(ctx, officeImageKey, drawX, drawY, drawWidth, drawHeight);
+          drawOfficeHotspots(ctx, officeImageKey, drawX, drawY, drawWidth, drawHeight);
             hideGif();
         }
     }
