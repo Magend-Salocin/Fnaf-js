@@ -4,6 +4,7 @@
 document.addEventListener('DOMContentLoaded',async () => {
     setupLanguageScreen();
     preloadImages(); // Précharge les images des salles
+    preloadOfficeAnimations(); // Précharge les GIF animés du bureau (ventilateur...)
     if (typeof RandomEvents !== 'undefined') {
       RandomEvents.preload(); // Précharge les images des événements aléatoires
     }

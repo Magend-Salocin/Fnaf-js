@@ -1,0 +1,20 @@
+{
+  "enabled": true,
+  "comment": "Animations jouees en surimpression sur l'image du bureau. `gif` est le fichier a lire, `source` la zone utile du GIF en pixels (le reste du fichier, decor compris, n'est pas dessine), et `zones` la destination par image du bureau, en coordonnees normalisees comme office_screens.json : l'animation suit donc le panoramique. Une cle d'image absente de `zones` = pas d'animation sur cette image (power down, jumpscares...). `shape` vaut \"ellipse\" pour un objet rond comme la grille du ventilateur — un rectangle laisserait voir les coins du GIF — ou \"rect\". `feather` adoucit le bord du masque, en part du rayon. `brightness` multiplie la luminosite du GIF : spinning_fan.gif a ete exporte d'un rendu plus clair que l'image actuelle du bureau, sans cette correction le ventilateur ressort comme un disque lumineux.",
+  "animations": [
+    {
+      "id": "fan",
+      "gif": "images/rooms/the_office/safe_room/spinning_fan.gif",
+      "source": { "x": 22, "y": 22, "width": 103, "height": 118 },
+      "shape": "ellipse",
+      "feather": 0.08,
+      "brightness": 0.4,
+      "zones": {
+        "safe_room_left_light_0_right_light_0": { "x": 0.4563, "y": 0.4653, "width": 0.0775, "height": 0.1958 },
+        "safe_room_left_light_0_right_light_1": { "x": 0.4563, "y": 0.4653, "width": 0.0775, "height": 0.1958 },
+        "safe_room_left_light_1_right_light_0": { "x": 0.4563, "y": 0.4653, "width": 0.0775, "height": 0.1958 },
+        "safe_room_left_light_1_right_light_1": { "x": 0.4563, "y": 0.4653, "width": 0.0775, "height": 0.1958 }
+      }
+    }
+  ]
+}

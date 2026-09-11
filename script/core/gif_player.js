@@ -142,6 +142,25 @@ class GifPlayer {
         );
     }
 
+    /**
+     * Draw a sub-rectangle of the current composited frame. Used when only
+     * part of a GIF is wanted — e.g. the fan cage of spinning_fan.gif, whose
+     * file also contains the scenery around it.
+     * @param {CanvasRenderingContext2D} ctx
+     * @param {number} sx  source X inside the gif
+     * @param {number} sy  source Y inside the gif
+     * @param {number} sw  source width
+     * @param {number} sh  source height
+     * @param {number} dx  destination X
+     * @param {number} dy  destination Y
+     * @param {number} dw  destination width
+     * @param {number} dh  destination height
+     */
+    drawFrameRegion(ctx, sx, sy, sw, sh, dx, dy, dw, dh) {
+        if (!this._offscreen) return;
+        ctx.drawImage(this._offscreen, sx, sy, sw, sh, dx, dy, dw, dh);
+    }
+
     /** Returns true when at least one frame has been decoded. */
     get ready() {
         return this.frames.length > 0;
