@@ -1,10 +1,16 @@
 {
   "enabled": true,
-  "comment": "Zones ecran du bureau, en surimpression sur l'image. Coordonnees normalisees (fractions de la largeur/hauteur de l'image source), donc valables quelle que soit la resolution du rendu. Une cle absente = pas de surimpression pour cette image (power down, jumpscares...). Pour recalibrer apres un nouveau rendu : reperer le rectangle noir du panneau BATTERIE en pixels, puis diviser par la taille de l'image.",
+  "comment": "Zones ecran du bureau, en surimpression sur l'image. Coordonnees normalisees (fractions de la largeur/hauteur de l'image source), donc valables quelle que soit la resolution du rendu. Une cle absente = pas de surimpression pour cette image (power down, jumpscares...). Pour recalibrer apres un nouveau rendu : reperer le rectangle noir du panneau en pixels, puis diviser par la taille de l'image.",
   "batteryScreens": {
     "safe_room_left_light_0_right_light_0": { "x": 0.6940, "y": 0.6028, "width": 0.0600, "height": 0.0569 },
     "safe_room_left_light_0_right_light_1": { "x": 0.6944, "y": 0.6028, "width": 0.0600, "height": 0.0569 },
     "safe_room_left_light_1_right_light_0": { "x": 0.6636, "y": 0.4673, "width": 0.0807, "height": 0.0690 },
     "safe_room_left_light_1_right_light_1": { "x": 0.7134, "y": 0.5696, "width": 0.0722, "height": 0.0571 }
+  },
+  "usageScreens": {
+    "safe_room_left_light_0_right_light_0": { "x": 0.6940, "y": 0.6653, "width": 0.0600, "height": 0.0583 },
+    "safe_room_left_light_0_right_light_1": { "x": 0.6944, "y": 0.6653, "width": 0.0600, "height": 0.0583 },
+    "safe_room_left_light_1_right_light_0": { "x": 0.6636, "y": 0.5363, "width": 0.0807, "height": 0.0630 },
+    "safe_room_left_light_1_right_light_1": { "x": 0.7134, "y": 0.6278, "width": 0.0674, "height": 0.0595 }
   }
 }

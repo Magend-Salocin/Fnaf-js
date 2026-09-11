@@ -30,3 +30,13 @@ function getOfficeBatteryScreenRect(officeImageKey) {
   if (!OFFICE_SCREENS_CONFIG.enabled) return null;
   return OFFICE_SCREENS_CONFIG.batteryScreens?.[officeImageKey] || null;
 }
+
+/**
+ * Retourne la zone normalisee de l'ecran consommation pour une image de bureau.
+ * @param {string} officeImageKey - Cle de l'image du bureau (ex: safe_room_left_light_1_right_light_0)
+ * @returns {{x: number, y: number, width: number, height: number}|null} Zone normalisee, ou null si l'image n'a pas d'ecran calibre
+ */
+function getOfficeUsageScreenRect(officeImageKey) {
+  if (!OFFICE_SCREENS_CONFIG.enabled) return null;
+  return OFFICE_SCREENS_CONFIG.usageScreens?.[officeImageKey] || null;
+}

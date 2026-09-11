@@ -44,6 +44,7 @@
         "officePrefix": "BUREAU",
         "usageLabel": "CONSO",
         "gridLabel": "RESEAU ELEC",
+        "screenLabel": "CONSOMMATION",
         "ariaLabel": "niveau de conso {level} sur {max}"
       },
       "clockPanel": {
@@ -131,6 +132,7 @@
         "officePrefix": "OFFICE",
         "usageLabel": "USAGE",
         "gridLabel": "POWER GRID",
+        "screenLabel": "CONSUMPTION",
         "ariaLabel": "usage level {level} of {max}"
       },
       "clockPanel": {

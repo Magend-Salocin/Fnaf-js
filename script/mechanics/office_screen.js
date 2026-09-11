@@ -1,47 +1,119 @@
 // office_screen.js
-// Surimpression de la batterie sur l'ecran presente dans l'image du bureau.
-// Le panneau HTML #powerUsage reste en place : cette surimpression est un
-// second affichage, diegetique, dessine directement sur le canvas pour
-// suivre le panoramique gauche/droite du bureau.
+// Surimpression de la batterie et de la consommation sur les ecrans presents
+// dans l'image du bureau. Les panneaux HTML #powerUsage et #usage-status
+// restent en place : ces surimpressions sont un second affichage, diegetique,
+// dessine directement sur le canvas pour suivre le panoramique du bureau.
 
-const OFFICE_BATTERY_SCREEN = Object.freeze({
+const OFFICE_SCREEN = Object.freeze({
   // Le rendu 3D contient un texte de remplissage : on repeint le fond
-  // pour le masquer avant de dessiner les valeurs reelles.
+  // pour le masquer avant de dessiner la jauge et les barres.
   BACKDROP: '#010402',
-  LABEL_COLOR: '#dcefe2',
-  SEGMENT_COUNT: 10,
-  SEGMENT_GAP_RATIO: 0.18,
-  TRACK_COLOR: 'rgba(255, 255, 255, 0.06)',
-  TRACK_BORDER: 'rgba(120, 220, 150, 0.22)',
+  SCANLINE_COLOR: 'rgba(0, 0, 0, 0.13)',
+  PADDING_X_RATIO: 0.06,
   LOW_THRESHOLD: 30,
   CRITICAL_THRESHOLD: 10,
   BLINK_PERIOD_MS: 800,
-  FONT_FAMILY: '"Press Start 2P", monospace'
+  // En dessous de cette taille a l'ecran la surimpression n'est plus
+  // lisible : l'ecran du rendu suffit.
+  MIN_WIDTH: 40,
+  MIN_HEIGHT: 18
+});
+
+const OFFICE_BATTERY_SCREEN = Object.freeze({
+  // Part de la hauteur de l'ecran occupee par la jauge.
+  GAUGE_HEIGHT_RATIO: 0.62,
+  SEGMENT_COUNT: 10,
+  SEGMENT_GAP_RATIO: 0.18,
+  TRACK_COLOR: 'rgba(255, 255, 255, 0.06)',
+  TRACK_BORDER: 'rgba(120, 220, 150, 0.22)'
+});
+
+const OFFICE_USAGE_SCREEN = Object.freeze({
+  // Part de la hauteur de l'ecran occupee par la barre la plus haute.
+  MAX_BAR_HEIGHT_RATIO: 0.78,
+  BAR_WIDTH_RATIO: 0.72,
+  // Hauteur relative de la barre la plus courte : les barres montent en
+  // escalier comme sur le panneau HTML #usage-status.
+  MIN_BAR_HEIGHT_RATIO: 0.45,
+  IDLE_BAR_COLOR: 'rgba(255, 255, 255, 0.05)',
+  IDLE_BAR_BORDER: 'rgba(150, 150, 150, 0.35)'
 });
 
 /**
- * Palette de la jauge selon le niveau de batterie.
+ * Palette de la jauge de batterie selon le niveau restant.
  * @param {number} displayPower - Batterie affichee (0-100)
- * @returns {{from: string, to: string, digits: string, glow: string}} Couleurs de la jauge
+ * @returns {{from: string, to: string, glow: string}} Couleurs de la jauge
  */
 function getOfficeBatteryPalette(displayPower) {
-  if (displayPower <= OFFICE_BATTERY_SCREEN.CRITICAL_THRESHOLD) {
-    return { from: '#ff6d4b', to: '#ff2222', digits: '#ff5252', glow: 'rgba(255, 40, 40, 0.55)' };
+  if (displayPower <= OFFICE_SCREEN.CRITICAL_THRESHOLD) {
+    return { from: '#ff6d4b', to: '#ff2222', glow: 'rgba(255, 40, 40, 0.55)' };
   }
-  if (displayPower <= OFFICE_BATTERY_SCREEN.LOW_THRESHOLD) {
-    return { from: '#ffd23f', to: '#ff8a1f', digits: '#ffb648', glow: 'rgba(255, 150, 40, 0.45)' };
+  if (displayPower <= OFFICE_SCREEN.LOW_THRESHOLD) {
+    return { from: '#ffd23f', to: '#ff8a1f', glow: 'rgba(255, 150, 40, 0.45)' };
   }
-  return { from: '#3dff6a', to: '#e2ff3a', digits: '#ffe14a', glow: 'rgba(80, 255, 130, 0.40)' };
+  return { from: '#3dff6a', to: '#e2ff3a', glow: 'rgba(80, 255, 130, 0.40)' };
 }
 
 /**
- * Libelle de l'ecran batterie dans la langue courante.
- * @returns {string} Libelle a afficher
+ * Palette des barres de consommation. Passe au rouge quand la batterie est
+ * critique, comme le panneau HTML #usage-status.
+ * @param {boolean} isCritical - Vrai si la batterie est au niveau critique
+ * @returns {{from: string, to: string, glow: string}} Couleurs des barres
  */
-function getOfficeBatteryScreenLabel() {
-  const lang = window.selectedLanguage || window.FNAF_DEFAULT_LANGUAGE || 'fr';
-  const t = typeof getCurrentTranslations === 'function' ? getCurrentTranslations() : {};
-  return t.powerPanel?.screenLabel || (lang === 'en' ? 'BATTERY' : 'BATTERIE');
+function getOfficeUsagePalette(isCritical) {
+  if (isCritical) {
+    return { from: '#ff7f54', to: '#ff3535', glow: 'rgba(255, 58, 58, 0.55)' };
+  }
+  return { from: '#ffd24f', to: '#ff9d20', glow: 'rgba(255, 170, 48, 0.45)' };
+}
+
+/**
+ * Convertit une zone normalisee en rectangle a l'ecran, dans le repere de
+ * l'image telle qu'elle vient d'etre dessinee par ctx.drawImage().
+ * @param {{x: number, y: number, width: number, height: number}|null} rect - Zone normalisee
+ * @param {number} drawX - Abscisse de l'image dessinee
+ * @param {number} drawY - Ordonnee de l'image dessinee
+ * @param {number} drawWidth - Largeur de l'image dessinee
+ * @param {number} drawHeight - Hauteur de l'image dessinee
+ * @returns {{x: number, y: number, width: number, height: number}|null} Rectangle a l'ecran, ou null si la zone est absente ou trop petite
+ */
+function resolveOfficeScreenBox(rect, drawX, drawY, drawWidth, drawHeight) {
+  if (!rect) return null;
+
+  const width = rect.width * drawWidth;
+  const height = rect.height * drawHeight;
+  if (width < OFFICE_SCREEN.MIN_WIDTH || height < OFFICE_SCREEN.MIN_HEIGHT) return null;
+
+  return {
+    x: drawX + rect.x * drawWidth,
+    y: drawY + rect.y * drawHeight,
+    width,
+    height
+  };
+}
+
+/**
+ * Repeint le fond d'un ecran pour masquer le texte de remplissage du rendu.
+ * @param {CanvasRenderingContext2D} ctx - Contexte de dessin
+ * @param {{x: number, y: number, width: number, height: number}} box - Rectangle de l'ecran
+ */
+function clearOfficeScreen(ctx, box) {
+  ctx.fillStyle = OFFICE_SCREEN.BACKDROP;
+  ctx.fillRect(box.x, box.y, box.width, box.height);
+}
+
+/**
+ * Dessine les lignes de balayage pour que la surimpression se fonde dans
+ * l'ecran du rendu.
+ * @param {CanvasRenderingContext2D} ctx - Contexte de dessin
+ * @param {{x: number, y: number, width: number, height: number}} box - Rectangle de l'ecran
+ */
+function drawOfficeScreenScanlines(ctx, box) {
+  const step = Math.max(2, Math.round(box.height / 14));
+  ctx.fillStyle = OFFICE_SCREEN.SCANLINE_COLOR;
+  for (let lineY = box.y; lineY < box.y + box.height; lineY += step) {
+    ctx.fillRect(box.x, lineY, box.width, 1);
+  }
 }
 
 /**
@@ -94,26 +166,85 @@ function drawOfficeBatteryGauge(ctx, x, y, width, height, ratio, palette) {
 }
 
 /**
- * Dessine les lignes de balayage pour que la surimpression se fonde dans
- * l'ecran du rendu.
+ * Dessine les barres de consommation en escalier, allumees jusqu'au niveau
+ * d'utilisation courant.
  * @param {CanvasRenderingContext2D} ctx - Contexte de dessin
- * @param {number} x - Bord gauche de l'ecran
- * @param {number} y - Bord haut de l'ecran
- * @param {number} width - Largeur de l'ecran
- * @param {number} height - Hauteur de l'ecran
+ * @param {number} x - Bord gauche de la rangee
+ * @param {number} baselineY - Ordonnee du pied des barres
+ * @param {number} width - Largeur de la rangee
+ * @param {number} maxHeight - Hauteur de la barre la plus haute
+ * @param {number} usageLevel - Niveau d'utilisation courant (1 a MAX_USAGE)
+ * @param {{from: string, to: string, glow: string}} palette - Couleurs des barres allumees
  */
-function drawOfficeScreenScanlines(ctx, x, y, width, height) {
-  const step = Math.max(2, Math.round(height / 14));
-  ctx.fillStyle = 'rgba(0, 0, 0, 0.13)';
-  for (let lineY = y; lineY < y + height; lineY += step) {
-    ctx.fillRect(x, lineY, width, 1);
+function drawOfficeUsageBars(ctx, x, baselineY, width, maxHeight, usageLevel, palette) {
+  const barCount = POWER_SYSTEM.MAX_USAGE;
+  const pitch = width / barCount;
+  const barWidth = Math.max(1, pitch * OFFICE_USAGE_SCREEN.BAR_WIDTH_RATIO);
+  const heightStep = barCount > 1
+    ? (1 - OFFICE_USAGE_SCREEN.MIN_BAR_HEIGHT_RATIO) / (barCount - 1)
+    : 0;
+
+  for (let i = 0; i < barCount; i++) {
+    const barHeight = maxHeight * (OFFICE_USAGE_SCREEN.MIN_BAR_HEIGHT_RATIO + heightStep * i);
+    const barX = x + i * pitch;
+    const barY = baselineY - barHeight;
+
+    if (i < usageLevel) {
+      const gradient = ctx.createLinearGradient(barX, barY, barX, barY + barHeight);
+      gradient.addColorStop(0, palette.from);
+      gradient.addColorStop(1, palette.to);
+      ctx.fillStyle = gradient;
+      ctx.shadowColor = palette.glow;
+      ctx.shadowBlur = Math.max(2, maxHeight * 0.25);
+      ctx.fillRect(barX, barY, barWidth, barHeight);
+      ctx.shadowBlur = 0;
+    } else {
+      ctx.fillStyle = OFFICE_USAGE_SCREEN.IDLE_BAR_COLOR;
+      ctx.fillRect(barX, barY, barWidth, barHeight);
+      ctx.strokeStyle = OFFICE_USAGE_SCREEN.IDLE_BAR_BORDER;
+      ctx.lineWidth = 1;
+      ctx.strokeRect(barX, barY, barWidth, barHeight);
+    }
   }
 }
 
 /**
- * Dessine la batterie en surimpression sur l'ecran du bureau.
- * Les coordonnees d'image (drawX/drawY/drawWidth/drawHeight) sont celles
- * passees a ctx.drawImage() : la surimpression suit donc exactement le
+ * Dessine le contenu de l'ecran batterie : la jauge remplit l'ecran.
+ * @param {CanvasRenderingContext2D} ctx - Contexte de dessin
+ * @param {{x: number, y: number, width: number, height: number}} box - Rectangle de l'ecran
+ * @param {number} displayPower - Batterie affichee (0-100)
+ */
+function drawOfficeBatteryContent(ctx, box, displayPower) {
+  const palette = getOfficeBatteryPalette(displayPower);
+  const paddingX = box.width * OFFICE_SCREEN.PADDING_X_RATIO;
+
+  const gaugeWidth = box.width - paddingX * 2;
+  const gaugeHeight = box.height * OFFICE_BATTERY_SCREEN.GAUGE_HEIGHT_RATIO;
+  const gaugeY = box.y + (box.height - gaugeHeight) * 0.5;
+  drawOfficeBatteryGauge(ctx, box.x + paddingX, gaugeY, gaugeWidth, gaugeHeight, displayPower / 100, palette);
+}
+
+/**
+ * Dessine le contenu de l'ecran consommation : les barres remplissent l'ecran.
+ * @param {CanvasRenderingContext2D} ctx - Contexte de dessin
+ * @param {{x: number, y: number, width: number, height: number}} box - Rectangle de l'ecran
+ * @param {number} usageLevel - Niveau d'utilisation courant (1 a MAX_USAGE)
+ * @param {boolean} isCritical - Vrai si la batterie est au niveau critique
+ */
+function drawOfficeUsageContent(ctx, box, usageLevel, isCritical) {
+  const palette = getOfficeUsagePalette(isCritical);
+  const paddingX = box.width * OFFICE_SCREEN.PADDING_X_RATIO;
+
+  const barsWidth = box.width - paddingX * 2;
+  const barsMaxHeight = box.height * OFFICE_USAGE_SCREEN.MAX_BAR_HEIGHT_RATIO;
+  const barsBaselineY = box.y + (box.height + barsMaxHeight) * 0.5;
+  drawOfficeUsageBars(ctx, box.x + paddingX, barsBaselineY, barsWidth, barsMaxHeight, usageLevel, palette);
+}
+
+/**
+ * Dessine les ecrans batterie et consommation en surimpression sur l'image
+ * du bureau. Les coordonnees passees sont celles utilisees pour
+ * ctx.drawImage() : les surimpressions suivent donc exactement le
  * panoramique du bureau.
  * @param {CanvasRenderingContext2D} ctx - Contexte de dessin
  * @param {string} officeImageKey - Cle de l'image du bureau affichee
@@ -122,58 +253,37 @@ function drawOfficeScreenScanlines(ctx, x, y, width, height) {
  * @param {number} drawWidth - Largeur de l'image dessinee
  * @param {number} drawHeight - Hauteur de l'image dessinee
  */
-function drawOfficeBatteryScreen(ctx, officeImageKey, drawX, drawY, drawWidth, drawHeight) {
-  const rect = getOfficeBatteryScreenRect(officeImageKey);
-  if (!rect || power <= 0) return;
+function drawOfficeScreens(ctx, officeImageKey, drawX, drawY, drawWidth, drawHeight) {
+  if (power <= 0) return;
 
-  const x = drawX + rect.x * drawWidth;
-  const y = drawY + rect.y * drawHeight;
-  const width = rect.width * drawWidth;
-  const height = rect.height * drawHeight;
-  // Sous cette taille le texte est illisible : l'ecran du rendu suffit.
-  if (width < 40 || height < 18) return;
+  const batteryBox = resolveOfficeScreenBox(getOfficeBatteryScreenRect(officeImageKey), drawX, drawY, drawWidth, drawHeight);
+  const usageBox = resolveOfficeScreenBox(getOfficeUsageScreenRect(officeImageKey), drawX, drawY, drawWidth, drawHeight);
+  if (!batteryBox && !usageBox) return;
 
   const displayPower = Math.max(0, Math.min(100, Math.floor(power)));
-  const palette = getOfficeBatteryPalette(displayPower);
-  const isCritical = displayPower <= OFFICE_BATTERY_SCREEN.CRITICAL_THRESHOLD;
+  const isCritical = displayPower <= OFFICE_SCREEN.CRITICAL_THRESHOLD;
   const blinkOff = isCritical &&
-    (performance.now() % OFFICE_BATTERY_SCREEN.BLINK_PERIOD_MS) > OFFICE_BATTERY_SCREEN.BLINK_PERIOD_MS / 2;
+    (performance.now() % OFFICE_SCREEN.BLINK_PERIOD_MS) > OFFICE_SCREEN.BLINK_PERIOD_MS / 2;
 
   ctx.save();
 
-  ctx.fillStyle = OFFICE_BATTERY_SCREEN.BACKDROP;
-  ctx.fillRect(x, y, width, height);
+  if (batteryBox) clearOfficeScreen(ctx, batteryBox);
+  if (usageBox) clearOfficeScreen(ctx, usageBox);
 
   if (blinkOff) {
     ctx.globalAlpha = 0.45;
   }
 
-  const paddingX = width * 0.06;
-  const contentWidth = width - paddingX * 2;
-
-  const labelSize = Math.max(5, height * 0.19);
-  ctx.font = `${labelSize}px ${OFFICE_BATTERY_SCREEN.FONT_FAMILY}`;
-  ctx.textAlign = 'left';
-  ctx.textBaseline = 'alphabetic';
-  ctx.fillStyle = OFFICE_BATTERY_SCREEN.LABEL_COLOR;
-  ctx.fillText(getOfficeBatteryScreenLabel(), x + paddingX, y + height * 0.30 + labelSize * 0.5);
-
-  const gaugeWidth = contentWidth * 0.62;
-  const gaugeHeight = height * 0.34;
-  const gaugeY = y + height * 0.48;
-  drawOfficeBatteryGauge(ctx, x + paddingX, gaugeY, gaugeWidth, gaugeHeight, displayPower / 100, palette);
-
-  const digitsSize = Math.max(6, height * 0.26);
-  ctx.font = `${digitsSize}px ${OFFICE_BATTERY_SCREEN.FONT_FAMILY}`;
-  ctx.textAlign = 'right';
-  ctx.fillStyle = palette.digits;
-  ctx.shadowColor = palette.glow;
-  ctx.shadowBlur = Math.max(2, digitsSize * 0.5);
-  ctx.fillText(`${String(displayPower).padStart(3, '0')}%`, x + width - paddingX, gaugeY + gaugeHeight * 0.5 + digitsSize * 0.4);
-  ctx.shadowBlur = 0;
+  if (batteryBox) {
+    drawOfficeBatteryContent(ctx, batteryBox, displayPower);
+  }
+  if (usageBox) {
+    drawOfficeUsageContent(ctx, usageBox, getPowerUsageLevel(), isCritical);
+  }
 
   ctx.globalAlpha = 1;
-  drawOfficeScreenScanlines(ctx, x, y, width, height);
+  if (batteryBox) drawOfficeScreenScanlines(ctx, batteryBox);
+  if (usageBox) drawOfficeScreenScanlines(ctx, usageBox);
 
   ctx.restore();
 }

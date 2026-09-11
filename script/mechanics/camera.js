@@ -609,7 +609,7 @@ function drawOfficeView(ctx,officeImageKey=null) {
           const drawY = (canvas.height - drawHeight) / 2;
 
           ctx.drawImage(picture, drawX, drawY, drawWidth, drawHeight);
-          drawOfficeBatteryScreen(ctx, officeImageKey, drawX, drawY, drawWidth, drawHeight);
+          drawOfficeScreens(ctx, officeImageKey, drawX, drawY, drawWidth, drawHeight);
             hideGif();
         }
     }
