@@ -34,7 +34,7 @@ function getDeclaredOfficeHotspots() {
 /**
  * Retourne les objets cliquables calibres pour une image du bureau.
  * @param {string} officeImageKey - Cle de l'image du bureau (ex: safe_room_left_light_1_right_light_0)
- * @returns {{id: string, action: string, available: string|null, attract: boolean, tooltip: string|null, rect: {x: number, y: number, width: number, height: number}}[]} Objets presents sur cette image (liste vide si aucun)
+ * @returns {{id: string, action: string, available: string|null, attract: boolean|string, tooltip: string|null, rect: {x: number, y: number, width: number, height: number}}[]} Objets presents sur cette image (liste vide si aucun)
  */
 function getOfficeHotspots(officeImageKey) {
   return getDeclaredOfficeHotspots()
@@ -42,7 +42,7 @@ function getOfficeHotspots(officeImageKey) {
       id: hotspot.id,
       action: hotspot.action,
       available: hotspot.available || null,
-      attract: hotspot.attract === true,
+      attract: hotspot.attract || false,
       tooltip: hotspot.tooltip || null,
       rect: hotspot.zones?.[officeImageKey] || null
     }))

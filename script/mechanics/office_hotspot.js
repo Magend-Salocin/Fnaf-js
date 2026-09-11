@@ -1,12 +1,13 @@
 // office_hotspot.js
 // Objets du bureau que le joueur survole et clique directement sur l'image :
 // le poste de radio ouvre le lecteur de cassettes, le terminal ouvre les
-// archives et le telephone raccroche l'appel en cours, comme les boutons
-// #tape-panel, #computer-panel et #phone-panel du HUD. Ces boutons restent
-// en place : le clic sur l'objet est un second acces, diegetique. Les zones
-// viennent de office_hotspots.json ; elles sont normalisees, donc le survol
-// suit le panoramique du bureau et change avec l'image affichee (lumieres,
-// power down) sans recalibrage.
+// archives, le bloc de moniteurs leve les cameras et le telephone raccroche
+// l'appel en cours. Ces objets ont remplace les boutons du HUD :
+// ils sont le seul acces a ces fonctions, d'ou l'etiquette au survol et la
+// pulsation quand il se passe quelque chose. Les zones viennent de
+// office_hotspots.json ; elles sont normalisees, donc le survol suit le
+// panoramique du bureau et change avec l'image affichee (lumieres, power
+// down) sans recalibrage.
 
 const OFFICE_HOTSPOT = Object.freeze({
   // Le decor est tres sombre : l'objet survole est eclairci plutot
@@ -102,23 +103,39 @@ function resolveOfficeHotspotBox(rect, layout) {
 }
 
 /**
- * Conditions de disponibilite, indexees par le champ `available` de
- * office_hotspots.json. Un objet indisponible n'est ni dessine, ni
- * survolable, ni cliquable : le telephone ne se propose donc qu'une fois
- * l'appel decroche, et redevient inerte des qu'il est raccroche ou termine.
+ * Etats du jeu interrogeables depuis office_hotspots.json, via les champs
+ * `available` (l'objet est-il propose ?) et `attract` (doit-il se signaler ?).
  */
-const OFFICE_HOTSPOT_AVAILABILITY = Object.freeze({
-  phoneCallActive: () => currentNight?.isPhoneCallActive() === true
+const OFFICE_HOTSPOT_CONDITIONS = Object.freeze({
+  phoneCallActive: () => currentNight?.isPhoneCallActive() === true,
+  tapePlaying: () => typeof TapeScene !== 'undefined' && TapeScene.isPlaying()
 });
 
 /**
- * Indique si un objet est actuellement propose au joueur.
+ * Indique si un objet est actuellement propose au joueur. Un objet
+ * indisponible n'est ni dessine, ni survolable, ni cliquable : le telephone
+ * ne se propose donc qu'une fois l'appel decroche, et redevient inerte des
+ * qu'il est raccroche ou termine.
  * @param {{available: string|null}} hotspot - Objet du bureau
  * @returns {boolean} Vrai si l'objet est disponible
  */
 function isOfficeHotspotAvailable(hotspot) {
   if (!hotspot.available) return true;
-  return OFFICE_HOTSPOT_AVAILABILITY[hotspot.available]?.() === true;
+  return OFFICE_HOTSPOT_CONDITIONS[hotspot.available]?.() === true;
+}
+
+/**
+ * Indique si un objet disponible doit pulser sans etre survole. `attract`
+ * vaut `true` (des qu'il est disponible, comme le telephone qui sonne) ou le
+ * nom d'une condition (le poste de radio, qui ne pulse que pendant la
+ * lecture d'une cassette mais reste cliquable en permanence).
+ * @param {{attract: boolean|string}} hotspot - Objet du bureau
+ * @returns {boolean} Vrai si l'objet doit se signaler
+ */
+function shouldOfficeHotspotAttract(hotspot) {
+  if (hotspot.attract === true) return true;
+  if (!hotspot.attract) return false;
+  return OFFICE_HOTSPOT_CONDITIONS[hotspot.attract]?.() === true;
 }
 
 /**
@@ -196,6 +213,7 @@ function handleOfficeHotspotPointerLeave() {
 const OFFICE_HOTSPOT_ACTIONS = Object.freeze({
   openTapeScene: () => showCloseTapeScene(),
   openComputerTerminal: () => openInfoComputerPanel(),
+  toggleCameraView: () => showCloseCamera(),
   hangUpPhone: () => hangupPhoneFromPanel()
 });
 
@@ -395,7 +413,7 @@ function drawOfficeHotspots(ctx, officeImageKey, drawX, drawY, drawWidth, drawHe
     const box = resolveOfficeHotspotBox(hotspot.rect, officeImageLayout);
     if (hotspot.id === hovered?.id) {
       drawOfficeHotspotHighlight(ctx, box);
-    } else if (hotspot.attract) {
+    } else if (shouldOfficeHotspotAttract(hotspot)) {
       drawOfficeHotspotAttract(ctx, box);
     }
   });
@@ -420,8 +438,11 @@ function validateOfficeHotspots() {
     if (!OFFICE_HOTSPOT_ACTIONS[hotspot.action]) {
       console.warn(`[OfficeHotspots] Objet "${hotspot.id}" : action "${hotspot.action}" inconnue.`);
     }
-    if (hotspot.available && !OFFICE_HOTSPOT_AVAILABILITY[hotspot.available]) {
+    if (hotspot.available && !OFFICE_HOTSPOT_CONDITIONS[hotspot.available]) {
       console.warn(`[OfficeHotspots] Objet "${hotspot.id}" : condition "${hotspot.available}" inconnue.`);
+    }
+    if (typeof hotspot.attract === 'string' && !OFFICE_HOTSPOT_CONDITIONS[hotspot.attract]) {
+      console.warn(`[OfficeHotspots] Objet "${hotspot.id}" : condition "${hotspot.attract}" inconnue.`);
     }
     if (hotspot.tooltip && !getOfficeHotspotTooltip(hotspot)) {
       console.warn(`[OfficeHotspots] Objet "${hotspot.id}" : libelle "panels.${hotspot.tooltip}" absent de translations.json.`);

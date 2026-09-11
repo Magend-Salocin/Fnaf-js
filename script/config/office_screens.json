@@ -1,16 +1,64 @@
 {
   "enabled": true,
-  "comment": "Zones ecran du bureau, en surimpression sur l'image. Coordonnees normalisees (fractions de la largeur/hauteur de l'image source), donc valables quelle que soit la resolution du rendu. Une cle absente = pas de surimpression pour cette image (power down, jumpscares...). Pour recalibrer apres un nouveau rendu : reperer le rectangle noir du panneau en pixels, puis diviser par la taille de l'image.",
+  "comment": "Zones ecran du bureau, en surimpression sur l'image. Coordonnees normalisees (fractions de la largeur/hauteur de l'image source), donc valables quelle que soit la resolution du rendu. 'rotation' est l'inclinaison de l'ecran en degres, sens horaire, pour que la surimpression suive la ligne du panneau au lieu de rester d'aplomb ; elle s'applique autour du centre de la zone, et 0 (ou absente) = pas d'inclinaison. Une cle absente = pas de surimpression pour cette image (power down, jumpscares...). Pour recalibrer apres un nouveau rendu : reperer le rectangle noir du panneau en pixels, puis diviser par la taille de l'image ; pour l'inclinaison, relever le y des barres du cadre a gauche et a droite du panneau.",
   "batteryScreens": {
-    "safe_room_left_light_0_right_light_0": { "x": 0.6940, "y": 0.6028, "width": 0.0600, "height": 0.0569 },
-    "safe_room_left_light_0_right_light_1": { "x": 0.6944, "y": 0.6028, "width": 0.0600, "height": 0.0569 },
-    "safe_room_left_light_1_right_light_0": { "x": 0.6636, "y": 0.4673, "width": 0.0807, "height": 0.0690 },
-    "safe_room_left_light_1_right_light_1": { "x": 0.7134, "y": 0.5696, "width": 0.0722, "height": 0.0571 }
+    "safe_room_left_light_0_right_light_0": {
+      "x": 0.694,
+      "y": 0.6028,
+      "width": 0.06,
+      "height": 0.0569,
+      "rotation": 3.1
+    },
+    "safe_room_left_light_0_right_light_1": {
+      "x": 0.6944,
+      "y": 0.6028,
+      "width": 0.06,
+      "height": 0.0569,
+      "rotation": 3.1
+    },
+    "safe_room_left_light_1_right_light_0": {
+      "x": 0.6944,
+      "y": 0.6028,
+      "width": 0.06,
+      "height": 0.0569,
+      "rotation": 3.1
+    },
+    "safe_room_left_light_1_right_light_1": {
+      "x": 0.6944,
+      "y": 0.6028,
+      "width": 0.06,
+      "height": 0.0569,
+      "rotation": 3.1
+    }
   },
   "usageScreens": {
-    "safe_room_left_light_0_right_light_0": { "x": 0.6940, "y": 0.6653, "width": 0.0600, "height": 0.0583 },
-    "safe_room_left_light_0_right_light_1": { "x": 0.6944, "y": 0.6653, "width": 0.0600, "height": 0.0583 },
-    "safe_room_left_light_1_right_light_0": { "x": 0.6636, "y": 0.5363, "width": 0.0807, "height": 0.0630 },
-    "safe_room_left_light_1_right_light_1": { "x": 0.7134, "y": 0.6278, "width": 0.0674, "height": 0.0595 }
+    "safe_room_left_light_0_right_light_0": {
+      "x": 0.694,
+      "y": 0.6653,
+      "width": 0.06,
+      "height": 0.0583,
+      "rotation": 4.1
+    },
+    "safe_room_left_light_0_right_light_1": {
+      "x": 0.6944,
+      "y": 0.6653,
+      "width": 0.06,
+      "height": 0.0583,
+      "rotation": 4.1
+    },
+    "safe_room_left_light_1_right_light_0": {
+      "x": 0.6944,
+      "y": 0.6653,
+      "width": 0.06,
+      "height": 0.0583,
+      "rotation": 4.1
+    },
+    "safe_room_left_light_1_right_light_1": {
+      "x": 0.6944,
+      "y": 0.6653,
+      "width": 0.06,
+      "height": 0.0583,
+      "rotation": 4.1
+    }
   }
 }

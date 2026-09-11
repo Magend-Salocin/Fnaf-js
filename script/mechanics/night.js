@@ -77,7 +77,6 @@ class Night {
 
       if(_night !== this.nightNumber) return;
 
-      setPhonePanelVisible(false);
 
       this.resetAnimatronics();
       this.applyAnimatronicDifficulty();
@@ -130,8 +129,6 @@ class Night {
         const soundId = `call_${phoneCallNumber}`;
 
         this.phoneCallActive = true;
-        setPhonePanelVisible(true);
-        setPhonePanelState('in-call');
 
         if (getSoundById(soundId)) {
             playSound(soundId);
@@ -178,57 +175,8 @@ class Night {
     }
 }
 /**
- * Met à jour l'état du panneau du téléphone.
- * 
- * @param {string} state 
- * @returns {void}
- */
-function setPhonePanelState(state) {
-  const panel = document.getElementById('phone-panel');
-  const statusEl = document.getElementById('phone-panel-status');
-  const footerEl = document.getElementById('phone-panel-footer');
-  const lang = window.selectedLanguage || window.FNAF_DEFAULT_LANGUAGE || 'fr';
-  const allTranslations = window.FNAF_TRANSLATIONS || {};
-  const t = allTranslations[lang] || allTranslations[window.FNAF_DEFAULT_LANGUAGE] || {};
-  const inCallLabel = t.panels?.phoneInCall || 'CALL ACTIVE';
-  const hangupLabel = t.panels?.phoneFooter || 'CLICK TO HANG UP';
-  const endedLabel = t.panels?.phoneEnded || 'CALL ENDED';
-  const lineClosedLabel = t.panels?.phoneLineClosed || 'LINE CLOSED';
-
-  if (!panel || !statusEl || !footerEl) {
-    return;
-  }
-
-  if (state === 'in-call') {
-    panel.classList.remove('call-ended');
-    statusEl.textContent = inCallLabel;
-    footerEl.textContent = hangupLabel;
-    return;
-  }
-
-  panel.classList.add('call-ended');
-  statusEl.textContent = endedLabel;
-  footerEl.textContent = lineClosedLabel;
-}
-/**
- * Affiche ou masque le panneau du téléphone.
- * @param {boolean} isVisible - true pour afficher, false pour masquer
- * @returns {void}
- */
-function setPhonePanelVisible(isVisible) {
-  const panel = document.getElementById('phone-panel');
-  if (!panel) {
-    return;
-  }
-
-  panel.classList.toggle('hidden', !isVisible);
-
-  if (!isVisible) {
-    setPhonePanelState('ended');
-  }
-}
-/**
- * Raccroche le téléphone depuis le panneau.
+ * Raccroche l'appel en cours. Declenche par le telephone du bureau
+ * (cf. OFFICE_HOTSPOT_ACTIONS dans office_hotspot.js).
  * @returns {void}
  */
 function hangupPhoneFromPanel() {
@@ -273,7 +221,6 @@ function startNight(nightNumber) {
 
   stopAllSounds();
   startAmbientSounds();
-  setPhonePanelVisible(true);
   currentNight.playPhoneCall();
 
   if (gameLoopInterval) {
@@ -320,7 +267,7 @@ function resetOfficeState() {
 
   showDoors();
   updateOfficeDoorVisibility();
-  updateOfficeLookControls();
+  updateViewDependentHud();
 }
 
 /**
@@ -367,7 +314,7 @@ function clearRoomsState() {
 function nightEndGame() {
   // Désactive les portes et bloque le jeu
   hideDoors();
-  updateOfficeLookControls();
+  updateViewDependentHud();
   stopAllSounds();
   if (typeof TapeScene !== 'undefined' && TapeScene.isOpen()) {
     TapeScene.close(); // La scène ne doit pas masquer un jumpscare / écran de fin

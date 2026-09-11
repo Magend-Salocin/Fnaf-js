@@ -4,8 +4,6 @@
    CONTRÔLE DE VOLUME
    ============================================= */
 
-
-
    .terminal-choice{
     padding:6px;
     text-align:center;
@@ -95,151 +93,13 @@
     font-weight:bold;
 }
 
-.phone-led{
-    width:10px;
-    height:10px;
-
-    background:#ff3300;
-    border-radius:50%;
-
-    position:absolute;
-    right:10px;
-    top:28px;
-
-    animation:blink .8s infinite;
-}
-
-#phone-panel {
-  position: fixed;
-  top: 8px;
-  right: 1222px;
-  z-index: 999;
-  width: 220px;
-  height: 63px;
-  background-color: #080808;
-  border: 1px solid #2a2a2a;
-  border-radius: 2px;
-  padding: 7px 10px 9px;
-  text-align: left;
-  box-shadow: 0 0 18px rgba(0, 0, 0, 0.9), inset 0 0 8px rgba(0, 0, 0, 0.6);
-  user-select: none;
-  color: #ff961f;
-  font-family: 'Press Start 2P', monospace;
-  border-collapse: collapse;
-}
-
-#computer-panel {
-  position: fixed;
-  top: 8px;
-  right: 765px;
-  z-index: 999;
-  width: 220px;
-  height: 63px;
-  background-color: #080808;
-  border: 1px solid #2a2a2a;
-  border-radius: 2px;
-  padding: 7px 10px 9px;
-  text-align: left;
-  box-shadow: 0 0 18px rgba(0, 0, 0, 0.9), inset 0 0 8px rgba(0, 0, 0, 0.6);
-  user-select: none;
-  color: #95ff66;
-  font-family: 'Press Start 2P', monospace;
-}
-
-#computer-panel::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background: repeating-linear-gradient(
-    to bottom,
-    rgba(255, 255, 255, 0.04) 0,
-    rgba(255, 255, 255, 0.04) 1px,
-    transparent 2px,
-    transparent 4px
-  );
-  opacity: 0.18;
-}
-
-#computer-panel:hover {
-  transform: none;
-}
-
-#computer-panel.computer-active {
-  border-color: #3f7640;
-  box-shadow: 0 0 16px rgba(35, 140, 55, 0.4), inset 0 0 12px rgba(140, 255, 120, 0.15);
-  animation: computer-boot 0.45s ease-out;
-}
-
-.computer-panel-label {
-  font-size: 6px;
-  color: #637d5d;
-  letter-spacing: 2px;
-  margin-bottom: 5px;
-}
-
-.computer-panel-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 4px;
-}
-
-.computer-panel-status {
-  font-size: 9px;
-  color: #95ff66;
-  letter-spacing: 1px;
-  text-shadow: 0 0 7px rgba(120, 255, 130, 0.55);
-}
-
-.computer-led {
-  width: 9px;
-  height: 9px;
-  border-radius: 50%;
-  background: #274029;
-  box-shadow: 0 0 4px rgba(70, 130, 80, 0.5);
-}
-
-#computer-panel.computer-active .computer-led {
-  background: #78ff87;
-  box-shadow: 0 0 10px rgba(120, 255, 135, 0.85);
-  animation: computer-led-blink 0.45s steps(2, start) 3;
-}
-
-.computer-panel-footer {
-  font-size: 6px;
-  color: #5a8551;
-  letter-spacing: 1px;
-}
-
-@keyframes computer-led-blink {
-  0%, 49% {
-    opacity: 1;
-  }
-  50%, 100% {
-    opacity: 0.4;
-  }
-}
-
-@keyframes computer-boot {
-  0% {
-    transform: scale(0.97);
-    filter: brightness(0.8);
-  }
-  60% {
-    transform: scale(1.02);
-    filter: brightness(1.25);
-  }
-  100% {
-    transform: scale(1);
-    filter: brightness(1);
-  }
-}
-
 #camera-panel {
   position: fixed;
   top: 8px;
-  right: 992px;
+  /* Rangee du HUD, ancree au bord droit avec un ecart constant de 32px :
+     #time-status (12px), ce panneau (260px), #usage-status (512px),
+     #powerUsage (764px). */
+  right: 260px;
   z-index: 999;
   width: 220px;
   height: 63px;
@@ -252,6 +112,10 @@
   user-select: none;
   color: #66c8ff;
   font-family: 'Press Start 2P', monospace;
+}
+
+#camera-panel.hidden {
+  display: none;
 }
 
 #camera-panel::after {
@@ -392,168 +256,11 @@
   }
 }
 
-#phone-panel::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background: repeating-linear-gradient(
-    to bottom,
-    rgba(255, 255, 255, 0.04) 0,
-    rgba(255, 255, 255, 0.04) 1px,
-    transparent 2px,
-    transparent 4px
-  );
-  opacity: 0.18;
-}
-
-#phone-panel.hidden {
-  display: none;
-}
-
-#phone-panel:hover {
-  transform: none;
-}
-
-.phone-panel-label {
-  font-size: 6px;
-  color: #666;
-  letter-spacing: 2px;
-  margin-bottom: 5px;
-}
-
-.phone-panel-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 4px;
-}
-
-.phone-panel-status {
-  font-size: 9px;
-  color: #ff961f;
-  letter-spacing: 1px;
-  text-shadow: 0 0 6px rgba(255, 136, 0, 0.7);
-}
-
-#phone-panel .phone-led {
-  width: 9px;
-  height: 9px;
-  position: static;
-  background: #ff3300;
-  box-shadow: 0 0 6px rgba(255, 45, 0, 0.85);
-}
-
-#phone-panel.call-ended .phone-led {
-  background: #444;
-  box-shadow: none;
-  animation: none;
-}
-
-.phone-panel-footer {
-  font-size: 6px;
-  color: #7a5d20;
-  letter-spacing: 1px;
-}
-
-#tape-panel {
-  position: fixed;
-  top: 8px;
-  right: 1452px;
-  z-index: 999;
-  width: 220px;
-  height: 63px;
-  background-color: #080808;
-  border: 1px solid #2a2a2a;
-  border-radius: 2px;
-  padding: 7px 10px 9px;
-  text-align: left;
-  box-shadow: 0 0 18px rgba(0, 0, 0, 0.9), inset 0 0 8px rgba(0, 0, 0, 0.6);
-  user-select: none;
-  color: #d9cba3;
-  font-family: 'Press Start 2P', monospace;
-}
-
-#tape-panel::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background: repeating-linear-gradient(
-    to bottom,
-    rgba(255, 255, 255, 0.04) 0,
-    rgba(255, 255, 255, 0.04) 1px,
-    transparent 2px,
-    transparent 4px
-  );
-  opacity: 0.18;
-}
-
-#tape-panel:hover {
-  transform: none;
-}
-
-#tape-panel.tape-playing {
-  border-color: #8a744a;
-  box-shadow: 0 0 16px rgba(240, 165, 63, 0.35), inset 0 0 12px rgba(240, 165, 63, 0.12);
-  animation: computer-boot 0.45s ease-out;
-}
-
-.tape-panel-label {
-  font-size: 6px;
-  color: #8a7a5c;
-  letter-spacing: 2px;
-  margin-bottom: 5px;
-}
-
-.tape-panel-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 4px;
-}
-
-.tape-panel-status {
-  font-size: 9px;
-  color: #d9cba3;
-  letter-spacing: 1px;
-  text-shadow: 0 0 6px rgba(217, 203, 163, 0.6);
-}
-
-.tape-led {
-  width: 9px;
-  height: 9px;
-  border-radius: 50%;
-  background: #4a4030;
-  box-shadow: 0 0 4px rgba(120, 100, 70, 0.5);
-}
-
-#tape-panel.tape-playing .tape-led {
-  background: #f0a53f;
-  box-shadow: 0 0 10px rgba(240, 165, 63, 0.9);
-  animation: camera-led-blink 0.6s steps(2, start) infinite;
-}
-
-.tape-panel-footer {
-  font-size: 6px;
-  color: #6b5c40;
-  letter-spacing: 1px;
-}
-
 @media (max-width: 720px) {
-  #computer-panel {
-    top: 32px;
-    right: 8px;
-    width: 180px;
-    padding: 6px 8px 8px;
-  }
-
-  .computer-panel-status {
-    font-size: 8px;
-  }
-
+  /* En colonne, le panneau camera prend la place laissee libre en haut :
+     il occupait 84px, deja utilise par #powerUsage. */
   #camera-panel {
-    top: 84px;
+    top: 8px;
     right: 8px;
     width: 180px;
     padding: 6px 8px 8px;
@@ -562,39 +269,9 @@
   .camera-panel-status {
     font-size: 8px;
   }
-
-  #phone-panel {
-  top: 136px;
-  right: 8px;
-  width: 180px;
-  padding: 6px 8px 8px;
-  }
-
-  .phone-panel-status {
-  font-size: 8px;
-  }
-
-  #tape-panel {
-    top: 188px;
-    right: 8px;
-    width: 180px;
-    padding: 6px 8px 8px;
-  }
-
-  .tape-panel-status {
-    font-size: 8px;
-  }
 }
-
-@keyframes blink{
-    50%{
-        opacity:.2;
-    }
-}
-
 
 /* ----- */
-
 
    #debug-control {
   position: fixed;
@@ -774,7 +451,6 @@ body {
 }
 
 #controls {
-
 }
 
 button {
@@ -786,7 +462,6 @@ button {
   border-radius: 4px;
   cursor: pointer;
 }
-
 
 .gameCanvas {
   display: block;
@@ -863,7 +538,6 @@ button {
     from { opacity: 0; }
     to { opacity: 1; }
 }
-
 
 /** door / switch **/
 #_left,

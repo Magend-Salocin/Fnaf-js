@@ -98,26 +98,6 @@
 			</div>
 		
 
-			<!-- Panneaux de contrôle -->
-			<button id="computer-panel" class="clickable" type="button" aria-label="Panneau ordinateur">
-				<div id="computer-panel-label" class="computer-panel-label">SECURITY PC</div>
-				<div class="computer-panel-row">
-					<div id="computer-panel-status" class="computer-panel-status">IDLE</div>
-					<div class="computer-led"></div>
-				</div>
-				<div id="computer-panel-footer" class="computer-panel-footer">CLICK FOR INFO</div>
-			</button>
-
-			<!-- Panneau de téléphone -->
-			<button id="phone-panel" class="clickable" type="button" aria-label="Panneau telephone">
-				<div id="phone-panel-label" class="phone-panel-label">OFFICE PHONE</div>
-				<div class="phone-panel-row">
-					<div id="phone-panel-status" class="phone-panel-status">INCOMING CALL</div>
-					<div class="phone-led"></div>
-				</div>
-				<div id="phone-panel-footer" class="phone-panel-footer">CLICK TO HANG UP</div>
-			</button>
-
 			<!-- Panneau de caméras -->
 			<button id="camera-panel" class="clickable" type="button" aria-label="Panneau camera">
 				<div id="camera-panel-label" class="camera-panel-label">CAM SYSTEM</div>
@@ -126,16 +106,6 @@
 					<div class="camera-led"></div>
 				</div>
 				<div id="camera-panel-footer" class="camera-panel-footer">CLICK TO OPEN</div>
-			</button>
-
-			<!-- Panneau du lecteur de cassettes -->
-			<button id="tape-panel" class="clickable" type="button" aria-label="Panneau lecteur cassette">
-				<div id="tape-panel-label" class="tape-panel-label">TAPE DECK</div>
-				<div class="tape-panel-row">
-					<div id="tape-panel-status" class="tape-panel-status">READY</div>
-					<div class="tape-led"></div>
-				</div>
-				<div id="tape-panel-footer" class="tape-panel-footer">CLICK TO OPEN</div>
 			</button>
 
 			<!-- Affichage de la puissance restante -->
@@ -299,7 +269,7 @@
 	<!--
 		Scène "lecteur de cassettes" : masquée par défaut, pilotée uniquement
 		via TapeScene.open()/close() (script/mechanics/tape.js), déclenchées
-		par le bouton #tape-panel. Mise en page adaptée de
+		par le poste de radio du bureau. Mise en page adaptée de
 		vx90-magnetic-analyzer-test.html (voir style/tape.css).
 	-->
 	<section id="tape-scene" class="tape-scene" hidden aria-hidden="true">

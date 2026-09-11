@@ -1,8 +1,8 @@
 /**
  * Scène "Lecteur de cassettes" (adaptée de .github/Projet/_poc_tape).
  *
- * Ouverture/fermeture pilotées comme les autres panneaux du HUD
- * (cf. showCloseCamera() dans camera.js) via le bouton #tape-panel.
+ * Ouverture/fermeture déclenchées par le poste de radio du bureau
+ * (cf. OFFICE_HOTSPOT_ACTIONS dans office_hotspot.js).
  *
  * L'audio d'une cassette insérée passe par le système de sons du jeu
  * (playSound/stopSound/gameSounds) au lieu d'instances Audio() isolées,
@@ -374,8 +374,6 @@ const TapeScene = (() => {
         setReelsSpinning(false);
         break;
     }
-
-    updateTapePanelState(newState === STATE.PLAYING);
   }
 
   function setReelsSpinning(spinning){
@@ -387,30 +385,12 @@ const TapeScene = (() => {
   /* -------------------------------------------------------------------
    * 14. API publique
    * ------------------------------------------------------------------- */
-  /**
-   * Résout un libellé de panneau ("tape.*") dans la langue active, avec
-   * repli sur l'anglais si la traduction est absente (même logique que
-   * setPhonePanelState() dans night.js).
-   */
-  function getPanelLabel(key, fallback){
-    const lang = window.selectedLanguage || window.FNAF_DEFAULT_LANGUAGE || 'fr';
-    const allTranslations = window.FNAF_TRANSLATIONS || {};
-    const t = allTranslations[lang] || allTranslations[window.FNAF_DEFAULT_LANGUAGE] || {};
-    return t.panels?.[key] || fallback;
-  }
-
-  function setTapePanelFooter(text){
-    const footerEl = document.getElementById('tape-panel-footer');
-    if (footerEl) footerEl.textContent = text;
-  }
-
   function open(){
     if (!els.scene) cacheDom();
     renderRack(); // reflète les cassettes débloquées depuis la dernière ouverture
     lockRack(currentState !== STATE.EMPTY);
     els.scene.hidden = false;
     els.scene.setAttribute("aria-hidden", "false");
-    setTapePanelFooter(getPanelLabel('tapeFooterClose', 'CLICK TO CLOSE'));
   }
 
   function close(){
@@ -420,11 +400,19 @@ const TapeScene = (() => {
       els.scene.hidden = true;
       els.scene.setAttribute("aria-hidden", "true");
     }
-    setTapePanelFooter(getPanelLabel('tapeFooter', 'CLICK TO OPEN'));
   }
 
   function isOpen(){
     return !!(els.scene && !els.scene.hidden);
+  }
+
+  /**
+   * Indique si une cassette est en cours de lecture. Le poste de radio du
+   * bureau s'en sert pour se signaler tant que la bande tourne, y compris
+   * quand la scène est refermée.
+   */
+  function isPlaying(){
+    return currentState === STATE.PLAYING;
   }
 
   /**
@@ -467,13 +455,13 @@ const TapeScene = (() => {
     init();
   }
 
-  return { open, close, isOpen, reset };
+  return { open, close, isOpen, isPlaying, reset };
 
 })();
 
 /**
- * Ouvre/ferme la scène du lecteur de cassettes depuis le bouton HUD
- * #tape-panel (même logique que showCloseCamera() pour #camera-panel).
+ * Ouvre/ferme la scène du lecteur de cassettes, déclenchée par le poste de
+ * radio du bureau.
  */
 function showCloseTapeScene(){
   if (gameEnd) return;
@@ -483,23 +471,4 @@ function showCloseTapeScene(){
   } else {
     TapeScene.open();
   }
-}
-
-/**
- * Met à jour le statut affiché sur le bouton HUD #tape-panel.
- * @param {boolean} isPlaying
- */
-function updateTapePanelState(isPlaying){
-  const panel = document.getElementById('tape-panel');
-  const statusEl = document.getElementById('tape-panel-status');
-  if (!panel || !statusEl) return;
-
-  const lang = window.selectedLanguage || window.FNAF_DEFAULT_LANGUAGE || 'fr';
-  const allTranslations = window.FNAF_TRANSLATIONS || {};
-  const t = allTranslations[lang] || allTranslations[window.FNAF_DEFAULT_LANGUAGE] || {};
-  const playingLabel = t.panels?.tapePlaying || 'PLAYING';
-  const readyLabel = t.panels?.tapeStatus || 'READY';
-
-  panel.classList.toggle('tape-playing', isPlaying);
-  statusEl.textContent = isPlaying ? playingLabel : readyLabel;
 }

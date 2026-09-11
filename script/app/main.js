@@ -78,10 +78,7 @@ function setupEventListeners() {
   document.getElementById('cam7').addEventListener('click', () => activateCamera("7"));
 
   
-  document.getElementById('phone-panel').addEventListener('click', () => hangupPhoneFromPanel());
   document.getElementById('camera-panel').addEventListener('click', () => showCloseCamera());
-  document.getElementById('computer-panel').addEventListener('click', () => openInfoComputerPanel());
-  document.getElementById('tape-panel').addEventListener('click', () => showCloseTapeScene());
 
   /*Gestion des portes*/
   document.getElementById('left-door-toggle').addEventListener('click', () => toggleDoor('left'));

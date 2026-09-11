@@ -1,10 +1,5 @@
 #usage-status {
     position: fixed;
-    /*
-    top: 168px;
-    right: 12px;
-    width: 220px;
-    */
     z-index: 999;
     background-color: #080808;
     border: 1px solid #2a2a2a;
@@ -16,7 +11,11 @@
     height: 46px;
     width: 220px;
     top: 12px;
-    right: 264px;
+    right: 512px;
+}
+
+#usage-status.hidden {
+  display: none;
 }
 
 #usage-status::after {

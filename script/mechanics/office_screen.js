@@ -13,6 +13,7 @@ const OFFICE_SCREEN = Object.freeze({
   LOW_THRESHOLD: 30,
   CRITICAL_THRESHOLD: 10,
   BLINK_PERIOD_MS: 800,
+  BLINK_ALPHA: 0.45,
   // En dessous de cette taille a l'ecran la surimpression n'est plus
   // lisible : l'ecran du rendu suffit.
   MIN_WIDTH: 40,
@@ -75,7 +76,7 @@ function getOfficeUsagePalette(isCritical) {
  * @param {number} drawY - Ordonnee de l'image dessinee
  * @param {number} drawWidth - Largeur de l'image dessinee
  * @param {number} drawHeight - Hauteur de l'image dessinee
- * @returns {{x: number, y: number, width: number, height: number}|null} Rectangle a l'ecran, ou null si la zone est absente ou trop petite
+ * @returns {{x: number, y: number, width: number, height: number, rotation: number}|null} Rectangle a l'ecran (rotation en radians), ou null si la zone est absente ou trop petite
  */
 function resolveOfficeScreenBox(rect, drawX, drawY, drawWidth, drawHeight) {
   if (!rect) return null;
@@ -88,8 +89,26 @@ function resolveOfficeScreenBox(rect, drawX, drawY, drawWidth, drawHeight) {
     x: drawX + rect.x * drawWidth,
     y: drawY + rect.y * drawHeight,
     width,
-    height
+    height,
+    rotation: (rect.rotation || 0) * Math.PI / 180
   };
+}
+
+/**
+ * Incline le repere sur la ligne du panneau. Les ecrans du rendu ne sont pas
+ * d'aplomb : sans cette rotation, la surimpression se decale de plusieurs
+ * pixels d'un bord a l'autre de l'ecran.
+ * @param {CanvasRenderingContext2D} ctx - Contexte de dessin
+ * @param {{x: number, y: number, width: number, height: number, rotation: number}} box - Rectangle de l'ecran
+ */
+function applyOfficeScreenTilt(ctx, box) {
+  if (!box.rotation) return;
+
+  const centerX = box.x + box.width / 2;
+  const centerY = box.y + box.height / 2;
+  ctx.translate(centerX, centerY);
+  ctx.rotate(box.rotation);
+  ctx.translate(-centerX, -centerY);
 }
 
 /**
@@ -242,6 +261,31 @@ function drawOfficeUsageContent(ctx, box, usageLevel, isCritical) {
 }
 
 /**
+ * Dessine un ecran complet dans le repere incline du panneau : fond,
+ * contenu, puis lignes de balayage. Seul le contenu clignote quand la
+ * batterie est critique ; le fond doit rester opaque pour continuer a
+ * masquer le texte de remplissage du rendu.
+ * @param {CanvasRenderingContext2D} ctx - Contexte de dessin
+ * @param {{x: number, y: number, width: number, height: number, rotation: number}} box - Rectangle de l'ecran
+ * @param {number} contentAlpha - Opacite du contenu (1 hors clignotement)
+ * @param {Function} drawContent - Dessine le contenu de l'ecran
+ */
+function drawTiltedOfficeScreen(ctx, box, contentAlpha, drawContent) {
+  ctx.save();
+  applyOfficeScreenTilt(ctx, box);
+
+  clearOfficeScreen(ctx, box);
+
+  ctx.globalAlpha = contentAlpha;
+  drawContent();
+  ctx.globalAlpha = 1;
+
+  drawOfficeScreenScanlines(ctx, box);
+
+  ctx.restore();
+}
+
+/**
  * Dessine les ecrans batterie et consommation en surimpression sur l'image
  * du bureau. Les coordonnees passees sont celles utilisees pour
  * ctx.drawImage() : les surimpressions suivent donc exactement le
@@ -265,25 +309,16 @@ function drawOfficeScreens(ctx, officeImageKey, drawX, drawY, drawWidth, drawHei
   const blinkOff = isCritical &&
     (performance.now() % OFFICE_SCREEN.BLINK_PERIOD_MS) > OFFICE_SCREEN.BLINK_PERIOD_MS / 2;
 
-  ctx.save();
-
-  if (batteryBox) clearOfficeScreen(ctx, batteryBox);
-  if (usageBox) clearOfficeScreen(ctx, usageBox);
-
-  if (blinkOff) {
-    ctx.globalAlpha = 0.45;
-  }
+  const contentAlpha = blinkOff ? OFFICE_SCREEN.BLINK_ALPHA : 1;
 
   if (batteryBox) {
-    drawOfficeBatteryContent(ctx, batteryBox, displayPower);
+    drawTiltedOfficeScreen(ctx, batteryBox, contentAlpha, () => {
+      drawOfficeBatteryContent(ctx, batteryBox, displayPower);
+    });
   }
   if (usageBox) {
-    drawOfficeUsageContent(ctx, usageBox, getPowerUsageLevel(), isCritical);
+    drawTiltedOfficeScreen(ctx, usageBox, contentAlpha, () => {
+      drawOfficeUsageContent(ctx, usageBox, getPowerUsageLevel(), isCritical);
+    });
   }
-
-  ctx.globalAlpha = 1;
-  if (batteryBox) drawOfficeScreenScanlines(ctx, batteryBox);
-  if (usageBox) drawOfficeScreenScanlines(ctx, usageBox);
-
-  ctx.restore();
 }

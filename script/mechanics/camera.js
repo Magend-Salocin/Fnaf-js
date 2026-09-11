@@ -43,6 +43,33 @@ function updateOfficeLookControls() {
   controls.classList.toggle('hidden', !shouldShow);
 }
 
+/**
+ * Panneaux du HUD qui n'apparaissent qu'en vue camera. Dans le bureau ils
+ * feraient double emploi : la batterie et la consommation se lisent sur les
+ * ecrans du decor, et les cameras se levent en cliquant sur le bloc de
+ * moniteurs (cf. office_hotspots.json).
+ */
+const CAMERA_HUD_PANEL_IDS = Object.freeze(['camera-panel', 'powerUsage', 'usage-status']);
+
+function updateCameraHudVisibility() {
+  const shouldShow = activeView === 'camera' && !gameEnd;
+
+  CAMERA_HUD_PANEL_IDS.forEach(id => {
+    document.getElementById(id)?.classList.toggle('hidden', !shouldShow);
+  });
+}
+
+/**
+ * Met a jour tout ce qui depend de la vue active : les fleches de
+ * panoramique n'ont de sens que dans le bureau, les panneaux du HUD qu'en
+ * vue camera. Un seul point d'appel, pour qu'aucun changement de vue
+ * n'oublie l'un des deux.
+ */
+function updateViewDependentHud() {
+  updateOfficeLookControls();
+  updateCameraHudVisibility();
+}
+
 function setOfficeLookDirection(direction) {
   if (!OFFICE_LOOK_POSITIONS.hasOwnProperty(direction)) return;
   setOfficeLookTargetOffset(OFFICE_LOOK_POSITIONS[direction]);
@@ -78,7 +105,7 @@ function updateOfficeLookAnimation() {
 
   if (previousDirection !== officeLookDirection || previousMoving !== officeLookIsMoving) {
     updateOfficeDoorVisibility();
-    updateOfficeLookControls();
+    updateViewDependentHud();
   }
 }
 
@@ -137,7 +164,7 @@ function showCloseCamera(){
     updateCameraPanelState(false);
   } else {
     hideDoors();
-    updateOfficeLookControls();
+    updateViewDependentHud();
     playSound("camera_toggle"); // Joue le son de basculement de caméra
     cameraUp(); // Animation de montée de la caméra
     updateCameraPanelState(true);
@@ -153,7 +180,7 @@ function activateCamera(cameraId) {
   if (camera && camera.isAvailable && power > 0) {
       activeView = 'camera'; // Passe en vue caméra
     updateOfficeDoorVisibility();
-    updateOfficeLookControls();
+    updateViewDependentHud();
     activeCamera = cameraId; // Définit la caméra active
     if (typeof RandomEvents !== 'undefined') {
       RandomEvents.notifyCameraSwitch(cameraId); // Notifie du changement de caméra
@@ -310,7 +337,7 @@ function cameraUp() {
 
     camTimeout = setTimeout(() => {
         hideDoors();
-      updateOfficeLookControls();
+      updateViewDependentHud();
         img.classList.remove('display-0', 'display-1');
         img.classList.add('display-0');
          
@@ -331,7 +358,7 @@ function cameraDown() {
     img.classList.add('display-1');
     img.src = 'images/_cam/camera_mode_0.gif';
     showDoors();
-    updateOfficeLookControls();
+    updateViewDependentHud();
     
     // Arrête le son en cours
     stopSound(currentSoundCamera);
@@ -567,7 +594,7 @@ function drawOfficeViewByPicture(officeImageKey){
     ctx.clearRect(0, 0, canvas.width, canvas.height);	
     activeView = 'office';
     updateOfficeDoorVisibility();
-    updateOfficeLookControls();
+    updateViewDependentHud();
     drawOfficeView(ctx,officeImageKey);
   }
 }
