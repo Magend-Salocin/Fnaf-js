@@ -71,7 +71,24 @@ const TapeScene = (() => {
       btnStop:          document.getElementById("btn-stop"),
       closeBtn:         document.getElementById("scene-close"),
       counter:          document.getElementById("tape-counter"),
-      progressFill:     document.getElementById("tape-progress-fill")
+      progressFill:     document.getElementById("tape-progress-fill"),
+
+      // Instruments alimentes par TapeAnalyser
+      scope:            document.getElementById("tape-scope"),
+      scopePeak:        document.getElementById("tape-scope-peak"),
+      scopeFrequency:   document.getElementById("tape-scope-frequency"),
+      scopeNoise:       document.getElementById("tape-scope-noise"),
+      spectrum:         document.getElementById("tape-spectrum"),
+      vuLeft:           document.getElementById("tape-vu-left"),
+      vuRight:          document.getElementById("tape-vu-right"),
+      vuLeftDb:         document.getElementById("tape-vu-left-db"),
+      vuRightDb:        document.getElementById("tape-vu-right-db"),
+      diagSignal:       document.getElementById("tape-diag-signal"),
+      diagPeak:         document.getElementById("tape-diag-peak"),
+      diagPosition:     document.getElementById("tape-diag-position"),
+      diagCondition:    document.getElementById("tape-diag-condition"),
+      anomaly:          document.getElementById("tape-anomaly"),
+      anomalyText:      document.getElementById("tape-anomaly-text")
     };
   }
 
@@ -208,6 +225,7 @@ const TapeScene = (() => {
     els.cassetteVisual.hidden = false;
     els.statusMedia.textContent = tape.title;
     els.statusCondition.textContent = tape.condition || "INCONNU";
+    renderTapeCondition();
   }
 
   function hideCassetteVisual(){
@@ -215,6 +233,7 @@ const TapeScene = (() => {
     els.slotHint.hidden = false;
     els.statusMedia.textContent = "—";
     els.statusCondition.textContent = "—";
+    renderTapeCondition();
   }
 
   /* -------------------------------------------------------------------
@@ -230,6 +249,8 @@ const TapeScene = (() => {
       audioElement.removeEventListener("timeupdate", onPlaybackTimeUpdate);
       audioElement.addEventListener("timeupdate", onPlaybackTimeUpdate);
     }
+
+    if (audioElement) TapeAnalyser.attach(audioElement);
 
     playSound(currentTape.soundId);
     setState(STATE.PLAYING);
@@ -274,6 +295,175 @@ const TapeScene = (() => {
     }
     stopSound(currentTape.soundId);
     resetCounter();
+  }
+
+  /* -------------------------------------------------------------------
+   * 8 bis. Instruments (oscilloscope, spectre, VU-mètres, diagnostic)
+   *
+   *    Tout ce que ces cadrans affichent vient de TapeAnalyser, donc du son
+   *    réellement joué — à l'exception de l'état de la bande, qui vient de
+   *    son champ `condition` dans tapes_data.json. La boucle tourne tant
+   *    que la scène est ouverte : à l'arrêt, les cadrans retombent au repos
+   *    au lieu de rester figés sur la dernière mesure.
+   * ------------------------------------------------------------------- */
+  const SPECTRUM_BANDS = 24;
+  const NOMINAL_CONDITION = "STABLE";
+  let instrumentsFrameId = null;
+
+  /** Construit les barres du spectre, une fois pour toutes. */
+  function buildSpectrumBars(){
+    if (!els.spectrum || els.spectrum.childElementCount === SPECTRUM_BANDS) return;
+
+    els.spectrum.innerHTML = "";
+    for (let i = 0; i < SPECTRUM_BANDS; i++){
+      const bar = document.createElement("i");
+      bar.style.setProperty("--h", "0%");
+      els.spectrum.appendChild(bar);
+    }
+  }
+
+  /** Convertit un niveau en dB en remplissage de VU-mètre. */
+  function levelToPercent(db){
+    const ratio = (db - TapeAnalyser.SILENCE_DB) / (0 - TapeAnalyser.SILENCE_DB);
+    return Math.max(0, Math.min(1, ratio)) * 100;
+  }
+
+  function formatDb(db){
+    return db <= TapeAnalyser.SILENCE_DB ? "-INF" : `${db.toFixed(0)}`;
+  }
+
+  function formatFrequency(hz){
+    return hz >= 1000 ? `${(hz / 1000).toFixed(1)} KHZ` : `${Math.round(hz)} HZ`;
+  }
+
+  /** Trace la forme d'onde sur l'oscilloscope. */
+  function drawScope(waveform){
+    if (!els.scope) return;
+
+    const ctx = els.scope.getContext("2d");
+    const width = els.scope.width;
+    const height = els.scope.height;
+    ctx.clearRect(0, 0, width, height);
+
+    if (!waveform){
+      // Pas de signal : une ligne plate, comme un appareil sous tension mais
+      // sans bande.
+      ctx.strokeStyle = "rgba(255, 173, 50, 0.35)";
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(0, height / 2);
+      ctx.lineTo(width, height / 2);
+      ctx.stroke();
+      return;
+    }
+
+    ctx.strokeStyle = "#ffad32";
+    ctx.lineWidth = 2;
+    ctx.shadowColor = "rgba(255, 173, 50, 0.55)";
+    ctx.shadowBlur = 6;
+    ctx.beginPath();
+    for (let x = 0; x < width; x++){
+      const sample = waveform[Math.floor((x / width) * waveform.length)];
+      const y = height / 2 + ((sample - 128) / 128) * (height / 2) * 0.9;
+      if (x === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+    }
+    ctx.stroke();
+    ctx.shadowBlur = 0;
+  }
+
+  /** Etat de la bande et encart d'anomalie : données de la cassette. */
+  function renderTapeCondition(){
+    const condition = currentTape?.condition || "—";
+    if (els.diagCondition){
+      els.diagCondition.textContent = condition;
+      els.diagCondition.className = condition === NOMINAL_CONDITION ? "ok" : "warning";
+    }
+
+    if (els.anomaly){
+      const isAnomalous = Boolean(currentTape) && condition !== NOMINAL_CONDITION;
+      els.anomaly.hidden = !isAnomalous;
+      if (isAnomalous && els.anomalyText) els.anomalyText.textContent = `BANDE ${condition}`;
+    }
+  }
+
+  /** Repose tous les cadrans : aucun signal à afficher. */
+  function renderInstrumentsIdle(){
+    drawScope(null);
+    if (els.spectrum){
+      for (const bar of els.spectrum.children) bar.style.setProperty("--h", "0%");
+    }
+    if (els.vuLeft) els.vuLeft.style.width = "0%";
+    if (els.vuRight) els.vuRight.style.width = "0%";
+    if (els.vuLeftDb) els.vuLeftDb.textContent = "-INF";
+    if (els.vuRightDb) els.vuRightDb.textContent = "-INF";
+    if (els.scopePeak) els.scopePeak.textContent = "0.00V";
+    if (els.scopeFrequency) els.scopeFrequency.textContent = "—";
+    if (els.scopeNoise) els.scopeNoise.textContent = "—";
+    if (els.diagSignal){
+      els.diagSignal.textContent = "ABSENT";
+      els.diagSignal.className = "warning";
+    }
+    if (els.diagPeak) els.diagPeak.textContent = "-INF";
+  }
+
+  /** Reporte une mesure sur tous les cadrans. */
+  function renderInstruments(reading){
+    drawScope(reading.waveform);
+
+    if (els.spectrum){
+      const bars = els.spectrum.children;
+      for (let i = 0; i < bars.length; i++){
+        bars[i].style.setProperty("--h", `${Math.round((reading.bands[i] || 0) * 100)}%`);
+      }
+    }
+
+    if (els.vuLeft) els.vuLeft.style.width = `${levelToPercent(reading.left)}%`;
+    if (els.vuRight) els.vuRight.style.width = `${levelToPercent(reading.right)}%`;
+    if (els.vuLeftDb) els.vuLeftDb.textContent = formatDb(reading.left);
+    if (els.vuRightDb) els.vuRightDb.textContent = formatDb(reading.right);
+
+    if (els.scopePeak) els.scopePeak.textContent = `${reading.peak.toFixed(2)}V`;
+    if (els.scopeFrequency) els.scopeFrequency.textContent = formatFrequency(reading.dominantHz);
+    if (els.scopeNoise) els.scopeNoise.textContent = `${Math.round(reading.noiseRatio * 100)}%`;
+
+    if (els.diagSignal){
+      els.diagSignal.textContent = "PRESENT";
+      els.diagSignal.className = "ok";
+    }
+    if (els.diagPeak) els.diagPeak.textContent = `${formatDb(Math.max(reading.left, reading.right))} DB`;
+  }
+
+  /** Avancement de la bande, indépendant du signal. */
+  function renderPosition(){
+    if (!els.diagPosition) return;
+
+    const audioElement = currentTape ? getSoundById(currentTape.soundId) : null;
+    const ratio = audioElement && audioElement.duration
+      ? audioElement.currentTime / audioElement.duration
+      : 0;
+    els.diagPosition.textContent = currentTape ? `${Math.round(ratio * 100)}%` : "—";
+  }
+
+  function updateInstruments(){
+    const reading = currentState === STATE.PLAYING ? TapeAnalyser.read(SPECTRUM_BANDS) : null;
+
+    if (reading && reading.active) renderInstruments(reading);
+    else renderInstrumentsIdle();
+
+    renderPosition();
+    instrumentsFrameId = window.requestAnimationFrame(updateInstruments);
+  }
+
+  function startInstruments(){
+    if (instrumentsFrameId !== null) return;
+    buildSpectrumBars();
+    instrumentsFrameId = window.requestAnimationFrame(updateInstruments);
+  }
+
+  function stopInstruments(){
+    if (instrumentsFrameId === null) return;
+    window.cancelAnimationFrame(instrumentsFrameId);
+    instrumentsFrameId = null;
   }
 
   /* -------------------------------------------------------------------
@@ -391,6 +581,8 @@ const TapeScene = (() => {
     lockRack(currentState !== STATE.EMPTY);
     els.scene.hidden = false;
     els.scene.setAttribute("aria-hidden", "false");
+    renderTapeCondition();
+    startInstruments();
   }
 
   function close(){
@@ -400,6 +592,7 @@ const TapeScene = (() => {
       els.scene.hidden = true;
       els.scene.setAttribute("aria-hidden", "true");
     }
+    stopInstruments();
   }
 
   function isOpen(){

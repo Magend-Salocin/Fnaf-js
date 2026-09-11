@@ -280,10 +280,10 @@
 				<header class="vx90-header">
 					<div class="vx90-brand">
 						<span class="vx90-led"></span>
-						<div><strong>ANALYSEUR MAGNÉTIQUE</strong><small>VX-90 / UNITÉ DE TRAITEMENT DE BANDE</small></div>
+						<div><strong>ANALYSEUR MAGNETIQUE</strong><small>VX-90 / UNITE DE TRAITEMENT DE BANDE</small></div>
 					</div>
 					<div class="vx90-header-status">
-						<span>UNITÉ 04</span><span class="status-online">● EN LIGNE</span>
+						<span>UNITE 04</span><span class="status-online">● EN LIGNE</span>
 						<button type="button" class="vx90-close" id="scene-close" aria-label="Fermer la scène">✕</button>
 					</div>
 				</header>
@@ -291,7 +291,7 @@
 				<main class="vx90-body">
 
 					<section class="vx90-column">
-						<div class="panel-title"><span>SOURCE MAGNÉTIQUE</span><small>ENTRÉE A</small></div>
+						<div class="panel-title"><span>SOURCE MAGNETIQUE</span><small>ENTREE A</small></div>
 
 						<!-- Zone de dépôt : seule zone valide pour le Drag & Drop -->
 						<div class="cassette-stage" id="player-slot">
@@ -305,7 +305,7 @@
 								<div class="cassette-screws screw-3"></div><div class="cassette-screws screw-4"></div>
 								<div class="cassette-label">
 									<strong id="cassette-title"></strong>
-									<small id="cassette-subtitle"></small>
+									<small id="cassette-subtitle" class="tape-data"></small>
 								</div>
 								<div class="cassette-window">
 									<div class="reel reel-left" id="reel-left"><div class="reel-core"></div></div>
@@ -318,50 +318,55 @@
 
 						<div class="source-status">
 							<div><label>SUPPORT</label><strong id="cassette-status-media">—</strong></div>
-							<div><label>ÉTAT</label><strong id="cassette-status-condition">—</strong></div>
+							<div><label>ETAT</label><strong id="cassette-status-condition" class="tape-data">—</strong></div>
 							<div><label>PROTECTION</label><strong>INCONNUE</strong></div>
 						</div>
 
 						<!-- Étagère à cassettes : remplie dynamiquement par tape.js -->
 						<div class="vx-panel">
-							<div class="panel-title"><span>BIBLIOTHÈQUE DE BANDES</span><small>ÉTAGÈRE</small></div>
+							<div class="panel-title"><span>BIBLIOTHEQUE DE BANDES</span><small>ETAGERE</small></div>
 							<div class="tape-rack" id="tape-rack" aria-label="Cassettes disponibles"></div>
 						</div>
 					</section>
 
-					<section class="vx90-column" aria-hidden="true">
+					<!-- Instruments alimentes par TapeAnalyser : forme d'onde, spectre
+					     et niveaux viennent du son reellement joue. -->
+					<section class="vx90-column">
 						<div class="vx-panel">
 							<div class="panel-title"><span>MONITEUR DE SIGNAL</span><small>OSC-01</small></div>
-							<div class="scope"><div class="scope-grid"></div><div class="wave wave-1"></div><div class="wave wave-2"></div>
-							<div class="scope-marker marker-left"></div><div class="scope-marker marker-right"></div></div>
-							<div class="scope-footer"><span>CH-A <b>0.72V</b></span><span>FRÉQ <b>4.7 KHZ</b></span><span>BRUIT <b>18%</b></span></div>
+							<div class="scope">
+								<div class="scope-grid"></div>
+								<canvas id="tape-scope" class="scope-trace" width="640" height="220"></canvas>
+							</div>
+							<div class="scope-footer">
+								<span>CRETE <b id="tape-scope-peak">—</b></span>
+								<span>FREQ <b id="tape-scope-frequency">—</b></span>
+								<span>BRUIT <b id="tape-scope-noise">—</b></span>
+							</div>
 						</div>
 						<div class="vx-panel">
-							<div class="panel-title"><span>ANALYSEUR DE FRÉQUENCE</span><small>SPC-02</small></div>
-							<div class="spectrum">
-								<i style="--h:20%"></i><i style="--h:32%"></i><i style="--h:45%"></i><i style="--h:25%"></i>
-								<i style="--h:62%"></i><i style="--h:38%"></i><i style="--h:82%"></i><i style="--h:48%"></i>
-								<i style="--h:30%"></i><i style="--h:72%"></i><i style="--h:92%"></i><i style="--h:42%"></i>
-								<i style="--h:25%"></i><i style="--h:55%"></i><i style="--h:34%"></i><i style="--h:67%"></i>
-							</div>
+							<div class="panel-title"><span>ANALYSEUR DE FREQUENCE</span><small>SPC-02</small></div>
+							<!-- Barres construites par tape.js, une par bande analysee -->
+							<div class="spectrum" id="tape-spectrum"></div>
 							<div class="frequency-scale"><span>20Hz</span><span>100Hz</span><span>1KHz</span><span>5KHz</span><span>20KHz</span></div>
 						</div>
 					</section>
 
-					<section class="vx90-column" aria-hidden="true">
+					<section class="vx90-column">
 						<div class="vx-panel meters-panel">
 							<div class="panel-title"><span>MONITEUR DE NIVEAU</span><small>VU-02</small></div>
-							<div class="vu-row"><label>G</label><div class="vu-meter"><i></i></div><b>-08</b></div>
-							<div class="vu-row"><label>D</label><div class="vu-meter"><i></i></div><b>-11</b></div>
+							<div class="vu-row"><label>G</label><div class="vu-meter"><i id="tape-vu-left"></i></div><b id="tape-vu-left-db">—</b></div>
+							<div class="vu-row"><label>D</label><div class="vu-meter"><i id="tape-vu-right"></i></div><b id="tape-vu-right-db">—</b></div>
 						</div>
 						<div class="vx-panel">
 							<div class="panel-title"><span>DIAGNOSTIC BANDE</span><small>SYS</small></div>
-							<div class="diagnostic-line"><span>TÊTE DE LECTURE</span><strong class="ok">OK</strong></div>
-							<div class="diagnostic-line"><span>MOTEUR</span><strong class="ok">780 TR/MIN</strong></div>
-							<div class="diagnostic-line"><span>SUIVI BANDE</span><strong class="warning">INSTABLE</strong></div>
-							<div class="diagnostic-line"><span>BRUIT</span><strong class="danger">ÉLEVÉ</strong></div>
+							<div class="diagnostic-line"><span>SIGNAL</span><strong id="tape-diag-signal">—</strong></div>
+							<div class="diagnostic-line"><span>NIVEAU CRETE</span><strong id="tape-diag-peak">—</strong></div>
+							<div class="diagnostic-line"><span>DEFILEMENT</span><strong id="tape-diag-position">—</strong></div>
+							<div class="diagnostic-line"><span>ETAT BANDE</span><strong id="tape-diag-condition" class="tape-data">—</strong></div>
 						</div>
-						<div class="anomaly-box"><span class="anomaly-led"></span><div><strong>ANOMALIE</strong><small>FRÉQUENCE NON STANDARD</small></div></div>
+						<!-- Visible seulement quand la bande inseree n'est pas STABLE -->
+						<div class="anomaly-box" id="tape-anomaly" hidden><span class="anomaly-led"></span><div><strong>ANOMALIE</strong><small id="tape-anomaly-text" class="tape-data"></small></div></div>
 					</section>
 
 				</main>
@@ -372,7 +377,7 @@
 							<span>▶</span><small>LECTURE</small>
 						</button>
 						<button type="button" class="transport-button" id="btn-stop" disabled>
-							<span>■</span><small>ARRÊT</small>
+							<span>■</span><small>ARRET</small>
 						</button>
 					</div>
 					<div class="counter">
@@ -381,12 +386,12 @@
 						<div class="tape-progress"><i id="tape-progress-fill"></i></div>
 					</div>
 					<div class="machine-status">
-						<span><i class="led led-green" id="led-green" title="Bande prête"></i>PRÊT</span>
+						<span><i class="led led-green" id="led-green" title="Bande prete"></i>PRET</span>
 						<span><i class="led led-red" id="led-red" title="Absence de bande"></i>VIDE</span>
 					</div>
 				</footer>
 
-				<div class="vx90-footer">FAZBEAR ENTERTAINMENT // SYSTÈME DE TRAITEMENT D'ARCHIVES <span>MODÈLE VX-90</span></div>
+				<div class="vx90-footer">FAZBEAR ENTERTAINMENT // SYSTEME DE TRAITEMENT D'ARCHIVES <span>MODELE VX-90</span></div>
 			</section>
 		</div>
 	</section>
@@ -603,6 +608,7 @@
 		<script src="script/mechanics/animatronic.js"></script>
 		<script src="script/mechanics/door.js"></script>
 		<script src="script/mechanics/camera.js"></script>
+		<script src="script/mechanics/tape_analyser.js"></script>
 		<script src="script/mechanics/tape.js"></script>
 		<script src="script/mechanics/journal.js"></script>
 		<script src="script/mechanics/ending.js"></script>
