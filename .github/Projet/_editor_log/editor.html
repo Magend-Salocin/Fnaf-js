@@ -143,6 +143,11 @@
     .cmd-item .tag { font-size: 9px; color: var(--phosphor-dim); border: 1px solid var(--line); padding: 1px 5px; border-radius: 8px; }
     .cmd-item.meta-item { color: var(--amber); }
 
+    .log-list { display: flex; flex-direction: column; gap: 2px; }
+    .log-item { color: var(--amber); }
+    .log-item.active { background: rgba(255,180,84,0.08); border-color: var(--amber); color: var(--amber); }
+    .legacy-control { display: none !important; }
+
     main.editor {
         grid-area: main;
         overflow-y: auto;
@@ -246,22 +251,26 @@
 
 <header>
     <div class="brand">ÉDITEUR DE LOGS<span class="caret"></span></div>
-    <button id="btnOpen" class="primary">Ouvrir le dossier du projet</button>
-    <button id="btnLoadJson" title="Ajoute/écrase un ou plusieurs fichiers .json dans la nuit courante">Charger des JSON…</button>
-    <button id="btnImport" title="Fallback lecture seule pour Firefox / Safari">Importer (lecture seule)</button>
+    <button id="btnOpen" class="primary legacy-control">Ouvrir le dossier du projet</button>
+    <button id="btnLoadJson" class="legacy-control" title="Ajoute/écrase un ou plusieurs fichiers .json dans la nuit courante">Charger des JSON…</button>
+    <button id="btnImport" class="legacy-control" title="Fallback lecture seule pour Firefox / Safari">Importer (lecture seule)</button>
     <div class="status" id="statusLine">Aucun dossier ouvert.</div>
 </header>
 
 <aside class="side">
-    <h3>Nuits</h3>
-    <div class="night-tabs" id="nightTabs"></div>
-    <button id="btnNewNight" style="width:100%; margin-top:6px;">+ Nouvelle nuit</button>
+    <h3 class="legacy-control">Nuits</h3>
+    <div class="night-tabs legacy-control" id="nightTabs"></div>
+    <button id="btnNewNight" class="legacy-control" style="width:100%; margin-top:6px;">+ Nouvelle nuit</button>
 
-    <h3>Entrées — nuit <span id="nightLabel">–</span></h3>
-    <div class="cmd-list" id="cmdList"></div>
-    <button id="btnNewCmd" style="width:100%; margin-top:10px;" disabled>+ Nouvelle commande</button>
+    <h3 class="legacy-control">Entrées — nuit <span id="nightLabel">–</span></h3>
+    <div class="cmd-list legacy-control" id="cmdList"></div>
+    <button id="btnNewCmd" class="legacy-control" style="width:100%; margin-top:10px;" disabled>+ Nouvelle commande</button>
 
-    <div class="toolbar">
+    <h3>Logs — ressources/logs</h3>
+    <div class="log-list" id="logList"></div>
+    <button id="btnLoadLogs" style="width:100%; margin-top:10px;">↻ Ouvrir les logs</button>
+
+    <div class="toolbar legacy-control">
         <button id="btnCompile" class="primary" disabled style="width:100%;">⚙ Compiler lore-night{N}.js</button>
     </div>
     <div class="hint" id="compileHint"></div>
@@ -303,7 +312,10 @@
         terminalHandle: null,
         nights: {},          // { n: { meta, entries: { NAME: obj }, metaHandle, dirHandle } }
         currentNight: null,
-        currentEntry: null   // command name, or "__meta__"
+        currentEntry: null,  // command name, or "__meta__"
+        logs: {},
+        logsDirectoryHandle: null,
+        currentLog: null
     };
 
     const el = id => document.getElementById(id);
@@ -317,9 +329,186 @@
     const btnCompile = el("btnCompile");
     const compileHint = el("compileHint");
     const btnPlayback = el("btnPlayback");
+    const logList = el("logList");
+    const btnLoadLogs = el("btnLoadLogs");
     let currentPreviewSteps = null;
 
+    const LOG_FILES = [
+        "ARCHIVE", "BALLOON", "CAMLOG", "CHILDREN_ART", "CLEANING", "CLOSED",
+        "COOKING", "DELETE", "DRAWINGS", "GUESTS", "KITCHEN", "LOGS", "LOST",
+        "LOST001", "LOST_ART", "LOST_OBJECTS", "LOST_PETS", "LOST_TOYS", "MAINT_05",
+        "MEMORY", "PARTY", "PETS", "PIRATE", "RECOVER", "REPORT_89", "ROOT",
+        "SCANNER", "STAFF", "STAGE_PROP", "SUDO", "TABLES", "TOYS", "USER", "WHOAMI"
+    ];
+
     function setStatus(text) { statusLine.textContent = text; }
+
+    function renderLogList() {
+        logList.innerHTML = "";
+        Object.keys(state.logs).sort().forEach(name => {
+            const item = document.createElement("div");
+            item.className = "cmd-item log-item" + (state.currentLog === name ? " active" : "");
+            item.textContent = name;
+            item.addEventListener("click", () => selectLog(name));
+            logList.appendChild(item);
+        });
+    }
+
+    async function loadResourceLogs(directoryHandle = null) {
+        btnLoadLogs.disabled = true;
+        btnLoadLogs.textContent = "Chargement…";
+        state.logs = {};
+
+        if (window.logEditor && !directoryHandle) {
+            const logs = await window.logEditor.loadLogs();
+            logs.forEach(({ name, data }) => { state.logs[name] = data; });
+        } else if (directoryHandle) {
+            state.logsDirectoryHandle = directoryHandle;
+            for await (const [name, handle] of directoryHandle.entries()) {
+                if (handle.kind !== "file" || !name.endsWith(".json")) continue;
+                try {
+                    const file = await handle.getFile();
+                    const data = JSON.parse(await file.text());
+                    if (data && typeof data.text === "string") {
+                        state.logs[name.replace(/\.json$/, "")] = { ...data, fileHandle: handle };
+                    }
+                } catch (e) {
+                    // Ignore les JSON qui ne sont pas des logs.
+                }
+            }
+        } else {
+            const results = await Promise.all(LOG_FILES.map(async name => {
+                try {
+                    const response = await fetch(`../../../ressources/logs/${name}.json`);
+                    if (!response.ok) throw new Error(response.status);
+                    return { name, data: await response.json() };
+                } catch (e) {
+                    return null;
+                }
+            }));
+            results.filter(Boolean).forEach(({ name, data }) => {
+                if (data && typeof data.text === "string") state.logs[name] = data;
+            });
+        }
+        renderLogList();
+        btnLoadLogs.disabled = false;
+        btnLoadLogs.textContent = "↻ Ouvrir les logs";
+
+        if (Object.keys(state.logs).length) {
+            setStatus(`${Object.keys(state.logs).length} logs chargés — modifiables et enregistrables`);
+            selectLog(Object.keys(state.logs).sort()[0]);
+        } else {
+            setStatus("Impossible de charger ressources/logs/ — ouvre l'éditeur via un serveur local.");
+        }
+    }
+
+    async function openResourceLogs() {
+        if (window.logEditor) {
+            await loadResourceLogs();
+            return;
+        }
+        if (!FSA_SUPPORTED) {
+            await loadResourceLogs();
+            return;
+        }
+        try {
+            let directoryHandle;
+            if (state.rootHandle) {
+                const resourcesHandle = await state.rootHandle.getDirectoryHandle("ressources");
+                directoryHandle = await resourcesHandle.getDirectoryHandle("logs");
+            } else {
+                directoryHandle = await window.showDirectoryPicker({ mode: "readwrite", id: "fnaf-resource-logs" });
+            }
+            await loadResourceLogs(directoryHandle);
+        } catch (e) {
+            if (e.name !== "AbortError") flashMsg("err", "Impossible d'ouvrir les logs : " + e.message);
+            btnLoadLogs.disabled = false;
+            btnLoadLogs.textContent = "↻ Ouvrir les logs";
+        }
+    }
+
+    function selectLog(name) {
+        const log = state.logs[name];
+        if (!log) return;
+        state.currentLog = name;
+        state.currentEntry = null;
+        renderLogList();
+
+        editor.innerHTML = "";
+        const title = document.createElement("h2");
+        title.style.cssText = "color:var(--amber); font-size:16px; letter-spacing:.05em; margin:0 0 4px;";
+        title.textContent = name;
+        editor.appendChild(title);
+
+        const sub = document.createElement("div");
+        sub.className = "hint";
+        sub.textContent = `ressources/logs/${name}.json`;
+        editor.appendChild(sub);
+
+        const textArea = document.createElement("textarea");
+        textArea.style.minHeight = "420px";
+        textArea.value = log.text;
+        textArea.addEventListener("input", () => {
+            log.text = textArea.value;
+            crtPreview.textContent = textArea.value;
+            currentPreviewSteps = [{ text: textArea.value, delay: 0, glitch: !!log.glitch }];
+        });
+        editor.appendChild(fieldRow("Contenu du log", textArea));
+
+        const glitchRow = document.createElement("div");
+        glitchRow.className = "checkline";
+        const glitchCheck = document.createElement("input");
+        glitchCheck.type = "checkbox";
+        glitchCheck.checked = !!log.glitch;
+        const glitchLabel = document.createElement("label");
+        glitchLabel.textContent = "Effet glitch";
+        glitchRow.appendChild(glitchCheck);
+        glitchRow.appendChild(glitchLabel);
+        editor.appendChild(glitchRow);
+
+        const toolbar = document.createElement("div");
+        toolbar.className = "toolbar";
+        const saveButton = document.createElement("button");
+        saveButton.className = "primary";
+        saveButton.textContent = "💾 Enregistrer le log";
+        saveButton.disabled = !log.fileHandle && !window.logEditor;
+        saveButton.addEventListener("click", () => saveResourceLog(name, textArea, glitchCheck));
+        toolbar.appendChild(saveButton);
+        editor.appendChild(toolbar);
+
+        glitchCheck.addEventListener("change", () => {
+            log.glitch = glitchCheck.checked;
+            currentPreviewSteps = [{ text: textArea.value, delay: 0, glitch: log.glitch }];
+        });
+
+        currentPreviewSteps = [{ text: textArea.value, delay: 0, glitch: !!log.glitch }];
+        crtPreview.textContent = textArea.value;
+        btnPlayback.disabled = false;
+    }
+
+    async function saveResourceLog(name, textArea, glitchCheck) {
+        const log = state.logs[name];
+        if (!log) return;
+        const data = { ...log, text: textArea.value, glitch: glitchCheck.checked };
+        delete data.fileHandle;
+        try {
+            if (window.logEditor) {
+                await window.logEditor.saveLog(name, data);
+            } else if (log.fileHandle) {
+                const writable = await log.fileHandle.createWritable();
+                await writable.write(JSON.stringify(data, null, 4) + "\n");
+                await writable.close();
+            } else {
+                throw new Error("Aucun accès en écriture");
+            }
+            state.logs[name] = { ...data, fileHandle: log.fileHandle };
+            flashMsg("ok", `${name}.json enregistré dans ressources/logs.`);
+        } catch (e) {
+            flashMsg("err", "Impossible d'enregistrer le log : " + e.message);
+        }
+    }
+
+    btnLoadLogs.addEventListener("click", openResourceLogs);
 
     function flashMsg(kind, text) {
         const box = document.createElement("div");
@@ -558,6 +747,8 @@
 
     function selectEntry(name) {
         state.currentEntry = name;
+        state.currentLog = null;
+        renderLogList();
         renderCmdList();
         if (name === "__meta__") renderMetaForm();
         else renderEntryForm(name);
@@ -1198,6 +1389,10 @@
     if (!FSA_SUPPORTED) {
         setStatus("Ce navigateur ne supporte pas l'écriture directe — utilise Chrome/Edge, ou le bouton d'import en lecture seule.");
     }
+
+    loadResourceLogs().catch(error => {
+        setStatus("Erreur de chargement des logs : " + error.message);
+    });
 })();
 </script>
 </body>

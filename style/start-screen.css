@@ -140,6 +140,11 @@ h1 {
     left: 23%;
 }
 
+#log-editor-link {
+    top: 79%;
+    left: 23%;
+}
+
 #start-game, #continue-game {
     font-weight: 100;
     position: absolute;
@@ -148,6 +153,18 @@ h1 {
     text-decoration: none;
 }
 
+#log-editor-link {
+    font-weight: 100;
+    position: absolute;
+    font-size: 18px;
+    color: #fff;
+    text-decoration: none;
+}
+
 #start-game:hover:before, #continue-game:hover:before {
+    content: "> "
+}
+
+#log-editor-link:hover:before {
     content: "> "
 }
