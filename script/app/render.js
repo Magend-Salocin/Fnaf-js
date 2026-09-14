@@ -135,12 +135,11 @@ function transitionEndNight(night) {
  *   Fondu entrant sur "Nuit N+1" et "12:00 AM" (ou "6:00 AM" et la fin de
  *   partie après la dernière nuit).
  *
- * - 3 000 ms (3 s) :
- *   Fondu sortant.
- *
- * - 4 900 ms (4,9 s) :
+ * - 3 500 ms (3,5 s) :
  *   Referme l'écran des journaux, resté affiché sous le fondu, coupe sa
- *   musique, puis démarre la nuit suivante ou lance la séquence de fin de jeu.
+ *   musique, démarre la nuit suivante et passe directement au bureau : pas de
+ *   fondu sortant, l'écran de transition laisse place au bureau déjà dessiné.
+ *   Après la dernière nuit, lance la séquence de fin de jeu.
  */
 function runNightTransition(night) {
     const transition = document.querySelector('.transition');
@@ -184,23 +183,23 @@ function runNightTransition(night) {
     nightLabel.classList.add('display-1');
 
     setTimeout(function() {
-        transition.classList.remove('animate-in');
-        transition.classList.add('animate-out');
-    }, 3000);
-
-    setTimeout(function() {
-        transition.style.display = 'none';
-        transition.classList.remove('animate-out');
         JournalViewer.close(); // le journal restait affiché sous le fondu
         stopSound(JournalViewer.MUSIC_ID);
 
         if (night < MAX_NIGHT) {
             startNight(night + 1);
+            drawOfficeView(ctx); // dessine le bureau avant de découvrir l'écran
         } else {
             drawOfficeViewByPicture('game_over_end');
             EndingScene.playEnding();
         }
-    }, 4900);
+
+        // Retiré en dernier : ce qui apparaît dessous est déjà la bonne image.
+        // 'animate-in' doit repartir, sinon le fondu ne rejouerait pas la nuit
+        // suivante (la classe serait déjà posée).
+        transition.style.display = 'none';
+        transition.classList.remove('animate-in');
+    }, 3500);
 }
 
 /**
