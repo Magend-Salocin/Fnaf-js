@@ -143,15 +143,14 @@ class Animatronic {
             }
         }
 
-        // Sons de pas et mouvements (Freddy se déplace silencieusement, sans
-        // bruit de pas détectable, contrairement à Bonnie et Chica)
-        if (this.name !== 'Freddy') {
-            const possibleSounds = [
-                "move_sound", "move_sound", "move_sound", "run_sound", "run_sound", "run_fast"
-            ];
-            const randomSound = possibleSounds[Math.floor(Math.random() * possibleSounds.length)];
-            playSound(randomSound);
-        }
+        // Sons de déplacement. Bonnie et Chica font du bruit de pas ; Freddy
+        // marche sans bruit mais rit à chaque déplacement, c'est le seul
+        // indice sonore de sa progression (comme dans le jeu d'origine).
+        const possibleSounds = (this.name === 'Freddy')
+            ? ["laugh_girl1", "laugh_girl1d", "laugh_girl2d", "laugh_girl8d"]
+            : ["move_sound", "move_sound", "move_sound", "run_sound", "run_sound", "run_fast"];
+        const randomSound = possibleSounds[Math.floor(Math.random() * possibleSounds.length)];
+        playSound(randomSound);
     }
 
     /**

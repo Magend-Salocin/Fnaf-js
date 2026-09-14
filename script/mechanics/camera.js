@@ -161,11 +161,15 @@ function showCloseCamera(){
     lastActiveCamera = activeCamera; // Sauvegarde la dernière caméra active
     activeCamera = 0; // Désactive la caméra
     playSound("camera_put_down"); // Joue le son de descente de caméra
+    stopSound("camera_static"); // Coupe le souffle statique de la tablette
     updateCameraPanelState(false);
   } else {
     hideDoors();
     updateViewDependentHud();
     playSound("camera_toggle"); // Joue le son de basculement de caméra
+    // Souffle statique continu tant que la tablette est levée : il sert de
+    // masque sonore et signale au joueur que les caméras consomment.
+    playSoundLoop("camera_static");
     cameraUp(); // Animation de montée de la caméra
     updateCameraPanelState(true);
   }
@@ -544,21 +548,20 @@ function CameraPlaysound(cameraId) {
       randomSound = possibleSoundsWithAnimatronic[Math.floor(Math.random() * possibleSoundsWithAnimatronic.length)];
     }
 
-/*
-    if(Math.random() < CAMERA_DEBUG_CONSTANTS.EMPTY_ROOM_SOUND_CHANCE){ // 20% de chance de jouer un son même si la pièce est vide
-      // Tableau des sons possibles si aucun animatronic n'est présent
-      let possibleSoundsEmpty = ["laugh_girl1", "laugh_girl1d", "laugh_girl2d", "laugh_girl8d"];
-      if (isAnimatronicPresent) {
-        possibleSoundsEmpty = ["breath_1", "breath_2", "breath_3", "breath_4", "whispering", "robot_voice", "garble_1", "garble_2"];
-      }
-      randomSound = possibleSoundsEmpty[Math.floor(Math.random() * possibleSoundsEmpty.length)];
+    // Son d'ambiance aléatoire sur la pièce observée : une respiration ou un
+    // murmure si un animatronic s'y trouve, un rire lointain sinon. Ne
+    // remplace pas le son de cuisine, qui reste prioritaire quand il a été
+    // tiré juste au-dessus.
+    if(!randomSound && Math.random() < CAMERA_DEBUG_CONSTANTS.EMPTY_ROOM_SOUND_CHANCE){
+      const possibleAmbientSounds = isAnimatronicPresent
+        ? ["breath_1", "breath_2", "breath_3", "breath_4", "whispering", "robot_voice", "garble_1", "garble_2", "garble_3"]
+        : ["laugh_girl1", "laugh_girl1d", "laugh_girl2d", "laugh_girl8d"];
+      randomSound = possibleAmbientSounds[Math.floor(Math.random() * possibleAmbientSounds.length)];
     }
-*/
+
     if(randomSound){
       currentSoundCamera = randomSound;
-      
       playSound(randomSound);
-      console.log(`Son joué (animatronic présent) : ${randomSound}` );
     }
   }
 

@@ -214,7 +214,10 @@ const OFFICE_HOTSPOT_ACTIONS = Object.freeze({
   openTapeScene: () => showCloseTapeScene(),
   openComputerTerminal: () => openInfoComputerPanel(),
   toggleCameraView: () => showCloseCamera(),
-  hangUpPhone: () => hangupPhoneFromPanel()
+  hangUpPhone: () => hangupPhoneFromPanel(),
+  // Clin d'oeil au jeu d'origine : le nez de Freddy sur l'affiche du bureau
+  // klaxonne. Sans effet sur la partie, c'est le seul objet purement decoratif.
+  honkFreddyNose: () => playSound('party_favor')
 });
 
 /**

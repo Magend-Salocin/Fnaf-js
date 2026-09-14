@@ -37,6 +37,16 @@
       }
     },
     {
+      "id": "freddy_nose",
+      "action": "honkFreddyNose",
+      "zones": {
+        "safe_room_left_light_0_right_light_0": { "x": 0.4081, "y": 0.3347, "width": 0.0219, "height": 0.0306 },
+        "safe_room_left_light_0_right_light_1": { "x": 0.4081, "y": 0.3347, "width": 0.0219, "height": 0.0306 },
+        "safe_room_left_light_1_right_light_0": { "x": 0.4081, "y": 0.3347, "width": 0.0219, "height": 0.0306 },
+        "safe_room_left_light_1_right_light_1": { "x": 0.4081, "y": 0.3347, "width": 0.0219, "height": 0.0306 }
+      }
+    },
+    {
       "id": "phone",
       "action": "hangUpPhone",
       "available": "phoneCallActive",

@@ -224,6 +224,41 @@
     "mixVolume": 1.3
   },
   {
+    "id": "foxy-curtain-open",
+    "selector": ".foxy-curtain-open",
+    "category": "movement",
+    "description": "Rideau de Pirate Cove qui s'ouvre",
+    "mixVolume": 1
+  },
+  {
+    "id": "foxy-running",
+    "selector": ".foxy-running",
+    "category": "movement",
+    "description": "Foxy court dans le couloir",
+    "mixVolume": 1.3
+  },
+  {
+    "id": "foxy-blocked",
+    "selector": ".foxy-blocked",
+    "category": "movement",
+    "description": "Foxy bloqué par la porte",
+    "mixVolume": 1.2
+  },
+  {
+    "id": "foxy-attack",
+    "selector": ".foxy-attack",
+    "category": "movement",
+    "description": "Foxy attrape le joueur",
+    "mixVolume": 1
+  },
+  {
+    "id": "foxy-retrait",
+    "selector": ".foxy-retrait",
+    "category": "movement",
+    "description": "Foxy se retire dans Pirate Cove",
+    "mixVolume": 0.9
+  },
+  {
     "id": "tape_frt_01",
     "selector": ".tape-frt-01",
     "category": "call",
