@@ -82,7 +82,8 @@ function transitionScreen(night) {
 /**
  * Gère la séquence de fin de nuit en cas de victoire (survie jusqu'à 6h du matin).
  * Cette fonction déclenche l'animation de victoire, le son de félicitations,
- * l'affichage du chèque de paie, puis la transition vers la nuit suivante ou l'écran de fin.
+ * l'affichage du chèque de paie, puis l'écran des journaux depuis lequel le
+ * joueur lance lui-même la nuit suivante.
  *
  * @param {number} night - Le nombre de nuits écoulées dans le jeu.
  *                         Influence l'affichage de la transition ou le passage direct à la nuit suivante.
@@ -96,27 +97,13 @@ function transitionScreen(night) {
  *   Joue le son de félicitations (applaudissements ou rires).
  *
  * - 5 000 ms (5 s) :
- *   Affiche le chèque de paie avec le salaire de la nuit.
- *
- * - 8 000 ms (8 s) :
- *   Si `night < 6` :
- *     Transition vers l'écran de sélection de la nuit suivante.
- *   Si `night = 6` :
- *     Transition vers l'écran de fin de jeu (crédits ou "Game Complete").
- *
- * - 10 000 ms (10 s) :
- *   Réinitialise l'opacité des éléments et prépare le jeu pour la nuit suivante
- *   ou affiche les crédits si le jeu est terminé.
- *
- * Avant tout ça, si au moins un journal a été débloqué (cf. Collectibles),
- * la visionneuse JournalViewer s'affiche en premier : la séquence
- * ci-dessous ne démarre qu'une fois le joueur sur "Continuer".
+ *   Affiche le chèque de paie avec le salaire de la nuit, efface la vue du
+ *   bureau, puis ouvre l'écran plein écran des journaux (JournalViewer). La
+ *   séquence s'arrête là : elle ne reprend qu'au clic du joueur sur "LANCER LA
+ *   NUIT N+1" (ou "VOIR LA FIN" après la dernière nuit), cf.
+ *   runNightTransition().
  */
 function transitionEndNight(night) {
-    JournalViewer.open(() => runNightEndSequence(night));
-}
-
-function runNightEndSequence(night) {
     nightEndGame(); // Bloque le jeu et désactive les portes
 
     drawOfficeViewByPicture("game_win");
@@ -127,61 +114,94 @@ function runNightEndSequence(night) {
         playSound("win_cheer");
     }, 3000);
 
+    // Écran des journaux : le joueur y reste tant qu'il n'a pas lancé la suite.
     setTimeout(function() {
-        const transition = document.querySelector('.transition');
-        const transitionImg = document.querySelector('.transition img');
-        const startLabel = document.getElementById('transition-start');
-        const nightLabel = document.getElementById('transition-night');
-        const nightCount = document.getElementById('night-count');
+        clearOfficeView(); // retire le GIF 5 h → 6 h resté à l'écran
+        JournalViewer.open(night, () => runNightTransition(night));
+    }, 5000);
+}
 
-        if (transitionImg) {
-            transitionImg.src = 'images/game/transition_screen.png';
-        }
+/**
+ * Fondu de lancement de la nuit suivante, déclenché par le bouton de l'écran
+ * des journaux (cf. transitionEndNight()). Reprend exactement la mise en page
+ * et le fondu de l'intro de la nuit 1 (cf. transitionScreen()) : le GIF
+ * transition-fade.gif en fond, le titre de la nuit et l'heure à leur place
+ * habituelle (cf. style/style.css).
+ *
+ * @param {number} night - La nuit qui vient de se terminer.
+ *
+ * @description
+ * - 0 ms :
+ *   Fondu entrant sur "Nuit N+1" et "12:00 AM" (ou "6:00 AM" et la fin de
+ *   partie après la dernière nuit).
+ *
+ * - 3 000 ms (3 s) :
+ *   Fondu sortant.
+ *
+ * - 4 900 ms (4,9 s) :
+ *   Referme l'écran des journaux, resté affiché sous le fondu, coupe sa
+ *   musique, puis démarre la nuit suivante ou lance la séquence de fin de jeu.
+ */
+function runNightTransition(night) {
+    const transition = document.querySelector('.transition');
+    const transitionImg = document.querySelector('.transition img');
+    const startLabel = document.getElementById('transition-start');
+    const nightLabel = document.getElementById('transition-night');
+    const nightWordLabel = document.getElementById('transition-night-label');
+    const nightCount = document.getElementById('night-count');
 
-        transition.style.display = 'block';
-        transition.classList.remove('display-0', 'animate-out');
-        transition.classList.add('display-1', 'animate-in');
+    const lang = window.selectedLanguage || window.FNAF_DEFAULT_LANGUAGE || 'fr';
+    const allTranslations = window.FNAF_TRANSLATIONS || {};
+    const t = allTranslations[lang] || allTranslations[window.FNAF_DEFAULT_LANGUAGE] || {};
+    const nightWord = t.transition?.nightLabel || 'Night';
+    const customNightComplete = t.transition?.customNightComplete || 'Custom Night Complete';
 
-        startLabel.classList.remove('display-0');
-        startLabel.classList.add('display-1');
+    if (night < MAX_NIGHT) {
+        startLabel.innerHTML = '12:00 AM';
+        nightWordLabel.textContent = nightWord;
+        nightCount.textContent = night + 1;
+    } else {
+        startLabel.innerHTML = '6:00 AM';
+        nightWordLabel.textContent = customNightComplete;
+        nightCount.textContent = '';
+    }
 
-        nightLabel.classList.remove('display-0');
-        nightLabel.classList.add('display-1');
+    if (transitionImg) {
+        // Réassignation forcée : sans cela le GIF, déjà chargé par l'intro de
+        // la nuit 1, ne rejouerait pas son fondu.
+        transitionImg.removeAttribute('src');
+        transitionImg.src = 'images/game/transition-fade.gif';
+    }
 
+    transition.style.display = 'block';
+    transition.classList.remove('display-0', 'animate-out');
+    transition.classList.add('display-1', 'animate-in');
 
-        const lang = window.selectedLanguage || window.FNAF_DEFAULT_LANGUAGE || 'fr';
-        const allTranslations = window.FNAF_TRANSLATIONS || {};
-        const t = allTranslations[lang] || allTranslations[window.FNAF_DEFAULT_LANGUAGE] || {};
-        const nightWord = t.transition?.nightLabel || 'Night';
-        const customNightComplete = t.transition?.customNightComplete || 'Custom Night Complete';
+    startLabel.classList.remove('display-0');
+    startLabel.classList.add('display-1');
 
-        if (night < MAX_NIGHT) {
-            nightCount.innerHTML = night + 1;
-            startLabel.innerHTML = '12:00 AM';
-            nightLabel.innerHTML = `${nightWord} <span id="night-count">${night + 1}</span>`;
-        } else {
-            startLabel.innerHTML = '6:00 AM';
-            nightLabel.innerHTML = customNightComplete;
-        }
-    }, 4500);
+    nightLabel.classList.remove('display-0');
+    nightLabel.classList.add('display-1');
 
     setTimeout(function() {
-        const transition = document.querySelector('.transition');
         transition.classList.remove('animate-in');
         transition.classList.add('animate-out');
+    }, 3000);
+
+    setTimeout(function() {
+        transition.style.display = 'none';
+        transition.classList.remove('animate-out');
+        JournalViewer.close(); // le journal restait affiché sous le fondu
+        stopSound(JournalViewer.MUSIC_ID);
 
         if (night < MAX_NIGHT) {
             startNight(night + 1);
-            transition.style.display = 'none';
         } else {
-            transition.style.display = 'none';
             drawOfficeViewByPicture('game_over_end');
             EndingScene.playEnding();
         }
-    }, 8000);
+    }, 4900);
 }
-
-
 
 /**
  * Gère la séquence de jump scare pour un animatronic donné, en jouant le son et en affichant l'image correspondante.

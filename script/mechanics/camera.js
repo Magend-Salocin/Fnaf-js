@@ -586,6 +586,23 @@ function drawStaticEffect(ctx, camera) {
 
 
 /**
+ * Efface la vue du bureau : plus aucune image de bureau n'est affichée, le
+ * canvas est repeint en noir. Appelé en fin de nuit (cf. transitionEndNight()
+ * dans script/app/render.js) pour que le bureau ne réapparaisse pas derrière
+ * l'écran des journaux et les fondus.
+ */
+function clearOfficeView(){
+  // L'écran de victoire (5_to_6.gif) n'est pas dessiné sur le canvas : showGif()
+  // le pose dans <img id="gameCanvasGif"> et masque le canvas. Il faut donc
+  // masquer ce <img> et repeindre le canvas, sinon l'image reste à l'écran
+  // derrière les scènes qui suivent la fin de la nuit.
+  hideGif();
+  _pictureGif = null;
+  ctx.fillStyle = '#000';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+}
+
+/**
  * Dessine la vue du bureau en utilisant une clé d'image spécifique
  * @param {string} officeImageKey - Clé de l'image du bureau à afficher
  */
@@ -643,6 +660,7 @@ function drawOfficeView(ctx,officeImageKey=null) {
           drawOfficeScreens(ctx, officeImageKey, drawX, drawY, drawWidth, drawHeight);
           drawOfficeHotspots(ctx, officeImageKey, drawX, drawY, drawWidth, drawHeight);
             hideGif();
+            _pictureGif = null;
         }
     }
 }

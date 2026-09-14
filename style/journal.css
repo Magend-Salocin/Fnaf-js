@@ -1,147 +1,102 @@
 /* =====================================================================
-   Scène "Journaux" — Archives de presse
+   Scène "Journaux" — coupures de presse en plein écran
    ---------------------------------------------------------------------
-   Direction artistique : coupure de presse jaunie, papier/sépia, à
-   l'opposé du look "tech" du lecteur de cassettes (style/tape.css).
    Affichée automatiquement en fin de nuit réussie (transitionEndNight()
-   dans script/app/render.js) pour parcourir les journaux débloqués.
+   dans script/app/render.js) : l'image du journal occupe tout l'écran,
+   les flèches latérales passent d'un journal à l'autre, et le bouton en
+   bas à droite lance la nuit suivante. Les boutons reprennent le look
+   "matériel Fazbear" du lecteur de cassettes (style/tape.css) : boîtier
+   sombre, texture CRT et phosphore vert (style/retro-console-tokens.css).
    ===================================================================== */
 
 .journal-scene{
-  --paper:        #ece3c8;
-  --paper-dark:   #ddd0a8;
-  --ink:          #2a2118;
-  --ink-dim:      #5c5140;
-  --rule:         rgba(42,33,24,.35);
-  --font-serif:   Georgia, "Times New Roman", serif;
-  --font-mono:    "Courier New", Consolas, monospace;
-
   position: fixed;
   inset: 0;
   z-index: 1000;
-  font-family: var(--font-serif);
-  color: var(--ink);
+  background: #000;
 }
 
 .journal-scene[hidden]{ display: none; }
 
-.journal-overlay{
+.journal-image{
   position: absolute;
   inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 24px;
-  background: radial-gradient(ellipse at center, rgba(20,15,8,.7), rgba(0,0,0,.95));
-  overflow: auto;
-}
-
-.journal-reader{
-  width: 80vw;
-  height: 80vh;
-  display: flex;
-  flex-direction: column;
-  background:
-    repeating-linear-gradient(0deg, rgba(0,0,0,.015) 0 2px, transparent 2px 4px),
-    linear-gradient(155deg, var(--paper), var(--paper-dark));
-  border: 1px solid rgba(42,33,24,.4);
-  box-shadow: 0 30px 80px rgba(0,0,0,.7), inset 0 0 60px rgba(42,33,24,.15);
-}
-
-.journal-header{
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 16px 22px;
-  border-bottom: 3px double var(--rule);
-  font-family: var(--font-mono);
-}
-.journal-header-title{
-  font-size: 13px;
-  font-weight: bold;
-  letter-spacing: 3px;
-}
-.journal-page-indicator{
-  font-size: 11px;
-  color: var(--ink-dim);
-  letter-spacing: 1px;
-}
-
-.journal-body{
-  flex: 1;
-  min-height: 0;
-  overflow: hidden;
-  padding: 24px 30px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.journal-image-wrap{
-  display: inline-flex;
-  max-width: 100%;
-  max-height: 100%;
-  border: 1px solid rgba(42,33,24,.4);
-  box-shadow: 0 4px 10px rgba(0,0,0,.25);
-  background: #000;
-}
-.journal-image{
-  display: block;
-  max-width: 100%;
-  max-height: calc(80vh - 180px);
-  width: auto;
-  height: auto;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
   filter: sepia(.35) contrast(1.05);
-}
-
-/* ---------------------------------------------------------------------
-   Pied de page — style "matériel Fazbear" (boutons du lecteur de
-   cassettes, cf. style/tape.css) plutôt que le papier journal, pour
-   trancher avec le corps de l'archive et rappeler l'interface du
-   bureau de sécurité.
-   --------------------------------------------------------------------- */
-.journal-footer{
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  align-items: center;
-  gap: 14px;
-  padding: 14px 22px;
-  background: linear-gradient(#151816, #090a09);
-  border-top: 1px solid #3c403d;
 }
 
 .journal-nav-btn,
 .journal-continue-btn{
-  width: 200px;
-  justify-self: center;
+  position: absolute;
   font-family: var(--rc-font-mono);
-  font-size: 11px;
   letter-spacing: 1px;
-  padding: 12px 16px;
-  color: var(--rc-text-mid);
-  background: linear-gradient(#373a37, #1a1c1a);
-  border: 1px solid var(--rc-border-light);
-  box-shadow: 0 3px 0 #080908, inset 0 1px rgba(255,255,255,.1);
   cursor: pointer;
 }
+
+/* Pendant le fondu vers la nuit suivante, la scène reste affichée sous le
+   fondu mais ses commandes disparaissent (cf. onContinue() dans
+   script/mechanics/journal.js). */
+.journal-scene.is-leaving .journal-nav-btn,
+.journal-scene.is-leaving .journal-continue-btn{ display: none; }
+
+.journal-nav-btn{
+  top: 50%;
+  transform: translateY(-50%);
+  display: grid;
+  place-items: center;
+  width: 62px;
+  height: 92px;
+  font-size: 20px;
+  color: var(--rc-green-soft);
+  background:
+    var(--rc-scanlines),
+    linear-gradient(180deg, var(--rc-bg-panel-light), var(--rc-bg-panel-dark));
+  border: 1px solid var(--rc-border-light);
+  border-radius: 3px;
+  box-shadow:
+    0 4px 0 var(--rc-bg-void),
+    inset 0 1px rgba(255,255,255,.12),
+    inset 0 0 20px rgba(0,255,102,.07);
+  text-shadow: 0 0 8px rgba(0,255,102,.55);
+  transition: color .15s, border-color .15s, box-shadow .15s, text-shadow .15s;
+}
+.journal-prev{ left: 26px; }
+.journal-next{ right: 26px; }
+
 .journal-nav-btn:hover:not(:disabled){
   color: var(--rc-green);
-  border-color: rgba(0,255,102,.5);
+  border-color: rgba(0,255,102,.55);
+  box-shadow:
+    0 4px 0 var(--rc-bg-void),
+    inset 0 1px rgba(255,255,255,.12),
+    inset 0 0 26px rgba(0,255,102,.16),
+    0 0 14px rgba(0,255,102,.25);
+  text-shadow: 0 0 14px rgba(0,255,102,.9);
 }
 .journal-nav-btn:active:not(:disabled){
-  transform: translateY(2px);
-  box-shadow: 0 1px 0 #080908;
+  transform: translateY(-50%) translateY(3px);
+  box-shadow: 0 1px 0 var(--rc-bg-void), inset 0 0 26px rgba(0,255,102,.16);
 }
 .journal-nav-btn:disabled{
-  opacity: .35;
+  color: var(--rc-text-dim);
+  opacity: .3;
+  text-shadow: none;
   cursor: not-allowed;
 }
 
 .journal-continue-btn{
+  right: 26px;
+  bottom: 26px;
+  min-width: 220px;
+  white-space: nowrap;
+  font-size: 11px;
   font-weight: bold;
+  padding: 12px 16px;
   color: var(--rc-bg-void);
   background: linear-gradient(var(--rc-green), #0f9c47);
-  border-color: var(--rc-green);
+  border: 1px solid var(--rc-green);
   box-shadow: 0 3px 0 #063a1c, 0 0 10px rgba(0,255,102,.4), inset 0 1px rgba(255,255,255,.25);
 }
 .journal-continue-btn:hover{ filter: brightness(1.1); }
@@ -151,7 +106,18 @@
 }
 
 @media (max-width: 640px){
-  .journal-footer{ grid-template-columns: 1fr; gap: 8px; }
-  .journal-nav-btn,
-  .journal-continue-btn{ width: 100%; justify-self: stretch; }
+  .journal-nav-btn{
+    width: 44px;
+    height: 68px;
+    font-size: 15px;
+  }
+  .journal-prev{ left: 10px; }
+  .journal-next{ right: 10px; }
+
+  .journal-continue-btn{
+    left: 16px;
+    right: 16px;
+    bottom: 16px;
+    min-width: 0;
+  }
 }

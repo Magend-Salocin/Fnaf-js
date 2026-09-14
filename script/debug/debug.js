@@ -33,11 +33,12 @@ function debugWinNight() {
 /**
  * DEBUG - Ouvre immédiatement l'écran des journaux (JournalViewer), le
  * même que celui affiché en fin de nuit réussie (cf. transitionEndNight()
- * dans render.js), sans attendre 6h00. N'affiche rien si aucun journal
- * n'a encore été débloqué.
+ * dans render.js), sans attendre 6h00. Comme en fin de nuit, les journaux
+ * manquants de la nuit en cours sont débloqués au passage ; le bouton
+ * ferme simplement l'écran au lieu de lancer la nuit suivante.
  */
 function debugShowJournals() {
-  JournalViewer.open(() => {});
+  JournalViewer.open(_night, () => {});
   debugRefreshJournalsStatus();
 }
 

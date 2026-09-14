@@ -2,7 +2,7 @@
  * Scène "Fin de partie" — lecteur plein écran des cinématiques de fin
  * (ressources/Tape/TAPE_ERREUR_08.mp4 / TAPE_ERREUR_09.mp4).
  *
- * Appelée depuis runNightEndSequence() dans script/app/render.js, à la
+ * Appelée depuis runNightTransition() dans script/app/render.js, à la
  * place de l'écran statique "game_over_end", une fois la nuit 6 terminée.
  * La bonne ou la mauvaise fin dépend de la ligne narrative secrète des
  * cassettes Cassidy (TAPE_ERREUR_01 à 07, débloquées par les événements

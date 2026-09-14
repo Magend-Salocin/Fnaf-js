@@ -398,34 +398,18 @@
 	</section>
 
 	<!--
-		Scène "journaux" : affichée automatiquement à la fin d'une nuit
-		réussie (cf. transitionEndNight() dans script/app/render.js), avant
-		la séquence de victoire, si au moins un journal a été débloqué par
-		un événement aléatoire (champ `journal`, cf. Collectibles). Pilotée
-		par script/mechanics/journal.js.
+		Scène "journaux" : affichée automatiquement à la fin de chaque nuit
+		réussie (cf. transitionEndNight() dans script/app/render.js), après
+		l'écran de victoire. Les coupures de presse débloquées (champ `journal`
+		des événements aléatoires, cf. Collectibles) occupent tout l'écran, se
+		parcourent avec les flèches, et le bouton lance la nuit suivante (son
+		libellé est posé par script/mechanics/journal.js).
 	-->
 	<section id="journal-scene" class="journal-scene" hidden aria-hidden="true">
-		<div class="journal-overlay">
-			<section class="journal-reader">
-
-				<header class="journal-header">
-					<span class="journal-header-title">ARCHIVES DE PRESSE</span>
-					<span class="journal-page-indicator" id="journal-page-indicator">1 / 1</span>
-				</header>
-
-				<div class="journal-body">
-					<div class="journal-image-wrap" id="journal-image-wrap" hidden>
-						<img class="journal-image" id="journal-image" alt="">
-					</div>
-				</div>
-
-				<footer class="journal-footer">
-					<button type="button" class="journal-nav-btn" id="journal-prev" aria-label="Journal précédent">◀ PRÉCÉDENT</button>
-					<button type="button" class="journal-continue-btn" id="journal-continue">CONTINUER</button>
-					<button type="button" class="journal-nav-btn" id="journal-next" aria-label="Journal suivant">SUIVANT ▶</button>
-				</footer>
-			</section>
-		</div>
+		<img class="journal-image" id="journal-image" alt="">
+		<button type="button" class="journal-nav-btn journal-prev" id="journal-prev" aria-label="Journal précédent">◀</button>
+		<button type="button" class="journal-nav-btn journal-next" id="journal-next" aria-label="Journal suivant">▶</button>
+		<button type="button" class="journal-continue-btn" id="journal-continue">CONTINUER</button>
 	</section>
 
 	<!-- Cinématique de fin (bonne/mauvaise fin) : script/mechanics/ending.js -->
