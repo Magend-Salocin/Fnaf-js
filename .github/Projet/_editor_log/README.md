@@ -110,3 +110,23 @@ puis ouvre `http://localhost:3000/Terminal/editor.html` (adapte le port).
 Duplique le schéma : crée `Terminal/night2.meta.json` + `Terminal/night2/*.json`
 (à la main, ou via l'éditeur avec « + Nouvelle nuit »), puis
 `node build.js 2` ou le bouton Compiler.
+
+## 6. Cohérence du lore
+
+Le contenu des logs n'est pas libre. Dates, prénoms, salles, numéros d'objets et
+numéros de version sont fixés par
+[`02 - Lore/CANON_LOGS.md`](../02%20-%20Lore/CANON_LOGS.md). Lis-le avant
+d'ajouter ou de modifier une entrée : un log qui invente une date ou un prénom
+casse les recoupements que le joueur est censé faire entre les fichiers.
+
+Après toute modification :
+
+```bash
+node ".github/Projet/_editor_log/check_logs.js"
+```
+
+Le script vérifie que chaque fichier déclaré dans
+`script/config/logs_database.json` existe, que son JSON est valide, que
+`command` correspond au nom de fichier, que les cadres et séparateurs font la
+bonne largeur, et qu'aucun prénom hors canon n'a été introduit. Il sort en
+code 1 si une erreur est trouvée.

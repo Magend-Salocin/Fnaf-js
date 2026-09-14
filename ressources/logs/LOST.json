@@ -1,13 +1,13 @@
 {
     "command": "LOST",
-    "label": "fin de nuit seulement",
     "markFound": "LOST",
+    "type": "text",
+    "text": "╔══════════════════════════════════════════════════════════════╗\n║                    FAZBEAR ENTERTAINMENT                     ║\n║                INVENTAIRE DES OBJETS TROUVÉS                 ║\n╚══════════════════════════════════════════════════════════════╝\n\nDOCUMENT .................... LOST.LOG\nRÉFÉRENCE ................... FE-89-170\nSERVICE ÉMETTEUR ............ LOST & FOUND v1.2\nCLASSIFICATION .............. INTERNE\nDERNIÈRE MISE À JOUR ........ CETTE NUIT - 05:00\n\n════════════════════════════════════════════════════════════════\n  1. ÉTAT DE L'INVENTAIRE\n════════════════════════════════════════════════════════════════\n\n N°    RÉF.      OBJET             EMPLACEMENT\n ──────────────────────────────────────────────────────────────\n 001   OBJ-453   Chaise enfant     Dining Area\n 002   OBJ-451   Ballon bleu       Dining Area\n 003   OBJ-445   Casquette rouge   Show Stage\n 004   OBJ-452   Bracelet rose     East Hall A\n\n════════════════════════════════════════════════════════════════\n  2. RÉCAPITULATIF\n════════════════════════════════════════════════════════════════\n\nOBJETS ENREGISTRÉS .......... 04\nOBJETS RÉCUPÉRÉS ............ 00\nOBJETS EN ATTENTE ........... 04\n\n════════════════════════════════════════════════════════════════\n  3. PROCÉDURE\n════════════════════════════════════════════════════════════════\n\nLes objets trouvés restent à la disposition\nde leur propriétaire jusqu'à récupération.\n\nToute réclamation doit être validée par un\nresponsable de l'établissement.\n\n════════════════════════════════════════════════════════════════\n  4. STATUT\n════════════════════════════════════════════════════════════════\n\nÉTAT DU REGISTRE ............ EN ATTENTE\nDERNIÈRE MISE À JOUR ........ 05:00\n\n════════════════════════════════════════════════════════════════\n  FIN DU DOCUMENT\n  FAZBEAR ENTERTAINMENT - DIFFUSION INTERNE\n════════════════════════════════════════════════════════════════\n\n█",
+    "glitch": false,
+    "label": "fin de nuit seulement",
     "minHour": 5,
     "beforeHour": {
         "text": "AUCUNE DONNÉE DISPONIBLE AVANT LA FERMETURE.",
         "glitch": false
-    },
-    "type": "text",
-    "text": "╔══════════════════════════════════════════════════════════════╗\n║          FAZBEAR ENTERTAINMENT - LOST v1.2                   ║\n║          INVENTAIRE DES OBJETS TROUVÉS                       ║\n╚══════════════════════════════════════════════════════════════╝\n\n> OUVERTURE : LOST.LOG\n\n════════════════════════════════════════════════════════════════\n\nÉTAT DE L'INVENTAIRE\n\n N°    OBJET                  EMPLACEMENT\n──────────────────────────────────────────────────────────────\n\n 001   Ballon bleu            Salle principale\n\n 002   Peluche ours           Dining Area\n\n 003   Casquette rouge        Show Stage\n\n 004   Bracelet rose          East Hall\n\n════════════════════════════════════════════════════════════════\n\nRÉCAPITULATIF\n\nObjets enregistrés ......... 4\n\nObjets récupérés ........... 0\n\nObjets en attente .......... 4\n\n════════════════════════════════════════════════════════════════\n\nPROCÉDURE\n\nLes objets trouvés restent à\nla disposition de leur propriétaire\njusqu'à leur récupération.\n\nToute réclamation doit être validée\npar un responsable.\n\n════════════════════════════════════════════════════════════════\n\nSTATUT\n\nEn attente de récupération...\n\nDernière mise à jour\n\n05:00\n\nFIN DU FICHIER\n\n█",
-    "glitch": false
+    }
 }

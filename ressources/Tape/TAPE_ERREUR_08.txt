@@ -171,7 +171,7 @@ ATTACHEMENT.
 
 [LONG SILENCE]
 
-[VOIX SYSTÈME]
+[VOIX SYSTÈME] ->  puppet
 
 "Avec les autres."
 

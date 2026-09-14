@@ -1,11 +1,10 @@
 {
     "command": "CAMLOG",
-    "label": "rare",
     "markFound": "CAMLOG",
     "type": "sequence",
     "steps": [
         {
-            "text": "CAMÉRA 03\n\nArchive disponible.\n\nDate :\n18 avril 1989\n\nHeure :\n18h41",
+            "text": "╔══════════════════════════════════════════════════════════════╗\n║                    FAZBEAR ENTERTAINMENT                     ║\n║                CONSULTATION D'ARCHIVE CAMÉRA                 ║\n╚══════════════════════════════════════════════════════════════╝\n\nDOCUMENT .................... CAMLOG.LOG\nRÉFÉRENCE ................... FE-89-041\nSERVICE ÉMETTEUR ............ CCTV v1.7\nCLASSIFICATION .............. INTERNE\nDERNIÈRE MISE À JOUR ........ 18/04/1989\n\n════════════════════════════════════════════════════════════════\n  1. ARCHIVE SÉLECTIONNÉE\n════════════════════════════════════════════════════════════════\n\nCAMÉRA ...................... CAM 3\nZONE ........................ Supply Closet\nDATE ........................ 18/04/1989\nHEURE ....................... 18:41\nFERMETURE AU PUBLIC ......... 18:00\nDISPONIBILITÉ ............... ARCHIVE PRÉSENTE",
             "delay": 0,
             "glitch": false,
             "flash": false
@@ -23,5 +22,6 @@
             "flash": true,
             "flashDuration": 1000
         }
-    ]
+    ],
+    "label": "rare"
 }

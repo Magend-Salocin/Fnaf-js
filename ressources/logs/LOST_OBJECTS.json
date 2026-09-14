@@ -1,11 +1,10 @@
 {
     "command": "LOST_OBJECTS",
-    "label": "rare",
     "markFound": "LOST_OBJECTS",
     "type": "sequence",
     "steps": [
         {
-            "text": "\n╔══════════════════════════════════════════════════════════════╗\n║                OBJETS TROUVÉS                               ║\n╚══════════════════════════════════════════════════════════════╝\nN°      OBJET               STATUT\n\n442     Veste bleue         RENDUE\n\n443     Voiture             RENDUE\n\n444     Sac à dos           RENDU\n\n445     Casquette           EN ATTENTE\n\n--------------------------------------------------------------\n\nPROPRIÉTAIRE :      INCONNU\nTEMPS D'ATTENTE :   4018 jours\nStatut :            Personne n'est revenu.\n\nRetrait réglementaire :  IMPOSSIBLE\nMotif :                  DOSSIER VERROUILLÉ\n--------------------------------------------------------------\n",
+            "text": "╔══════════════════════════════════════════════════════════════╗\n║                    FAZBEAR ENTERTAINMENT                     ║\n║                REGISTRE HISTORIQUE DES OBJETS                ║\n╚══════════════════════════════════════════════════════════════╝\n\nDOCUMENT .................... LOST_OBJECTS.LOG\nRÉFÉRENCE ................... FE-89-044\nSERVICE ÉMETTEUR ............ LOST & FOUND v1.2\nCLASSIFICATION .............. INTERNE\nDERNIÈRE MISE À JOUR ........ 03/07/1989\n\n════════════════════════════════════════════════════════════════\n  1. REGISTRE\n════════════════════════════════════════════════════════════════\n\n RÉF.      OBJET                  STATUT\n ──────────────────────────────────────────────────────────────\n OBJ-442   Veste bleue            RENDUE\n OBJ-443   Petite voiture rouge   RENDUE\n OBJ-444   Sac à dos              RENDU\n OBJ-445   Casquette rouge        EN ATTENTE\n\n════════════════════════════════════════════════════════════════\n  2. FICHE OBJ-445\n════════════════════════════════════════════════════════════════\n\nPROPRIÉTAIRE ................ INCONNU\nDATE D'ENTRÉE ............... 21/04/1989\nTEMPS D'ATTENTE ............. 4018 JOURS\nDATE CALCULÉE ............... 21/04/2000\nDATE SYSTÈME ................ 03/07/1989\n\nCONTRÔLE DE COHÉRENCE ....... ÉCHEC\nRETRAIT RÉGLEMENTAIRE ....... IMPOSSIBLE\nMOTIF ....................... DOSSIER VERROUILLÉ\n\nPersonne n'est revenu.",
             "delay": 0,
             "glitch": false,
             "flash": false
@@ -17,5 +16,6 @@
             "flash": true,
             "flashDuration": 2000
         }
-    ]
+    ],
+    "label": "rare"
 }

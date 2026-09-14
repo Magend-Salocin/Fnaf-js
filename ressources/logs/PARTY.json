@@ -1,21 +1,21 @@
 {
     "command": "PARTY",
-    "label": "rare",
     "markFound": "PARTY",
     "type": "sequence",
     "steps": [
         {
-            "text": "╔══════════════════════════════════════════════════════════════╗\n║          FAZBEAR ENTERTAINMENT - PARTY LOG v2.1             ║\n║           REGISTRE DES ÉVÉNEMENTS ENFANTS                   ║\n╚══════════════════════════════════════════════════════════════╝\n\n> OUVERTURE DU FICHIER : PARTY.LOG\n\n════════════════════════════════════════════════════════════════\n\nCHARGEMENT DES DONNÉES...\n\nVÉRIFICATION DE L'INTÉGRITÉ ............ OK\nRÉCUPÉRATION DES ARCHIVES .............. OK\n\n════════════════════════════════════════════════════════════════\n\nDATE      TYPE            INV.   ÂGE    STATUT\n──────────────────────────────────────────────────────────────\n\n04/06     ANNIVERSAIRE     11     6     TERMINÉ\n\n09/06     ANNIVERSAIRE     15     8     TERMINÉ\n\n26/06     ANNIVERSAIRE      4     7     TERMINÉ\n\n──────────────────────────────────────────────────────────────",
+            "text": "╔══════════════════════════════════════════════════════════════╗\n║                    FAZBEAR ENTERTAINMENT                     ║\n║               REGISTRE DES ÉVÉNEMENTS ENFANTS                ║\n╚══════════════════════════════════════════════════════════════╝\n\nDOCUMENT .................... PARTY.LOG\nRÉFÉRENCE ................... FE-89-136\nSERVICE ÉMETTEUR ............ EVENTS v2.1\nCLASSIFICATION .............. INTERNE\nDERNIÈRE MISE À JOUR ........ 26/06/1989\n\n════════════════════════════════════════════════════════════════\n  1. CHARGEMENT DES DONNÉES\n════════════════════════════════════════════════════════════════\n\nVÉRIFICATION DE L'INTÉGRITÉ . OK\nRÉCUPÉRATION DES ARCHIVES ... OK\nPÉRIODE ..................... JUIN 1989\n\n════════════════════════════════════════════════════════════════\n  2. ÉVÉNEMENTS DE LA PÉRIODE\n════════════════════════════════════════════════════════════════\n\n DATE     TYPE                 INV.  ÂGE  STATUT\n ──────────────────────────────────────────────────────────────\n 04/06    ANNIVERSAIRE          11    6   TERMINÉ\n 11/06    ANNIVERSAIRE          15    8   INTERROMPU\n 26/06    RÉSERVATION PRIVÉE    04    7   TERMINÉ\n ──────────────────────────────────────────────────────────────",
             "delay": 0,
             "glitch": false,
             "flash": false
         },
         {
-            "text": "\nERREUR\n26/06     ANNIVERSAIRE    5    7 ANS  INTERROMPU",
+            "text": "\nERREUR\n\n 26/06    RÉSERVATION PRIVÉE    05    7   INTERROMPU",
             "delay": 15000,
             "glitch": true,
             "flash": true,
             "flashDuration": 2000
         }
-    ]
+    ],
+    "label": "rare"
 }

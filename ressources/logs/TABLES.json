@@ -1,11 +1,10 @@
 {
     "command": "TABLES",
-    "label": "rare",
     "markFound": "TABLES",
     "type": "sequence",
     "steps": [
         {
-            "text": "╔══════════════════════════════════════════════════════════════╗\n║          FAZBEAR ENTERTAINMENT - ROOM MAP v1.4               ║\n║              PLAN DE LA SALLE D'ANNIVERSAIRE                 ║\n╚══════════════════════════════════════════════════════════════╝\n\n> CHARGEMENT DU PLAN...\n\n════════════════════════════════════════════════════════════════ \n\n              TABLE ANNIVERSAIRE\n                 ○────○────○\n                 │         │\n                 ○────○────○\n                      ▲\n               CHAISE DÉPLACÉE\n\n════════════════════════════════════════════════════════════════\n\nÉTAT DE LA PIÈCE\nDernière inspection ......... 26/06\nMobilier .................... Conforme\nSignalement maintenance ..... AUCUN\nOccupation actuelle ......... AUCUNE\n════════════════════════════════════════════════════════════════",
+            "text": "╔══════════════════════════════════════════════════════════════╗\n║                    FAZBEAR ENTERTAINMENT                     ║\n║               PLAN DE LA TABLE D'ANNIVERSAIRE                ║\n╚══════════════════════════════════════════════════════════════╝\n\nDOCUMENT .................... TABLES.LOG\nRÉFÉRENCE ................... FE-89-138\nSERVICE ÉMETTEUR ............ ROOM MAP v1.4\nCLASSIFICATION .............. INTERNE\nDERNIÈRE MISE À JOUR ........ 26/06/1989\n\n════════════════════════════════════════════════════════════════\n  1. ZONE RELEVÉE\n════════════════════════════════════════════════════════════════\n\nZONE ........................ Dining Area (CAM 1B)\n\n              TABLE ANNIVERSAIRE\n                 ○────○────○\n                 │         │\n                 ○────○────●\n                      ▲\n               CHAISE DÉPLACÉE\n\n════════════════════════════════════════════════════════════════\n  2. COUVERTS\n════════════════════════════════════════════════════════════════\n\nCOUVERTS DRESSÉS ............ 06\nCOUVERTS UTILISÉS ........... 05\nINVITÉS ENREGISTRÉS ......... 04\n\n════════════════════════════════════════════════════════════════\n  3. ÉTAT DE LA PIÈCE\n════════════════════════════════════════════════════════════════\n\nDERNIÈRE INSPECTION ......... 26/06/1989\nMOBILIER .................... CONFORME\nSIGNALEMENT MAINTENANCE ..... AUCUN\nOCCUPATION ACTUELLE ......... AUCUNE",
             "delay": 0,
             "glitch": false,
             "flash": false
@@ -17,5 +16,6 @@
             "flash": true,
             "flashDuration": 3000
         }
-    ]
+    ],
+    "label": "rare"
 }

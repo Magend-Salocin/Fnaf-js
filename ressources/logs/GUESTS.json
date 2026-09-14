@@ -1,21 +1,21 @@
 {
     "command": "GUESTS",
-    "label": "rare",
     "markFound": "GUESTS",
     "type": "sequence",
     "steps": [
         {
-            "text": "╔══════════════════════════════════════════════════════════════╗\n║         FAZBEAR ENTERTAINMENT - GUESTS.LOG v1.6              ║\n║              LISTE DES INVITÉS - RÉSERVATION                 ║\n╚══════════════════════════════════════════════════════════════╝\n\n> OUVERTURE : GUESTS_26-06.LOG\n\n════════════════════════════════════════════════════════════════\n\nAnalyse de la réservation...\n\n✓ Jeremy      ............ ENREGISTRÉ\n\n✓ Susie       ............ ENREGISTRÉ\n\n✓ Fritz       ............ ENREGISTRÉ\n\n✓ Gabriel     ............ ENREGISTRÉ\n\n════════════════════════════════════════════════════════════════\n\nRÉSUMÉ\n\nInvités prévus ............ 04\n\nInvités enregistrés ....... 04\n\nAbsences .................. 00\n\nAucune anomalie détectée.\n\n════════════════════════════════════════════════════════════════\n",
+            "text": "╔══════════════════════════════════════════════════════════════╗\n║                    FAZBEAR ENTERTAINMENT                     ║\n║               LISTE DES INVITÉS - RÉSERVATION                ║\n╚══════════════════════════════════════════════════════════════╝\n\nDOCUMENT .................... GUESTS_2606.LOG\nRÉFÉRENCE ................... FE-89-139\nSERVICE ÉMETTEUR ............ EVENTS v2.1\nCLASSIFICATION .............. INTERNE\nDERNIÈRE MISE À JOUR ........ 26/06/1989\n\n════════════════════════════════════════════════════════════════\n  1. RÉSERVATION\n════════════════════════════════════════════════════════════════\n\nDATE ........................ 26/06/1989\nHEURE ....................... 16:00\nZONE ........................ Dining Area (CAM 1B)\nTYPE ........................ RÉSERVATION PRIVÉE\nÂGE DÉCLARÉ ................. 7 ANS\n\n════════════════════════════════════════════════════════════════\n  2. CONTRÔLE DES INVITÉS\n════════════════════════════════════════════════════════════════\n\n NOM       STATUT\n ──────────────────────────────────────────────────────────────\n Gabriel   ENREGISTRÉ\n Jeremy    ENREGISTRÉ\n Susie     ENREGISTRÉ\n Fritz     ENREGISTRÉ\n\n════════════════════════════════════════════════════════════════\n  3. RÉCAPITULATIF\n════════════════════════════════════════════════════════════════\n\nINVITÉS PRÉVUS .............. 04\nINVITÉS ENREGISTRÉS ......... 04\nDÉPARTS ENREGISTRÉS ......... 00\nABSENCES .................... 00\nANOMALIE DÉTECTÉE ........... AUCUNE",
             "delay": 0,
             "glitch": false,
             "flash": false
         },
         {
-            "text": "\nERREUR\n\n□ ???????? \n\nUne réservation est incomplète.\n\nLe système attend toujours\nle dernier invité.\n\n5 invités enregistrés.\n\n ",
+            "text": "\nERREUR\n\n□ ???????? \n\nUne réservation est incomplète.\n\nLe système attend toujours\nle dernier invité.\n\n5 invités enregistrés.\n ",
             "delay": 1300,
             "glitch": true,
             "flash": true,
             "flashDuration": 3000
         }
-    ]
+    ],
+    "label": "rare"
 }

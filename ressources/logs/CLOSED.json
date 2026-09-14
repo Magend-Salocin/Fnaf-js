@@ -1,17 +1,16 @@
 {
     "command": "CLOSED",
-    "label": "TRÈS RARE",
     "markFound": "CLOSED",
     "type": "sequence",
     "steps": [
         {
-            "text": "\n╔══════════════════════════════════════════════════════════════╗\n║             PROCÉDURE DE FERMETURE                          ║\n╚══════════════════════════════════════════════════════════════╝\n\nNettoyage ............. OK\n\nExtinction lumières ... OK\n\nCuisine ............... OK\n\nAnimatroniques ........ OK\n\nInvités ............... OK\n\n--------------------------------------------------------------\n\nAnalyse du bâtiment...\n",
+            "text": "╔══════════════════════════════════════════════════════════════╗\n║                    FAZBEAR ENTERTAINMENT                     ║\n║                    PROCÉDURE DE FERMETURE                    ║\n╚══════════════════════════════════════════════════════════════╝\n\nDOCUMENT .................... CLOSED.LOG\nRÉFÉRENCE ................... FE-89-140\nSERVICE ÉMETTEUR ............ INCIDENTS v1.2\nCLASSIFICATION .............. CONFIDENTIEL\nDERNIÈRE MISE À JOUR ........ 26/06/1989\n\n════════════════════════════════════════════════════════════════\n  1. CONTRÔLES DE FERMETURE\n════════════════════════════════════════════════════════════════\n\nDATE ........................ 26/06/1989\nHEURE ....................... 18:00\n\nNETTOYAGE ................... OK\nEXTINCTION LUMIÈRES ......... OK\nCUISINE ..................... OK\nANIMATRONIQUES .............. OK\nINVITÉS ..................... OK\n\n> ANALYSE DU BÂTIMENT...",
             "delay": 0,
             "glitch": false,
             "flash": false
         },
         {
-            "text": "\nAnalyse du bâtiment...\nVérification des accès...\n\n",
+            "text": "> ANALYSE DU BÂTIMENT...\n> VÉRIFICATION DES ACCÈS...\n",
             "delay": 2500,
             "glitch": false,
             "flash": false
@@ -23,25 +22,25 @@
             "flash": false
         },
         {
-            "text": "Contrôle des salles...\nRecherche des occupants...\n\n",
+            "text": "> CONTRÔLE DES SALLES...\n> RECHERCHE DES OCCUPANTS...\n",
             "delay": 3000,
             "glitch": false,
             "flash": false
         },
         {
-            "text": "\nAnalyse terminée.\n\n...\n",
+            "text": "> ANALYSE TERMINÉE.\n\n...\n",
             "delay": 3500,
             "glitch": false,
             "flash": false
         },
         {
-            "text": "\nAnalyse terminée.\n\nERREUR\n",
+            "text": "> ANALYSE TERMINÉE.\n\nERREUR\n",
             "delay": 2000,
             "glitch": true,
             "flash": false
         },
         {
-            "text": "\nAnalyse terminée.\n\nERREUR\n\n1 enfant est toujours\nprésent dans le bâtiment.\n",
+            "text": "> ANALYSE TERMINÉE.\n\nERREUR\n\n1 enfant est toujours\nprésent dans le bâtiment.\n",
             "delay": 2800,
             "glitch": true,
             "flash": true,
@@ -79,5 +78,6 @@
             "glitch": true,
             "flash": false
         }
-    ]
+    ],
+    "label": "très rare"
 }
