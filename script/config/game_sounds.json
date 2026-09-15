@@ -25,28 +25,28 @@
     "selector": ".Buzz-fan",
     "category": "ambiance",
     "description": "Bruit du ventilateur (volume modulé entre 0.10 et 0.15)",
-    "mixVolume": 0.25
+    "mixVolume": 0.15
   },
   {
     "id": "circus",
     "selector": ".circus",
     "category": "ambiance",
     "description": "Musique de cirque",
-    "mixVolume": 0.15
+    "mixVolume": 0.65
   },
   {
     "id": "pirate_song",
     "selector": ".pirate-song",
     "category": "ambiance",
     "description": "Chanson pirate",
-    "mixVolume": 0.3
+    "mixVolume": 0.50
   },
   {
     "id": "cold_presc",
     "selector": ".cold-presc",
     "category": "ambiance",
     "description": "Ambiance de fond de la nuit, sous le ventilateur",
-    "mixVolume": 0.15
+    "mixVolume": 0.95
   },
   {
     "id": "menu_start2",

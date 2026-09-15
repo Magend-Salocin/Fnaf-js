@@ -36,6 +36,10 @@ function transitionScreen(night) {
         // Après 20 secondes : mise à jour de l'image, du titre et du compteur de nuits
         setTimeout(function() {
             stopAllSounds();
+
+            // Bip d'annonce, juste avant que le numéro de la nuit n'apparaisse.
+            playSound("camera_cycle");
+
             document.querySelector('.transition').classList.remove('animate-out');
             const transitionImg = document.querySelector('.transition img');
             if (transitionImg) {
@@ -171,6 +175,9 @@ function runNightTransition(night) {
         transitionImg.removeAttribute('src');
         transitionImg.src = 'images/game/transition-fade.gif';
     }
+
+    // Bip d'annonce, juste avant que le numéro de la nuit n'apparaisse.
+    playSound("camera_cycle");
 
     transition.style.display = 'block';
     transition.classList.remove('display-0', 'animate-out');
