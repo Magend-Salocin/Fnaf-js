@@ -282,10 +282,12 @@ class Animatronic {
                         this.attackReady = true;
                         this.attackCounter = 0;
                     }else{
-                        // Déclenche le son "door_pounding" avec une probabilité de 30% 
+                        // L'animatronic patiente derrière la porte et cogne de
+                        // temps en temps : c'est ce qui prévient le joueur
+                        // qu'il est là sans lui dire quand il attaquera.
                         if (Math.random() < 0.3) { // 30% de chance
-                            playSound("door_pounding");
-                            this.writeMessage(`[${this.name}] Door pounding sound joué !`);
+                            playSound("knock");
+                            this.writeMessage(`[${this.name}] Coup à la porte joué !`);
                         }
                     }
                 }

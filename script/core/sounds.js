@@ -12,22 +12,41 @@
 // 2. GESTION DU VOLUME GLOBAL
 // ---------------------------------------------
 /**
+ * Réglages d'usine du mixer, seule référence du jeu.
+ *
+ * Les groupes sont neutres : l'équilibre entre les sons est entièrement porté
+ * par le `mixVolume` de chaque entrée de game_sounds.json, calé sur le tableau
+ * de référence FNAF 1. Un groupe réglé ailleurs qu'à 1 est une préférence du
+ * joueur, pas une correction du mixage. Le volume général est le seul niveau
+ * d'écoute à ajuster.
+ */
+const AUDIO_MIXER_DEFAULTS = Object.freeze({
+    globalVolume: 0.4,
+    groups: Object.freeze({
+        voice: 1,
+        ambient: 1,
+        metallic: 1,
+        abnormal: 1
+    })
+});
+
+/**
  * Volume général du jeu (0.0 à 1.0).
  * @type {number}
  */
-let globalVolume = 0.4;
+let globalVolume = AUDIO_MIXER_DEFAULTS.globalVolume;
 
-const AUDIO_MIXER_STORAGE_KEY = 'fnaf_audio_mixer_v1';
+/**
+ * Clé de sauvegarde. La version est incrémentée quand les réglages d'usine
+ * changent, pour qu'un ancien enregistrement ne remette pas des valeurs
+ * calées sur un mixage qui n'existe plus.
+ */
+const AUDIO_MIXER_STORAGE_KEY = 'fnaf_audio_mixer_v2';
 
 /**
  * Volumes par groupe de sons (0.0 à 1.0).
  */
-const audioGroupVolumes = {
-    voice: 1,
-    ambient: 0.4,
-    metallic: 0.6,
-    abnormal: 0.8
-};
+const audioGroupVolumes = { ...AUDIO_MIXER_DEFAULTS.groups };
 
 /** Volume avant mute (pour restauration). */
 let _volumeBeforeMute = globalVolume;
@@ -61,6 +80,28 @@ function _saveAudioMixerState() {
 }
 
 /**
+ * Remet le mixer aux réglages d'usine et oublie les réglages sauvegardés.
+ * C'est la sortie de secours quand les curseurs ont été déplacés au point de
+ * ne plus savoir d'où on part.
+ */
+function resetAudioMixer() {
+    globalVolume = AUDIO_MIXER_DEFAULTS.globalVolume;
+    _volumeBeforeMute = globalVolume;
+    _isMuted = false;
+
+    Object.assign(audioGroupVolumes, AUDIO_MIXER_DEFAULTS.groups);
+
+    try {
+        localStorage.removeItem(AUDIO_MIXER_STORAGE_KEY);
+    } catch (error) {
+        console.warn('Impossible d\'effacer le mixer audio sauvegarde :', error);
+    }
+
+    _syncMixerUI();
+    console.log('Mixer audio remis aux réglages par défaut.');
+}
+
+/**
  * Recharge les volumes sauvegardés du mixer.
  */
 function _loadAudioMixerState() {
@@ -70,14 +111,16 @@ function _loadAudioMixerState() {
 
         const parsed = JSON.parse(raw);
 
-        if (typeof parsed?.globalVolume === 'number') {
+        // Une valeur absente ou aberrante laisse le réglage d'usine en place
+        // plutôt que de propager un enregistrement abîmé.
+        if (Number.isFinite(parsed?.globalVolume)) {
             globalVolume = Math.max(0, Math.min(1, parsed.globalVolume));
             _volumeBeforeMute = globalVolume;
         }
 
         if (parsed?.groups && typeof parsed.groups === 'object') {
             Object.keys(audioGroupVolumes).forEach(group => {
-                if (typeof parsed.groups[group] === 'number') {
+                if (Number.isFinite(parsed.groups[group])) {
                     audioGroupVolumes[group] = Math.max(0, Math.min(1, parsed.groups[group]));
                 }
             });
@@ -132,20 +175,47 @@ function setSoundDynamicGain(id, gain) {
     }
 
     soundInfo.dynamicGain = Math.max(0, Math.min(1, gain));
+    _applySoundVolume(soundInfo);
+}
 
-    if (soundInfo.element) {
-        soundInfo.element.volume = getFinalSoundVolume(soundInfo);
+/**
+ * Règle le niveau visé d'un son en valeur absolue plutôt qu'en gain. Le
+ * mixVolume du son sert de plafond : viser au-dessus revient à viser le
+ * plafond.
+ * @param {string} id - Identifiant du son.
+ * @param {number} level - Niveau visé, dans l'échelle des mixVolume.
+ */
+function setSoundTargetLevel(id, level) {
+    const soundInfo = gameSounds.find(s => s.id === id);
+    if (!soundInfo) {
+        console.warn(`Niveau visé : son "${id}" introuvable.`);
+        return;
     }
+
+    const mixVolume = Number.isFinite(soundInfo.mixVolume) ? soundInfo.mixVolume : 1;
+    setSoundDynamicGain(id, mixVolume > 0 ? level / mixVolume : 0);
+}
+
+/**
+ * Applique le volume calculé aux éléments audio d'un son. Une boucle en
+ * fondu enchaîné en utilise deux, chacun avec son propre coefficient.
+ * @param {{element?: HTMLAudioElement, loopPlayer?: {voices: HTMLAudioElement[]}}} soundInfo
+ */
+function _applySoundVolume(soundInfo) {
+    const volume = getFinalSoundVolume(soundInfo);
+    const elements = soundInfo?.loopPlayer ? soundInfo.loopPlayer.voices : [soundInfo?.element];
+
+    elements.forEach(element => {
+        if (!element) return;
+        element.volume = Math.max(0, Math.min(1, volume * (element.crossfadeGain ?? 1)));
+    });
 }
 
 /**
  * Applique les volumes à tous les sons.
  */
 function _applyVolumeToAllSounds() {
-    gameSounds.forEach(soundInfo => {
-        if (!soundInfo?.element) return;
-        soundInfo.element.volume = getFinalSoundVolume(soundInfo);
-    });
+    gameSounds.forEach(soundInfo => _applySoundVolume(soundInfo));
 }
 
 /**
@@ -316,27 +386,161 @@ function getSoundById(id) {
 }
 
 /**
+ * Durée du recouvrement entre deux passages d'une boucle, en secondes.
+ * Ramenée au quart de la durée du son s'il est plus court.
+ */
+const LOOP_CROSSFADE_SECONDS = 1.5;
+
+/** Période de surveillance des boucles en fondu, en millisecondes. */
+const LOOP_WATCH_INTERVAL_MS = 100;
+
+/** Boucles en cours, indexées par identifiant de son. */
+const _loopPlayers = new Map();
+
+/** Timer partagé par toutes les boucles ; null quand il n'y en a aucune. */
+let _loopWatchTimer = null;
+
+/**
  * Joue un son en boucle par son identifiant.
+ *
+ * La boucle native de <audio> redémarre le fichier net : on entend la fin
+ * s'arrêter puis le début repartir, d'autant plus que les ambiances longues
+ * du jeu se terminent par un fondu vers le silence. On fait donc jouer deux
+ * copies du son en alternance, la suivante démarrant avant que la précédente
+ * ne se termine, avec un fondu croisé entre les deux.
  * @param {string} id - Identifiant du son.
  */
 function playSoundLoop(id) {
-    const audioElement = getSoundById(id);
-    if (!audioElement) {
-        console.error("Erreur : élément audio non défini.");
+    const soundInfo = gameSounds.find(s => s.id === id);
+    if (!soundInfo?.element) {
+        console.error(`Erreur : son avec l'id "${id}" non trouvé.`);
         return;
     }
 
     // Arrête le son s'il est déjà en cours
     stopSound(id);
 
-    audioElement.loop = true;
-    audioElement.currentTime = 0;
-    
-    applyGlobalVolume(audioElement);
-    
-    audioElement.play().catch(error => {
+    // La seconde voix est un clone du même élément : même source, donc même
+    // fichier déjà en cache, et aucune balise à ajouter dans index.html. On
+    // la garde d'une boucle à l'autre, les sons courts comme la lumière de
+    // porte étant relancés très souvent.
+    if (!soundInfo.secondVoice) {
+        soundInfo.secondVoice = soundInfo.element.cloneNode();
+    }
+
+    const voices = [soundInfo.element, soundInfo.secondVoice];
+
+    voices.forEach(voice => {
+        voice.loop = false;
+        voice.crossfadeGain = 0;
+    });
+
+    soundInfo.loopPlayer = { voices, current: 0, fadingIn: null };
+    _loopPlayers.set(id, soundInfo);
+
+    _startLoopVoice(soundInfo, 0, 1);
+    _applySoundVolume(soundInfo);
+
+    if (!_loopWatchTimer) {
+        _loopWatchTimer = setInterval(_updateLoopPlayers, LOOP_WATCH_INTERVAL_MS);
+    }
+}
+
+/**
+ * Démarre une des deux voix d'une boucle depuis le début.
+ * @param {{loopPlayer: {voices: HTMLAudioElement[]}}} soundInfo
+ * @param {number} index - Voix à démarrer (0 ou 1).
+ * @param {number} gain - Coefficient de fondu initial (0 pour entrer en fondu).
+ */
+function _startLoopVoice(soundInfo, index, gain) {
+    const voice = soundInfo.loopPlayer.voices[index];
+
+    voice.currentTime = 0;
+    voice.crossfadeGain = gain;
+    voice.play().catch(error => {
         console.error("Erreur de lecture en boucle :", error);
     });
+}
+
+/**
+ * Durée du fondu applicable à une voix, bornée au quart de sa durée pour les
+ * sons courts.
+ * @param {HTMLAudioElement} voice
+ * @returns {number} Durée en secondes, 0 si la durée du son est inconnue.
+ */
+function _getCrossfadeDuration(voice) {
+    if (!Number.isFinite(voice.duration) || voice.duration <= 0) return 0;
+    return Math.min(LOOP_CROSSFADE_SECONDS, voice.duration / 4);
+}
+
+/**
+ * Fait avancer toutes les boucles : lance la voix suivante à l'approche de la
+ * fin, puis répartit le volume entre les deux pendant le recouvrement.
+ */
+function _updateLoopPlayers() {
+    _loopPlayers.forEach(soundInfo => {
+        const player = soundInfo.loopPlayer;
+        if (!player) return;
+
+        const outgoing = player.voices[player.current];
+        const crossfade = _getCrossfadeDuration(outgoing);
+
+        // Filet de sécurité : si la voix s'est tue sans qu'un fondu ait pu
+        // démarrer, parce que sa durée n'était pas encore connue, on relance
+        // plutôt que de laisser la boucle s'éteindre.
+        if (player.fadingIn === null && outgoing.ended) {
+            _startLoopVoice(soundInfo, player.current, 1);
+            _applySoundVolume(soundInfo);
+            return;
+        }
+
+        if (crossfade === 0) return;
+
+        if (player.fadingIn === null && outgoing.duration - outgoing.currentTime <= crossfade) {
+            player.fadingIn = 1 - player.current;
+            _startLoopVoice(soundInfo, player.fadingIn, 0);
+        }
+
+        if (player.fadingIn !== null) {
+            const incoming = player.voices[player.fadingIn];
+            const progress = Math.min(1, incoming.currentTime / crossfade);
+
+            incoming.crossfadeGain = progress;
+            outgoing.crossfadeGain = 1 - progress;
+
+            if (progress >= 1) {
+                outgoing.pause();
+                outgoing.currentTime = 0;
+                outgoing.crossfadeGain = 0;
+                player.current = player.fadingIn;
+                player.fadingIn = null;
+            }
+        }
+
+        _applySoundVolume(soundInfo);
+    });
+}
+
+/**
+ * Arrête et oublie la boucle d'un son, s'il en a une.
+ * @param {{loopPlayer?: {voices: HTMLAudioElement[]}}} soundInfo
+ */
+function _stopLoopPlayer(soundInfo) {
+    if (!soundInfo?.loopPlayer) return;
+
+    soundInfo.loopPlayer.voices.forEach(voice => {
+        voice.pause();
+        voice.currentTime = 0;
+        voice.crossfadeGain = 1;
+    });
+
+    soundInfo.loopPlayer = null;
+    _loopPlayers.delete(soundInfo.id);
+
+    if (_loopPlayers.size === 0 && _loopWatchTimer) {
+        clearInterval(_loopWatchTimer);
+        _loopWatchTimer = null;
+    }
 }
 
 /**
@@ -379,11 +583,13 @@ function playSound(id) {
  * @param {string} id - Identifiant du son.
  */
 function stopSound(id) {
-    const audioElement = getSoundById(id);
-    if (!audioElement) return;
+    const soundInfo = gameSounds.find(s => s.id === id);
+    if (!soundInfo?.element) return;
 
-    audioElement.pause();
-    audioElement.currentTime = 0;
+    _stopLoopPlayer(soundInfo);
+
+    soundInfo.element.pause();
+    soundInfo.element.currentTime = 0;
 }
 
 /**
@@ -478,13 +684,94 @@ function resetThreatAmbience() {
     setSoundDynamicGain(THREAT_AMBIENCE_ID, 0);
 }
 
+// ---------------------------------------------
+// 5. RESPIRATION DU VENTILATEUR
+// ---------------------------------------------
 /**
- * Démarre les sons du menu principal.
+ * Le ventilateur du bureau tourne en boucle toute la nuit. À volume
+ * rigoureusement constant, l'oreille finit par le gommer. On le fait donc
+ * dériver lentement entre deux niveaux, assez peu pour qu'aucune variation
+ * ne s'entende, assez pour que la boucle reste vivante.
+ */
+const FAN_SOUND_ID = "buzz_fan";
+const FAN_LEVEL_MIN = 0.02;
+const FAN_LEVEL_MAX = 0.06;
+
+/**
+ * Périodes des deux oscillations, en secondes. Volontairement premières entre
+ * elles : leur somme ne se répète qu'au bout de 77 s, donc la dérive ne
+ * s'entend jamais comme un cycle.
+ */
+const FAN_FLUTTER_PERIODS = [7, 11];
+
+/** Temps écoulé dans le cycle de dérive, en secondes. */
+let _fanFlutterTime = 0;
+
+/**
+ * Fait dériver le volume du ventilateur.
+ * À appeler à chaque frame de la boucle de jeu.
+ * @param {number} deltaSeconds - Temps écoulé depuis la frame précédente.
+ */
+function updateFanFlutter(deltaSeconds) {
+    const cycle = FAN_FLUTTER_PERIODS[0] * FAN_FLUTTER_PERIODS[1];
+    _fanFlutterTime = (_fanFlutterTime + deltaSeconds) % cycle;
+
+    const wave = FAN_FLUTTER_PERIODS
+        .reduce((sum, period) => sum + Math.sin(2 * Math.PI * _fanFlutterTime / period), 0)
+        / FAN_FLUTTER_PERIODS.length;
+
+    const middle = (FAN_LEVEL_MIN + FAN_LEVEL_MAX) / 2;
+    const amplitude = (FAN_LEVEL_MAX - FAN_LEVEL_MIN) / 2;
+
+    setSoundTargetLevel(FAN_SOUND_ID, middle + amplitude * wave);
+}
+
+// ---------------------------------------------
+// 6. SON D'AMBIANCE RARE
+// ---------------------------------------------
+/**
+ * La musique de cirque est un son d'ambiance rare. Elle ne sert aucune
+ * information au joueur : son seul rôle est de tomber sans prévenir, une fois
+ * de temps en temps, sur une nuit par ailleurs silencieuse. Elle ne se
+ * déclenche donc qu'une fois par nuit au maximum.
+ */
+const RARE_AMBIENT_SOUND_ID = "circus";
+
+/**
+ * Probabilité tirée à chaque minute de jeu. Une nuit dure 360 minutes de jeu,
+ * ce qui donne environ une nuit sur trois avec le son.
+ */
+const RARE_AMBIENT_CHANCE_PER_MINUTE = 0.001;
+
+/** Vrai dès que le son a été joué cette nuit. */
+let _rareAmbientPlayed = false;
+
+/**
+ * Tire au sort le son d'ambiance rare.
+ * À appeler une fois par minute de jeu.
+ */
+function tryPlayRareAmbientSound() {
+    if (_rareAmbientPlayed) return;
+    if (Math.random() >= RARE_AMBIENT_CHANCE_PER_MINUTE) return;
+
+    _rareAmbientPlayed = true;
+    playSound(RARE_AMBIENT_SOUND_ID);
+}
+
+/**
+ * Rend le son d'ambiance rare à nouveau tirable (début de nuit).
+ */
+function resetRareAmbientSound() {
+    _rareAmbientPlayed = false;
+}
+
+/**
+ * Démarre les sons de l'écran d'accueil. C'est darkness_music, la musique de
+ * menu du jeu d'origine ; le thème ajouté reste réservé au journal.
  */
 function startMenuSounds() {
     if (!gameStarted) {
-        //buzzFanSound.volume = 0.1 * globalVolume; // Volume relatif au volume global
-        playSoundLoop("menu_start2");
+        playSoundLoop("menu_start");
         console.log("Sons du menu principal démarrés avec volume global :", globalVolume);
     }
 }

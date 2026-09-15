@@ -221,6 +221,7 @@ function startNight(nightNumber) {
 
   stopAllSounds();
   resetThreatAmbience();
+  resetRareAmbientSound();
   startAmbientSounds();
   currentNight.playPhoneCall();
 

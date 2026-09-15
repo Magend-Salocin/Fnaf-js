@@ -55,16 +55,17 @@ function setupLightToggle(light) {
     toggle.addEventListener('mousedown', () => {
         if (light.disabled) return;
 
-        if(bonnie.isInSafeRoom() && leftLight.on){
-            playSound("window_scare");
-        }else if(chica.isInSafeRoom() && rightLight.on) {
-            playSound("window_scare");
-        }
-
         light.value = 1;
         light.on = true;
         updatePowerDisplay();
         processLightActivity(light.value, light.side);
+
+        // Un animatronic éclairé derrière la vitre. Le test porte sur celui
+        // qui attend de ce côté-ci : Bonnie à gauche, Chica à droite.
+        const animatronicAtDoor = light.side === 'left' ? bonnie : chica;
+        if (animatronicAtDoor.isInSafeRoom()) {
+            playSound("window_scare");
+        }
     });
 
     toggle.addEventListener('mouseup', () => {

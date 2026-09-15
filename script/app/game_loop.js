@@ -31,6 +31,7 @@ function gameLoop() {
       drainPowerByUsage(1 / 60);
       updatePowerDisplay();
       updateThreatAmbience(1 / 60);
+      updateFanFlutter(1 / 60);
     }
 
     if(!gameEnd){
@@ -48,6 +49,8 @@ function gameLoop() {
         ticksSinceLastMinute = 0;
         gameTime.minutes++;
         minutesSinceLastTurn++; // Incrémente le compteur de minutes depuis le dernier tour
+
+        tryPlayRareAmbientSound(); // Tirage du son d'ambiance rare
 
         // Vérifie si 5 minutes se sont écoulées (tour de jeu)
         if (minutesSinceLastTurn >= MINUTES_PER_TURN) {

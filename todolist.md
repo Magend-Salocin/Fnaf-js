@@ -48,17 +48,21 @@ giggle repitché `Laugh_Giggle_Girl_*`, la chanson de Pirate Cove est
       Le brancher ajouterait un élément sonore absent du jeu d'origine.
 - [ ] `scare_2` (XSCREAM2) n'est plus joué : il est réservé à Golden Freddy,
       qui n'est pas implémenté.
-- [ ] `ambience2` figure au catalogue mais n'est joué nulle part.
+- [ ] Deux sons figurent au catalogue mais ne sont déclenchés nulle part :
+      `ambience2` (ambience2.wav) et `knock` (knock2.wav, dont le fichier ne
+      s'entend que via `foxy-blocked` et `foxy-retrait`).
 - [ ] Appels téléphoniques anglais : `voiceover1_en.wav` à `voiceover4_en.wav`
       n'ont aucune balise `<audio>` et ne sont cités nulle part, alors que
       `language.js` gère les deux langues. `voiceover5_en.wav` n'existe pas.
-- [ ] `menu_start` (darkness_music.wav) reste débranché : le menu joue
-      `menu_start2`, un thème ajouté. Trancher entre la fidélité FNAF 1 et le
-      thème actuel.
-- [ ] Trois sons de Foxy partagent des fichiers approximatifs :
-      `foxy-curtain-open` pointe sur DOOR_POUNDING (le coup sur la porte),
-      `foxy-blocked` et `foxy-retrait` sur le même knock2.wav, `run_fast` et
-      `foxy-running` sur le même running fast3.wav.
+- [x] `menu_start` (darkness_music.wav) joue sur l'écran d'accueil, à la place
+      du thème ajouté. Celui-ci reste la musique du journal.
+- [ ] `foxy-curtain-open` joue DOOR_POUNDING, soit un coup violent sur une
+      porte, pour l'ouverture du rideau de Pirate Cove. Il lui faut son propre
+      fichier. Tant qu'il n'existe pas, DOOR_POUNDING ne peut pas retrouver
+      son rôle de coup de Foxy sur la porte, qui serait sinon en double.
+- [ ] `foxy-retrait` n'est plus joué : il utilisait knock2.wav pour un retour
+      hors champ et silencieux dans le jeu d'origine.
+- [ ] `run_fast` et `foxy-running` pointent sur le même running fast3.wav.
 
 ## Priorité 1 — Images cachées (43 à produire)
 

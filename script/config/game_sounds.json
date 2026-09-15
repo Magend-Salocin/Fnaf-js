@@ -3,8 +3,8 @@
     "id": "menu_start",
     "selector": ".menu-start",
     "category": "ambiance",
-    "description": "Musique du menu principal",
-    "mixVolume": 0.4
+    "description": "Musique du menu principal (darkness_music)",
+    "mixVolume": 0.7
   },
   {
     "id": "ambience1",
@@ -24,8 +24,8 @@
     "id": "buzz_fan",
     "selector": ".Buzz-fan",
     "category": "ambiance",
-    "description": "Bruit du ventilateur",
-    "mixVolume": 0.35
+    "description": "Bruit du ventilateur (volume modulé entre 0.10 et 0.15)",
+    "mixVolume": 0.15
   },
   {
     "id": "circus",
@@ -45,8 +45,8 @@
     "id": "cold_presc",
     "selector": ".cold-presc",
     "category": "ambiance",
-    "description": "Ambiance froide",
-    "mixVolume": 0.25
+    "description": "Ambiance de fond de la nuit, sous le ventilateur",
+    "mixVolume": 0.95
   },
   {
     "id": "menu_start2",
