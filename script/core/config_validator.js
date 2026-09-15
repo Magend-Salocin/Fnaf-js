@@ -103,6 +103,20 @@
     }
   }
 
+  // 7bis. mixVolume inexploitable. Le bon niveau d'un son est une question
+  //       de mixage, pas de configuration, donc on ne signale que ce qui est
+  //       objectivement faux : valeur manquante, négative, ou si haute que le
+  //       son sature quel que soit le réglage du joueur.
+  if (typeof gameSounds !== 'undefined') {
+    const MIX_CEILING = 1.5;
+
+    gameSounds.forEach(s => {
+      if (!Number.isFinite(s.mixVolume) || s.mixVolume < 0 || s.mixVolume > MIX_CEILING) {
+        report(`Catalogue audio : "${s.id}" a un mixVolume inexploitable (${s.mixVolume}), attendu entre 0 et ${MIX_CEILING}.`);
+      }
+    });
+  }
+
   // 8. Sons référencés par les événements aléatoires présents dans le
   //    catalogue audio.
   if (typeof RANDOM_EVENTS_RAW !== 'undefined' && typeof gameSounds !== 'undefined') {

@@ -421,6 +421,29 @@
   color: #f88;
 }
 
+.volume-row-reset {
+  grid-template-columns: 1fr;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  padding-top: 8px;
+  margin-top: 2px;
+}
+
+#volume-reset-btn {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 3px;
+  color: #ddd;
+  font-size: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 4px;
+  cursor: pointer;
+}
+#volume-reset-btn:hover {
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.6);
+}
+
 @media (max-width: 720px) {
   #volume-panel {
     min-width: 260px;

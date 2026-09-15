@@ -25,7 +25,7 @@
     "selector": ".Buzz-fan",
     "category": "ambiance",
     "description": "Bruit du ventilateur (volume modulé entre 0.10 et 0.15)",
-    "mixVolume": 0.15
+    "mixVolume": 0.25
   },
   {
     "id": "circus",
@@ -46,7 +46,7 @@
     "selector": ".cold-presc",
     "category": "ambiance",
     "description": "Ambiance de fond de la nuit, sous le ventilateur",
-    "mixVolume": 0.95
+    "mixVolume": 0.15
   },
   {
     "id": "menu_start2",
