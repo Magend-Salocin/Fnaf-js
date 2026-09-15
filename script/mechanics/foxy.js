@@ -150,9 +150,9 @@ class Foxy {
                 this.writeMessage("Foxy a été bloqué par la porte!");
                 playFoxySound('foxy-blocked', "*Foxy a été bloqué par la porte!*");
             } else {
-                // Game Over si la porte n'est pas fermée
-               // playFoxySound('foxy-attack', "*CRASH* (Foxy vous a attrapé !)");
-                playFoxySound('pirate_song', "*CRASH* (Foxy vous a attrapé !)");
+                // Game Over si la porte n'est pas fermée. Le cri est joué par
+                // foxyJumpScare() : le déclencher ici ne servirait à rien,
+                // nightEndGame() coupe tous les sons juste après.
                 this.writeMessage("GAME OVER - Foxy a attaqué!");
                 return false; // Game Over
             }

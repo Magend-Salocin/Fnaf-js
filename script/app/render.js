@@ -205,7 +205,7 @@ function runNightTransition(night) {
 /**
  * Gère la séquence de jump scare pour un animatronic donné, en jouant le son et en affichant l'image correspondante.
  * Cette fonction est utilisée pour les jump scares spécifiques à Bonnie, Chica et Foxy, en centralisant la logique de déclenchement du jump scare.
- * @param {string} scareSound - Le nom du son à jouer pour le jump scare (ex: "scare_1", "pirate_song").
+ * @param {string} scareSound - Le nom du son à jouer pour le jump scare (ex: "scare_1", "foxy-attack").
  * @param {string} jumpScarePicture - Le nom de l'image à afficher pour le jump scare (ex: "chika_jumpscare", "foxy_jumpscare").
  * 
  * Note : Cette fonction peut être appelée depuis les méthodes de jump scare spécifiques à chaque animatronic (ex: bonnieJumpScare, chicaJumpScare, foxyJumpScare) pour éviter la duplication de code et centraliser la gestion des jump scares.
@@ -234,13 +234,14 @@ function animatronicJumpScare(scareSound, jumpScarePicture) {
     }, 5300);
 }
 
-// Fonctions personnalisées pour chaque animatronic
+// Fonctions personnalisées pour chaque animatronic. Comme dans FNAF 1, tous
+// partagent le même cri (XSCREAM) ; XSCREAM2 est réservé à Golden Freddy.
 function bonnieJumpScare() {
-    animatronicJumpScare("scare_2", "bonnie_jumpscare");
+    animatronicJumpScare("scare_1", "bonnie_jumpscare");
 }
 
 function foxyJumpScare() {
-    animatronicJumpScare("pirate_song", "foxy_jumpscare");
+    animatronicJumpScare("foxy-attack", "foxy_jumpscare");
 }
 
 function chicaJumpScare() {
@@ -248,7 +249,7 @@ function chicaJumpScare() {
 }
 
 function freddyJumpScare() {
-    animatronicJumpScare("scare_2", "rightside_freddy_scare");
+    animatronicJumpScare("scare_1", "rightside_freddy_scare");
 }
 
 
@@ -299,7 +300,7 @@ function transitionEndNightFreddy() {
     // Déclenche le jump scare de Freddy après 34 secondes
     setTimeout(function() {
         if(!gameWin){
-            playSound("scare_2");
+            playSound("scare_1");
             drawOfficeViewByPicture("power_down_freddy_scare");
         }
     }, 34000);
@@ -307,7 +308,7 @@ function transitionEndNightFreddy() {
     // Transition vers l'écran de fin après 35,3 secondes
     setTimeout(function() {
         if(!gameWin){
-            stopSound("scare_2");
+            stopSound("scare_1");
             playSound("gameover_static");
             drawOfficeViewByPicture("game_over_trans");
         }

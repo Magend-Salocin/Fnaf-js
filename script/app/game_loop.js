@@ -30,6 +30,7 @@ function gameLoop() {
     if (!gameEnd) {
       drainPowerByUsage(1 / 60);
       updatePowerDisplay();
+      updateThreatAmbience(1 / 60);
     }
 
     if(!gameEnd){

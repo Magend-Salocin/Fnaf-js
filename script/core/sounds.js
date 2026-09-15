@@ -112,8 +112,30 @@ function getFinalSoundVolume(soundInfo) {
     const mixVolume = Number.isFinite(soundInfo?.mixVolume) ? soundInfo.mixVolume : 1;
     const group = getAudioGroupForSound(soundInfo);
     const groupVolume = audioGroupVolumes[group] ?? 1;
+    // Gain piloté par le jeu (cf. ambiance de menace). Vaut 1 pour tous les
+    // sons que le jeu ne module pas dynamiquement.
+    const dynamicGain = Number.isFinite(soundInfo?.dynamicGain) ? soundInfo.dynamicGain : 1;
 
-    return Math.max(0, Math.min(1, globalVolume * groupVolume * mixVolume));
+    return Math.max(0, Math.min(1, globalVolume * groupVolume * mixVolume * dynamicGain));
+}
+
+/**
+ * Règle le gain dynamique d'un son et l'applique immédiatement.
+ * @param {string} id - Identifiant du son.
+ * @param {number} gain - Gain entre 0.0 et 1.0.
+ */
+function setSoundDynamicGain(id, gain) {
+    const soundInfo = gameSounds.find(s => s.id === id);
+    if (!soundInfo) {
+        console.warn(`Gain dynamique : son "${id}" introuvable.`);
+        return;
+    }
+
+    soundInfo.dynamicGain = Math.max(0, Math.min(1, gain));
+
+    if (soundInfo.element) {
+        soundInfo.element.volume = getFinalSoundVolume(soundInfo);
+    }
 }
 
 /**
@@ -380,13 +402,81 @@ function stopAllSounds() {
  */
 function startAmbientSounds() {
     if (!gameStarted) {
-        //buzzFanSound.volume = 0.1 * globalVolume; // Volume relatif au volume global
-        playSoundLoop("ambience1");
+        // Trois couches : le ventilateur du bureau, l'ambiance de fond de la
+        // nuit, et la nappe de menace dont le volume suit les animatronics.
         playSoundLoop("buzz_fan");
+        playSoundLoop("cold_presc");
+        playSoundLoop("ambience1");
         console.log("Sons d'ambiance démarrés avec volume global :", globalVolume);
     }
 }
 
+
+// ---------------------------------------------
+// 4. AMBIANCE DE MENACE
+// ---------------------------------------------
+/**
+ * Reprend le comportement de FNAF 1 : la nappe sonore inquiétante monte par
+ * paliers selon le nombre d'animatronics en position d'attaque, et sature
+ * quand Freddy est juste derrière la porte. Le palier donne un gain
+ * dynamique, multiplié ensuite par le mixer habituel (global × groupe × mix).
+ */
+const THREAT_AMBIENCE_ID = "ambience1";
+
+/** Gain par nombre de menaces ; au-delà du dernier palier, on reste à 1. */
+const THREAT_AMBIENCE_STEPS = [0, 0.30, 0.50, 0.75, 1];
+
+/** Gain forcé quand Freddy attend devant le bureau. */
+const THREAT_AMBIENCE_FREDDY_GAIN = 1;
+
+/** Vitesse de transition entre deux paliers, en gain par seconde. */
+const THREAT_AMBIENCE_FADE_PER_SECOND = 0.5;
+
+/** Gain courant, interpolé vers le palier cible à chaque frame. */
+let _threatAmbienceGain = 0;
+
+/**
+ * Calcule le gain cible à partir de l'état des animatronics.
+ * @returns {number} Gain entre 0.0 et 1.0.
+ */
+function getThreatAmbienceTargetGain() {
+    if (typeof getOfficeThreatState !== 'function') return 0;
+
+    const { threatCount, freddyAtOffice } = getOfficeThreatState();
+
+    if (freddyAtOffice) return THREAT_AMBIENCE_FREDDY_GAIN;
+
+    const step = Math.min(threatCount, THREAT_AMBIENCE_STEPS.length - 1);
+    return THREAT_AMBIENCE_STEPS[step];
+}
+
+/**
+ * Fait glisser l'ambiance de menace vers son palier cible.
+ * À appeler à chaque frame de la boucle de jeu.
+ * @param {number} deltaSeconds - Temps écoulé depuis la frame précédente.
+ */
+function updateThreatAmbience(deltaSeconds) {
+    const target = getThreatAmbienceTargetGain();
+    const maxStep = THREAT_AMBIENCE_FADE_PER_SECOND * deltaSeconds;
+    const delta = target - _threatAmbienceGain;
+
+    if (Math.abs(delta) <= 0.001) {
+        if (_threatAmbienceGain === target) return;
+        _threatAmbienceGain = target;
+    } else {
+        _threatAmbienceGain += Math.sign(delta) * Math.min(Math.abs(delta), maxStep);
+    }
+
+    setSoundDynamicGain(THREAT_AMBIENCE_ID, _threatAmbienceGain);
+}
+
+/**
+ * Remet l'ambiance de menace au silence (début de nuit).
+ */
+function resetThreatAmbience() {
+    _threatAmbienceGain = 0;
+    setSoundDynamicGain(THREAT_AMBIENCE_ID, 0);
+}
 
 /**
  * Démarre les sons du menu principal.

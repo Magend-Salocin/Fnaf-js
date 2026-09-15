@@ -405,3 +405,32 @@ const chica 	= new Animatronic('Chica'	,'right', 1	, 0, ['1a', '1b', '7', '6', '
 const foxy 		= new Animatronic('Foxy'	,'left', 7	, 0,  ['1c'],foxyJumpScare);
 
 const animatronics = [freddy, bonnie, chica, foxy];
+
+/**
+ * Compte les animatronics en position d'attaque, pour l'ambiance de menace
+ * (cf. updateThreatAmbience dans sounds.js).
+ * Sont considérés comme menaçants : Freddy, Bonnie et Chica arrivés en safe
+ * room, et Foxy dès qu'il est prêt à sortir de Pirate Cove.
+ * @returns {{threatCount: number, freddyAtOffice: boolean}}
+ */
+function getOfficeThreatState() {
+    const foxyThreatPhases = [FoxyPhase.PRET_A_SORTIR, FoxyPhase.COURSE];
+
+    const threatCount = animatronics.filter(animatronic => {
+        if (animatronic.foxyInstance) {
+            return foxyThreatPhases.includes(animatronic.foxyInstance.phase);
+        }
+        return animatronic.isInSafeRoom();
+    }).length;
+
+    return { threatCount, freddyAtOffice: freddy.isInSafeRoom() };
+}
+
+/**
+ * Indique si Foxy est encore dans Pirate Cove, pour la chanson pirate jouée
+ * sur la Cam 1C. Il n'en est absent que pendant sa course dans le couloir.
+ * @returns {boolean}
+ */
+function isFoxyInPirateCove() {
+    return foxy.foxyInstance ? foxy.foxyInstance.phase !== FoxyPhase.COURSE : false;
+}

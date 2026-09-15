@@ -220,6 +220,7 @@ function startNight(nightNumber) {
   updatePowerDisplay();
 
   stopAllSounds();
+  resetThreatAmbience();
   startAmbientSounds();
   currentNight.playPhoneCall();
 

@@ -548,6 +548,14 @@ function CameraPlaysound(cameraId) {
       randomSound = possibleSoundsWithAnimatronic[Math.floor(Math.random() * possibleSoundsWithAnimatronic.length)];
     }
 
+    // Chanson pirate tant que Foxy n'a pas quitté Pirate Cove. Soumise à la
+    // même probabilité que les autres sons d'ambiance : le joueur surveille
+    // cette caméra en permanence, la jouer à chaque coup d'œil la userait.
+    if(!randomSound && room.name === "Pirate Cove" && isFoxyInPirateCove()
+       && Math.random() < CAMERA_DEBUG_CONSTANTS.EMPTY_ROOM_SOUND_CHANCE){
+      randomSound = "pirate_song";
+    }
+
     // Son d'ambiance aléatoire sur la pièce observée : une respiration ou un
     // murmure si un animatronic s'y trouve, un rire lointain sinon. Ne
     // remplace pas le son de cuisine, qui reste prioritaire quand il a été
