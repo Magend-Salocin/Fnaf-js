@@ -372,14 +372,7 @@ const RandomEvents = {
   notifyUserInput,
   drawActiveOverlay: drawActiveRandomEventOverlay,
   resetForNewNight: resetRandomEventsForNewNight,
-  isTerminalCommandUnlocked,
-  // Utile pour debug / affichage dans ton panneau camera-status existant
-  getDebugSummary() {
-    return Object.values(RANDOM_EVENTS).map(event => {
-      const state = eventRuntimeState[event.id];
-      return `${event.id}: ${state.active ? 'ACTIF' : (state.resolvedTonight ? 'résolu' : 'en attente')}`;
-    }).join('<br/>');
-  }
+  isTerminalCommandUnlocked
 };
 
 // Rend RandomEvents accessible globalement

@@ -279,56 +279,6 @@ function onCamera() {
     }
   }
 
-  displayCameraStatus();
-}
-
-function displayCameraStatus() {
-  const statusDiv = document.getElementById('camera-status');
-  if (!statusDiv) return;
-
-  const activeCameraData = cameras.find(c => c.id === activeCamera) || null;
-  const camerasSummary = cameras
-    .map(camera => {
-      const availability = camera.isAvailable ? 'UP' : 'DOWN';
-      return `${camera.id}:${availability} use=${camera.maxUsageTime}s reload=${camera.remainingTime.toFixed(1)}s`;
-    })
-    .join('<br/>');
-
-  statusDiv.innerHTML = `
-    <div style="font-weight:bold; color:#66ccff; margin-bottom:4px;">CAMERA DEBUG</div>
-    <div>
-      <span style="color:#bbb;">activeView:</span> ${activeView}<br/><br/>
-      <span style="color:#bbb;">activeCamera:</span> ${activeCamera}<br/><br/>
-      <span style="color:#bbb;">lastActiveCamera:</span> ${lastActiveCamera}<br/><br/>
-      <span style="color:#bbb;">lastActiveCameraId:</span> ${lastActiveCameraId || 'none'}<br/><br/>
-      <span style="color:#bbb;">isUsingCamera:</span> ${isUsingCamera}<br/><br/>
-      <span style="color:#bbb;">cameraUsageTimer:</span> ${cameraUsageTimer.toFixed(2)}s<br/><br/>
-      <span style="color:#bbb;">currentSoundCamera:</span> ${currentSoundCamera || 'none'}<br/><br/>
-      <span style="color:#bbb;">power:</span> ${Math.max(0, power).toFixed(2)}%<br/><br/>
-      <span style="color:#bbb;">panSpeed:</span> ${panSpeed}<br/><br/>
-      <span style="color:#bbb;">autoPanDirection:</span> ${autoPanDirection}<br/><br/>
-      <span style="color:#bbb;">roomOffset/max:</span> ${activeCameraData ? (() => {
-        const room = roomsArray.find(r => r.id === activeCameraData.roomId);
-        if (!room) return 'n/a';
-        return `${room.cameraOffset}/${room.maxCameraOffset}<br/>`;
-      })() : 'n/a'}
-    </div>
-    <hr style="border-color:#444; margin:6px 0;"/>
-    <div style="color:#ffaa66; font-weight:bold; margin-bottom:3px;">CONSTANTS</div>
-    <div>
-      <span style="color:#bbb;">RECHARGE_SECONDS:</span> ${CAMERA_DEBUG_CONSTANTS.RECHARGE_SECONDS}<br/><br/>
-      <span style="color:#bbb;">AUTO_PAN_STEP:</span> ${CAMERA_DEBUG_CONSTANTS.AUTO_PAN_STEP}<br/><br/>
-      <span style="color:#bbb;">EMPTY_ROOM_SOUND_CHANCE:</span> ${CAMERA_DEBUG_CONSTANTS.EMPTY_ROOM_SOUND_CHANCE}<br/><br/>
-      <span style="color:#bbb;">CAMERAS_TOTAL:</span> ${cameras.length}<br/>
-    </div>
-    <hr style="border-color:#444; margin:6px 0;"/>
-    <div style="color:#a0ffa0; font-weight:bold; margin-bottom:3px;">CAMERAS</div>
-    <div>${camerasSummary}</div>
-  `;
-
-  if (!statusDiv.style.display || statusDiv.style.display === 'none') {
-    statusDiv.style.display = 'block';
-  }
 }
 
 /**

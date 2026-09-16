@@ -91,28 +91,28 @@ Format `<ID>.png` dans `images/rooms/<salle>/hidden/`. Passer `realised` à
 ### Backstage — 11 images
 - [ ] JER-026 (n3) Bonnie regarde un dessin
 - [ ] JER-027 (n3) Bonnie dessine
-- [ ] JER-011 (n4) Dessin d'un soleil
-- [ ] JER-016 (n4) Dessin de cinq enfants
-- [ ] JER-017 (n4) Dessin barré
-- [ ] JER-018 (n4) Dessin déchiré
-- [ ] JER-019 (n4) Dessin inachevé
-- [ ] JER-020 (n4) Feuille totalement blanche
-- [ ] JER-028 (n4) Bonnie tient une feuille
-- [ ] JER-029 (n4) Bonnie baisse la tête devant un dessin
-- [ ] JER-030 (n5) Bonnie repose doucement le crayon
+- [X] JER-011 (n4) Dessin d'un soleil
+- [X] JER-016 (n4) Dessin de cinq enfants
+- [X] JER-017 (n4) Dessin barré
+- [X] JER-018 (n4) Dessin déchiré
+- [X] JER-019 (n4) Dessin inachevé
+- [X] JER-020 (n4) Feuille totalement blanche
+- [X] JER-028 (n4) Bonnie tient une feuille
+- [X] JER-029 (n4) Bonnie baisse la tête devant un dessin
+- [X] JER-030 (n5) Bonnie repose doucement le crayon
 
 ### Supply Closet — 5 images
-- [ ] JER-021 (n3) Crayon bleu au sol
-- [ ] JER-022 (n3) Crayon rouge cassé
-- [ ] JER-023 (n4) Le crayon vert disparaît
-- [ ] JER-024 (n4) Les crayons changent de place
-- [ ] JER-025 (n5) Un seul crayon reste sur la table
+- [X] JER-021 (n3) Crayon bleu au sol
+- [X] JER-022 (n3) Crayon rouge cassé
+- [X] JER-023 (n4) Le crayon vert disparaît
+- [X] JER-024 (n4) Les crayons changent de place
+- [X] JER-025 (n5) Un seul crayon reste sur la table
 
 ### West Hall — 4 images
-- [ ] FRT-014 (n3) Cube en bois
-- [ ] FRT-016 (n3) La voiture avance seule
-- [ ] FRT-009 (n4) Petite voiture dans le couloir
-- [ ] FRT-018 (n4) Un cube disparaît
+- [X] FRT-014 (n3) Cube en bois
+- [X] FRT-016 (n3) La voiture avance seule
+- [X] FRT-009 (n4) Petite voiture dans le couloir
+- [X] FRT-018 (n4) Un cube disparaît
 
 ### Stage — 3 images
 - [ ] GAB-004 (n2) Freddy regarde une chaise vide
