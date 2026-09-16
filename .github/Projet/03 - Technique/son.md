@@ -196,23 +196,50 @@ démarrage de la nuit. La durée est codée en dur par nuit dans
 `getPhoneCallDuration()` : 206 s, 103 s, 75 s, 65 s, 37 s. Le téléphone du
 bureau (`hangupPhoneFromPanel`) permet de raccrocher avant la fin.
 
-### Terminal, cassettes, divers
+### Terminal
+
+Les sons du terminal sont déclarés dans une seule table, `TERMINAL_CUES`
+(`script/lore/retro_terminal.js`). Chaque entrée porte la durée de l'extrait
+joué et un drapeau `owned` qui dit si le son appartient au terminal.
+
+| Contexte | Son | `owned` |
+|----------|-----|---------|
+| Ouverture du terminal | `terminal-start`, 2,6 s | oui |
+| Frappe au clavier | `terminal-keyboard-typing`, 150 ms | oui |
+| Glitch du terminal | `terminal-glitch`, 420 ms | oui |
+| Parasite idle | `terminal-static`, 520 ms | oui |
+| Ouverture / fermeture d'une fenêtre | `camera_toggle`, 500 ms | non |
+
+Les clips du catalogue sont des ambiances longues, 8 s pour la frappe, 27 s
+pour le démarrage, 34 s pour le parasite. `TerminalAudio` n'en joue qu'un
+extrait de la durée de l'effet visuel, sinon ils se superposeraient et
+continueraient après la fermeture de la fenêtre.
+
+`TerminalAudio.stopAll()` coupe les sons marqués `owned`. Il est appelé sur les
+trois chemins de fermeture : la fenêtre principale, la `rootSequence` et la
+`endOfNightGlitch`. Un extrait entamé juste avant la fermeture est donc coupé
+au lieu de continuer dans le bureau.
+
+`camera_toggle` est exclu du groupe pour deux raisons : c'est un son du jeu
+partagé avec la tablette des caméras, et c'est celui du clic de fermeture, il
+doit pouvoir finir.
+
+Ajouter un son au terminal se fait en une ligne dans `TERMINAL_CUES`. Avec
+`owned: true`, il rejoint le groupe coupé à la fermeture sans autre
+modification.
+
+### Cassettes et divers
 
 | Contexte | Son |
 |----------|-----|
-| Ouverture du terminal | `terminal-start`, coupé après 2,6 s |
-| Frappe au clavier | `terminal-keyboard-typing`, 150 ms |
-| Glitch du terminal | `terminal-glitch`, 420 ms |
-| Parasite idle | `terminal-static`, 520 ms |
-| Ouverture / fermeture d'une fenêtre du terminal | `camera_toggle`, 500 ms |
 | Lecture d'une cassette | `tape_*`, id pris dans `tapes_data.json` |
 | Éjection d'une cassette | `tape_eject` |
 | Clic sur le nez de Freddy | `party_favor` |
 | Écran de nuit, avant l'apparition du numéro | `camera_cycle` |
 
-Les clips du terminal sont des ambiances longues (8 s à 34 s). `TerminalAudio`
-n'en joue qu'un extrait de la durée de l'effet visuel, sinon ils se
-superposeraient et continueraient après la fermeture de la fenêtre.
+Le lecteur de cassettes est une scène à part, `TapeScene`, avec son propre
+arrêt : `stopCurrentAudio()` à la fermeture, `reset()` au début de chaque nuit.
+Fermer le terminal n'arrête pas une cassette en cours.
 
 ### Événements aléatoires
 

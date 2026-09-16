@@ -6,14 +6,29 @@
  * d'interface, ils se superposent, ne s'arretent jamais et continuent apres
  * la fermeture de la fenetre. On n'en joue donc qu'un extrait, de la duree
  * de l'effet visuel qu'ils accompagnent.
+ *
+ * `owned` dit si le son appartient au terminal. Un son possede est coupe des
+ * que la fenetre se ferme, ou qu'elle se ferme normalement ou que la sequence
+ * s'interrompt en cours de route. Le son de bascule ne l'est pas : c'est le
+ * `camera_toggle` du jeu, partage avec la tablette, et c'est justement celui
+ * du clic de fermeture, il doit pouvoir finir.
  */
 const TERMINAL_CUES = Object.freeze({
-    boot:   { id: "terminal-start",           durationMs: 2600 },
-    toggle: { id: "camera_toggle",            durationMs: 500 },
-    typing: { id: "terminal-keyboard-typing", durationMs: 150 },
-    glitch: { id: "terminal-glitch",          durationMs: 420 },
-    noise:  { id: "terminal-static",          durationMs: 520 }
+    boot:   { id: "terminal-start",           durationMs: 2600, owned: true },
+    toggle: { id: "camera_toggle",            durationMs: 500,  owned: false },
+    typing: { id: "terminal-keyboard-typing", durationMs: 150,  owned: true },
+    glitch: { id: "terminal-glitch",          durationMs: 420,  owned: true },
+    noise:  { id: "terminal-static",          durationMs: 520,  owned: true }
 });
+
+/**
+ * Les sons que la fermeture du terminal doit couper. Deduit de TERMINAL_CUES :
+ * un son ajoute a la table avec `owned: true` rejoint le groupe sans autre
+ * modification.
+ */
+const TERMINAL_OWNED_CUES = Object.freeze(
+    Object.values(TERMINAL_CUES).filter(cue => cue.owned)
+);
 
 const TerminalAudio = (() => {
 
@@ -52,12 +67,12 @@ const TerminalAudio = (() => {
     }
 
     /**
-     * Coupe ce que la fenetre faisait entendre pendant qu'elle etait
-     * ouverte. Le son de bascule en est exclu : c'est justement celui du
-     * clic de fermeture, il doit pouvoir finir.
+     * Coupe tous les sons possedes par le terminal. A appeler sur chaque
+     * chemin de fermeture : sans cela, un clip entame juste avant la
+     * fermeture continue de jouer dans le bureau.
      */
     function stopAll() {
-        [TERMINAL_CUES.boot, TERMINAL_CUES.typing, TERMINAL_CUES.glitch, TERMINAL_CUES.noise].forEach(stop);
+        TERMINAL_OWNED_CUES.forEach(stop);
     }
 
     return { play, hold, stop, stopAll };
@@ -829,6 +844,9 @@ class RetroTerminal {
 
         const close = () => {
             if (!finished) return;
+            // Une sequence courte peut se fermer avant la fin du demarrage :
+            // sans cela, il continuerait de jouer dans le bureau.
+            TerminalAudio.stopAll();
             overlay.remove();
             options.onClose?.();
         };
@@ -931,6 +949,7 @@ class RetroTerminal {
                     screen.innerHTML = "";
 
                     setTimeout(() => {
+                        TerminalAudio.stopAll();
                         overlay.remove();
                         onComplete?.();
                     }, holdBlack);
