@@ -67,7 +67,9 @@ function buildHiddenImagePath(roomLabel, fileName) {
 function parseHourRange(str) {
   if (!str || /toute nuit/i.test(str)) return { start: 0, end: 6 };
 
-  const parts = str.split("-").map(s => s.trim());
+  // Accepte le tiret simple comme le tiret demi-cadratin (–) : les deux
+  // sont utilisés dans le tableau de production.
+  const parts = str.split(/[-–]/).map(s => s.trim());
   const toDecimal = (h) => {
     const m = h.match(/(\d{1,2})h(\d{2})?/i);
     if (!m) return null;
@@ -83,24 +85,34 @@ function parseHourRange(str) {
 
 /**
  * Types de déclencheur reconnus par le moteur :
- *  - "observe"          : chance évaluée régulièrement tant que
+ *  - "observe"           : chance évaluée régulièrement tant que
  *                          la caméra de la pièce est affichée
- *  - "observeDuration"   : il faut regarder la caméra EN CONTINU
- *                          pendant `duration` secondes avant que
- *                          la chance soit évaluée
+ *                          ("Observer", "Écoute")
+ *  - "observeDuration"   : il faut regarder/écouter la caméra EN
+ *                          CONTINU pendant `duration` secondes avant
+ *                          que la chance soit évaluée ("Observer 8 s",
+ *                          "Écoute 10 s")
  *  - "cameraReturn"      : chance évaluée au moment où on BASCULE
- *                          sur cette caméra (peu importe la durée)
- *  - "silence"           : pas de caméra (vue bureau), évalué quand
- *                          le joueur reste inactif un moment
+ *                          sur cette caméra, peu importe la durée
+ *                          ("Retour caméra", "Retour écoute")
+ *  - "silence"           : évalué quand le joueur reste inactif un
+ *                          moment ; si l'événement est rattaché à une
+ *                          salle, il faut en plus que sa caméra soit
+ *                          affichée
+ *  - "time"              : seule la fenêtre horaire compte, le joueur
+ *                          n'a rien à observer ("Heure")
+ *
+ * Toute valeur non reconnue retombe sur "observe".
  */
 function parseTrigger(str) {
   if (!str) return { type: "observe", duration: 0 };
   const s = str.toLowerCase();
-  if (s.includes("retour caméra") || s.includes("retour camera")) {
-    return { type: "cameraReturn", duration: 0 };
-  }
+  // "Retour caméra" et "Retour écoute" : évalués au basculement de caméra.
+  if (s.includes("retour")) return { type: "cameraReturn", duration: 0 };
   if (s.includes("silence")) return { type: "silence", duration: 0 };
-  const durMatch = s.match(/observer\s+(\d+)\s*s/);
+  if (s.includes("heure")) return { type: "time", duration: 0 };
+  // Accepte "observer" comme "écoute", avec ou sans espace avant le "s".
+  const durMatch = s.match(/(?:observer|écoute|ecoute)\s+(\d+)\s*s/);
   if (durMatch) return { type: "observeDuration", duration: parseInt(durMatch[1], 10) };
   return { type: "observe", duration: 0 };
 }
@@ -140,12 +152,11 @@ function parseTrigger(str) {
      parseHourRange() retombe alors sur {0,6} (comme "Toute nuit"), donc
      sans impact fonctionnel, mais la donnée source mériterait d'être
      corrigée.
-   - JER-006 (nuit 2, Supply Closet) a un déclencheur "Silence" alors que
-     ce type de déclencheur n'est traité par le moteur que pour les
-     événements sans caméra (roomLabel "Bureau") : tel quel, cet événement
-     ne se déclenchera jamais (updateSilenceEvents() ignore les events
-     avec cameraId non nul). À corriger côté design (autre déclencheur ou
-     autre salle) si l'événement doit réellement apparaître.
+   - JER-006 (nuit 2, Supply Closet), SUS-029 (nuit 5, Restroom) et SUS-025
+     (nuit 5, Kitchen) ont un déclencheur "Silence" alors qu'ils sont dans
+     une salle équipée d'une caméra : le moteur les évalue quand le joueur
+     est inactif ET que la caméra de la salle est affichée (cf.
+     rollSilenceEvents() dans random_events_engine.js).
    ------------------------------------------------------------ */
 
 /**

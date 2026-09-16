@@ -32,6 +32,10 @@ function gameLoop() {
       updatePowerDisplay();
       updateThreatAmbience(1 / 60);
       updateFanFlutter(1 / 60);
+      if (typeof RandomEvents !== 'undefined') {
+        // Déclencheurs "Silence" et "Heure" : évalués quelle que soit la vue.
+        RandomEvents.updateGlobal(1 / 60);
+      }
     }
 
     if(!gameEnd){

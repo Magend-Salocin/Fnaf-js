@@ -65,6 +65,7 @@ const DEFAULT_EVENT_DISPLAY_SECONDS = 6;
 // "observe" / "silence" (pour ne pas tirer 60 fois par seconde)
 const CHANCE_CHECK_INTERVAL_SECONDS = 1;
 let _chanceCheckTimer = 0;
+let _globalCheckTimer = 0;
 
 function initEventRuntimeState() {
   if (typeof RANDOM_EVENTS === 'undefined') {
@@ -95,6 +96,8 @@ function resetRandomEventsForNewNight() {
   _currentCameraContinuousTime = 0;
   _lastObservedCameraId = null;
   _cameraVisitToken = 0;
+  _chanceCheckTimer = 0;
+  _globalCheckTimer = 0;
   Object.keys(_lastSoundCameraVisitByEvent).forEach(id => delete _lastSoundCameraVisitByEvent[id]);
 }
 
@@ -126,6 +129,16 @@ const RANDOM_EVENT_HANDLERS = {
   // function(event) { ... return true/false; }
 };
 
+/**
+ * Normalise une liste d'animatronics ("Chica,Bonnie" ou "Bonnie, Chica")
+ * en une clé comparable ("Bonnie,Chica"), pour que l'ordre et les espaces
+ * du JSON n'empêchent pas la correspondance avec l'état de la pièce.
+ */
+function normalizeAnimatronicList(value) {
+  if (!value) return "";
+  return value.split(',').map(name => name.trim()).filter(Boolean).sort().join(',');
+}
+
 function runCustomHandler(event) {
   const handler = event.jsHandler && RANDOM_EVENT_HANDLERS[event.jsHandler];
   if (!handler) return true; // pas de handler = toujours autorisé
@@ -155,7 +168,8 @@ function preloadHiddenEventImages() {
    CONDITIONS
    ============================================================ */
 function isEventTimeWindowActive(event) {
-  if (event.night !== getCurrentNight() && event.night !== '0') return false;
+  const eventNight = Number(event.night);
+  if (eventNight !== 0 && eventNight !== getCurrentNight()) return false;
   const hour = getCurrentHourDecimal();
   return hour >= event.hourRange.start && hour < event.hourRange.end;
 }
@@ -267,7 +281,7 @@ function updateRandomEvents(deltaSeconds, camera, room) {
       }
     }
     // "cameraReturn" est géré dans notifyCameraSwitch(), pas ici
-    // "silence" est géré dans updateSilenceEvents(), pas ici
+    // "silence" et "time" sont gérés dans updateGlobalEvents(), pas ici
   });
 }
 
@@ -293,22 +307,67 @@ function notifyUserInput() {
 }
 
 /**
- * À appeler régulièrement (ex. dans la boucle principale du
- * jeu, indépendamment de la vue caméra) pour les événements de
- * type "Silence" qui n'ont pas de caméra associée.
+ * Identifiant de la caméra actuellement affichée, ou null si le joueur
+ * est dans le bureau. Lu depuis l'état global du jeu (camera.js).
  */
-function updateSilenceEvents() {
+function getWatchedCameraId() {
+  if (typeof activeView === 'undefined' || activeView !== 'camera') return null;
+  return (typeof activeCamera !== 'undefined') ? activeCamera : null;
+}
+
+/**
+ * Déclencheur "silence" : le joueur est resté inactif au moins
+ * SILENCE_THRESHOLD_SECONDS. Un événement sans caméra (roomLabel "Bureau")
+ * est évalué quelle que soit la vue ; un événement rattaché à une salle
+ * exige en plus que sa caméra soit affichée, sinon le joueur ne pourrait
+ * ni voir ni entendre ce qui s'y passe.
+ */
+function rollSilenceEvents(watchedCameraId) {
   const silentForSeconds = (Date.now() - _lastUserInputTimestamp) / 1000;
   if (silentForSeconds < SILENCE_THRESHOLD_SECONDS) return;
 
   Object.values(RANDOM_EVENTS).forEach(event => {
     if (event.trigger.type !== "silence") return;
-    if (event.cameraId !== null) return; // ce trigger est pour la vue bureau
+    if (event.cameraId !== null && event.cameraId !== watchedCameraId) return;
     const state = eventRuntimeState[event.id];
     if (state.resolvedTonight) return;
     if (!isEventTimeWindowActive(event)) return;
     if (rollEventChance(event)) triggerEvent(event);
   });
+}
+
+/**
+ * Déclencheur "time" (colonne Déclencheur = "Heure") : seule la fenêtre
+ * horaire compte, le joueur n'a rien à observer. L'image éventuelle reste
+ * affichée sur la caméra de la salle pendant la durée habituelle.
+ */
+function rollTimedEvents() {
+  Object.values(RANDOM_EVENTS).forEach(event => {
+    if (event.trigger.type !== "time") return;
+    const state = eventRuntimeState[event.id];
+    if (state.resolvedTonight) return;
+    if (!isEventTimeWindowActive(event)) return;
+    if (rollEventChance(event)) triggerEvent(event);
+  });
+}
+
+/**
+ * À appeler à chaque frame depuis la boucle de jeu, quelle que soit la vue
+ * affichée, pour les déclencheurs qui ne dépendent pas de l'observation
+ * d'une caméra ("Silence" et "Heure").
+ * @param {number} deltaSeconds - Temps écoulé depuis la frame précédente.
+ */
+function updateGlobalEvents(deltaSeconds) {
+  if (typeof RANDOM_EVENTS === 'undefined') return;
+
+  // Même cadence que updateRandomEvents : une tentative par seconde, pas une
+  // par frame (sinon une chance de 0.05 se déclenche en moins d'une seconde).
+  _globalCheckTimer += deltaSeconds;
+  if (_globalCheckTimer < CHANCE_CHECK_INTERVAL_SECONDS) return;
+  _globalCheckTimer = 0;
+
+  rollSilenceEvents(getWatchedCameraId());
+  rollTimedEvents();
 }
 
 
@@ -332,7 +391,7 @@ function drawActiveRandomEventOverlay(ctx, camera, room) {
   if (!event || !event.imagePath) return;
 
   // Si l'événement a un animatronic associé, ne le dessine que si l'animatronic est présent dans la pièce (ex: GAB-001 ne se déclenche que si Bonnie est là).
-  if(animatronic !== event.animatronic)return;
+  if (normalizeAnimatronicList(animatronic) !== normalizeAnimatronicList(event.animatronic)) return;
   
 
   const img = loadedHiddenEventImages[event.id];
@@ -367,7 +426,7 @@ function drawActiveRandomEventOverlay(ctx, camera, room) {
 const RandomEvents = {
   preload: preloadHiddenEventImages,
   update: updateRandomEvents,
-  updateSilence: updateSilenceEvents,
+  updateGlobal: updateGlobalEvents,
   notifyCameraSwitch,
   notifyUserInput,
   drawActiveOverlay: drawActiveRandomEventOverlay,
