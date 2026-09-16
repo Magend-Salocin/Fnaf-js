@@ -867,7 +867,7 @@
   {
     "id": "JER-021",
     "type": "Objet",
-    "roomLabel": "Supply Closet",
+    "roomLabel": "West Hall",
     "night": 3,
     "hourStr": "Toute nuit",
     "chance": 0.1,
@@ -887,7 +887,7 @@
   {
     "id": "JER-022",
     "type": "Objet",
-    "roomLabel": "Supply Closet",
+    "roomLabel": "West Hall",
     "night": 3,
     "hourStr": "Toute nuit",
     "chance": 0.08,
@@ -1387,7 +1387,7 @@
   {
     "id": "JER-024",
     "type": "Décor",
-    "roomLabel": "Supply Closet",
+    "roomLabel": "West Hall",
     "night": 4,
     "hourStr": "Retour caméra",
     "chance": 0.06,
@@ -1647,7 +1647,7 @@
   {
     "id": "JER-023",
     "type": "Objet",
-    "roomLabel": "Supply Closet",
+    "roomLabel": "West Hall",
     "night": 4,
     "hourStr": "Toute nuit",
     "chance": 0.07,
@@ -2147,7 +2147,7 @@
   {
     "id": "JER-025",
     "type": "Objet",
-    "roomLabel": "Supply Closet",
+    "roomLabel": "West Hall",
     "night": 5,
     "hourStr": "Toute nuit",
     "chance": 0.05,
