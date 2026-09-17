@@ -23,6 +23,13 @@ function applyLanguage(lang) {
     document.getElementById('camera-panel-label').textContent = t.panels.cameraLabel;
     document.getElementById('camera-panel-status').textContent = t.panels.cameraStatus;
     document.getElementById('camera-panel-footer').textContent = t.panels.cameraFooter;
+    document.getElementById('camera-name-label').textContent = t.panels.cameraFeedLabel;
+  }
+
+  // Le panneau du flux camera est reconstruit a la prochaine frame de la vue
+  // camera, avec les libelles de la langue choisie.
+  if (typeof resetCameraNameDisplay === 'function') {
+    resetCameraNameDisplay();
   }
 
   document.getElementById('room-dining-area').textContent = t.rooms.diningArea;

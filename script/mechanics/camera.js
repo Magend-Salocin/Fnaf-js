@@ -49,7 +49,7 @@ function updateOfficeLookControls() {
  * ecrans du decor, et les cameras se levent en cliquant sur le bloc de
  * moniteurs (cf. office_hotspots.json).
  */
-const CAMERA_HUD_PANEL_IDS = Object.freeze(['camera-panel', 'powerUsage', 'usage-status']);
+const CAMERA_HUD_PANEL_IDS = Object.freeze(['camera-panel', 'powerUsage', 'usage-status', 'camera-name']);
 
 function updateCameraHudVisibility() {
   const shouldShow = activeView === 'camera' && !gameEnd;
@@ -107,6 +107,44 @@ function updateOfficeLookAnimation() {
     updateOfficeDoorVisibility();
     updateViewDependentHud();
   }
+}
+
+/**
+ * Derniere valeur ecrite dans le panneau du flux camera, pour ne toucher au
+ * DOM que lorsque le texte change et non a chaque frame.
+ */
+let lastCameraNameSignature = null;
+
+/**
+ * Force la reecriture du panneau du flux camera a la prochaine frame. Appele
+ * par applyLanguage() quand les libelles changent de langue.
+ */
+function resetCameraNameDisplay() {
+  lastCameraNameSignature = null;
+}
+
+/**
+ * Met a jour le panneau qui affiche la camera observee et son etat.
+ * @param {Object} camera - Camera actuellement affichee
+ * @param {boolean} isRecharging - true quand la camera est en recharge
+ */
+function updateCameraNameDisplay(camera, isRecharging) {
+  const valueEl = document.getElementById('camera-name-value');
+  const statusEl = document.getElementById('camera-name-status');
+  if (!valueEl || !statusEl) return;
+
+  const panels = translations[selectedLanguage]?.panels || {};
+  const name = camera?.name ?? '—';
+  const status = isRecharging
+    ? (panels.cameraFeedRecharge || 'RECHARGE')
+    : (panels.cameraFeedLive || 'EN DIRECT');
+  const signature = name + '|' + status;
+  if (signature === lastCameraNameSignature) return;
+
+  lastCameraNameSignature = signature;
+  valueEl.textContent = name;
+  statusEl.textContent = status;
+  statusEl.classList.toggle('camera-name-status-recharge', isRecharging);
 }
 
 function updateCameraPanelState(isOpen) {
@@ -269,6 +307,8 @@ function onCamera() {
           isUsingCamera = true;
         }
       }
+      updateCameraNameDisplay(camera, !isUsingCamera);
+
        // Affiche la caméra ou l'effet de statique selon l'état
       if (isUsingCamera) {
         drawWithCamera(ctx, camera); 
@@ -469,11 +509,6 @@ function drawWithCamera(ctx, camera) {
     // s'exécutait dans le bloc ci-dessus, dépilant un état qui ne lui
     // appartenait pas).
     ctx.restore();
-    // Affiche le nom de la caméra et le temps restant
-    ctx.fillStyle = 'white';
-    ctx.font = `${20 * scale}px Arial`;
-    ctx.fillText(`Caméra : ${camera.name}`, 20, 30 * scale);
-    ctx.fillStyle = 'red';
 
 
     // Render any registered animated GIFs on top of the camera view
@@ -537,11 +572,13 @@ function drawStaticEffect(ctx, camera) {
     ctx.fillStyle = `rgba(255, 255, 255, ${Math.random() * 0.6})`;
     ctx.fillRect(x, y, 2, 2);
   }
+  // Centre le message : le coin haut gauche est occupé par les commandes de
+  // volume et de debug, et le nom de la caméra est déjà dans le panneau HUD.
   ctx.fillStyle = 'white';
-  ctx.font = '24px Arial';
-  ctx.fillText(`RECHARGE... (${Math.ceil(camera.remainingTime)}s)`, 50, 50);
-  ctx.fillStyle = 'yellow';
-  ctx.fillText(`Caméra ${camera.name} en recharge`, 50, 80);
+  ctx.font = "20px 'Press Start 2P', monospace";
+  ctx.textAlign = 'center';
+  ctx.fillText(`RECHARGE... (${Math.ceil(camera.remainingTime)}s)`, canvas.width / 2, canvas.height / 2);
+  ctx.textAlign = 'left';
 }
 
 

@@ -1,12 +1,15 @@
+/* Placé sous #volume-control (coin haut gauche, 12px), avec lequel il se
+   chevauchait quand les deux étaient ancrés dans le même coin. */
 .debug-toggle-btn {
 	position: fixed;
-	top: 0;
-	left: 0;
+	top: 58px;
+	left: 12px;
 	z-index: 101;
 	background-color: #222;
 	color: #ff8800;
 	border: 1px solid #ff8800;
 	font-size: 11px;
+	margin: 0;
 	padding: 4px 8px;
 	cursor: pointer;
 }
@@ -19,8 +22,8 @@
 #debug-panel {
 	display: none;
 	position: fixed;
-	top: 40px;
-	left: 0;
+	top: 86px;
+	left: 12px;
 	min-width: 220px;
 	padding: 10px;
 	z-index: 100;
@@ -28,7 +31,6 @@
 	font-size: 11px;
 	background-color: rgba(10, 10, 10, 0.95);
 	border: 1px solid #ff8800;
-	border-top: none;
 }
 
 .debug-panel-title {

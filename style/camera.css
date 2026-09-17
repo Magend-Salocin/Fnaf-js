@@ -179,3 +179,60 @@ top: 475px;
         z-index: 3;
     }
 
+
+    /* Nom de la camera observee. Le libelle etait dessine sur le canvas en
+       haut a gauche, a une taille dependante de l'echelle de la piece : il
+       chevauchait le bouton de volume et celui du debug. Il vit maintenant
+       dans un panneau HUD, en bas a gauche, une zone libre. */
+    #camera-name {
+        position: fixed;
+        bottom: 12px;
+        left: 12px;
+        z-index: 999;
+        min-width: 170px;
+        padding: 7px 10px 9px;
+        background-color: #080808;
+        border: 1px solid #2a2a2a;
+        border-radius: 2px;
+        box-shadow: 0 0 18px rgba(0, 0, 0, 0.9), inset 0 0 8px rgba(0, 0, 0, 0.6);
+        user-select: none;
+    }
+
+    #camera-name.hidden {
+        display: none;
+    }
+
+    .camera-name-label {
+        font-family: 'Press Start 2P', monospace;
+        font-size: 6px;
+        color: #666;
+        letter-spacing: 2px;
+        margin-bottom: 7px;
+    }
+
+    .camera-name-row {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 12px;
+    }
+
+    .camera-name-value {
+        font-family: 'Press Start 2P', monospace;
+        font-size: 12px;
+        line-height: 1;
+        letter-spacing: 1px;
+        color: #ff961f;
+        text-shadow: 0 0 6px rgba(255, 136, 0, 0.75), 0 0 14px rgba(255, 90, 0, 0.38);
+    }
+
+    .camera-name-status {
+        font-family: 'Press Start 2P', monospace;
+        font-size: 6px;
+        letter-spacing: 1px;
+        color: #4eff8f;
+    }
+
+    .camera-name-status-recharge {
+        color: #ff5a19;
+    }

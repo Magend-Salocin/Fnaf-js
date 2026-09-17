@@ -17,6 +17,9 @@
         "cameraFooter": "CLIQUE POUR OUVRIR",
         "cameraOnline": "EN LIGNE",
         "cameraFooterClose": "CLIQUE POUR FERMER",
+        "cameraFeedLabel": "FLUX CAM",
+        "cameraFeedLive": "EN DIRECT",
+        "cameraFeedRecharge": "RECHARGE",
         "tapeFooter": "CLIQUE POUR OUVRIR"
       },
       "powerPanel": {
@@ -90,6 +93,9 @@
         "cameraFooter": "CLICK TO OPEN",
         "cameraOnline": "ONLINE",
         "cameraFooterClose": "CLICK TO CLOSE",
+        "cameraFeedLabel": "CAM FEED",
+        "cameraFeedLive": "LIVE",
+        "cameraFeedRecharge": "RECHARGING",
         "tapeFooter": "CLICK TO OPEN"
       },
       "powerPanel": {
