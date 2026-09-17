@@ -589,9 +589,6 @@ function drawOfficeView(ctx,officeImageKey=null) {
   // effectivement dessinee plus bas : on repart de zero a chaque frame.
   clearOfficeImageLayout();
 
-    ctx.fillStyle = 'darkgray';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-
     // Choisir l'image en fonction de l'état des lumières
     if(officeImageKey == null){
       officeImageKey = getOfficeImageKey();
@@ -623,6 +620,13 @@ function drawOfficeView(ctx,officeImageKey=null) {
             hideGif();
             _pictureGif = null;
         }
+    } else {
+        // Image du bureau pas encore chargée : on peint le fond, sinon le
+        // canvas effacé par onCamera() resterait transparent. Dans le cas
+        // normal l'image est opaque et couvre tout le canvas, la peindre
+        // dessous à chaque frame ne sert à rien.
+        ctx.fillStyle = 'darkgray';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
     }
 }
 

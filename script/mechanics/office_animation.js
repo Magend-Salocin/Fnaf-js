@@ -13,7 +13,10 @@
 /**
  * Lecteurs de GIF et tampons de composition, indexes par id d'animation.
  * Le tampon est garde d'une frame a l'autre et redimensionne seulement
- * quand la zone change de taille (fenetre redimensionnee).
+ * quand la zone change de taille (fenetre redimensionnee). Il garde aussi
+ * la composition deja faite : `composedFrame`, `composedWidth` et
+ * `composedHeight` decrivent ce qu'il contient, pour ne la refaire que
+ * lorsque le GIF change d'image ou que la zone change de taille.
  */
 const officeAnimationPlayers = {};
 
@@ -29,7 +32,14 @@ async function preloadOfficeAnimations() {
       const player = new GifPlayer();
       await player.load(animation.gif);
       player.play();
-      officeAnimationPlayers[animation.id] = { player, buffer: null, bufferCtx: null };
+      officeAnimationPlayers[animation.id] = {
+        player,
+        buffer: null,
+        bufferCtx: null,
+        composedFrame: null,
+        composedWidth: 0,
+        composedHeight: 0
+      };
     } catch (err) {
       console.error(`[OfficeAnimations] Chargement de "${animation.gif}" impossible`, err);
     }
@@ -88,20 +98,13 @@ function maskOfficeAnimation(ctx, width, height, animation) {
 }
 
 /**
- * Dessine une animation dans sa zone a l'ecran.
- * @param {CanvasRenderingContext2D} ctx - Contexte du canvas
- * @param {Object} animation - Animation, zone `rect` comprise
- * @param {{x: number, y: number, width: number, height: number}} box - Zone a l'ecran
+ * Remplit le tampon avec l'image courante du GIF, assombrie puis masquee.
+ * @param {Object} entry - Entree de officeAnimationPlayers
+ * @param {Object} animation - Animation en cours de dessin
+ * @param {number} width - Largeur du tampon, en pixels canvas
+ * @param {number} height - Hauteur du tampon, en pixels canvas
  */
-function drawOfficeAnimation(ctx, animation, box) {
-  const entry = officeAnimationPlayers[animation.id];
-  if (!entry || !entry.player.ready) return;
-
-  const width = Math.max(1, Math.round(box.width));
-  const height = Math.max(1, Math.round(box.height));
-
-  entry.player.update();
-
+function composeOfficeAnimation(entry, animation, width, height) {
   const bufferCtx = resolveOfficeAnimationBuffer(entry, width, height);
   // Sans `source`, c'est tout le GIF qui est repris.
   const source = animation.source || { x: 0, y: 0, width: entry.player.width, height: entry.player.height };
@@ -120,6 +123,36 @@ function drawOfficeAnimation(ctx, animation, box) {
   }
 
   maskOfficeAnimation(bufferCtx, width, height, animation);
+
+  entry.composedFrame = entry.player.currentFrame;
+  entry.composedWidth = width;
+  entry.composedHeight = height;
+}
+
+/**
+ * Dessine une animation dans sa zone a l'ecran.
+ * @param {CanvasRenderingContext2D} ctx - Contexte du canvas
+ * @param {Object} animation - Animation, zone `rect` comprise
+ * @param {{x: number, y: number, width: number, height: number}} box - Zone a l'ecran
+ */
+function drawOfficeAnimation(ctx, animation, box) {
+  const entry = officeAnimationPlayers[animation.id];
+  if (!entry || !entry.player.ready) return;
+
+  const width = Math.max(1, Math.round(box.width));
+  const height = Math.max(1, Math.round(box.height));
+
+  entry.player.update();
+
+  // spinning_fan.gif ne compte que trois images a 20 images/s, alors que le
+  // rendu tourne a 60 : la composition redonnerait deux fois sur trois le
+  // meme tampon. On ne la refait donc que quand le GIF a change d'image ou
+  // que la zone a change de taille.
+  if (entry.composedFrame !== entry.player.currentFrame
+      || entry.composedWidth !== width
+      || entry.composedHeight !== height) {
+    composeOfficeAnimation(entry, animation, width, height);
+  }
 
   ctx.drawImage(entry.buffer, box.x, box.y);
 }

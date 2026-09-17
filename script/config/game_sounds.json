@@ -46,7 +46,7 @@
     "selector": ".cold-presc",
     "category": "ambiance",
     "description": "Ambiance de fond de la nuit, sous le ventilateur",
-    "mixVolume": 0.95
+    "mixVolume": 0.65
   },
   {
     "id": "menu_start2",
