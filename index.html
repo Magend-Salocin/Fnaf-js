@@ -17,6 +17,7 @@
 	<link rel="stylesheet" href="style/tape.css">
 	<link rel="stylesheet" href="style/journal.css">
 	<link rel="stylesheet" href="style/ending.css">
+	<link rel="stylesheet" href="style/game_over.css">
 
 </head>
 <body>
@@ -427,6 +428,9 @@
 		<video id="ending-video" class="ending-video" playsinline></video>
 		<button type="button" id="ending-skip" class="ending-skip-btn">PASSER ▶</button>
 	</section>
+
+	<!-- Retour à l'accueil depuis l'écran final "game over" : showGameOverScreen() dans script/app/render.js -->
+	<button type="button" id="game-over-home-btn" class="game-over-home-btn" hidden>RETOUR A L'ACCUEIL</button>
 
 
 	<!-- audios -->

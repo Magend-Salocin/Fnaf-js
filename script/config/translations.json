@@ -75,6 +75,9 @@
       "transition": {
         "nightLabel": "Nuit",
         "customNightComplete": "Nuit Personnalisee Terminee"
+      },
+      "gameOverScreen": {
+        "backHome": "RETOUR A L'ACCUEIL"
       }
     },
     "en": {
@@ -151,6 +154,9 @@
       "transition": {
         "nightLabel": "Night",
         "customNightComplete": "Custom Night Complete"
+      },
+      "gameOverScreen": {
+        "backHome": "BACK TO MENU"
       }
     }
   }

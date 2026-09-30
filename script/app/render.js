@@ -236,9 +236,36 @@ function animatronicJumpScare(scareSound, jumpScarePicture) {
     }, 4000);
 
     // Écran final game over
-    setTimeout(function() {
-        drawOfficeViewByPicture("game_over_end");
-    }, 5300);
+    setTimeout(showGameOverScreen, 5300);
+}
+
+// Délai avant le retour automatique à l'accueil depuis l'écran final.
+const GAME_OVER_RETURN_DELAY_MS = 20000;
+
+/**
+ * Affiche l'écran final "game over" avec le bouton de retour à l'accueil,
+ * et programme un retour automatique après GAME_OVER_RETURN_DELAY_MS.
+ * Le retour recharge la page : c'est la seule réinitialisation complète de
+ * l'état du jeu (boucles, écouteurs, écrans). Langue, cassettes et journaux
+ * sont conservés via localStorage.
+ */
+function showGameOverScreen() {
+    drawOfficeViewByPicture("game_over_end");
+
+    const homeBtn = document.getElementById('game-over-home-btn');
+    const lang = window.selectedLanguage || window.FNAF_DEFAULT_LANGUAGE || 'fr';
+    const t = (window.FNAF_TRANSLATIONS || {})[lang] || {};
+    if (t.gameOverScreen?.backHome) {
+        homeBtn.textContent = t.gameOverScreen.backHome;
+    }
+    homeBtn.hidden = false;
+    homeBtn.onclick = returnToHome;
+
+    setTimeout(returnToHome, GAME_OVER_RETURN_DELAY_MS);
+}
+
+function returnToHome() {
+    window.location.reload();
 }
 
 // Fonctions personnalisées pour chaque animatronic. Comme dans FNAF 1, tous
@@ -324,7 +351,7 @@ function transitionEndNightFreddy() {
     // Affiche l'écran final de "Game Over" après 37 secondes
     setTimeout(function() {
         if(!gameWin){
-            drawOfficeViewByPicture("game_over_end");
+            showGameOverScreen();
         }
     }, 37000);
 }

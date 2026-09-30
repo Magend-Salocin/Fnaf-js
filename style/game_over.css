@@ -1,0 +1,28 @@
+/* =====================================================================
+   Écran final "game over" — bouton de retour à l'accueil
+   ---------------------------------------------------------------------
+   Affiché par showGameOverScreen() (script/app/render.js) ; un retour
+   automatique a lieu après GAME_OVER_RETURN_DELAY_MS.
+   ===================================================================== */
+
+.game-over-home-btn{
+  position: fixed;
+  right: 28px;
+  bottom: 28px;
+  z-index: 1200;
+  font-family: var(--rc-font-mono);
+  font-size: 11px;
+  letter-spacing: 1px;
+  padding: 10px 16px;
+  color: var(--rc-text-mid);
+  background: linear-gradient(#1b1e1c, #0c0e0d);
+  border: 1px solid var(--rc-border-light);
+  cursor: pointer;
+  opacity: .8;
+}
+.game-over-home-btn:hover{
+  color: var(--rc-green);
+  border-color: var(--rc-green);
+  opacity: 1;
+}
+.game-over-home-btn[hidden]{ display: none; }

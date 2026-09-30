@@ -42,6 +42,7 @@ const EndingScene = (() => {
     els.video.load();
     els.scene.hidden = true;
     els.scene.setAttribute("aria-hidden", "true");
+    showGameOverScreen(); // sinon le joueur resterait bloqué sur l'écran final
   }
 
   /**
