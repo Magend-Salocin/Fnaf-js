@@ -48,14 +48,14 @@ du tableau ne manque au dossier `audio/`.
       qui n'est pas implémenté.
 - [ ] `ambience2` (ambience2.wav) figure au catalogue mais n'est déclenché
       nulle part.
-- [ ] Appels téléphoniques anglais : `voiceover1_en.wav` à `voiceover4_en.wav`
+- [x] Appels téléphoniques anglais : `voiceover1_en.wav` à `voiceover4_en.wav`
       n'ont aucune balise `<audio>` et ne sont cités nulle part, alors que
       `language.js` gère les deux langues. `voiceover5_en.wav` n'existe pas.
 - [ ] `foxy-curtain-open` joue DOOR_POUNDING, soit un coup violent sur une
       porte, pour l'ouverture du rideau de Pirate Cove. Il lui faut son propre
       fichier. Tant qu'il n'existe pas, DOOR_POUNDING ne peut pas retrouver
       son rôle de coup de Foxy sur la porte, qui serait sinon en double.
-- [ ] `foxy-retrait` n'est plus joué : il utilisait knock2.wav pour un retour
+- [x] `foxy-retrait` n'est plus joué : il utilisait knock2.wav pour un retour
       hors champ et silencieux dans le jeu d'origine.
 - [ ] `run_fast` et `foxy-running` pointent sur le même running fast3.wav.
 
@@ -100,7 +100,7 @@ Passer `realised` à `true` dans `random_events_data.json` au fur et à mesure.
 - [ ] SUS-006 (n3) — écrire la description avant de produire l'image
 
 ### Correctifs sur les images déjà produites
-- [ ] 47 événements ont leur image mais restent à `"realised": false` dans
+- [x] 47 événements ont leur image mais restent à `"realised": false` dans
       `random_events_data.json` (tous les FRT produits, JER-016 à JER-030, les
       visuels d'animatroniques). Le champ ne sert qu'au suivi de production,
       mais il est devenu faux : le resynchroniser.
@@ -138,7 +138,7 @@ Passer `realised` à `true` dans `random_events_data.json` au fur et à mesure.
 
 ## Priorité 3 — Nettoyage avant diffusion
 
-- [ ] Gater ou retirer le panneau de debug (`index.html`, `script/debug/`)
+- [x] Gater ou retirer le panneau de debug (`index.html`, `script/debug/`)
 - [ ] `transitionEndNight()` (`script/app/render.js`) : construire l'écran de
       chèque de paie ou corriger le commentaire qui le décrit
 

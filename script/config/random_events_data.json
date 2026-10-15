@@ -158,7 +158,7 @@
     "weight": 15,
     "retryWeight": 8,
     "lastNightBoost": 4,
-    "realised": false
+    "realised": true
   },
   {
     "id": "FRT-002",
@@ -181,7 +181,7 @@
     "weight": 5,
     "retryWeight": 3,
     "lastNightBoost": 5,
-    "realised": false
+    "realised": true
   },
   {
     "id": "GAB-003",
@@ -261,7 +261,7 @@
     "tape": null,
     "evolution": "",
     "animatronic": "Freddy",
-    "realised": false
+    "realised": true
   },
   {
     "id": "JER-002",
@@ -321,7 +321,7 @@
     "tape": null,
     "evolution": "",
     "animatronic": "Bonnie",
-    "realised": false
+    "realised": true
   },
   {
     "id": "SUS-002",
@@ -401,7 +401,7 @@
     "tape": null,
     "evolution": "",
     "animatronic": "Foxy",
-    "realised": false
+    "realised": true
   },
   {
     "id": "FRT-006",
@@ -421,7 +421,7 @@
     "tape": null,
     "evolution": "",
     "animatronic": "Foxy",
-    "realised": false
+    "realised": true
   },
   {
     "id": "FRT-011",
@@ -441,7 +441,7 @@
     "tape": "TAPE_FRT_01",
     "evolution": "",
     "animatronic": "Foxy",
-    "realised": false
+    "realised": true
   },
   {
     "id": "JER-008",
@@ -501,7 +501,7 @@
     "tape": null,
     "evolution": "",
     "animatronic": "Foxy",
-    "realised": false
+    "realised": true
   },
   {
     "id": "GAB-007",
@@ -541,7 +541,7 @@
     "tape": null,
     "evolution": "",
     "animatronic": "Bonnie",
-    "realised": false
+    "realised": true
   },
   {
     "id": "SUS-026",
@@ -581,7 +581,7 @@
     "tape": null,
     "evolution": "",
     "animatronic": "Foxy",
-    "realised": false
+    "realised": true
   },
   {
     "id": "JER-027",
@@ -601,7 +601,7 @@
     "tape": null,
     "evolution": "",
     "animatronic": "Bonnie",
-    "realised": false
+    "realised": true
   },
   {
     "id": "FRT-007",
@@ -621,7 +621,7 @@
     "tape": null,
     "evolution": "",
     "animatronic": "Foxy",
-    "realised": false
+    "realised": true
   },
   {
     "id": "FRT-022",
@@ -641,7 +641,7 @@
     "tape": null,
     "evolution": "",
     "animatronic": "Foxy",
-    "realised": false
+    "realised": true
   },
   {
     "id": "SUS-004",
@@ -722,7 +722,7 @@
     "tape": null,
     "evolution": "",
     "animatronic": "Foxy",
-    "realised": false
+    "realised": true
   },
   {
     "id": "SUS-016",
@@ -762,7 +762,7 @@
     "tape": null,
     "evolution": "",
     "animatronic": "Foxy",
-    "realised": false
+    "realised": true
   },
   {
     "id": "FRT-008",
@@ -782,7 +782,7 @@
     "tape": null,
     "evolution": "",
     "animatronic": "Foxy",
-    "realised": false
+    "realised": true
   },
   {
     "id": "FRT-012",
@@ -802,7 +802,7 @@
     "tape": null,
     "evolution": "",
     "animatronic": "Foxy",
-    "realised": false
+    "realised": true
   },
   {
     "id": "FRT-013",
@@ -842,7 +842,7 @@
     "tape": "TAPE_FRT_02",
     "evolution": "",
     "animatronic": "Foxy",
-    "realised": false
+    "realised": true
   },
   {
     "id": "GAB-021",
@@ -882,7 +882,7 @@
     "tape": null,
     "evolution": "",
     "animatronic": "Bonnie",
-    "realised": false
+    "realised": true
   },
   {
     "id": "JER-022",
@@ -902,7 +902,7 @@
     "tape": null,
     "evolution": "",
     "animatronic": "Bonnie",
-    "realised": false
+    "realised": true
   },
   {
     "id": "SUS-017",
@@ -942,7 +942,7 @@
     "tape": null,
     "evolution": "",
     "animatronic": "Chica",
-    "realised": false
+    "realised": true
   },
   {
     "id": "SUS-022",
@@ -1122,7 +1122,7 @@
     "tape": null,
     "evolution": "",
     "animatronic": "Bonnie",
-    "realised": false
+    "realised": true
   },
   {
     "id": "GAB-012",
@@ -1162,7 +1162,7 @@
     "tape": null,
     "evolution": "",
     "animatronic": "Foxy",
-    "realised": false
+    "realised": true
   },
   {
     "id": "JER-009",
@@ -1242,7 +1242,7 @@
     "tape": null,
     "evolution": "",
     "animatronic": "Bonnie",
-    "realised": false
+    "realised": true
   },
   {
     "id": "GAB-013",
@@ -1302,7 +1302,7 @@
     "tape": null,
     "evolution": "",
     "animatronic": "Foxy",
-    "realised": false
+    "realised": true
   },
   {
     "id": "FRT-017",
@@ -1342,7 +1342,7 @@
     "tape": null,
     "evolution": "",
     "animatronic": "Foxy",
-    "realised": false
+    "realised": true
   },
   {
     "id": "FRT-027",
@@ -1362,7 +1362,7 @@
     "tape": null,
     "evolution": "",
     "animatronic": "Foxy",
-    "realised": false
+    "realised": true
   },
   {
     "id": "GAB-022",
@@ -1402,7 +1402,7 @@
     "tape": null,
     "evolution": "",
     "animatronic": "Bonnie",
-    "realised": false
+    "realised": true
   },
   {
     "id": "SUS-018",
@@ -1462,7 +1462,7 @@
     "tape": null,
     "evolution": "",
     "animatronic": "Foxy",
-    "realised": false
+    "realised": true
   },
   {
     "id": "FRT-015",
@@ -1502,7 +1502,7 @@
     "tape": "TAPE_FRT_03",
     "evolution": "",
     "animatronic": "Foxy",
-    "realised": false
+    "realised": true
   },
   {
     "id": "GAB-023",
@@ -1562,7 +1562,7 @@
     "tape": null,
     "evolution": "",
     "animatronic": "Bonnie",
-    "realised": false
+    "realised": true
   },
   {
     "id": "JER-017",
@@ -1582,7 +1582,7 @@
     "tape": null,
     "evolution": "",
     "animatronic": "Bonnie",
-    "realised": false
+    "realised": true
   },
   {
     "id": "JER-018",
@@ -1602,7 +1602,7 @@
     "tape": null,
     "evolution": "",
     "animatronic": "Bonnie",
-    "realised": false
+    "realised": true
   },
   {
     "id": "JER-019",
@@ -1622,7 +1622,7 @@
     "tape": null,
     "evolution": "",
     "animatronic": "Bonnie",
-    "realised": false
+    "realised": true
   },
   {
     "id": "JER-020",
@@ -1642,7 +1642,7 @@
     "tape": null,
     "evolution": "",
     "animatronic": "Bonnie",
-    "realised": false
+    "realised": true
   },
   {
     "id": "JER-023",
@@ -1662,7 +1662,7 @@
     "tape": null,
     "evolution": "",
     "animatronic": "Bonnie",
-    "realised": false
+    "realised": true
   },
   {
     "id": "SUS-008",
@@ -1722,7 +1722,7 @@
     "tape": null,
     "evolution": "",
     "animatronic": "Chica",
-    "realised": false
+    "realised": true
   },
   {
     "id": "SUS-024",
@@ -1742,7 +1742,7 @@
     "tape": null,
     "evolution": "",
     "animatronic": "Chica",
-    "realised": false
+    "realised": true
   },
   {
     "id": "GAB-014",
@@ -1882,7 +1882,7 @@
     "tape": null,
     "evolution": "",
     "animatronic": "Foxy",
-    "realised": false
+    "realised": true
   },
   {
     "id": "SUS-029",
@@ -1922,7 +1922,7 @@
     "tape": null,
     "evolution": "",
     "animatronic": "Foxy",
-    "realised": false
+    "realised": true
   },
   {
     "id": "GAB-024",
@@ -1962,7 +1962,7 @@
     "tape": null,
     "evolution": "",
     "animatronic": "Bonnie",
-    "realised": false
+    "realised": true
   },
   {
     "id": "SUS-010",
@@ -2042,7 +2042,7 @@
     "tape": null,
     "evolution": "",
     "animatronic": "Foxy",
-    "realised": false
+    "realised": true
   },
   {
     "id": "FRT-030",
@@ -2062,7 +2062,7 @@
     "tape": null,
     "evolution": "",
     "animatronic": "Foxy",
-    "realised": false
+    "realised": true
   },
   {
     "id": "GAB-025",
@@ -2102,7 +2102,7 @@
     "tape": null,
     "evolution": "",
     "animatronic": "Foxy",
-    "realised": false
+    "realised": true
   },
   {
     "id": "FRT-028",
@@ -2142,7 +2142,7 @@
     "tape": null,
     "evolution": "",
     "animatronic": "Foxy",
-    "realised": false
+    "realised": true
   },
   {
     "id": "JER-025",
@@ -2162,7 +2162,7 @@
     "tape": null,
     "evolution": "",
     "animatronic": "Bonnie",
-    "realised": false
+    "realised": true
   },
   {
     "id": "SUS-009",
@@ -2222,7 +2222,7 @@
     "tape": null,
     "evolution": "",
     "animatronic": "Chica",
-    "realised": false
+    "realised": true
   },
   {
     "id": "BONNIE-001",
@@ -2239,7 +2239,8 @@
     "terminal": null,
     "journal": null,
     "tape": null,
-    "evolution": ""
+    "evolution": "",
+    "realised": true
   },
   {
     "id": "RESTO-001",
@@ -2255,7 +2256,8 @@
     "terminal": null,
     "journal": null,
     "tape": null,
-    "evolution": ""
+    "evolution": "",
+    "realised": true
   },
   {
     "id": "CHICA-001",
@@ -2272,7 +2274,8 @@
     "terminal": null,
     "journal": null,
     "tape": null,
-    "evolution": ""
+    "evolution": "",
+    "realised": true
   },
   {
     "id": "CHICA-002",
@@ -2289,7 +2292,8 @@
     "terminal": null,
     "journal": null,
     "tape": null,
-    "evolution": ""
+    "evolution": "",
+    "realised": true
   },
   {
     "id": "Animatronic-001",
@@ -2306,7 +2310,8 @@
     "terminal": null,
     "journal": null,
     "tape": null,
-    "evolution": ""
+    "evolution": "",
+    "realised": true
   },
   {
     "id": "Freddy-001",
@@ -2323,7 +2328,8 @@
     "terminal": null,
     "journal": null,
     "tape": null,
-    "evolution": ""
+    "evolution": "",
+    "realised": true
   },
   {
     "id": "CHICA-003",
@@ -2340,7 +2346,8 @@
     "terminal": null,
     "journal": null,
     "tape": null,
-    "evolution": ""
+    "evolution": "",
+    "realised": true
   },
   {
     "id": "BONNIE-002",
@@ -2357,7 +2364,8 @@
     "terminal": null,
     "journal": null,
     "tape": null,
-    "evolution": ""
+    "evolution": "",
+    "realised": true
   },
   {
     "id": "CASSIDY-01",

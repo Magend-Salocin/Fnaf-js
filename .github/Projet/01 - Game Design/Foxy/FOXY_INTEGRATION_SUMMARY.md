@@ -84,7 +84,6 @@ gameEnd            // Flag indiquant la fin du jeu
 | `foxy-running` | running fast3 | Phase 2→3 (course rapide) |
 | `foxy-blocked` | door-sound | Phase 3→4 (bloqué par porte) |
 | `foxy-attack` | XSCREAM | Game Over (attaque) |
-| `foxy-retrait` | door-sound | Phase 4→1 (retrait) |
 
 ## Niveaux d'IA par Nuit
 

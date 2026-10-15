@@ -30,6 +30,14 @@ ipcMain.handle("logs:save", async (_event, name, data) => {
     return filename;
 });
 
+// Outils de développement (DevTools, panneau debug, éditeur de logs)
+// réservés au lancement via `npm start`, absents de l'application buildée.
+const devToolsEnabled = !app.isPackaged;
+
+ipcMain.on("app:dev-tools-enabled", event => {
+    event.returnValue = devToolsEnabled;
+});
+
 function createWindow() {
     const win = new BrowserWindow({
         width: 1280,
@@ -51,8 +59,9 @@ function createWindow() {
 
     win.loadFile(path.join(__dirname, "index.html"));
 
-    // DEBUG
-    win.webContents.openDevTools();
+    if (devToolsEnabled) {
+        win.webContents.openDevTools();
+    }
 
     // Affiche les erreurs JavaScript dans le terminal
     win.webContents.on("console-message", (event, level, message, line, sourceId) => {

@@ -252,13 +252,6 @@
     "mixVolume": 1
   },
   {
-    "id": "foxy-retrait",
-    "selector": ".foxy-retrait",
-    "category": "movement",
-    "description": "Foxy se retire dans Pirate Cove",
-    "mixVolume": 0.9
-  },
-  {
     "id": "tape_frt_01",
     "selector": ".tape-frt-01",
     "category": "call",
@@ -424,6 +417,41 @@
     "selector": ".call5",
     "category": "call",
     "description": "Appel 5",
+    "mixVolume": 1
+  },
+  {
+    "id": "call_1_en",
+    "selector": ".call1-en",
+    "category": "call",
+    "description": "Appel 1 (anglais)",
+    "mixVolume": 1
+  },
+  {
+    "id": "call_2_en",
+    "selector": ".call2-en",
+    "category": "call",
+    "description": "Appel 2 (anglais)",
+    "mixVolume": 1
+  },
+  {
+    "id": "call_3_en",
+    "selector": ".call3-en",
+    "category": "call",
+    "description": "Appel 3 (anglais)",
+    "mixVolume": 1
+  },
+  {
+    "id": "call_4_en",
+    "selector": ".call4-en",
+    "category": "call",
+    "description": "Appel 4 (anglais)",
+    "mixVolume": 1
+  },
+  {
+    "id": "call_5_en",
+    "selector": ".call5-en",
+    "category": "call",
+    "description": "Appel 5 (anglais)",
     "mixVolume": 1
   },
   {

@@ -81,9 +81,8 @@ class Foxy {
                 this.inCooldown = false;
                 this.phase = FoxyPhase.INACTIF;
                 this.timeInCurrentPhase = 0;
-                // Pas de son : `foxy-retrait` joue knock2.wav, soit un coup à
-                // la porte, alors que Foxy regagne Pirate Cove hors champ.
-                // Dans FNAF 1 ce retour est silencieux.
+                // Pas de son : dans FNAF 1, Foxy regagne Pirate Cove hors
+                // champ et en silence.
                 this.writeMessage("Foxy se retire dans Pirate Cove...");
             }
             return true; // Pas de Game Over

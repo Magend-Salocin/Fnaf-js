@@ -191,10 +191,12 @@ FNAF 1.
 
 ### Appel téléphonique
 
-`playPhoneCall()` construit l'identifiant `call_${numéroDeNuit}` et le joue au
-démarrage de la nuit. La durée est codée en dur par nuit dans
-`getPhoneCallDuration()` : 206 s, 103 s, 75 s, 65 s, 37 s. Le téléphone du
-bureau (`hangupPhoneFromPanel`) permet de raccrocher avant la fin.
+`playPhoneCall()` construit l'identifiant `call_${numéroDeNuit}`, suffixé de
+`_en` quand le joueur a choisi l'anglais, et le joue au démarrage de la nuit.
+`getPhoneCallDuration()` prend la durée du fichier joué ; si elle n'est pas
+encore connue, il retombe sur la durée de référence de la nuit (206 s, 103 s,
+75 s, 65 s, 37 s, calées sur les appels anglais). Le téléphone du bureau
+(`hangupPhoneFromPanel`) permet de raccrocher avant la fin.
 
 ### Terminal
 
@@ -258,7 +260,6 @@ chaque frame tant que le joueur reste sur la même caméra.
 | `ambience2` | Aucun appel, nulle part |
 | `scare_2` | XSCREAM2, réservé à Golden Freddy, non implémenté |
 | `door_pounding` | Son présent, mais c'est `foxy-curtain-open` qui utilise le fichier DOOR_POUNDING |
-| `foxy-retrait` | Écarté : il joue knock2.wav, soit un coup à la porte, pour un retour hors champ silencieux dans FNAF 1 |
 
 ## 6. Pièges connus
 
@@ -274,9 +275,6 @@ chaque frame tant que le joueur reste sur la même caméra.
   déplacement quand plusieurs animatronics bougent au même tour.
 - `stopAllSounds()` est appelé au début de chaque nuit, sur le jumpscare et à
   6 AM. Tout son lancé juste avant est perdu.
-- Les appels téléphoniques anglais (`voiceover1_en.wav` à `voiceover4_en.wav`)
-  existent dans `audio/` mais n'ont aucune balise `<audio>` et ne sont cités
-  nulle part, alors que `language.js` gère les deux langues.
 
 ## 7. Rôle de référence dans FNAF 1
 
@@ -352,7 +350,7 @@ intention.
 
 | Classe | Rôle de référence | Écart |
 |--------|-------------------|-------|
-| `call1` à `call5` | Appels du Phone Guy au début de chaque nuit | Conforme en français ; les versions anglaises ne sont pas branchées |
+| `call1` à `call5` | Appels du Phone Guy au début de chaque nuit | Conforme ; `call_1_en` à `call_5_en` pour l'anglais |
 | `robot-voice` | Voix robotique | Joué comme son d'ambiance de caméra |
 | `garble1` à `garble3` | Voix brouillées | Joué comme son d'ambiance de caméra |
 | `whispering` | Chuchotements | Joué comme son d'ambiance de caméra |

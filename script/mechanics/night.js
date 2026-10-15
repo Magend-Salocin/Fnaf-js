@@ -10,6 +10,7 @@ class Night {
       this.nightNumber = nightNumber;
       this.phoneCallTimeoutId = null;
       this.phoneCallActive = false;
+      this.phoneCallSoundId = null;
     }
 
     /**
@@ -101,13 +102,33 @@ class Night {
 
     /**
      * private
-     * 
-     * Retourne la durée du message vocal
-     * associée à la nuit.
      *
+     * Retourne l'id du message du Phone Guy de la nuit, dans la langue
+     * choisie (les appels anglais portent le suffixe `_en`).
+     *
+     * @returns {string}
+     */
+    getPhoneCallSoundId() {
+        const lang = window.selectedLanguage || window.FNAF_DEFAULT_LANGUAGE || 'fr';
+        const suffix = lang === 'en' ? '_en' : '';
+        return `call_${this.nightNumber}${suffix}`;
+    }
+
+    /**
+     * private
+     *
+     * Retourne la durée du message vocal en millisecondes : celle du
+     * fichier joué si elle est connue, sinon la durée de référence de la
+     * nuit (calée sur les appels anglais, les plus longs).
+     *
+     * @param {HTMLAudioElement|undefined} audioElement
      * @returns {number}
      */
-    getPhoneCallDuration() {
+    getPhoneCallDuration(audioElement) {
+
+        if (audioElement && Number.isFinite(audioElement.duration)) {
+            return audioElement.duration * 1000;
+        }
 
         switch (this.nightNumber) {
             case 1: return 206000;
@@ -124,20 +145,20 @@ class Night {
      */
     playPhoneCall() {
 
-        const phoneCallNumber = this.nightNumber;
-
-        const soundId = `call_${phoneCallNumber}`;
+        // Mémorisé pour que stopPhoneCall() coupe le bon fichier.
+        this.phoneCallSoundId = this.getPhoneCallSoundId();
+        const audioElement = getSoundById(this.phoneCallSoundId);
 
         this.phoneCallActive = true;
 
-        if (getSoundById(soundId)) {
-            playSound(soundId);
+        if (audioElement) {
+            playSound(this.phoneCallSoundId);
         }
 
         clearTimeout(this.phoneCallTimeoutId);
         this.phoneCallTimeoutId = setTimeout(() => {
-          this.finishPhoneCall(this.nightNumber);
-        }, this.getPhoneCallDuration());
+          this.finishPhoneCall();
+        }, this.getPhoneCallDuration(audioElement));
     }
 
     /**
@@ -149,12 +170,8 @@ class Night {
         return;
       }
 
-      const phoneCallNumber = this.nightNumber;
-
-      const soundId = `call_${phoneCallNumber}`;
-
-      if (getSoundById(soundId)) {
-          stopSound(soundId);
+      if (getSoundById(this.phoneCallSoundId)) {
+          stopSound(this.phoneCallSoundId);
       }
 
       this.finishPhoneCall();

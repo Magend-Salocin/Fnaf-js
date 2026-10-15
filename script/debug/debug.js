@@ -1,4 +1,26 @@
 
+/**
+ * Indique si les outils de développement sont disponibles. L'application
+ * Electron buildée les désactive (cf. main.js) ; hors Electron, `appInfo`
+ * n'existe pas et ils restent disponibles.
+ * @returns {boolean}
+ */
+function isDevToolsEnabled() {
+  return window.appInfo ? window.appInfo.devToolsEnabled : true;
+}
+
+// Masque le bouton du panneau debug et le lien vers l'éditeur de logs dans
+// l'application buildée. Les éléments restent dans le DOM : les écouteurs de
+// setupDebugEventListeners() les attendent.
+document.addEventListener('DOMContentLoaded', () => {
+  if (isDevToolsEnabled()) return;
+
+  ['debug-toggle-btn', 'debug-panel', 'log-editor-link'].forEach(id => {
+    const element = document.getElementById(id);
+    if (element) element.style.display = 'none';
+  });
+});
+
 // Écouteurs d'événements
 function setupDebugEventListeners() {
 
