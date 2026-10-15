@@ -210,17 +210,10 @@
     "mixVolume": 0.5
   },
   {
-    "id": "run_sound",
-    "selector": ".run-sound",
-    "category": "movement",
-    "description": "Course normale",
-    "mixVolume": 0.5
-  },
-  {
     "id": "run_fast",
     "selector": ".run-fast",
     "category": "movement",
-    "description": "Course rapide",
+    "description": "Pas de course de Freddy (running fast3), non branché",
     "mixVolume": 0.5
   },
   {

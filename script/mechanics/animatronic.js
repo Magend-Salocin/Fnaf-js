@@ -143,12 +143,12 @@ class Animatronic {
             }
         }
 
-        // Sons de déplacement. Bonnie et Chica font du bruit de pas ; Freddy
-        // marche sans bruit mais rit à chaque déplacement, c'est le seul
-        // indice sonore de sa progression (comme dans le jeu d'origine).
+        // Sons de déplacement. Bonnie et Chica jouent les pas de FNAF 1
+        // (deep steps) ; run.wav est réservé à la course de Foxy. Freddy rit
+        // à chaque déplacement.
         const possibleSounds = (this.name === 'Freddy')
             ? ["laugh_girl1", "laugh_girl1d", "laugh_girl2d", "laugh_girl8d"]
-            : ["move_sound", "move_sound", "move_sound", "run_sound", "run_sound", "run_fast"];
+            : ["move_sound"];
         const randomSound = possibleSounds[Math.floor(Math.random() * possibleSounds.length)];
         playSound(randomSound);
     }
@@ -336,7 +336,7 @@ class Animatronic {
         // Vérifier si le joueur surveille Pirate Cove via la caméra (Cam 1C)
         const playerCheckedPirateCove = (typeof activeCamera !== 'undefined' && activeCamera === '1c');
 
-        // Vérifier si la porte Est est fermée
+        // Foxy attaque par la porte gauche (couloir Ouest, CAM 2A)
         const doorClosed = (typeof doors !== 'undefined' && doors.left && doors.left.isClosed) || false;
 
         // Mettre à jour Foxy

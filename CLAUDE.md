@@ -32,11 +32,14 @@ Ordre des couches : `loaders` → `state` → `core` → `lore` → `app/render.
 
 ## Règles du projet
 
-- Jeu de base fidèle à FNAF 1 : mécaniques, déclenchements sonores et comportements des animatronics se comparent au jeu original, sans réinvention. Le contenu original (événements cachés, cassettes, terminal, ligne Cassidy) est une couche ajoutée par-dessus et n'est pas soumis à cette règle.
-- Un niveau d'IA à 0 désactive complètement l'animatronic pour la nuit. Il faut un `return` explicite en début de méthode, comme dans `move()` et `attack()` de `script/mechanics/animatronic.js`, car la formule d'intervalle ne suffit pas.
-- Les fichiers de `audio/` ont été renommés par rapport aux ressources d'origine (par exemple, le rire de Freddy correspond à `laugh_girl1`, `laugh_girl1d`, `laugh_girl2d` et `laugh_girl8d`). Faire le rapprochement par nom et par rôle avant de déclarer un son manquant.
-- Ajouter un son : déposer le fichier dans `audio/hidden/`, ajouter l'entrée dans `script/config/game_sounds.json` (`id`, `selector` en kebab-case, `category`, `description`, `mixVolume`), ajouter la balise `<audio preload="metadata">` dans le bloc `<!-- Hidden -->` de `index.html`, puis remplacer `laugh_girl1` (son provisoire) par le nouvel id dans `script/config/random_events_data.json`.
-- Logs du terminal : tous suivent la même maquette de document Fazbear Entertainment, décrite dans `.github/Projet/02 - Lore/CANON_LOGS.md` (section 8). Lire le canon avant d'écrire, puis lancer `check_logs.js`.
+Le jeu de base (mécaniques, sons, animatronics) reste fidèle à FNAF 1. Le contenu original (événements cachés, cassettes, terminal, ligne Cassidy) est une couche ajoutée par-dessus et n'est pas soumis à cette règle.
+
+Les règles détaillées sont dans `.claude/rules/` et se chargent selon les fichiers touchés : logs du terminal, audio, animatronics, données de config, documentation.
+
+Outils du projet :
+
+- Skills : `/ajouter-son`, `/ecrire-log`, `/evenement-cache`.
+- Agents (lecture seule) : `auditeur-fnaf1` pour comparer au jeu d'origine, `gardien-lore` pour vérifier ou collecter le canon narratif.
 
 ## Documentation
 

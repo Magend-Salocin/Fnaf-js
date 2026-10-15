@@ -141,12 +141,13 @@ Le seuil de 20 % est `CAMERA_DEBUG_CONSTANTS.EMPTY_ROOM_SOUND_CHANCE`
 
 | Situation | Son |
 |-----------|-----|
-| Déplacement de Bonnie ou Chica | `move_sound` (3 chances sur 6), `run_sound` (2/6), `run_fast` (1/6) |
+| Déplacement de Bonnie ou Chica | `move_sound` (deep steps) |
 | Déplacement de Freddy | `laugh_girl1`, `laugh_girl1d`, `laugh_girl2d` ou `laugh_girl8d` |
 | Attente derrière la porte, avant le seuil d'attaque | `knock`, 30 % de chance par tour |
 
-Freddy se déplace sans bruit de pas : son rire est le seul indice sonore de sa
-progression, comme dans le jeu d'origine.
+Freddy rit à chaque déplacement. Selon les sources consultées, FNAF 1 joue
+aussi ses pas de course (`running fast3`, id `run_fast`) : non branché tant
+que ce n'est pas confirmé à l'écoute du jeu d'origine.
 
 ### Foxy
 
@@ -155,7 +156,7 @@ progression, comme dans le jeu d'origine.
 | Passage en `TETE_SORTIE` | `foxy-curtain-open` |
 | Passage en `PRET_A_SORTIR` | `foxy-curtain-open` |
 | Passage en `COURSE` | `foxy-running` |
-| Course bloquée par la porte Est | `foxy-blocked` |
+| Course bloquée par la porte gauche | `foxy-blocked` |
 | Retour dans Pirate Cove après cooldown | aucun, volontairement |
 | Attaque réussie | `foxy-attack`, joué par `foxyJumpScare()` |
 
@@ -260,14 +261,13 @@ chaque frame tant que le joueur reste sur la même caméra.
 | `ambience2` | Aucun appel, nulle part |
 | `scare_2` | XSCREAM2, réservé à Golden Freddy, non implémenté |
 | `door_pounding` | Son présent, mais c'est `foxy-curtain-open` qui utilise le fichier DOOR_POUNDING |
+| `run_fast` | running fast3, pas de Freddy selon FNAF 1 : à confirmer à l'écoute avant de le brancher |
 
 ## 6. Pièges connus
 
 - `startAmbientSounds()` et `startMenuSounds()` sont gardés par
   `if (!gameStarted)`, or `gameStarted` est un `const` à `false`
   (`script/state/game_state.js`). La garde ne fait rien.
-- `run_fast` et `foxy-running` pointent sur le même fichier
-  `running fast3.wav`.
 - La description de `buzz_fan` dans le catalogue annonce une modulation entre
   0.10 et 0.15, alors que `updateFanFlutter()` vise 0.02 à 0.06.
 - `playSound()` coupe le son avant de le relancer. Deux occurrences du même id
@@ -343,8 +343,7 @@ intention.
 | Classe | Rôle de référence | Écart |
 |--------|-------------------|-------|
 | `move-sound` | Pas d'un animatronic dans les couloirs | Conforme |
-| `run-sound` | Déplacement rapide | Conforme |
-| `run-fast` | Mouvement urgent | Conforme, mais partage son fichier avec `foxy-running` |
+| `run-fast` | Pas de course de Freddy (running fast3) | Non branché, en attente de confirmation |
 
 ### Voix et appels
 

@@ -81,7 +81,7 @@ gameEnd            // Flag indiquant la fin du jeu
 | ID | Son | Utilisation |
 |----|----|-------------|
 | `foxy-curtain-open` | DOOR_POUNDING | Phase 1→2 (rideau qui s'ouvre) |
-| `foxy-running` | running fast3 | Phase 2→3 (course rapide) |
+| `foxy-running` | run | Phase 2→3 (course rapide) |
 | `foxy-blocked` | door-sound | Phase 3→4 (bloqué par porte) |
 | `foxy-attack` | XSCREAM | Game Over (attaque) |
 

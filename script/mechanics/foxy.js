@@ -5,7 +5,7 @@
  * INACTIF: Foxy est dans Pirate Cove, inactif
  * TETE_SORTIE: Foxy sort partiellement la tête
  * PRET_A_SORTIR: Foxy est prêt à sortir (phase de tension)
- * COURSE: Foxy court dans le couloir Est (Cam 1B)
+ * COURSE: Foxy court dans le couloir Ouest (Cam 2A)
  * RETRAIT: Foxy se retire (en cooldown)
  */
 const FoxyPhase = {
@@ -59,7 +59,7 @@ class Foxy {
     /**
      * Met à jour l'état de Foxy en fonction des actions du joueur et du temps
      * @param {boolean} playerCheckedPirateCove - Le joueur a-t-il vérifié Pirate Cove ce tick?
-     * @param {boolean} doorClosed - La porte Est est-elle fermée?
+     * @param {boolean} doorClosed - La porte gauche est-elle fermée?
      * @param {number} aiLevel - Niveau d'IA pour cette nuit (0-5, cf. FOXY_LEVEL_TUNING)
      * @returns {boolean} true si le joueur survit, false si Game Over
      */
@@ -129,7 +129,7 @@ class Foxy {
             }
         }
         else if (this.phase === FoxyPhase.PRET_A_SORTIR) {
-            // Si la porte Est est fermée, Foxy se retire
+            // Si la porte gauche est fermée, Foxy se retire
             if (this.timeInCurrentPhase > tuning.minPretASortirTicks) {
                 const runChance = (this.aggressivity / 100) * 0.12;
                 const randomValue = Math.random();
@@ -140,13 +140,13 @@ class Foxy {
                 if (runChance > randomValue) {
                     this.phase = FoxyPhase.COURSE;
                     this.timeInCurrentPhase = 0;
-                    playFoxySound('foxy-running', "*Bruit de course rapide* (Foxy court dans le couloir Est !)");
+                    playFoxySound('foxy-running', "*Bruit de course rapide* (Foxy court dans le couloir Ouest !)");
                     this.writeMessage(`Phase COURSE (Agressivité: ${this.aggressivity.toFixed(1)})`);
                 }
             }
         } 
         else if (this.phase === FoxyPhase.COURSE) {
-            // Si la porte Est est fermée à temps, Foxy se retire
+            // Si la porte gauche est fermée à temps, Foxy se retire
             if (doorClosed) {
                 this.initiateRetrait();
                 this.writeMessage("Foxy a été bloqué par la porte!");

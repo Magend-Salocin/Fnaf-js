@@ -57,7 +57,9 @@ du tableau ne manque au dossier `audio/`.
       son rôle de coup de Foxy sur la porte, qui serait sinon en double.
 - [x] `foxy-retrait` n'est plus joué : il utilisait knock2.wav pour un retour
       hors champ et silencieux dans le jeu d'origine.
-- [ ] `run_fast` et `foxy-running` pointent sur le même running fast3.wav.
+- [x] `run_fast` et `foxy-running` pointent sur le même running fast3.wav.
+      Corrigé : `foxy-running` joue run.wav, Bonnie et Chica ne jouent plus
+      que deep steps.
 
 ## Priorité 1 — Images cachées (26 à produire)
 
@@ -133,6 +135,10 @@ Passer `realised` à `true` dans `random_events_data.json` au fur et à mesure.
 - [ ] Vérifier les 12 événements dont le `roomLabel` a été corrigé
       (JER-004, JER-005, JER-012, GAB-011, GAB-012, GAB-013, SUS-013,
       SUS-014, SUS-027, SUS-028, SUS-029, SUS-030)
+- [ ] Confirmer à l'écoute de FNAF 1 que Freddy joue running fast3 à chaque
+      déplacement, puis brancher `run_fast` dans `animatronic.js`
+- [ ] Confirmer que les pas de Chica ne s'entendent qu'à partir de CAM 6 et
+      ceux de Bonnie à partir de CAM 2A, puis ajouter cette condition
 - [ ] Vérifier le nouveau souffle statique de la tablette et les sons
       ambiants aléatoires des caméras (20 %) à l'oreille
 
