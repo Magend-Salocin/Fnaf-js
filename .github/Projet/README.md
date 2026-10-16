@@ -75,6 +75,7 @@ Suivi de ce qui est à produire.
 | [Anomalie.md](04%20-%20Production/Anomalie.md) | Tableau complet des anomalies : ID, salle, nuit, heure, chance, son, image |
 | [Tableau_Production_Regroupe_Par_Nuit.md](04%20-%20Production/Tableau_Production_Regroupe_Par_Nuit.md) | Le même tableau, regroupé par nuit |
 | `Tableau_Production_Regroupe_Par_Nuit.csv` / `.xls` | Sources éditables du tableau |
+| [Prompts_Images_Cachees.md](04%20-%20Production/Prompts_Images_Cachees.md) | Prompts d'édition d'image pour les images cachées manquantes |
 | [Rapport_Probabilites_Secrets.md](04%20-%20Production/Rapport_Probabilites_Secrets.md) | Analyse du moteur d'événements : quels secrets sont réellement trouvables |
 
 ### _editor_log
