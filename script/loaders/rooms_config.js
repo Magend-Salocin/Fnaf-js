@@ -80,6 +80,11 @@ function buildRoomsArrayFromConfig(config) {
       item.isOffice = true;
     }
 
+    // Étalonnage des sprites posés en calque (cf. script/core/sprite_atlas.js).
+    if (room.propGrade) {
+      item.propGrade = room.propGrade;
+    }
+
     return item;
   });
 }

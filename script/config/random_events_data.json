@@ -147,7 +147,10 @@
     "triggerStr": "Observer 5 s",
     "description": "Petite voiture rouge apparaît",
     "lore": "Jouet préféré de Fritz",
-    "image": "FRT-001.png",
+    "image": null,
+    "layers": [
+      { "sprite": "foxy/car_front", "x": 1070, "y": 702, "scale": 0.36 }
+    ],
     "sound": "toy_roll",
     "js": null,
     "terminal": "TOYS",

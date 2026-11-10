@@ -154,6 +154,10 @@ function preloadHiddenEventImages() {
     return;
   }
   Object.values(RANDOM_EVENTS).forEach(event => {
+    if (event.layers) {
+      event.layers.forEach(layer => SpriteAtlas.getSprite(layer.sprite));
+      return;
+    }
     if (!event.imagePath) return; // ex: GAB-006 n'a pas d'image
     const img = new Image();
     img.src = event.imagePath;
@@ -374,29 +378,43 @@ function updateGlobalEvents(deltaSeconds) {
 /* ============================================================
    RENDU (appelé depuis drawWithCamera, dans le repère room)
    ============================================================ */
-function drawActiveRandomEventOverlay(ctx, camera, room) {
-  const event = getActiveEventForCamera(camera.id);
-  let animatronic = "";
-  const roomData = (typeof rooms !== 'undefined') ? rooms[camera.id] : null;
-  if (roomData) {
-    const _animatronic = [];
-    if (roomData.b === 1) _animatronic.push('Bonnie');
-    if (roomData.c === 1) _animatronic.push('Chica');
-    if (roomData.f === 1) _animatronic.push('Freddy');
-    if (roomData.foxy === 1) _animatronic.push('Foxy');
-    if (_animatronic.length > 0) animatronic = _animatronic.join(', ');
-  }
+/**
+ * Noms des animatronics présents dans la salle, triés.
+ * On lit la salle de chaque animatronic plutôt que les drapeaux b/c/f de
+ * rooms : Foxy et Freddy partagent la clé "f" (Animatronic.getKey()).
+ * Foxy parti en course n'est plus dans Pirate Cove.
+ */
+function getAnimatronicNamesInRoom(cameraId) {
+  if (typeof animatronics === 'undefined') return "";
+  return animatronics
+    .filter(a => a.getRoomKey(a.currentRoomId) === cameraId)
+    .filter(a => !(a.foxyInstance && a.foxyInstance.getStatus().phase === FoxyPhase.COURSE))
+    .map(a => a.name)
+    .join(', ');
+}
 
-  // Si aucun événement actif ou si l'image n'est pas prête, ne rien dessiner
-  if (!event || !event.imagePath) return;
+/**
+ * @param {HTMLImageElement} baseImage image de base de la caméra, pour
+ *   convertir les coordonnées des calques (pixels de l'image de base).
+ */
+function drawActiveRandomEventOverlay(ctx, camera, room, baseImage) {
+  const event = getActiveEventForCamera(camera.id);
+  const animatronic = getAnimatronicNamesInRoom(camera.id);
+
+  if (!event || (!event.imagePath && !event.layers)) return;
 
   // Si l'événement a un animatronic associé, ne le dessine que si l'animatronic est présent dans la pièce (ex: GAB-001 ne se déclenche que si Bonnie est là).
   if (normalizeAnimatronicList(animatronic) !== normalizeAnimatronicList(event.animatronic)) return;
-  
 
+  // Calques prioritaires sur l'image pleine ; rien n'est dessiné tant que
+  // les ressources ne sont pas chargées.
   const img = loadedHiddenEventImages[event.id];
-  // Si l'image n'est pas encore chargée ou est invalide, ne rien dessiner
-  if (!img || !img.complete || img.naturalWidth === 0) return;
+  const useLayers = Boolean(event.layers);
+  if (useLayers) {
+    if (!baseImage || !SpriteAtlas.isReady(event.layers)) return;
+  } else if (!img || !img.complete || img.naturalWidth === 0) {
+    return;
+  }
 
   // Si l'événement a un son associé, le jouer (mais pas à chaque frame)
   if (event.sound) {
@@ -409,7 +427,16 @@ function drawActiveRandomEventOverlay(ctx, camera, room) {
     }
   }
 
-  //console.log(`[RandomEvents] Dessin de l'image cachée pour ${event.id} : ${event.imagePath}`);
+  if (useLayers) {
+    SpriteAtlas.drawLayers(ctx, event.layers, {
+      sourceX: Math.max(0, Math.min(room.cameraOffset, baseImage.width - room.width)),
+      scaleY: room.height / baseImage.height,
+      grade: room.propGrade,
+      cacheKey: camera.id
+    });
+    return;
+  }
+
   // Dessine l'image cachée par-dessus la pièce, alignée sur le
   // panoramique actuel de la pièce (même logique que drawRoom).
   const sourceX = Math.max(0, Math.min(room.cameraOffset, img.width - room.width));
@@ -431,7 +458,14 @@ const RandomEvents = {
   notifyUserInput,
   drawActiveOverlay: drawActiveRandomEventOverlay,
   resetForNewNight: resetRandomEventsForNewNight,
-  isTerminalCommandUnlocked
+  isTerminalCommandUnlocked,
+  // Debug : RandomEvents.forceTrigger('FRT-001') dans la console DevTools.
+  // L'événement reste affiché jusqu'à la fin de la nuit, pour régler un placement.
+  forceTrigger: (eventId) => {
+    if (!RANDOM_EVENTS[eventId]) return console.warn(`[RandomEvents] Événement inconnu : ${eventId}`);
+    triggerEvent(RANDOM_EVENTS[eventId]);
+    eventRuntimeState[eventId].remainingDisplay = Infinity;
+  }
 };
 
 // Rend RandomEvents accessible globalement

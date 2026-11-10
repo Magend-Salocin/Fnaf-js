@@ -495,7 +495,7 @@ function drawWithCamera(ctx, camera) {
 
 
       // Dessine les overlays d'événements aléatoires
-      RandomEvents.drawActiveOverlay(ctx, camera, room);
+      RandomEvents.drawActiveOverlay(ctx, camera, room, camPicture);
 
       // Dessine les parasites selon la configuration de la caméra
       const parasiteConfig = getParasiteConfigByRoom(roomKey);

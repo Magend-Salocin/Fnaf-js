@@ -121,3 +121,23 @@ function DebugDrawCurrentTurn() {
   if (nuitEl) nuitEl.textContent = `Nuit : ${_night}`;
   if (tourEl) tourEl.textContent = `Tour : ${currentTurn}`;
 }
+/**
+ * DEBUG - Affiche un événement en calques sur sa caméra pour régler son
+ * placement. À appeler depuis la console DevTools, nuit en cours :
+ *   testA()             FRT-001 à sa position actuelle
+ *   testA(1000, 660)    déplace le premier calque puis l'affiche
+ * Les valeurs ne sont pas sauvegardées : recopier la ligne affichée dans
+ * random_events_data.json.
+ */
+function testA(x, y, eventId = 'FRT-001') {
+  const event = RANDOM_EVENTS[eventId];
+  if (!event?.layers) return console.warn(`[testA] ${eventId} n'a pas de calques.`);
+
+  const layer = event.layers[0];
+  if (x !== undefined) layer.x = x;
+  if (y !== undefined) layer.y = y;
+
+  RandomEvents.forceTrigger(eventId);
+  activateCamera(event.cameraId);
+  console.log(`[testA] ${eventId} :`, JSON.stringify(layer));
+}

@@ -4,7 +4,7 @@
   "description": "FNAF Remake",
   "main": "main.js",
   "scripts": {
-    "start": "electron .",
+    "start": "node tools/start.js",
     "build": "electron-builder"
   },
   "build": {
@@ -19,6 +19,7 @@
   },
   "devDependencies": {
     "electron": "^43.4.0",
-    "electron-builder": "^26.15.3"
+    "electron-builder": "^26.15.3",
+    "pngjs": "^7.0.0"
   }
 }

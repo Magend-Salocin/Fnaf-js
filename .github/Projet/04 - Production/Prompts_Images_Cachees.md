@@ -2,7 +2,71 @@
 
 Prompts pour produire les images cachées manquantes listées dans `todolist.md` (Priorité 1).
 
-## Méthode
+Deux méthodes coexistent pendant la migration : les atlas de sprites (méthode cible, section suivante) et l'édition d'image complète (ancienne méthode, sections « Méthode » et suivantes).
+
+## Atlas de sprites (méthode cible)
+
+Au lieu d'éditer toute l'image de la caméra, on génère en une fois tous les objets d'une série sur une planche à fond transparent. Le jeu les pose ensuite en calques sur l'image de base. Avantages : un style homogène dans la série, aucun décalage de cadrage, des objets réutilisables d'une caméra à l'autre, et la possibilité de les déplacer ou de les animer.
+
+Les animatronics restent hors des atlas : les événements où ils agissent passeront par des découpes de leurs images existantes.
+
+### Procédure
+
+1. Coller le prompt de la série dans ChatGPT.
+2. Vérifier : vrai fond transparent (sinon redemander avec le fond vert `#00FF00`), variantes d'un même objet identiques, aucun texte, objets bien séparés. Pour corriger une seule cellule : `Keep the image exactly identical. Only redo cell N so that ...`.
+3. Déposer la planche dans `images/atlas/src/<serie>_props.png`, avec sa description `<serie>_props.sprites.json` (nom de l'atlas, grille, nom des sprites par cellule ; une cellule à plusieurs objets les nomme de gauche à droite).
+4. Lancer `node tools/atlas/slice_atlas.js images/atlas/src/<serie>_props.png`. Le script retire le halo de détourage et les poussières, puis produit `images/atlas/<atlas>.png` et `<atlas>.json`.
+5. Dans `random_events_data.json`, remplacer `image` par `layers` :
+   `"layers": [{ "sprite": "foxy/car_front", "x": 1070, "y": 702, "scale": 0.36 }]`.
+   `x`, `y` désignent le point de contact au sol (bas centre du sprite), en pixels de l'image de base (1600x719). Options : `"flip": true` (miroir), `"shadow": false` (pas d'ombre de contact).
+6. Si la salle n'a pas encore d'étalonnage, ajouter `propGrade` dans `rooms_config.json` (luminosité, saturation, flou, teinte) pour que les sprites prennent la lumière de la scène.
+7. Tester en jeu : DevTools, `RandomEvents.forceTrigger('<ID>')`, puis ouvrir la caméra.
+
+### Série Fritz / Foxy
+
+Planche : `images/atlas/src/foxy_props.png` (produite le 2026-11-10). Atlas : `foxy`.
+
+```
+Create a single sprite sheet image, 1536x1024, landscape, with a TRANSPARENT background (PNG with alpha). If transparency is not possible, use a perfectly flat pure green background (#00FF00) with no gradient, no texture and no shadow.
+
+Layout: a 4-column by 3-row grid of 12 cells. One object (or group) per cell, centered, filling about 80% of its cell. Leave generous empty space between objects. No grid lines, no borders, no labels, no text, no numbers anywhere.
+
+Subject: a set of old children's toys from a 1980s family pizzeria, all made by the same hand, as one coherent collection. Realistic 3D render, matte painted wood and slightly faded plastic, worn edges, chipped paint, a light layer of dust. Muted, slightly desaturated colors. No green on any object.
+
+Camera: every object is seen from the same high angle, about 35 degrees from above, like a ceiling-mounted security camera. Same lens, no perspective distortion.
+
+Lighting: identical for every object. Soft, neutral white light from the top left, gentle shading, no colored light, no rim light, no glow. No cast shadow on the background, no floor, no reflection.
+
+Cells, left to right, top to bottom:
+1. Small red toy car, die-cast metal, rounded 1960s style, seen from the side, facing left.
+2. The same red toy car, three-quarter front view.
+3. The same red toy car, three-quarter rear view, as if driving away.
+4. Miniature wooden pirate ship, about 30 cm long, upright, dark brown hull, off-white cloth sails, small black flag with no symbol.
+5. The same pirate ship lying on its side, as if dropped.
+6. Small wooden toy treasure chest, painted brown with brass-colored corners and a latch, closed.
+7. The same chest, lid slightly ajar.
+8. The same chest, lid fully open, empty inside.
+9. A small pile of toy treasure: plastic gold coins and a few colored plastic bead necklaces, as if spilled from the chest.
+10. A small plastic pirate captain figurine, child's toy, standing, hat and coat, painted with simple worn colors, facing the camera.
+11. Three separate wooden toy blocks, painted cubes: one red, one blue, one yellow, spaced apart, not touching.
+12. A tower of five stacked wooden toy blocks in red, blue and yellow, slightly uneven.
+```
+
+| Sprite | Événements |
+|---|---|
+| `car_side`, `car_front`, `car_rear` | FRT-001, 003, 009, 011, 016, 028 |
+| `boat`, `boat_fallen` | FRT-004, 012, 017, 024 |
+| `chest_closed`, `chest_ajar`, `chest_open` | FRT-005, 013, 019, 025 |
+| `treasure` | FRT-029 |
+| `captain` | FRT-015 |
+| `block_red`, `block_blue`, `block_yellow` | FRT-008, 014, 018, 027 (tour écroulée = cubes éparpillés) |
+| `block_tower` | FRT-026 |
+
+FRT-010, 020 et 030 (jouets alignés ou rangés) réutilisent les mêmes sprites avec d'autres placements. Les événements où Foxy agit (FRT-002, 007, 021 à 025) ne sont pas couverts par l'atlas.
+
+Migré en calques : FRT-001.
+
+## Méthode (ancienne : édition d'image complète)
 
 Chaque image cachée est une variante de l'image de base de la caméra : même cadrage, même éclairage, un seul détail changé. Il faut donc faire de l'édition d'image, pas de la génération libre.
 

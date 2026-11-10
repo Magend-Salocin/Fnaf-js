@@ -1,0 +1,10 @@
+{
+  "output": "foxy",
+  "columns": 4,
+  "rows": 3,
+  "cells": [
+    ["car_side"], ["car_front"], ["car_rear"], ["boat"],
+    ["boat_fallen"], ["chest_closed"], ["chest_ajar"], ["chest_open"],
+    ["treasure"], ["captain"], ["block_blue", "block_red", "block_yellow"], ["block_tower"]
+  ]
+}

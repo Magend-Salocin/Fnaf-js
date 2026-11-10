@@ -209,6 +209,7 @@ RANDOM_EVENTS_RAW.forEach(raw => {
     description: (raw.description) ? raw.description.trim() : "",
     lore: (raw.lore) ? raw.lore.trim() : "",
     imagePath: buildHiddenImagePath(raw.roomLabel, raw.image),
+    layers: Array.isArray(raw.layers) && raw.layers.length ? raw.layers : null, // sprites d'atlas, prioritaires sur image (cf. sprite_atlas.js)
     animatronic: (raw.animatronic) ? raw.animatronic.trim() : "",
     sound: (raw.sound) ? raw.sound.trim() : "",                      // nom logique passé à playSound()
     jsHandler: (raw.js) ? raw.js.trim() : "",                    // nom du handler custom (voir RANDOM_EVENT_HANDLERS)
