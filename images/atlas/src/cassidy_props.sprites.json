@@ -1,0 +1,9 @@
+{
+  "output": "cassidy",
+  "columns": 2,
+  "rows": 2,
+  "cells": [
+    ["face_flash"], ["face_glitch"],
+    ["plush_golden"], ["plush_golden_fallen"]
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "output": "susie",
+  "columns": 4,
+  "rows": 3,
+  "cells": [
+    ["bowl"], ["bowl_tipped"], ["leash_coiled"], ["leash_floor"],
+    ["collar"], ["pawprints"], ["ball"], ["ribbon"],
+    ["cupcake"], ["cupcake_front"], ["cupcake_side"], ["cupcake_cracked"]
+  ]
+}

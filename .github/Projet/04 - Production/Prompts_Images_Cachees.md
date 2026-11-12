@@ -66,6 +66,226 @@ FRT-010, 020 et 030 (jouets alignés ou rangés) réutilisent les mêmes sprites
 
 Migré en calques : FRT-001.
 
+### Choix communs aux séries suivantes
+
+- Les horloges de Gabriel sont générées sans aiguilles : le jeu les dessine, ce qui permet de les bloquer à 17h45, de les faire repartir ou tourner à l'envers.
+- La flamme de la bougie est un sprite séparé, pour la faire vaciller.
+- Les objets du décor existant (chaise reculée de GAB-001) et les événements où un animatronic agit ne sont pas couverts : un sprite généré ne correspondrait pas aux meubles ou aux personnages de l'image de base. Ils passeront par des découpes de l'image de base.
+- Jeremy a deux planches : une pour les dessins, une pour le matériel.
+- Le fond de secours est magenta (`#FF00FF`) pour Jeremy, parce que ses crayons comprennent un vert.
+
+### Série Gabriel / Freddy
+
+Planche : `images/atlas/src/gabriel_props.png`. Atlas : `gabriel`.
+
+```
+Create a single sprite sheet image, 1536x1024, landscape, with a TRANSPARENT background (PNG with alpha). If transparency is not possible, use a perfectly flat pure green background (#00FF00) with no gradient, no texture and no shadow.
+
+Layout: a 4-column by 3-row grid of 12 cells. One object per cell, centered, filling about 80% of its cell. Leave generous empty space between objects. No grid lines, no borders, no labels, no text, no numbers anywhere.
+
+Subject: leftovers of a child's birthday party in a 1980s family pizzeria, all from the same party, as one coherent collection. Realistic 3D render, paper, cardboard and plastic party supplies, slightly aged, a light layer of dust. Palette of faded yellow and warm orange, slightly desaturated. No green on any object.
+
+Camera: every object is seen from the same high angle, about 35 degrees from above, like a ceiling-mounted security camera, except the two clocks, seen straight on as if hanging on a wall. Same lens, no perspective distortion.
+
+Lighting: identical for every object. Soft, neutral white light from the top left, gentle shading, no colored light, no rim light. No cast shadow on the background, no floor, no reflection.
+
+Cells, left to right, top to bottom:
+1. A yellow helium party balloon, slightly faded, with its thin white string hanging straight down.
+2. The same yellow balloon, burst: a small shriveled piece of rubber on its string, lying flat.
+3. An empty round paper party plate, white with a thin yellow and orange border.
+4. A single thin birthday candle, white with an orange spiral stripe, standing in a small plastic holder, unlit, wick slightly blackened.
+5. A small candle flame alone, warm orange and yellow, teardrop shaped, about the size that would sit on the candle of cell 4. No glow around it.
+6. A wrapped gift box, yellow paper with orange polka dots, orange ribbon and bow, closed.
+7. The same gift box, opened: lid off and leaning against it, torn wrapping paper, the box empty.
+8. A slice of birthday cake on a paper plate like cell 3, yellow sponge, pale frosting, a little dry, a bite missing.
+9. A paper party cup knocked over on its side, with a small dried puddle of orange juice.
+10. Round analog wall clock, white face, black numbers 1 to 12, thin dark frame, NO hands at all.
+11. A second, different wall clock: square, wooden frame, cream face, black numbers 1 to 12, NO hands at all.
+12. A crumpled ball of the yellow and orange polka dot wrapping paper from cell 6.
+```
+
+| Sprite | Événements |
+|---|---|
+| `balloon`, `balloon_burst` | GAB-002, 014 (GAB-030 du dossier) |
+| `plate` | GAB-003 |
+| `candle`, `flame` | GAB-005 (GAB-028 du dossier) |
+| `gift_closed`, `gift_open`, `wrapping_paper` | GAB-007, 008, 015 (GAB-029 du dossier) |
+| `cake_slice` | GAB-009 |
+| `cup_spilled` | GAB-010 |
+| `clock`, `clock_alt` | GAB-021 à 025 |
+
+Non couverts : GAB-001 (chaise reculée, découpe), GAB-004, 011 à 015 (Freddy), GAB-006 (son).
+
+### Série Jeremy / Bonnie : dessins
+
+Planche : `images/atlas/src/jeremy_drawings.png`. Atlas : `jeremy_drawings`.
+
+```
+Create a single sprite sheet image, 1536x1024, landscape, with a TRANSPARENT background (PNG with alpha). If transparency is not possible, use a perfectly flat pure magenta background (#FF00FF) with no gradient, no texture and no shadow.
+
+Layout: a 4-column by 3-row grid of 12 cells. One sheet of paper per cell, centered, filling about 80% of its cell. Leave generous empty space between sheets. No grid lines, no borders, no labels. No written words or letters anywhere, including on the drawings.
+
+Subject: drawings by the same 7-year-old boy, on the same off-white letter-size paper, slightly yellowed and creased. Wax crayon drawings with thick, simple, wobbly strokes and bold colors, so each drawing stays recognizable when seen very small. Realistic photo-like render of the paper sheets.
+
+Camera: every sheet lies flat and is seen from the same high angle, about 35 degrees from above, like a ceiling-mounted security camera, except cell 12. Same lens.
+
+Lighting: identical for every sheet. Soft, neutral white light from the top left, no colored light. No cast shadow on the background, no table, no reflection.
+
+Cells, left to right, top to bottom:
+1. A blank sheet, nothing drawn on it.
+2. A big smiling yellow sun with rays, over a strip of green grass.
+3. A big brown bear standing, with a small black top hat and a black bow tie, smiling.
+4. A big blue-purple rabbit standing, with long ears and a red bow tie, holding a guitar.
+5. A simple house with a red roof, a door, two windows and a smoking chimney.
+6. A family holding hands: a tall man, a woman and a small boy, all smiling.
+7. Five small children standing in a row, holding hands, no faces drawn.
+8. A drawing of a smiling sun and a house, crossed out with large angry black scribbles.
+9. A sheet torn in two halves, the halves still touching, with half a smiling bear drawing on it.
+10. An unfinished drawing: only the outline of a rabbit's head, one ear missing, no color.
+11. A birthday cake drawing, half rubbed out with an eraser, gray smudges where the crayon was erased.
+12. The yellow sun drawing of cell 2, seen straight on and taped to a wall with two pieces of clear tape at the top corners.
+```
+
+### Série Jeremy / Bonnie : matériel
+
+Planche : `images/atlas/src/jeremy_props.png`. Atlas : `jeremy_props`.
+
+```
+Create a single sprite sheet image, 1536x1024, landscape, with a TRANSPARENT background (PNG with alpha). If transparency is not possible, use a perfectly flat pure magenta background (#FF00FF) with no gradient, no texture and no shadow.
+
+Layout: a 3-column by 2-row grid of 6 cells. One object per cell, centered, filling about 70% of its cell. Leave generous empty space between objects. No grid lines, no borders, no labels, no text, no numbers anywhere, including on the crayon box.
+
+Subject: a child's drawing supplies from the 1980s, all from the same set, as one coherent collection. Realistic 3D render, wax crayons with paper wrappers, worn and used, a light layer of dust. Slightly desaturated colors.
+
+Camera: every object lies flat and is seen from the same high angle, about 35 degrees from above, like a ceiling-mounted security camera. Same lens, no perspective distortion.
+
+Lighting: identical for every object. Soft, neutral white light from the top left, gentle shading, no colored light, no rim light. No cast shadow on the background, no floor, no reflection.
+
+Cells, left to right, top to bottom:
+1. An open cardboard box of wax crayons, plain yellow box with no writing, about ten used crayons of mixed colors inside.
+2. A worn pink rubber eraser, rounded corners, gray crayon smudges on one end.
+3. A single blue wax crayon lying on its side, tip worn down.
+4. A single red wax crayon snapped in two, the two pieces lying side by side and touching.
+5. A single green wax crayon lying on its side.
+6. A single yellow wax crayon lying on its side, worn very short.
+```
+
+| Sprite | Événements |
+|---|---|
+| `sheet_blank` | JER-001, 008, 020 |
+| `drawing_sun`, `drawing_sun_wall` | JER-002, 011, 005 |
+| `drawing_bear`, `drawing_rabbit`, `drawing_house`, `drawing_family`, `drawing_five_children` | JER-012, 013, 014, 015, 016 (et JER-010) |
+| `drawing_crossed`, `drawing_torn`, `drawing_unfinished`, `drawing_erased` | JER-017, 018, 019, 007 |
+| `crayon_box`, `eraser` | JER-003, 007 |
+| `crayon_blue`, `crayon_red_broken`, `crayon_green`, `crayon_yellow` | JER-021 à 025 |
+
+Non couverts : JER-004, 009, 026 à 030 (Bonnie), JER-006 (son).
+
+### Série Susie / Chica
+
+Planche : `images/atlas/src/susie_props.png`. Atlas : `susie`.
+
+```
+Create a single sprite sheet image, 1536x1024, landscape, with a TRANSPARENT background (PNG with alpha). If transparency is not possible, use a perfectly flat pure green background (#00FF00) with no gradient, no texture and no shadow.
+
+Layout: a 4-column by 3-row grid of 12 cells. One object per cell, centered, filling about 80% of its cell. Leave generous empty space between objects. No grid lines, no borders, no labels, no text, no numbers anywhere, including on the dog bowl and collar.
+
+Subject: belongings of a little girl and her small dog, lost in a 1980s family pizzeria, as one coherent collection. Realistic 3D render, worn and slightly aged, a light layer of dust. Muted colors, pale yellow tones. No green on any object.
+
+Camera: every object is seen from the same high angle, about 35 degrees from above, like a ceiling-mounted security camera. Same lens, no perspective distortion.
+
+Lighting: identical for every object. Soft, neutral white light from the top left, gentle shading, no colored light, no rim light. No cast shadow on the background, no floor, no reflection.
+
+Cells, left to right, top to bottom:
+1. A small dented stainless steel dog bowl, empty, upright.
+2. The same dog bowl tipped over on its side.
+3. A red nylon dog leash with a metal clasp, loosely coiled.
+4. The same red leash stretched out loosely on the ground, slightly curved, clasp at one end.
+5. A worn red dog collar with a small brass bell, buckle closed, lying in a loop.
+6. A short trail of five dusty paw prints of a small dog, gray dust only, walking diagonally away. No dog.
+7. A small yellow rubber ball, scuffed, a few bite marks.
+8. A pale yellow satin hair ribbon tied in a bow, a little frayed.
+9. A ceramic cupcake figurine, about 15 cm tall: pink frosting, pale yellow paper cup, two round black eyes and a small smile on the frosting, a single unlit candle on top. Three-quarter view.
+10. The same cupcake figurine facing the camera directly, looking straight at the viewer.
+11. The same cupcake figurine in profile, facing left.
+12. The same cupcake figurine in three-quarter view like cell 9, with a thin crack running down through the frosting and the paper cup.
+```
+
+| Sprite | Événements |
+|---|---|
+| `bowl`, `bowl_tipped` | SUS-001, 011 |
+| `leash_coiled`, `leash_floor` | SUS-002, 012 |
+| `collar` | SUS-013 |
+| `pawprints` | SUS-014 |
+| `ball` | SUS-015 |
+| `ribbon` | SUS-009 |
+| `cupcake`, `cupcake_front`, `cupcake_side`, `cupcake_cracked` | SUS-005, 016 à 020 (SUS-018 : le cupcake disparaît, aucun sprite) |
+
+Non couverts : SUS-004, 010, 026 à 030 (Chica), SUS-006 (description à écrire), SUS-008 et les sons de la cuisine (caméra audio uniquement, voir « Questions ouvertes »).
+
+### Série Cassidy
+
+Source : tableau « Série Event — CASSIDY / GOLDEN FREDDY » du `Dossier 05 - Cassidy.md`. Ces événements CAS-xxx n'existent pas encore dans `random_events_data.json`, qui ne contient que les sons CASSIDY-01 à 07 : la planche les prépare.
+
+Planche : `images/atlas/src/cassidy_props.png`. Atlas : `cassidy`.
+
+```
+Create a single sprite sheet image, 1536x1024, landscape, with a TRANSPARENT background (PNG with alpha). If transparency is not possible, use a perfectly flat pure green background (#00FF00) with no gradient, no texture and no shadow.
+
+Layout: a 2-column by 2-row grid of 4 cells. One element per cell, centered, filling about 70% of its cell. Leave generous empty space between elements. No grid lines, no borders, no labels, no text, no numbers anywhere.
+
+Subject: fragments of a forgotten memory in a 1980s family pizzeria. Realistic, slightly aged, muted colors, faded golden-yellow tones. No green on any element.
+
+Lighting: soft, neutral white light from the top left, no colored light. No cast shadow on the background, no floor, no reflection.
+
+Cells, left to right, top to bottom:
+1. The pale face of a little girl, about 8 years old, seen straight on, eyes closed, calm expression, short hair. The face fades softly into transparency at its edges, like a memory. Desaturated, almost gray, slightly blurred, faint horizontal video scan lines across it. Not gory, not monstrous.
+2. The same face, broken by a video glitch: cut into horizontal slices shifted left and right, some slices missing.
+3. A small worn plush teddy bear, faded golden yellow, about 20 cm tall, sitting upright, button eyes, a few loose threads. Seen from a high angle, about 35 degrees from above, like a ceiling-mounted security camera.
+4. The same golden plush bear lying on its side, seen from the same high angle.
+```
+
+| Sprite | Événements |
+|---|---|
+| `face_flash`, `face_glitch` | CAS-007 (visage d'enfant pendant une frame) |
+| `plush_golden`, `plush_golden_fallen` | CAS-014 (Foxy place cinq jouets au lieu de quatre : les quatre jouets de l'atlas `foxy` plus celui-ci) |
+
+L'ours doré est une proposition, le dossier ne précise pas le cinquième jouet. Il rappelle Golden Freddy sans le montrer. À valider avec le lore.
+
+Non couverts : CAS-006, 010, 016 (Golden Freddy, découpe des images `_GF` existantes), CAS-011 (cinquième chaise, découpe comme GAB-001), CAS-012 (Bonnie, avec le sprite `drawing_five_children` de Jeremy), CAS-001, 002, 005 et les événements terminal ou audio (effets en code).
+
+### Restaurant
+
+Source : section « Les Anomalies » du `Dossier 06 - Le Restaurant.md` (« Une photo apparaît », « Une cassette ressurgit »). Le dossier ne définit aucun événement : ces sprites serviront aux anomalies transversales à créer.
+
+Planche : `images/atlas/src/restaurant_props.png`. Atlas : `restaurant`.
+
+```
+Create a single sprite sheet image, 1536x1024, landscape, with a TRANSPARENT background (PNG with alpha). If transparency is not possible, use a perfectly flat pure green background (#00FF00) with no gradient, no texture and no shadow.
+
+Layout: a 3-column by 2-row grid of 6 cells. One object per cell, centered, filling about 70% of its cell. Leave generous empty space between objects. No grid lines, no borders, no labels, no text, no numbers anywhere, including on the cassette labels.
+
+Subject: forgotten archives of a 1980s family pizzeria, as one coherent collection. Realistic 3D render, worn, slightly yellowed, a light layer of dust. Muted, slightly desaturated colors. No green on any object.
+
+Camera: every object lies flat and is seen from the same high angle, about 35 degrees from above, like a ceiling-mounted security camera, except cell 3, seen straight on as if hanging on a wall. Same lens, no perspective distortion.
+
+Lighting: identical for every object. Soft, neutral white light from the top left, gentle shading, no colored light, no rim light. No cast shadow on the background, no floor, no reflection.
+
+Cells, left to right, top to bottom:
+1. A faded instant photo with a white border, showing a blurry children's birthday party in a pizzeria, warm colors, no recognizable faces.
+2. The same instant photo lying face down, plain white back, a corner slightly bent.
+3. A small wooden picture frame, hanging straight, holding the same faded party photo, glass slightly dusty.
+4. An audio cassette tape, black plastic, blank white label with no writing.
+5. The same cassette with its brown magnetic tape pulled out and tangled in loose loops.
+6. A black VHS videotape in a plain cardboard sleeve, blank white label with no writing.
+```
+
+| Sprite | Usage |
+|---|---|
+| `photo`, `photo_back`, `photo_framed` | « Une photo apparaît » |
+| `cassette`, `cassette_unspooled` | « Une cassette ressurgit » ; la bande sortie illustre une archive effacée par le système |
+| `vhs` | Archives vidéo (`CAM03_1989.DAT` du mini-jeu de maintenance) |
+
 ## Méthode (ancienne : édition d'image complète)
 
 Chaque image cachée est une variante de l'image de base de la caméra : même cadrage, même éclairage, un seul détail changé. Il faut donc faire de l'édition d'image, pas de la génération libre.

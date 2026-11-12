@@ -1,0 +1,10 @@
+{
+  "output": "gabriel",
+  "columns": 4,
+  "rows": 3,
+  "cells": [
+    ["balloon"], ["balloon_burst"], ["plate"], ["candle"],
+    ["flame"], ["gift_closed"], ["gift_open"], ["cake_slice"],
+    ["cup_spilled"], ["clock"], ["clock_alt"], ["wrapping_paper"]
+  ]
+}

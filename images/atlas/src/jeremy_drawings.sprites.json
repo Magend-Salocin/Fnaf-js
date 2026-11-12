@@ -1,0 +1,10 @@
+{
+  "output": "jeremy_drawings",
+  "columns": 4,
+  "rows": 3,
+  "cells": [
+    ["sheet_blank"], ["drawing_sun"], ["drawing_bear"], ["drawing_rabbit"],
+    ["drawing_house"], ["drawing_family"], ["drawing_five_children"], ["drawing_crossed"],
+    ["drawing_torn"], ["drawing_unfinished"], ["drawing_erased"], ["drawing_sun_wall"]
+  ]
+}
