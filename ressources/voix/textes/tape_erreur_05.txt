@@ -1,0 +1,59 @@
+!mode cassette
+
+[BRUIT DE DÉMARRAGE SYSTÈME]
+@machine Analyse des souvenirs résiduels.
+@machine Chargement des profils émotionnels.
+[BRUIT DE DONNÉES]
+@machine Profil : Gabriel.
+@machine Mémoire détectée.
+@machine Ancrage : anniversaire.
+[VALIDÉ]
+@machine Profil : Jeremy.
+@machine Mémoire détectée.
+@machine Ancrage : dessins.
+[VALIDÉ]
+@machine Profil : Susie.
+@machine Mémoire détectée.
+@machine Ancrage : animal.
+[VALIDÉ]
+@machine Profil : Fritz.
+@machine Mémoire détectée.
+@machine Ancrage : jeu.
+[VALIDÉ]
+[LONG SILENCE]
+@machine Recherche profil supplémentaire.
+@machine Analyse...
+@machine Analyse...
+@machine Erreur.
+[BRUIT D'ALERTE]
+@machine Aucun souvenir trouvé.
+[PAUSE]
+@machine Nouvelle méthode.
+@machine Recherche émotionnelle.
+[STATIQUE]
+@machine Colère.
+@machine Détectée.
+@machine Confusion.
+@machine Détectée.
+@machine Attachement.
+@machine Détecté.
+[PAUSE]
+@machine Souvenir associé...
+@machine Introuvable.
+[STATIQUE FORTE]
+@cassidy Je suis là.
+[COUPURE]
+[REPRISE]
+@machine Erreur.
+@machine Présence détectée.
+@machine Origine : inconnue.
+@machine Nom :
+@machine non disponible.
+[LONG SILENCE]
+@machine Création d'une nouvelle catégorie.
+[BRUIT D'ÉCRITURE]
+@machine Catégorie :
+@machine anomalie
+[PAUSE]
+@cassidy Ce n'est pas mon nom.
+[COUPURE BRUTALE]

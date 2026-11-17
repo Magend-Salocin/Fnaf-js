@@ -1,0 +1,30 @@
+!mode cassette
+
+[BRUIT DE PORTE DE CUISINE]
+[PAS SUR LE SOL]
+@marie Je comprends pas...
+[PAUSE]
+@marie La gamelle était encore déplacée ce matin.
+[BRUIT MÉTALLIQUE]
+@marie Elle était là.
+[OBJET POSÉ SUR UNE TABLE]
+@marie Exactement au milieu de la cuisine.
+[PAUSE]
+@marie Je l'ai rangée hier soir.
+@marie Comme tous les soirs.
+[BRUIT DE FRIGO AU LOIN]
+@marie Personne n'a accès ici pendant la nuit.
+[LONG SILENCE]
+@marie j'ai demandé aux autres employés.
+@marie Ils pensent tous que quelqu'un fait une blague.
+[PETIT RIRE NERVEUX]
+@marie Mais personne ne veut dire que c'est lui.
+[PAUSE]
+@marie Le plus étrange...
+[STATIQUE]
+@marie ...c'est qu'elle est toujours propre.
+[LONG SILENCE]
+@marie Comme si quelqu'un l'avait utilisée et remise à sa place.
+[BRUIT DE BANDE QUI SAUTE]
+@marie Je vais prévenir la direction.
+[FIN D'ENREGISTREMENT]

@@ -1,0 +1,20 @@
+!mode cassette
+
+[BRUIT DE BANDE MAGNÉTIQUE]
+@marie Bienvenue dans le protocole de fermeture des cuisines Fazbear.
+[BRUIT DE PAPIERS]
+@marie Avant de quitter votre poste, vous devez vérifier que toutes les surfaces ont été nettoyées.
+[PAUSE]
+@marie Tous les aliments doivent être rangés dans les zones prévues à cet effet.
+@marie Ne laissez jamais de nourriture ouverte après la fermeture.
+[BRUIT DE FOURNITURES POSÉES]
+@marie Les restes alimentaires peuvent attirer des nuisibles.
+@marie Vérifiez également sous les tables, derrière les équipements et près des zones de stockage.
+[PAUSE]
+@marie Si vous trouvez un objet qui n'appartient pas à la cuisine, ne le déplacez pas.
+@marie Signalez-le immédiatement à votre responsable.
+[STATIQUE LÉGÈRE]
+@marie Fazbear Entertainment rappelle que les cuisines doivent rester vides après les heures d'ouverture.
+[COURTE PAUSE]
+@marie Aucun personnel non autorisé ne doit rester dans cette zone.
+[FIN DE BANDE]

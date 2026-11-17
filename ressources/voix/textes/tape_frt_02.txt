@@ -1,0 +1,30 @@
+!mode cassette
+
+[BRUIT DE CAMÉRA DE SURVEILLANCE]
+[PORTE QUI S'OUVRE]
+@pierre Non...
+[PAUSE]
+@pierre Non, non, non...
+[BRUIT DE JOUETS QUI BOUGENT]
+@pierre Qui a sorti tous les jouets ?
+[LONG SILENCE]
+@pierre On avait tout rangé hier soir...
+[BRUIT D'OBJETS POSÉS SUR UNE TABLE]
+@pierre Les figurines étaient dans le coffre.
+@pierre Le bateau était sur l'étagère.
+@pierre Les accessoires étaient derrière le rideau.
+[PAUSE]
+@pierre Je sais que ce n'est pas un enfant. La salle est fermée depuis des heures.
+[BRUIT DE PAS]
+@pierre Quelqu'un aurait dû passer par ici...
+[STATIQUE]
+@pierre Mais le rapport de sécurité dit qu'il n'y a eu aucune ouverture.
+[PAUSE]
+@pierre Je vais refaire l'inventaire.
+[BRUIT D'UN PETIT OBJET QUI TOMBE]
+@pierre Très bien.
+@pierre Très drôle.
+@pierre Si quelqu'un est là...
+[LONG SILENCE]
+@pierre ...arrêtez de déplacer les jouets.
+[FIN D'ENREGISTREMENT]

@@ -1,0 +1,19 @@
+!mode cassette
+
+[GRÉSILLEMENT]
+[BRUIT DE FOND INCONNU]
+[STATIQUE]
+@cassidy ...Hello ?
+[PAUSE]
+[BRUIT DE BANDE]
+@cassidy Est-ce que quelqu'un...
+[COUPURE]
+[STATIQUE FORTE]
+[REPRISE AUDIO]
+@cassidy Vous m'entendez ?
+[LONG SILENCE]
+[BRUIT DE FREQUENCE]
+[VOIX INCOMPRÉHENSIBLE]
+[STATIQUE]
+@cassidy Je suis encore là.
+[COUPURE IMMÉDIATE]

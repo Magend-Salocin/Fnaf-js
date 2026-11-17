@@ -1,0 +1,31 @@
+!mode cassette
+
+[BRUIT DE PORTE QUI S'OUVRE]
+[AMBIANCE DU RESTAURANT AVANT OUVERTURE]
+[PAS RAPIDES]
+@pierre Attendez...
+[PAUSE]
+@pierre Non.
+[BRUIT DE PAPIERS]
+@pierre Ce n'est pas possible.
+[FEUILLES DÉPLACÉES]
+@pierre Il y a encore des dessins ce matin...
+[LONG SILENCE]
+@pierre Pourtant on les avait tous retirés.
+[BRUIT D'UNE FEUILLE POSÉE SUR UNE TABLE]
+@pierre j'ai moi-même vidé les tables hier soir.
+@pierre j'ai vérifié les murs.
+@pierre j'ai rangé les crayons.
+[PAUSE]
+@pierre Alors pourquoi...
+[STATIQUE]
+@pierre ...il y en a de nouveaux ?
+[BRUIT DE FEUILLE FROISSÉE]
+@pierre Ce n'est même pas le même papier.
+[RESPIRATION]
+@pierre Quelqu'un les a faits pendant la nuit.
+[LONG SILENCE]
+@pierre Mais il n'y avait personne.
+[BRUIT DE BANDE]
+@responsable Coupez l'enregistrement.
+[COUPURE]

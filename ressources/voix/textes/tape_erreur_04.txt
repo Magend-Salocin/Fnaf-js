@@ -1,0 +1,54 @@
+!mode cassette
+
+[BRUIT DE TERMINAL]
+[CLAVIER]
+@pierre Recherche des dossiers victimes associés à l'incident.
+[BRUIT DE DISQUE DUR]
+@pierre Premier dossier...
+@pierre Gabriel.
+[CLIC]
+@pierre Informations confirmées.
+[PAUSE]
+@pierre Deuxième dossier...
+@pierre Jeremy.
+@pierre Informations confirmées.
+[CLIC]
+@pierre Troisième dossier...
+@pierre Susie.
+@pierre Informations confirmées.
+[CLIC]
+@pierre Quatrième dossier...
+@pierre Fritz.
+@pierre Informations confirmées.
+[LONG SILENCE]
+[CLAVIER PLUS RAPIDE]
+@pierre Cinquième dossier...
+[PAUSE]
+@pierre Chargement...
+@pierre Échec.
+[BRUIT D'ERREUR]
+@pierre Nouvelle tentative.
+@pierre Échec.
+[STATIQUE]
+@pierre Le dossier existe.
+@pierre Mais aucune donnée associée.
+[PAUSE]
+@pierre Nom...
+[CLAVIER]
+@pierre Non renseigné.
+@pierre Âge...
+@pierre Non renseigné.
+@pierre Famille...
+@pierre Non renseigné.
+@pierre Responsable légal...
+@pierre Non renseigné.
+[LONG SILENCE]
+[BRUIT DE FEUILLE]
+@pierre Comment peut-on avoir un dossier...
+@pierre ...sans personne dedans ?
+[STATIQUE]
+@inconnu Supprimez cette entrée.
+@pierre Qui a demandé ça ?
+[PAUSE]
+@inconnu Elle n'était jamais censée être retrouvée.
+[COUPURE]

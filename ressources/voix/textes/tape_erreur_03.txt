@@ -1,0 +1,27 @@
+!mode cassette
+
+[BRUIT DE SALLE VIDE]
+[HORLOGE AU LOIN]
+@gardien Tu peux m'entendre ?
+[PAUSE]
+@gardien Je sais que tu es là.
+[STATIQUE]
+[BRUIT DE MICROPHONE]
+@gardien Je veux seulement comprendre.
+[LONG SILENCE]
+[PETIT BRUIT DE STATIQUE]
+[PAUSE]
+@gardien Qu'est-ce que tu veux ?
+[LONG SILENCE]
+[GRÉSILLEMENT]
+@cassidy Pourquoi...
+[COUPURE]
+[STATIQUE]
+[REPRISE AUDIO]
+@gardien Attendez...
+@gardien Ce n'est pas possible.
+[BRUIT DE CHAISE]
+@gardien Qui est là ?
+[STATIQUE VIOLENTE]
+@cassidy Tu es revenu.
+[COUPURE BRUTALE]

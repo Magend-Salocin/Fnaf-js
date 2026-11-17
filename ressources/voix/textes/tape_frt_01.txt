@@ -1,0 +1,17 @@
+!mode cassette
+
+[BRUIT DE BANDE MAGNÉTIQUE]
+@pierre Bonjour et bienvenue dans le protocole de fermeture de Pirate Cove. Avant de quitter votre poste, assurez-vous que tous les accessoires utilisés pendant les représentations sont correctement rangés.
+[PAUSE]
+@pierre Les jouets destinés aux enfants doivent être replacés dans les bacs prévus à cet effet. Les figurines pirates dans le coffre bleu. Les petits bateaux sur l'étagère du fond. Les accessoires de scène derrière le rideau.
+[BRUIT DE PAPIERS]
+@pierre Il est important de vérifier que rien ne reste sur le sol. Les enfants ont tendance à laisser leurs jouets partout après les spectacles.
+[PAUSE]
+@pierre Si un objet est retrouvé hors de son emplacement habituel, merci de le signaler dans le rapport de maintenance.
+[COURTE PAUSE]
+@pierre Ne replacez pas un objet dont l'origine n'est pas confirmée.
+[BRUIT DE STATIQUE]
+@pierre Certains accessoires peuvent appartenir à des collections privées.
+[PAUSE]
+@pierre Merci de votre coopération. Bonne fermeture.
+[FIN DE BANDE]

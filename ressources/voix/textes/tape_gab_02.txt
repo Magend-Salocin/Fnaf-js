@@ -1,0 +1,22 @@
+!mode cassette
+
+[BRUIT DE SALLE VIDE]
+@responsable Cette note concerne les employés chargés des animations avec Freddy.
+[PAUSE]
+@responsable Freddy Fazbear doit rester au centre de l'attention pendant les anniversaires.
+@responsable Il doit saluer les enfants.
+@responsable Participer aux chansons.
+@responsable Se positionner près de la scène pendant le moment du gâteau.
+[BRUIT DE MÉCANISME]
+@responsable Il est important que Freddy reste orienté vers les invités.
+[PAUSE]
+@responsable Les enfants doivent toujours avoir l'impression que Freddy les regarde.
+[STATIQUE]
+@responsable Si l'animatronique ne répond pas correctement, redémarrez le système.
+[LONG SILENCE]
+@responsable Ne laissez jamais Freddy seul sur scène après une représentation.
+[PAUSE]
+@responsable Un personnage Fazbear doit toujours être présent pendant une fête.
+[BRUIT DE BANDE]
+@responsable Même si la salle est vide.
+[COUPURE]

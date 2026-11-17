@@ -1,0 +1,52 @@
+!mode cassette
+
+[BRUIT DE SERVEURS]
+[CLAVIER]
+@memoire Initialisation du programme : reconstruction des souvenirs.
+[PAUSE]
+@memoire Objectif : Restaurer les profils émotionnels des victimes associées.
+[BRUIT DE DONNÉES]
+@memoire Chargement des fragments disponibles.
+@memoire Profil un.
+@memoire Ancrage trouvé.
+@memoire Souvenir : Anniversaire.
+[VALIDÉ]
+@memoire Profil deux.
+@memoire Ancrage trouvé.
+@memoire Souvenir : Création artistique.
+[VALIDÉ]
+@memoire Profil trois.
+@memoire Ancrage trouvé.
+@memoire Souvenir : Animal domestique.
+[VALIDÉ]
+@memoire Profil quatre.
+@memoire Ancrage trouvé.
+@memoire Souvenir : Jeu.
+[VALIDÉ]
+[LONG SILENCE]
+@memoire Profil cinq.
+@memoire Recherche d'ancrage.
+@memoire Recherche d'ancrage.
+@memoire Échec.
+[BRUIT D'ERREUR]
+@memoire Nouvelle tentative.
+@memoire Recherche dans les objets.
+@memoire Aucun objet associé.
+@memoire Recherche dans les archives familiales.
+@memoire Aucun résultat.
+@memoire Recherche dans les souvenirs des autres profils.
+[STATIQUE]
+@memoire Fragment détecté.
+[PAUSE]
+@memoire Origine : inconnue.
+@memoire Contenu : incomplet.
+[BRUIT DE LECTURE]
+@enfants Il manque quelqu'un.
+[COUPURE]
+@machine Correction.
+@machine Phrase invalide.
+@machine Suppression.
+[PAUSE]
+@machine Échec de suppression.
+[STATIQUE]
+@memoire Le souvenir refuse de disparaître.

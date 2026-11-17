@@ -18,9 +18,15 @@ Windows uniquement : la synthèse passe par les voix Windows. Aucune dépendance
 | `cassidy` | Cassidy | Hortense | +20 % de hauteur, graves coupés |
 | `machine` | Machine Fazbear : le système de nettoyage, qui corrige et supprime | Paul | Plus grave, numérique dégradé (8 kHz, 8 bits), modulation métallique, bande étroite |
 | `memoire` | Mémoire du bâtiment : le système qui restaure | Julie | Légèrement plus grave, numérique très dégradé (7 kHz, 7 bits), coupures et répétitions |
-| `gardien` | Le gardien (cassette 07) | Paul | Aucun |
+| `gardien` | Michael, le gardien (cassettes 03, 07) | Paul | Aucun |
+| `pierre` | Pierre D., employé de service | Paul | Bande magnétique |
+| `marie` | Marie L., employée de cuisine | Julie | Bande magnétique |
+| `responsable` | Le superviseur Fazbear | Paul | Plus grave, bande magnétique |
+| `inconnu` | La voix inconnue (cassette 04) | Paul | Très grave, étouffée |
+| `enfants` | Les quatre enfants ensemble (cassette 06) | Hortense | Chœur de quatre hauteurs |
+| `fritz_echo` | Le « Encore... » de FRT_03 | Hortense | Très grave, étouffée |
 
-Réglages dans `config.json`, section `voix`. Validés le 17/11/2026.
+Réglages dans `config.json`, section `voix`. `cassidy`, `machine`, `memoire` et `gardien` sont validés (17/11/2026), les autres sont à l'essai. Qui parle dans quel enregistrement : `.github/Projet/Next/Casting_Voix.md`.
 
 Les coupures et répétitions de `memoire` dépendent d'une graine (`glitch.graine`) : une même génération donne toujours le même résultat. Changer la graine déplace les accidents.
 
@@ -56,7 +62,9 @@ Parce que tu étais là.
 Deux pistes :
 
 - La voix avance dans le temps, réplique après réplique.
-- Un bruitage sonore (statique, pas, serveur...) se pose sur une piste à part, à l'instant où il apparaît dans le texte. Il ne retarde pas la voix : la réplique suivante démarre en même temps que lui. Pour qu'il passe avant la voix, lui donner une `avance` en secondes dans `config.json`.
+- Un bruitage sonore (statique, pas, serveur...) se pose sur une piste à part, à l'instant où il apparaît dans le texte.
+  - Suivi d'une réplique, il ne la retarde pas : la voix démarre en même temps que lui. Pour qu'il passe avant la voix, lui donner une `avance` en secondes dans `config.json`.
+  - Suivi d'un autre bruitage ou d'un silence, il se joue avant lui, avec un léger chevauchement (`enchainementBruitages` : 0.85 = le suivant démarre à 85 % du précédent).
 - Un bruitage de silence (`PAUSE`, `LONG SILENCE`, `COUPURE`...) fait avancer le temps : la voix attend.
 - Les bruitages baissent automatiquement pendant que quelqu'un parle (`attenuationBruitagesSousVoix`, 0.5 = moitié du volume).
 
@@ -76,8 +84,10 @@ Les bruitages sont reconnus par mot-clé (`STATIQUE`, `PAUSE`, `GOLDEN FREDDY`, 
 | Fichier | Usage |
 | --- | --- |
 | `appel_nuit5_A.txt`, `_B`, `_C` | Appel de la nuit 5, versions Conviction, Doute, Reconnaissance |
-| `tape_erreur_07.txt` | Cassette TAPE_ERREUR_07 : le gardien et Cassidy |
-| `tape_erreur_08.txt` | Cassette TAPE_ERREUR_08, fin Reconnaissance : la mémoire et Cassidy |
-| `tape_erreur_09.txt` | Cassette TAPE_ERREUR_09, fin Effacement : la machine et Cassidy |
+| `tape_*.txt` | Les 21 cassettes (ERREUR 01 à 09, FRT, GAB, JER, SUS 01 à 03) |
 
-Sources : `.github/Projet/Next/Appel_Nuit5.md` pour les appels, `ressources/Tape/TAPE_ERREUR_0x.txt` pour les cassettes. Les audios ne sont pas encore branchés dans le jeu.
+Sources : `.github/Projet/Next/Appel_Nuit5.md` pour les appels, `ressources/Tape/TAPE_*.txt` pour les cassettes. Qui parle dans quelle cassette : `.github/Projet/Next/Casting_Voix.md`.
+
+Les textes `tape_*.txt` font désormais foi pour l'audio. Une correction de réplique se fait ici, puis on régénère ; la transcription de `ressources/Tape/` est à reporter si elle sert encore à l'affichage.
+
+Les audios ne sont pas encore branchés dans le jeu, qui lit toujours les MP3 de `ressources/Tape/`.

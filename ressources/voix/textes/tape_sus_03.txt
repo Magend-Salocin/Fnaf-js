@@ -1,0 +1,25 @@
+!mode cassette
+
+[BRUIT DE STATIQUE]
+[AMBIANCE DE CUISINE FERMÉE]
+[HORLOGE AU LOIN]
+[BRUIT LÉGER MÉTALLIQUE]
+[ABOIEMENT LOINTAIN]
+[COUPURE AUDIO]
+[GRÉSILLEMENT]
+[REPRISE PARTIELLE]
+@responsable ...tu as enregistré ça ?
+[PAUSE]
+@marie Oui.
+@marie Je pensais que vous deviez être au courant.
+[STATIQUE]
+@responsable Non.
+[LONG SILENCE]
+@responsable Vous n'avez rien entendu.
+[BRUIT DE BANDE]
+@responsable Vous n'avez rien enregistré.
+[PAUSE]
+@responsable Cette bande n'existe pas.
+[GRÉSILLEMENT]
+@responsable Effacez cette bande.
+[COUPURE]

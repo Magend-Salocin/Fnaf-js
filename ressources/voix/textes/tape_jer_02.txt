@@ -1,0 +1,24 @@
+!mode cassette
+
+[BRUIT DE RESTAURANT VIDE]
+@responsable Petit rappel pour l'équipe de nuit.
+[PAUSE]
+@responsable Les feuilles laissées sur les tables après fermeture doivent être retirées.
+[BRUIT DE PAPIERS]
+@responsable Les crayons doivent retourner dans les boîtes de rangement.
+@responsable Les feutres doivent être comptés.
+@responsable Les dessins terminés doivent être placés dans les archives.
+[PAUSE]
+@responsable Nous avons remarqué plusieurs oublis ces dernières semaines.
+[BRUIT DE FEUILLES QUI BOUGENT]
+@responsable Certains employés laissent encore les activités en place jusqu'au lendemain.
+[SOUPIR]
+@responsable Le restaurant doit être prêt pour les prochains visiteurs.
+[PAUSE]
+@responsable Merci de vérifier chaque table.
+@responsable Y compris celles qui ne sont plus utilisées.
+[STATIQUE]
+@responsable Il n'est pas nécessaire de conserver chaque dessin.
+[LONG SILENCE]
+@responsable Merci.
+[FIN DE BANDE]

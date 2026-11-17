@@ -54,17 +54,28 @@ function splitDirections(text) {
 
 /* ---------- WAV ---------- */
 
+// PCM 16 ou 24 bits, mono ou stéréo (seul le canal gauche est gardé).
+// Une taille de données nulle ou trop grande (fichier écrit en flux) est ramenée à la fin du fichier.
 function readWav(file) {
   const buf = fs.readFileSync(file);
-  let offset = 12, rate = 0, channels = 1;
+  let offset = 12, rate = 0, channels = 1, bytes = 2;
   while (offset + 8 <= buf.length) {
     const id = buf.toString("ascii", offset, offset + 4);
-    const size = buf.readUInt32LE(offset + 4);
-    if (id === "fmt ") { channels = buf.readUInt16LE(offset + 10); rate = buf.readUInt32LE(offset + 12); }
+    let size = buf.readUInt32LE(offset + 4);
+    if (id === "fmt ") {
+      channels = buf.readUInt16LE(offset + 10);
+      rate = buf.readUInt32LE(offset + 12);
+      bytes = buf.readUInt16LE(offset + 22) / 8;
+    }
     if (id === "data") {
-      const frames = Math.floor(size / 2 / channels);
+      if (size === 0 || offset + 8 + size > buf.length) size = buf.length - offset - 8;
+      const frame = bytes * channels;
+      const frames = Math.floor(size / frame);
       const samples = new Float32Array(frames);
-      for (let i = 0; i < frames; i++) samples[i] = buf.readInt16LE(offset + 8 + i * channels * 2) / 32768;
+      for (let i = 0; i < frames; i++) {
+        const p = offset + 8 + i * frame;
+        samples[i] = bytes === 3 ? buf.readIntLE(p, 3) / 8388608 : buf.readInt16LE(p) / 32768;
+      }
       return { rate, samples };
     }
     offset += 8 + size + (size % 2);
@@ -155,8 +166,32 @@ function normalize(x, peakTarget) {
   return x;
 }
 
+const pitchShift = (x, k) => (k && k !== 1 ? resample(timeStretch(x, k), k) : x);
+
+// Superpose plusieurs copies de la voix, chacune à sa hauteur et avec un léger retard.
+function applyChoir(x, rate, voices) {
+  const layers = voices.map(v => ({ x: pitchShift(Float32Array.from(x), v.hauteur), offset: Math.round(rate * v.retard), level: v.niveau }));
+  const out = new Float32Array(Math.max(...layers.map(l => l.x.length + l.offset)));
+  for (const l of layers) for (let i = 0; i < l.x.length; i++) out[i + l.offset] += l.x[i] * l.level;
+  return out;
+}
+
+// Pleurage de bande magnétique : la vitesse de lecture ondule lentement.
+function applyTapeWow(x, rate, wow) {
+  const out = new Float32Array(x.length);
+  const depth = rate * wow.profondeur;
+  for (let i = 0; i < x.length; i++) {
+    const p = i - depth * (1 + Math.sin((2 * Math.PI * wow.frequence * i) / rate));
+    const j = Math.floor(p), f = p - j;
+    out[i] = j >= 0 ? (x[j] || 0) * (1 - f) + (x[j + 1] || 0) * f : 0;
+  }
+  return out;
+}
+
 function applyVoiceEffects(x, rate, fx, random) {
-  if (fx.hauteur && fx.hauteur !== 1) x = resample(timeStretch(x, fx.hauteur), fx.hauteur);
+  if (fx.choeur) x = applyChoir(x, rate, fx.choeur);
+  x = pitchShift(x, fx.hauteur);
+  if (fx.pleurage) x = applyTapeWow(x, rate, fx.pleurage);
   if (fx.echantillonnage) {
     const step = Math.max(1, Math.round(rate / fx.echantillonnage.frequence));
     const levels = 2 ** (fx.echantillonnage.bits - 1);
@@ -290,7 +325,13 @@ function assemble(segments, audio, config, reverse, breath) {
       const effect = renderSoundEffect(s.tag, config);
       if (effect.silence) { t += Math.round(rate * effect.silence); return; }
       fxClips.push({ pos: t, x: effect.clip });
-      t += Math.round(rate * effect.avance);
+      // Suivi d'une réplique : la voix démarre avec le bruitage.
+      // Suivi d'un autre bruitage ou d'un silence : on les enchaîne, avec un léger chevauchement.
+      const next = segments[i + 1];
+      const followedByVoice = next && next.type === "voix";
+      t += followedByVoice
+        ? Math.round(rate * effect.avance)
+        : Math.round(effect.clip.length * config.enchainementBruitages);
       return;
     }
     const profile = config.voix[s.voice];

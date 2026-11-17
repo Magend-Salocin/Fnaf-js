@@ -1,0 +1,20 @@
+!mode cassette
+
+[BRUIT DE BANDE MAGNÉTIQUE]
+@pierre Bonjour. Cet enregistrement concerne l'installation du concours de dessin organisé par Fazbear Entertainment.
+[BRUIT DE PAPIERS]
+@pierre Avant l'ouverture du restaurant, installez les tables d'activité dans la zone prévue.
+@pierre Chaque enfant doit recevoir : - une feuille blanche ; - des crayons de couleur ; - des feutres adaptés.
+[PAUSE]
+@pierre Les dessins terminés peuvent être affichés sur les panneaux prévus à cet effet.
+[BRUIT D'ACCROCHAGE]
+@pierre Assurez-vous que les noms et les dates soient correctement inscrits au dos des feuilles.
+[PAUSE]
+@pierre Les enfants aiment voir leurs créations exposées.
+@pierre Cette activité permet aux jeunes visiteurs de laisser une trace personnelle dans le restaurant.
+[STATIQUE LÉGÈRE]
+@pierre À la fin de chaque journée, les dessins doivent être triés.
+@pierre Les œuvres sélectionnées seront conservées dans les archives.
+[COURTE PAUSE]
+@pierre Les autres devront être retirées avant la fermeture.
+[FIN DE BANDE]
