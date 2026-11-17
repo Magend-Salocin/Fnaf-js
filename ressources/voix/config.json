@@ -5,6 +5,7 @@
   "silenceFin": 1.0,
   "pauseEntreSegments": 0.5,
   "niveauFinal": 0.9,
+  "attenuationBruitagesSousVoix": 0.5,
   "modes": {
     "inverse": { "souffle": 0.027, "souffleEndroit": 0.009 },
     "cassette": { "souffle": 0.008 }

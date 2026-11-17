@@ -246,46 +246,71 @@ function loadSound(file, rate) {
   return soundCache.get(file);
 }
 
+// Renvoie { silence } (secondes) ou { clip, avance } (avance : secondes dont le bruitage décale la voix).
 function renderSoundEffect(tag, config) {
   const rate = config.frequence;
   const upper = tag.toUpperCase();
   const rule = config.bruitages.find(b => upper.includes(b.motif));
   if (!rule) {
     console.warn(`  bruitage non associé, remplacé par un silence : [${tag}]`);
-    return new Float32Array(Math.round(rate * 0.5));
+    return { silence: 0.5 };
   }
-  if (rule.silence) return new Float32Array(Math.round(rate * rule.silence));
+  if (rule.silence) return { silence: rule.silence };
 
   const source = loadSound(rule.fichier, rate);
   const start = Math.round((rule.debut || 0) * rate);
   const clip = normalize(source.slice(start, start + Math.round(rule.duree * rate)), rule.niveau);
   const fade = Math.min(Math.round(rate * 0.03), Math.floor(clip.length / 2));
   for (let i = 0; i < fade; i++) { clip[i] *= i / fade; clip[clip.length - 1 - i] *= i / fade; }
-  return clip;
+  return { clip, avance: rule.avance || 0 };
 }
 
 /* ---------- Assemblage ---------- */
 
+// Baisse la piste de bruitages pendant que la voix parle.
+function duck(fx, voice, rate, amount) {
+  const release = Math.exp(-1 / (rate * 0.25));
+  let env = 0;
+  for (let i = 0; i < fx.length; i++) {
+    env = Math.max(Math.abs(voice[i]), env * release);
+    fx[i] *= 1 - amount * Math.min(1, env / 0.1);
+  }
+}
+
+// Deux pistes : la voix avance dans le temps, les bruitages se posent dessus
+// à l'instant où ils apparaissent dans le texte, sans retarder la voix.
 function assemble(segments, audio, config, reverse, breath) {
   const rate = config.frequence;
-  const parts = [new Float32Array(Math.round(rate * config.silenceDebut))];
-  const gap = new Float32Array(Math.round(rate * config.pauseEntreSegments));
+  const gap = Math.round(rate * config.pauseEntreSegments);
+  const voiceClips = [], fxClips = [];
+  let t = Math.round(rate * config.silenceDebut);
+
   segments.forEach((s, i) => {
-    if (s.type === "bruit") { parts.push(renderSoundEffect(s.tag, config)); return; }
+    if (s.type === "bruit") {
+      const effect = renderSoundEffect(s.tag, config);
+      if (effect.silence) { t += Math.round(rate * effect.silence); return; }
+      fxClips.push({ pos: t, x: effect.clip });
+      t += Math.round(rate * effect.avance);
+      return;
+    }
     const profile = config.voix[s.voice];
     const random = seededRandom((profile.effets.glitch?.graine || 1) + i);
     let x = applyVoiceEffects(Float32Array.from(audio.get(s.fichier)), rate, profile.effets, random);
     x = normalize(x, profile.niveau);
     if (reverse && s.reversed) x.reverse();
-    parts.push(x, gap);
+    voiceClips.push({ pos: t, x });
+    t += x.length + gap;
   });
-  parts.push(new Float32Array(Math.round(rate * config.silenceFin)));
 
-  const out = new Float32Array(parts.reduce((n, p) => n + p.length, 0));
-  let pos = 0;
-  for (const p of parts) { out.set(p, pos); pos += p.length; }
+  const end = Math.max(t, ...fxClips.map(c => c.pos + c.x.length)) + Math.round(rate * config.silenceFin);
+  const voice = new Float32Array(end), fx = new Float32Array(end);
+  for (const c of voiceClips) voice.set(c.x, c.pos);
+  for (const c of fxClips) for (let i = 0; i < c.x.length; i++) fx[c.pos + i] += c.x[i];
+  duck(fx, voice, rate, config.attenuationBruitagesSousVoix);
+
   const random = seededRandom(7);
-  for (let i = 0; i < out.length; i++) out[i] += (random() * 2 - 1) * breath;
+  const out = new Float32Array(end);
+  for (let i = 0; i < end; i++) out[i] = voice[i] + fx[i] + (random() * 2 - 1) * breath;
   return normalize(out, config.niveauFinal);
 }
 

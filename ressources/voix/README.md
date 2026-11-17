@@ -51,6 +51,15 @@ Cinquième profil. ... Recherche. ... Erreur.
 Parce que tu étais là.
 ```
 
+### Mixage
+
+Deux pistes :
+
+- La voix avance dans le temps, réplique après réplique.
+- Un bruitage sonore (statique, pas, serveur...) se pose sur une piste à part, à l'instant où il apparaît dans le texte. Il ne retarde pas la voix : la réplique suivante démarre en même temps que lui. Pour qu'il passe avant la voix, lui donner une `avance` en secondes dans `config.json`.
+- Un bruitage de silence (`PAUSE`, `LONG SILENCE`, `COUPURE`...) fait avancer le temps : la voix attend.
+- Les bruitages baissent automatiquement pendant que quelqu'un parle (`attenuationBruitagesSousVoix`, 0.5 = moitié du volume).
+
 Les bruitages sont reconnus par mot-clé (`STATIQUE`, `PAUSE`, `GOLDEN FREDDY`, `PAS LENTS`...), dans l'ordre de la liste : mettre les motifs les plus précis en premier (`STATIQUE FORTE` avant `STATIQUE`). Ils réutilisent les sons de `audio/`. Un bruitage sans correspondance devient un silence d'une demi-seconde et le générateur le signale.
 
 Écrire les mots en minuscules : certaines voix épellent les mots en majuscules.
