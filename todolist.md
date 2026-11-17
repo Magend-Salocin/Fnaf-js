@@ -123,9 +123,9 @@ Passer `realised` à `true` dans `random_events_data.json` au fur et à mesure.
 - [ ] `script/core/unused/analog_video_engine.js` et
       `script/core/unused/psychological_director.js` sont parqués hors du
       chargement : les brancher dans `index.html` ou les supprimer.
-- [ ] Custom Night : construire un vrai mode (écran de difficulté par
-      animatronic, nuit 7) ou retirer le libellé « Nuit Personnalisée Terminée »
-      (`script/config/translations.json`)
+- [x] Custom Night : décidé le 17/11/2026, pas de nuit 6 ni 7. Reste à
+      retirer le libellé « Nuit Personnalisée Terminée »
+      (`script/config/translations.json`). Voir `.github/Projet/Next/Bible.md`.
 
 ## Priorité 2 — Vérifications en jeu
 

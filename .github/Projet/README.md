@@ -42,6 +42,19 @@ Mécaniques de jeu : ce que fait le jeu, et pourquoi.
 | [Foxy/FOXY_DEBUG_GUIDE.md](01%20-%20Game%20Design/Foxy/FOXY_DEBUG_GUIDE.md) | Boutons de debug de Foxy, phases et agressivité |
 | [Foxy/FOXY_INTEGRATION_SUMMARY.md](01%20-%20Game%20Design/Foxy/FOXY_INTEGRATION_SUMMARY.md) | Ce que l'intégration de Foxy a créé et modifié |
 
+### Next
+
+Refonte du lore en cours. [Next/Bible.md](Next/Bible.md) fait foi sur tout le
+reste du lore, CANON_LOGS compris en cas de contradiction.
+[Next/Parcours_Enquete.md](Next/Parcours_Enquete.md) détaille, nuit par nuit,
+ce que le joueur trouve et comprend. [Next/Appel_Nuit5.md](Next/Appel_Nuit5.md)
+contient les textes de l'appel de Cassidy. [Next/Casting_Voix.md](Next/Casting_Voix.md)
+dit qui parle, avec quelle voix, dans quel enregistrement.
+[Next/Journal_Voix_Son.md](Next/Journal_Voix_Son.md) garde la trace des choix
+faits sur les voix et le son. [Next/En_Cours.md](Next/En_Cours.md) donne l'état
+d'avancement et la suite, à relire en reprenant le projet. Fichiers prévus : Mécaniques du lore,
+Tableau de production unique.
+
 ### 02 - Lore
 
 Contenu narratif : l'histoire, les personnages, les règles d'écriture.
