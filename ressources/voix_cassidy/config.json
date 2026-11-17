@@ -1,0 +1,16 @@
+{
+  "voix": "Microsoft Hortense Desktop",
+  "vitesse": "medium",
+  "hauteurSsml": "x-high",
+  "pauseTexte": "800ms",
+  "frequence": 22050,
+  "silenceDebut": 0.8,
+  "pauseEntreSegments": 0.5,
+  "decalageHauteur": 1.2,
+  "passeHaut": 150,
+  "niveauCrete": 0.9,
+  "souffle": {
+    "jeu": 900,
+    "endroit": 300
+  }
+}
