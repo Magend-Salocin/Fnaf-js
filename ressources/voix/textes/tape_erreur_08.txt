@@ -1,0 +1,51 @@
+!mode cassette
+!voix memoire
+
+[BRUIT DE SERVEUR]
+[HORLOGE INTERNE]
+Processus : réparation mémoire.
+[PAUSE]
+Analyse des profils existants.
+Gabriel. Statut : mémoire stable.
+Jeremy. Statut : mémoire stable.
+Susie. Statut : mémoire stable.
+Fritz. Statut : mémoire stable.
+[LONG SILENCE]
+Cinquième profil. ... Recherche. ... Erreur.
+[STATIQUE]
+Nouvelle méthode.
+Ne pas rechercher un souvenir.
+Rechercher une présence.
+[BRUIT DE DONNÉES]
+Présence trouvée.
+[PAUSE]
+Identité : inconnue.
+[LONG SILENCE]
+[BRUIT DE TERMINAL]
+Modification du fichier.
+Ancienne valeur : anomalie.
+Nouvelle valeur : enfant.
+[STATIQUE]
+@cassidy Pourquoi ?
+[PAUSE]
+Parce que tu étais là.
+[LONG SILENCE]
+@cassidy Vous m'avez oubliée.
+Oui.
+[PAUSE]
+Mais l'oubli n'efface pas l'existence.
+[BRUIT DE MÉMOIRE]
+Création d'un nouvel ancrage.
+Recherche objet associé. ... Échec.
+Recherche souvenir associé. ... Échec.
+Recherche émotion associée. ... Trouvé.
+[PAUSE]
+Émotion : colère. ... Peur. ... Solitude. ... Attachement.
+[STATIQUE LÉGÈRE]
+@cassidy Je ne veux plus être une erreur.
+Tu ne l'es plus.
+[BRUIT DE GOLDEN FREDDY]
+@cassidy Alors où est ma place ?
+[LONG SILENCE]
+Avec les autres.
+[COUPURE]

@@ -1,0 +1,43 @@
+!mode cassette
+
+[BRUIT DE CAMÉRA]
+[COULOIR VIDE]
+[PAS LENTS]
+@gardien Je sais que quelqu'un est là.
+[PAUSE]
+@gardien Je ne sais pas qui tu es.
+[STATIQUE]
+@gardien Mais tu essayes de me parler.
+[BRUIT DE TERMINAL]
+[CLAVIER]
+@gardien Tous les autres dossiers correspondent.
+@gardien Tous les autres enfants ont laissé une trace.
+[PAUSE]
+@gardien Mais toi ... Il n'y a rien.
+[LONG SILENCE]
+[BRUIT DE PARASITE]
+@cassidy Tu mens.
+@gardien Quoi ?
+[STATIQUE]
+@cassidy Vous dites tous ça.
+@cassidy Vous dites que vous allez vous souvenir.
+[PAUSE]
+@cassidy Puis vous oubliez.
+[BRUIT DE GLITCH]
+@gardien Je ne suis pas celui que tu crois.
+[LONG SILENCE]
+@cassidy Alors pourquoi as-tu son visage ?
+[COUPURE]
+[STATIQUE]
+[REPRISE]
+@cassidy Pourquoi personne ne se souvient de moi ?
+[PAUSE]
+[BRUIT DE RESPIRATION]
+@cassidy Les autres ont encore quelque chose.
+@cassidy Ils ont des endroits. Ils ont des objets. Ils ont des histoires.
+[STATIQUE]
+@cassidy Moi ... Il ne reste rien.
+[LONG SILENCE]
+@cassidy Alors je vais devenir quelque chose qu'ils ne pourront pas effacer.
+[BRUIT DE GOLDEN FREDDY]
+[COUPURE]

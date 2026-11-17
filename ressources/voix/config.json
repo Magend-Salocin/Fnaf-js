@@ -1,0 +1,84 @@
+{
+  "frequence": 22050,
+  "pauseTexte": "800ms",
+  "silenceDebut": 0.8,
+  "silenceFin": 1.0,
+  "pauseEntreSegments": 0.5,
+  "niveauFinal": 0.9,
+  "modes": {
+    "inverse": { "souffle": 0.027, "souffleEndroit": 0.009 },
+    "cassette": { "souffle": 0.008 }
+  },
+  "voix": {
+    "cassidy": {
+      "moteur": "sapi",
+      "nom": "Microsoft Hortense Desktop",
+      "vitesse": "medium",
+      "hauteurSsml": "x-high",
+      "niveau": 0.9,
+      "effets": { "hauteur": 1.2, "passeHaut": 150 }
+    },
+    "machine": {
+      "moteur": "winrt",
+      "nom": "Microsoft Paul",
+      "vitesse": 0.9,
+      "niveau": 0.85,
+      "effets": {
+        "hauteur": 0.88,
+        "echantillonnage": { "frequence": 8000, "bits": 8 },
+        "anneau": { "frequence": 45, "melange": 0.35 },
+        "passeHaut": 250,
+        "passeBas": 3400,
+        "grain": 0.004
+      }
+    },
+    "memoire": {
+      "moteur": "winrt",
+      "nom": "Microsoft Julie",
+      "vitesse": 1.0,
+      "niveau": 0.85,
+      "effets": {
+        "hauteur": 0.95,
+        "echantillonnage": { "frequence": 7000, "bits": 7 },
+        "passeHaut": 250,
+        "passeBas": 4000,
+        "glitch": { "coupure": 0.05, "repetition": 0.04, "graine": 1985 },
+        "grain": 0.005
+      }
+    },
+    "gardien": {
+      "moteur": "winrt",
+      "nom": "Microsoft Paul",
+      "vitesse": 1.0,
+      "niveau": 0.85,
+      "effets": { "passeHaut": 90 }
+    }
+  },
+  "bruitages": [
+    { "motif": "LONG SILENCE", "silence": 3 },
+    { "motif": "SILENCE", "silence": 2 },
+    { "motif": "PAUSE", "silence": 1 },
+    { "motif": "COUPURE", "silence": 0.3 },
+    { "motif": "REPRISE", "silence": 0.3 },
+    { "motif": "COULOIR VIDE", "silence": 1 },
+    { "motif": "STATIQUE VIOLENTE", "fichier": "audio/static.wav", "duree": 2, "niveau": 0.7 },
+    { "motif": "STATIQUE FORTE", "fichier": "audio/static.wav", "duree": 1.5, "niveau": 0.55 },
+    { "motif": "STATIQUE LÉGÈRE", "fichier": "audio/static.wav", "duree": 1, "niveau": 0.15 },
+    { "motif": "STATIQUE", "fichier": "audio/static.wav", "duree": 1, "niveau": 0.3 },
+    { "motif": "GOLDEN FREDDY", "fichier": "audio/garble2.wav", "duree": 3, "niveau": 0.6 },
+    { "motif": "SERVEUR", "fichier": "audio/BallastHumMedium2.wav", "duree": 2.5, "niveau": 0.35 },
+    { "motif": "DONNÉES", "fichier": "audio/COMPUTER_DIGITAL_L2076505.wav", "duree": 1.5, "niveau": 0.35 },
+    { "motif": "MÉMOIRE", "fichier": "audio/COMPUTER_DIGITAL_L2076505.wav", "duree": 1.5, "niveau": 0.35 },
+    { "motif": "HORLOGE", "fichier": "audio/BallastHumMedium2.wav", "duree": 1, "niveau": 0.2 },
+    { "motif": "TERMINAL", "fichier": "audio/blip3.wav", "duree": 0.2, "niveau": 0.45 },
+    { "motif": "CLAVIER", "fichier": "audio/COMPUTER_DIGITAL_L2076505.wav", "debut": 3, "duree": 1, "niveau": 0.3 },
+    { "motif": "CAMÉRA", "fichier": "audio/CAMERA_VIDEO_LOA_60105303.wav", "duree": 1.5, "niveau": 0.4 },
+    { "motif": "PAS LENTS", "fichier": "audio/deep steps.wav", "duree": 3, "niveau": 0.45 },
+    { "motif": "GLITCH", "fichier": "audio/static2.wav", "duree": 0.5, "niveau": 0.45 },
+    { "motif": "PARASITE", "fichier": "audio/static2.wav", "duree": 0.8, "niveau": 0.4 },
+    { "motif": "CRT", "fichier": "audio/static2.wav", "debut": 5, "duree": 1, "niveau": 0.4 },
+    { "motif": "RESPIRATION", "fichier": "audio/Vocals_Breaths_S_35972006.wav", "duree": 3.2, "niveau": 0.4 },
+    { "motif": "ALERTE", "fichier": "audio/error.wav", "duree": 0.3, "niveau": 0.5 },
+    { "motif": "ERREUR", "fichier": "audio/error.wav", "duree": 0.3, "niveau": 0.5 }
+  ]
+}

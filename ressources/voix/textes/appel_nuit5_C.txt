@@ -1,3 +1,6 @@
+!mode inverse
+!voix cassidy
+
 (Allô ?) ... Allô ?
 L'homme du téléphone ne t'appellera plus.
 Il parlait trop. Il disait toujours que tout irait bien.
