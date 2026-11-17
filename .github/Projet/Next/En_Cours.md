@@ -14,6 +14,10 @@
 | Casting des voix | [Casting_Voix.md](Casting_Voix.md) |
 | Générateur de voix, 3 appels et 21 cassettes générés | `tools/voix/`, `ressources/voix/`, [Journal_Voix_Son.md](Journal_Voix_Son.md) |
 | Affiche française de la nuit 5 déclarée dans `assets.json` | Non commité |
+| Carnet du développeur : procédures voix, images, sons, logs, événements | `04 - Production/Carnet_Developpeur.md` |
+| Atlas découpés : gabriel, jeremy_props, susie, cassidy, restaurant (en plus de foxy) | `images/atlas/` |
+| Cassettes générées branchées dans le jeu, appel de Cassidy en nuit 5 (choix de version provisoire) | `index.html`, `game_sounds.json`, `night.js` |
+| Vérificateur d'images `tools/check_assets.js` | Carnet, section 2 |
 
 ## 2. À valider
 
@@ -34,6 +38,12 @@
 8. Chèque de paie au nom de Mike Schmidt, retrait du libellé Custom Night.
 
 ## 4. Questions ouvertes
+
+- JER-021, JER-023, JER-025 : images dessinées sur le Supply Closet (`3_supply_closet/hidden/`), mais événements rattachés au West Hall depuis septembre. Elles ne s'affichent pas. Remettre le `roomLabel` à « Supply Closet », ou refaire les images sur le West Hall ?
+- `rooms_config.json` déclare `images/rooms/the_office/default.png`, absent du disque.
+- 22 images de `images/rooms/` ne sont utilisées nulle part (anciennes images remplacées par l'atlas de Foxy, essais `_event`, `_GF`...) : liste par `node tools/check_assets.js`. À trier : supprimer ou rebrancher.
+- Placement des sprites des nouveaux atlas sur leurs événements (`layers`) : coordonnées à caler salle par salle.
+- Planche `jeremy_drawings.png` à générer.
 
 - Qui sont les deux premiers enfants disparus un vendredi soir (affiche de la nuit 2) ?
 - Les transcriptions de `ressources/Tape/*.txt` servent-elles encore à l'affichage ? Si oui, y reporter les changements (étiquettes SUS au féminin, attributions du casting).

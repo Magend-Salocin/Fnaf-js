@@ -19,6 +19,8 @@ de tâches et des notes de travail, pas de la documentation.
 | La liste complète des anomalies à produire | [04 - Production/Anomalie.md](04%20-%20Production/Anomalie.md) |
 | Si un secret est trouvable en pratique | [04 - Production/Rapport_Probabilites_Secrets.md](04%20-%20Production/Rapport_Probabilites_Secrets.md) |
 | Comment éditer les logs du terminal | [_editor_log/README.md](_editor_log/README.md) |
+| Comment produire et brancher voix, images, sons, logs | [04 - Production/Carnet_Developpeur.md](04%20-%20Production/Carnet_Developpeur.md) |
+| Où en est le projet | [Next/En_Cours.md](Next/En_Cours.md) |
 | Ce qui reste à faire | [todolist.md](../../todolist.md) (racine du dépôt) |
 
 ## Table des matières
@@ -90,6 +92,7 @@ Suivi de ce qui est à produire.
 | `Tableau_Production_Regroupe_Par_Nuit.csv` / `.xls` | Sources éditables du tableau |
 | [Prompts_Images_Cachees.md](04%20-%20Production/Prompts_Images_Cachees.md) | Prompts d'édition d'image pour les images cachées manquantes |
 | [Rapport_Probabilites_Secrets.md](04%20-%20Production/Rapport_Probabilites_Secrets.md) | Analyse du moteur d'événements : quels secrets sont réellement trouvables |
+| [Carnet_Developpeur.md](04%20-%20Production/Carnet_Developpeur.md) | Procédures : générer les voix, produire les images et atlas, brancher sons, journaux, logs et événements |
 
 ### _editor_log
 
