@@ -90,4 +90,4 @@ Sources : `.github/Projet/Next/Appel_Nuit5.md` pour les appels, `ressources/Tape
 
 Les textes `tape_*.txt` font désormais foi pour l'audio. Une correction de réplique se fait ici, puis on régénère ; la transcription de `ressources/Tape/` est à reporter si elle sert encore à l'affichage.
 
-Les audios ne sont pas encore branchés dans le jeu, qui lit toujours les MP3 de `ressources/Tape/`.
+Branchement dans le jeu (17/11/2026) : les 19 cassettes déclarées (`index.html`, `game_sounds.json`) lisent `sorties/tape_*.wav`, et l'appel de la nuit 5 en français lit `sorties/appel_nuit5_{A,B,C}.wav` (`call_5_cassidy_*`). TAPE_ERREUR_08 et 09 attendent le système de fins.

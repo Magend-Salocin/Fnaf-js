@@ -110,8 +110,37 @@ class Night {
      */
     getPhoneCallSoundId() {
         const lang = window.selectedLanguage || window.FNAF_DEFAULT_LANGUAGE || 'fr';
+        // Nuit 5 : l'appel de Cassidy remplace celui de FNAF 1. Pas encore de version anglaise.
+        if (this.nightNumber === 5 && lang !== 'en') {
+            return `call_5_cassidy_${this.getNight5CallVersion()}`;
+        }
         const suffix = lang === 'en' ? '_en' : '';
         return `call_${this.nightNumber}${suffix}`;
+    }
+
+    /**
+     * private
+     *
+     * Version de l'appel de Cassidy : 'a' Conviction, 'b' Doute, 'c' Reconnaissance
+     * (cf. .github/Projet/Next/Appel_Nuit5.md).
+     *
+     * Provisoire : tant que les chaînes de découverte et l'écran de correction
+     * n'existent pas, l'avancée de l'enquête est estimée par la part des
+     * cassettes débloquées, ramenée aux 20 maillons prévus. Seuils : moins de
+     * 8 maillons, A ; de 8 à 14, B ; 15 et plus, C.
+     * Pour tester une version : window.FORCE_NIGHT5_CALL = 'c' dans les DevTools.
+     *
+     * @returns {'a'|'b'|'c'}
+     */
+    getNight5CallVersion() {
+        if (['a', 'b', 'c'].includes(window.FORCE_NIGHT5_CALL)) {
+            return window.FORCE_NIGHT5_CALL;
+        }
+        const total = TAPES_LIBRARY.length || 1;
+        const links = Math.round((Collectibles.getUnlockedTapes().length / total) * 20);
+        const version = links >= 15 ? 'c' : links >= 8 ? 'b' : 'a';
+        console.log(`[Night] Appel de Cassidy : version ${version.toUpperCase()} (${links} maillons estimés sur 20)`);
+        return version;
     }
 
     /**

@@ -1,0 +1,41 @@
+{
+  "image": "images/atlas/jeremy_props.png",
+  "sprites": {
+    "crayon_box": {
+      "x": 0,
+      "y": 0,
+      "w": 516,
+      "h": 516
+    },
+    "eraser": {
+      "x": 516,
+      "y": 0,
+      "w": 516,
+      "h": 516
+    },
+    "crayon_blue": {
+      "x": 1032,
+      "y": 0,
+      "w": 516,
+      "h": 516
+    },
+    "crayon_red_broken": {
+      "x": 0,
+      "y": 516,
+      "w": 516,
+      "h": 516
+    },
+    "crayon_green": {
+      "x": 516,
+      "y": 516,
+      "w": 516,
+      "h": 516
+    },
+    "crayon_yellow": {
+      "x": 1032,
+      "y": 516,
+      "w": 516,
+      "h": 516
+    }
+  }
+}

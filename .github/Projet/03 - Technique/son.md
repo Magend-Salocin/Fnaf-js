@@ -199,6 +199,18 @@ encore connue, il retombe sur la durée de référence de la nuit (206 s, 103 s,
 75 s, 65 s, 37 s, calées sur les appels anglais). Le téléphone du bureau
 (`hangupPhoneFromPanel`) permet de raccrocher avant la fin.
 
+Nuit 5 en français : l'appel de FNAF 1 est remplacé par l'appel de Cassidy,
+`call_5_cassidy_a`, `_b` ou `_c` (fichiers `ressources/voix/sorties/appel_nuit5_*.wav`).
+`getNight5CallVersion()` choisit la version. En attendant les chaînes de
+découverte, il estime l'enquête par la part des cassettes débloquées (ramenée
+à 20 maillons : moins de 8, A ; de 8 à 14, B ; 15 et plus, C). Pour forcer
+une version : `window.FORCE_NIGHT5_CALL = 'c'` dans les DevTools. En anglais,
+l'appel 5 de FNAF 1 reste joué tant que les versions anglaises n'existent pas.
+
+Les cassettes (`tape_*`) pointent sur `ressources/voix/sorties/tape_*.wav`,
+générées par `tools/voix/generer_voix.js`. Les MP3 de `ressources/Tape/` ne
+sont plus lus.
+
 ### Terminal
 
 Les sons du terminal sont déclarés dans une seule table, `TERMINAL_CUES`

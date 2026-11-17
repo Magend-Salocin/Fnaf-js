@@ -1,0 +1,29 @@
+{
+  "image": "images/atlas/cassidy.png",
+  "sprites": {
+    "face_flash": {
+      "x": 518,
+      "y": 0,
+      "w": 485,
+      "h": 472
+    },
+    "face_glitch": {
+      "x": 0,
+      "y": 0,
+      "w": 518,
+      "h": 475
+    },
+    "plush_golden": {
+      "x": 1003,
+      "y": 0,
+      "w": 400,
+      "h": 450
+    },
+    "plush_golden_fallen": {
+      "x": 1403,
+      "y": 0,
+      "w": 592,
+      "h": 370
+    }
+  }
+}

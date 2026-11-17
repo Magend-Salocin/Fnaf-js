@@ -1,0 +1,41 @@
+{
+  "image": "images/atlas/restaurant.png",
+  "sprites": {
+    "photo": {
+      "x": 1216,
+      "y": 0,
+      "w": 389,
+      "h": 406
+    },
+    "photo_back": {
+      "x": 823,
+      "y": 0,
+      "w": 393,
+      "h": 408
+    },
+    "photo_framed": {
+      "x": 0,
+      "y": 0,
+      "w": 382,
+      "h": 428
+    },
+    "cassette": {
+      "x": 485,
+      "y": 428,
+      "w": 408,
+      "h": 291
+    },
+    "cassette_unspooled": {
+      "x": 382,
+      "y": 0,
+      "w": 441,
+      "h": 422
+    },
+    "vhs": {
+      "x": 0,
+      "y": 428,
+      "w": 485,
+      "h": 365
+    }
+  }
+}

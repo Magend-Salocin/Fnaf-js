@@ -448,6 +448,27 @@
     "mixVolume": 1
   },
   {
+    "id": "call_5_cassidy_a",
+    "selector": ".call5-cassidy-a",
+    "category": "call",
+    "description": "Appel 5 de Cassidy, version Conviction",
+    "mixVolume": 1
+  },
+  {
+    "id": "call_5_cassidy_b",
+    "selector": ".call5-cassidy-b",
+    "category": "call",
+    "description": "Appel 5 de Cassidy, version Doute",
+    "mixVolume": 1
+  },
+  {
+    "id": "call_5_cassidy_c",
+    "selector": ".call5-cassidy-c",
+    "category": "call",
+    "description": "Appel 5 de Cassidy, version Reconnaissance",
+    "mixVolume": 1
+  },
+  {
     "id": "robot_voice",
     "selector": ".robot-voice",
     "category": "voice",
