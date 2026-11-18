@@ -1,6 +1,8 @@
 {
     "command": "LOST_OBJECTS",
+    "label": "rare",
     "markFound": "LOST_OBJECTS",
+    "minNight": 1,
     "type": "sequence",
     "steps": [
         {
@@ -16,6 +18,5 @@
             "flash": true,
             "flashDuration": 2000
         }
-    ],
-    "label": "rare"
+    ]
 }

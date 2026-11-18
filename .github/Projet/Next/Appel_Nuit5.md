@@ -162,5 +162,4 @@ Fichiers : `voiceover5_a`, `voiceover5_b`, `voiceover5_c`, plus leurs variantes 
 
 ## Points relevés dans les cassettes
 
-- TAPE_ERREUR_08 (« Reconnaissance ») et TAPE_ERREUR_09 (« Correction ») sont écrites comme des fins. Elles correspondent aux fins Reconnaissance et Effacement de la Bible. La fin Témoin n'a pas de cassette.
-- TAPE_ERREUR_08 attribue la dernière réplique (« Avec les autres. ») à une voix annotée « puppet ». La Bible réserve Charlie à la documentation : la voix doit rester une voix système, sans indice qui la désigne.
+- TAPE_ERREUR_08 et 09 sont remplacées par trois fins A, B, C : voir [Fins.md](Fins.md).

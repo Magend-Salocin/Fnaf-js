@@ -52,7 +52,7 @@ Refonte du lore en cours. [Next/Bible.md](Next/Bible.md) fait foi sur tout le
 reste du lore, CANON_LOGS compris en cas de contradiction.
 [Next/Parcours_Enquete.md](Next/Parcours_Enquete.md) détaille, nuit par nuit,
 ce que le joueur trouve et comprend. [Next/Appel_Nuit5.md](Next/Appel_Nuit5.md)
-contient les textes de l'appel de Cassidy. [Next/Casting_Voix.md](Next/Casting_Voix.md)
+contient les textes de l'appel de Cassidy, [Next/Fins.md](Next/Fins.md) ceux des trois fins. [Next/Casting_Voix.md](Next/Casting_Voix.md)
 dit qui parle, avec quelle voix, dans quel enregistrement.
 [Next/Journal_Voix_Son.md](Next/Journal_Voix_Son.md) garde la trace des choix
 faits sur les voix et le son. [Next/En_Cours.md](Next/En_Cours.md) donne l'état

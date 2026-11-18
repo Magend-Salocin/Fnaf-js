@@ -1,6 +1,8 @@
 {
     "command": "GUESTS",
+    "label": "rare",
     "markFound": "GUESTS",
+    "minNight": 2,
     "type": "sequence",
     "steps": [
         {
@@ -16,6 +18,5 @@
             "flash": true,
             "flashDuration": 3000
         }
-    ],
-    "label": "rare"
+    ]
 }

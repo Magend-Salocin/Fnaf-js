@@ -1,0 +1,45 @@
+!mode cassette
+!voix memoire
+
+[CARILLON DE SIX HEURES]
+[RESPIRATION]
+@gardien Six heures.
+[LONG SILENCE]
+@gardien C'est fini. ... C'est fini.
+[BRUIT DE CHAISE]
+@cassidy Tu t'en vas ?
+[STATIQUE]
+@gardien ... Il y a quelqu'un ?
+[PAUSE]
+@gardien Non. ... Je n'ai plus rien à faire ici.
+[BRUIT DE PAS QUI S'ÉLOIGNENT]
+[PORTE QUI SE FERME]
+[LONG SILENCE]
+Veilleur sorti du bâtiment.
+Reconstruction ... interrompue.
+[BRUIT DE DONNÉES]
+Salle principale. La fête est prête.
+@gabriel On attend encore quelqu'un.
+Couloir ouest. Une feuille sur la table.
+@jeremy J'ai dessiné tout le monde. ... Je crois.
+Cuisine. Une gamelle, encore pleine.
+@susie Je l'ai remplie. Pour quand il reviendra.
+Pirate Cove. Des jouets alignés.
+@fritz Un, deux, trois, quatre ... cinq ?
+[PAUSE]
+@fritz Non. ... Quatre.
+[STATIQUE]
+Cinquième profil. ... Recherche du nom.
+Le veilleur est parti avant la fin.
+Recherche ... abandonnée.
+[LONG SILENCE]
+@cassidy Tu as regardé. Tu as écouté.
+@cassidy Et tu ne m'as jamais demandé mon nom.
+[PAUSE]
+@cassidy Tu reviendras ?
+[LONG SILENCE]
+@machine Poste de veilleur : vacant.
+@machine Nouveau veilleur attendu lundi.
+[STATIQUE VIOLENTE]
+@cassidy C'est moi.
+[COUPURE]

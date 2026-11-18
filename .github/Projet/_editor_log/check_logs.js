@@ -237,6 +237,9 @@ function main() {
         if (entry.type === "sequence" && !Array.isArray(entry.steps)) {
             fail(file, "type sequence sans champ steps");
         }
+        if (entry.minNight !== undefined && ![1, 2, 3, 4, 5].includes(entry.minNight)) {
+            fail(file, `minNight « ${entry.minNight} » invalide : attendu un entier de 1 à 5`);
+        }
         if (typeof entry.minHour === "number" && !entry.beforeHour) {
             warn(file, "minHour sans beforeHour : le joueur n'aura aucun retour");
         }

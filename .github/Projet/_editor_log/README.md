@@ -46,6 +46,8 @@ Champs :
 - `command` — nom de la commande tapée par le joueur (majuscules).
 - `label` — optionnel, redevient le commentaire `/* ===== NOM (label) ===== */`.
 - `markFound` — `false` pour ne pas appeler `ctx.markFound`, sinon omis (utilise `command`).
+- `minNight` — nuit (1 à 5) à partir de laquelle un log de révélation est ouvert. Absent pour
+  un log de chaîne ou bonus, ouvert par une anomalie (`script/config/rewards_data.json`).
 - `minHour` / `beforeHour` — optionnel : verrouille la commande avant une heure donnée
   (comme `LOST`, qui n'affiche rien avant la fermeture).
 - `type` — `"text"` ou `"sequence"`.

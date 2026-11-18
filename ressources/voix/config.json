@@ -190,9 +190,81 @@
           "graine": 6
         }
       }
+    },
+    "gabriel": {
+      "moteur": "sapi",
+      "nom": "Microsoft Hortense Desktop",
+      "vitesse": "medium",
+      "hauteurSsml": "x-high",
+      "niveau": 0.8,
+      "effets": {
+        "hauteur": 1.08,
+        "passeHaut": 180,
+        "grain": 0.002
+      }
+    },
+    "jeremy": {
+      "moteur": "sapi",
+      "nom": "Microsoft Hortense Desktop",
+      "vitesse": "medium",
+      "hauteurSsml": "x-high",
+      "niveau": 0.8,
+      "effets": {
+        "hauteur": 1.15,
+        "passeHaut": 180,
+        "grain": 0.002
+      }
+    },
+    "fritz": {
+      "moteur": "sapi",
+      "nom": "Microsoft Hortense Desktop",
+      "vitesse": "medium",
+      "hauteurSsml": "x-high",
+      "niveau": 0.8,
+      "effets": {
+        "hauteur": 1.28,
+        "passeHaut": 180,
+        "grain": 0.002
+      }
+    },
+    "susie": {
+      "moteur": "sapi",
+      "nom": "Microsoft Hortense Desktop",
+      "vitesse": "medium",
+      "hauteurSsml": "x-high",
+      "niveau": 0.8,
+      "effets": {
+        "hauteur": 1.4,
+        "passeHaut": 180,
+        "grain": 0.002
+      }
     }
   },
   "bruitages": [
+    {
+      "motif": "CARILLON",
+      "fichier": "audio/chimes 2.wav",
+      "duree": 5,
+      "niveau": 0.5
+    },
+    {
+      "motif": "BOUGIES",
+      "fichier": "audio/hidden/whoosh.wav",
+      "duree": 1,
+      "niveau": 0.4
+    },
+    {
+      "motif": "PORTE QUI SE FERME",
+      "fichier": "audio/OVEN-DRA_1_GEN-HDF18119.wav",
+      "duree": 1.2,
+      "niveau": 0.4
+    },
+    {
+      "motif": "PAS QUI S",
+      "fichier": "audio/deep steps.wav",
+      "duree": 3,
+      "niveau": 0.35
+    },
     {
       "motif": "LONG SILENCE",
       "silence": 3

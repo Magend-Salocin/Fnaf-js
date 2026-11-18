@@ -133,22 +133,20 @@ const LoreCore = (() => {
        --------------------------------------------------------- */
 
     /**
-     * Indique si une commande liee a un evenement aleatoire a ete
-     * deverrouillee. Une commande sans evenement associe est toujours
-     * consideree comme ouverte.
+     * Indique si un log est ouvert, hors verrou horaire :
+     *  - un log de révélation s'ouvre par la nuit (champ minNight du log) ;
+     *  - un log de chaîne ou bonus s'ouvre quand une anomalie l'a donné
+     *    (cf. Rewards.isLogLocked(), script/core/rewards.js).
      */
-    function isUnlockedByEvent(cmd) {
-        if (typeof RandomEvents === "undefined" ||
-            typeof RandomEvents.isTerminalCommandUnlocked !== "function") {
-            return true;
-        }
-        return RandomEvents.isTerminalCommandUnlocked(cmd);
+    function isLogOpen(cmd) {
+        const data = typeof getLog === "function" ? getLog(cmd) : null;
+        if (data && typeof data.minNight === "number" && getCurrentNight() < data.minNight) return false;
+        return typeof Rewards === "undefined" || !Rewards.isLogLocked(cmd);
     }
 
     /**
      * Commandes reellement utilisables a cet instant : celles de la nuit
-     * courante, plus les logs dont le verrou horaire est passe et dont
-     * l'evenement de deverrouillage a ete vu.
+     * courante, plus les logs ouverts dont le verrou horaire est passe.
      * @returns {string[]} Noms de commandes, par ordre alphabetique
      */
     function listAvailableCommands() {
@@ -169,7 +167,7 @@ const LoreCore = (() => {
                 // Verrou horaire porte par le fichier de log lui-meme.
                 if (data && typeof data.minHour === "number" && hour < data.minHour) return;
 
-                if (!isUnlockedByEvent(cmd)) return;
+                if (!isLogOpen(cmd)) return;
 
                 available.add(cmd);
             });
@@ -289,19 +287,7 @@ const LoreCore = (() => {
             return buildHelp();
         }
 
-        const randomEventTerminalCommand =
-            typeof RANDOM_EVENTS !== "undefined" &&
-            Object.values(RANDOM_EVENTS).some(event =>
-                typeof event.terminal === "string" &&
-                event.terminal.toUpperCase() === cmd
-            );
-
-        if (
-            randomEventTerminalCommand &&
-            typeof RandomEvents !== "undefined" &&
-            typeof RandomEvents.isTerminalCommandUnlocked === "function" &&
-            !RandomEvents.isTerminalCommandUnlocked(cmd)
-        ) {
+        if (typeof LOG_FILES !== "undefined" && LOG_FILES.includes(cmd) && !isLogOpen(cmd)) {
             return {
                 text: "ACCES REFUSE. COMMANDE NON DEVERROUILLEE.",
                 glitch: false

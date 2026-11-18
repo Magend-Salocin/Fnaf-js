@@ -2,7 +2,7 @@
  * Validateur de config — audite au démarrage les données chargées depuis
  * script/config/*.json et journalise (console.warn) toute incohérence :
  * IDs dupliqués, salle non mappée à une caméra existante, référence
- * audio/journal/cassette/terminal invalide.
+ * audio invalide, réserve de récompenses incohérente.
  *
  * Ne bloque jamais le jeu : sert uniquement à repérer une erreur de
  * saisie dans les fichiers de données avant qu'elle ne cause un bug
@@ -58,35 +58,42 @@
     });
   }
 
-  // 4. Commandes terminal référencées par les événements présentes dans
-  //    LOG_FILES (donc avec un fichier ressources/logs/<CMD>.json).
-  if (typeof RANDOM_EVENTS_RAW !== 'undefined' && typeof LOG_FILES !== 'undefined') {
+  // 4. Les récompenses ne sont plus portées par les événements (cf.
+  //    script/core/rewards.js) : un champ terminal/journal/tape renseigné
+  //    serait ignoré par le moteur.
+  if (typeof RANDOM_EVENTS_RAW !== 'undefined') {
     RANDOM_EVENTS_RAW.forEach(raw => {
-      if (raw.terminal && !LOG_FILES.includes(raw.terminal.toUpperCase())) {
-        report(`Événement "${raw.id}" : commande terminal "${raw.terminal}" absente de LOG_FILES (aucun ressources/logs/${raw.terminal}.json).`);
-      }
+      ['terminal', 'journal', 'tape'].forEach(field => {
+        if (raw[field]) {
+          report(`Événement "${raw.id}" : champ ${field} "${raw[field]}" ignoré. Les récompenses se déclarent dans rewards_data.json.`);
+        }
+      });
     });
   }
 
-  // 5. Journaux référencés par les événements présents dans
-  //    journals_data.json.
-  if (typeof RANDOM_EVENTS_RAW !== 'undefined' && typeof JOURNALS_LIBRARY !== 'undefined') {
-    const validJournalCodes = new Set(JOURNALS_LIBRARY.map(j => j.code));
-    RANDOM_EVENTS_RAW.forEach(raw => {
-      if (raw.journal && !validJournalCodes.has(raw.journal)) {
-        report(`Événement "${raw.id}" : journal "${raw.journal}" absent de script/config/journals_data.json.`);
-      }
-    });
-  }
+  // 5. Réserves et chaînes (rewards_data.json) : chaque code existe dans son
+  //    catalogue, chaque événement de chaîne existe.
+  if (typeof REWARDS_DATA !== 'undefined') {
+    const catalogs = {
+      tape: new Set((typeof TAPES_LIBRARY !== 'undefined' ? TAPES_LIBRARY : []).map(t => t.code)),
+      journal: new Set((typeof JOURNALS_LIBRARY !== 'undefined' ? JOURNALS_LIBRARY : []).map(j => j.code)),
+      log: new Set(typeof LOG_FILES !== 'undefined' ? LOG_FILES : [])
+    };
+    const eventIds = new Set((typeof RANDOM_EVENTS_RAW !== 'undefined' ? RANDOM_EVENTS_RAW : []).map(raw => raw.id));
 
-  // 6. Cassettes référencées par les événements présentes dans
-  //    tapes_data.json.
-  if (typeof RANDOM_EVENTS_RAW !== 'undefined' && typeof TAPES_LIBRARY !== 'undefined') {
-    const validTapeCodes = new Set(TAPES_LIBRARY.map(t => t.code));
-    RANDOM_EVENTS_RAW.forEach(raw => {
-      if (raw.tape && !validTapeCodes.has(raw.tape)) {
-        report(`Événement "${raw.id}" : cassette "${raw.tape}" absente de script/config/tapes_data.json.`);
-      }
+    Object.entries(REWARDS_DATA.pools).forEach(([child, pool]) => {
+      pool.forEach(reward => {
+        if (!catalogs[reward.kind]?.has(reward.code)) {
+          report(`Réserve ${child} : ${reward.kind} "${reward.code}" inconnu.`);
+        }
+      });
+    });
+    REWARDS_DATA.chains.forEach(chain => {
+      if (!catalogs.log.has(chain.log)) report(`Chaîne ${chain.name} : log "${chain.log}" inconnu.`);
+      if (!catalogs.tape.has(chain.finalTape)) report(`Chaîne ${chain.name} : cassette "${chain.finalTape}" inconnue.`);
+      [chain.finalEvent, ...(chain.openEvents || [])].forEach(id => {
+        if (id && !eventIds.has(id)) report(`Chaîne ${chain.name} : événement "${id}" inexistant.`);
+      });
     });
   }
 

@@ -807,6 +807,14 @@
         });
         editor.appendChild(fieldRow("Type de réponse", typeSelect));
 
+        // minNight : nuit d'ouverture d'un log de révélation (vide = log ouvert par une anomalie)
+        const minNightInput = document.createElement("input");
+        minNightInput.type = "number";
+        minNightInput.min = "1";
+        minNightInput.max = "5";
+        minNightInput.value = entry.minNight ?? "";
+        editor.appendChild(fieldRow("Nuit d'ouverture (vide si ouvert par une anomalie)", minNightInput));
+
         // minHour gate
         const gateRow = document.createElement("div");
         gateRow.className = "checkline";
@@ -986,6 +994,7 @@
         saveBtn.addEventListener("click", () => saveEntry(name, {
             label: labelInput.value.trim() || undefined,
             markFound: mfCheck.checked ? name : false,
+            minNight: minNightInput.value === "" ? undefined : Number(minNightInput.value),
             minHour: gateCheck.checked ? Number(minHourInput.value) : undefined,
             beforeHour: gateCheck.checked ? { text: beforeText.value, glitch: beforeGlitch.checked } : undefined,
             ...bodyWrap._collect()
@@ -1033,9 +1042,9 @@
         const night = state.nights[state.currentNight];
         const clean = { command: name, ...patch };
         Object.keys(clean).forEach(k => clean[k] === undefined && delete clean[k]);
-        // preserve key order: command, label, markFound, minHour, beforeHour, type, text/glitch/steps
+        // preserve key order: command, label, markFound, minNight, minHour, beforeHour, type, text/glitch/steps
         const ordered = {};
-        ["command", "label", "markFound", "minHour", "beforeHour", "type", "text", "glitch", "steps"]
+        ["command", "label", "markFound", "minNight", "minHour", "beforeHour", "type", "text", "glitch", "steps"]
             .forEach(k => { if (clean[k] !== undefined) ordered[k] = clean[k]; });
 
         night.entries[name] = ordered;

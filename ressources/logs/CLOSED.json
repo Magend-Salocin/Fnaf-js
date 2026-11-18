@@ -1,6 +1,8 @@
 {
     "command": "CLOSED",
+    "label": "très rare",
     "markFound": "CLOSED",
+    "minNight": 3,
     "type": "sequence",
     "steps": [
         {
@@ -78,6 +80,5 @@
             "glitch": true,
             "flash": false
         }
-    ],
-    "label": "très rare"
+    ]
 }

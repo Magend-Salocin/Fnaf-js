@@ -11,8 +11,18 @@ Vue générée le 18/11/2026 par `node tools/vues_evenements.js` à partir des J
 | Cassette, journal, log bonus | Chaque anomalie vue d'un enfant donne la prochaine récompense de sa réserve, si sa nuit minimale est atteinte |
 | Log de chaîne | Première anomalie vue de l'enfant. Cassidy : une des traces du cinquième enfant (`openEvents`) |
 | Cassette de fin de chaîne | L'événement de fin de chaîne, une fois le log de chaîne lu |
-| Log de révélation | Ouvert par la nuit (champ `minNight` des logs, à coder) |
-| Journal garanti | `ensureNightJournals()`, qui pioche dans les réserves |
+| Log de révélation | Ouvert par la nuit : champ `minNight` du log |
+| Journal garanti | `ensureNightJournals()`. Les réserves sautent ensuite les journaux déjà donnés |
+
+## Logs de révélation par nuit
+
+| Nuit | Logs ouverts |
+| --- | --- |
+| 1 | ARCHIVE, CAMLOG, LOGS, LOST_OBJECTS, STAFF |
+| 2 | DRAWINGS, GUESTS, PARTY, PETS, TABLES, TOYS |
+| 3 | CLOSED, KITCHEN, LOST, LOST001, REPORT_89 |
+| 4 | CLEANING, DELETE, ROOT, SUDO, USER |
+| 5 | RECOVER, WHOAMI |
 
 ## Anomalies et récompenses par nuit
 

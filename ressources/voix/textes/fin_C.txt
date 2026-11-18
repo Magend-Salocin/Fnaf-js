@@ -1,0 +1,72 @@
+!mode cassette
+!voix memoire
+
+[CARILLON DE SIX HEURES]
+[BRUIT DE SERVEUR]
+Six heures.
+Le veilleur est toujours dans le bâtiment.
+[PAUSE]
+Anomalies conservées. ... Chaînes complètes.
+Lancement de la restauration.
+[BRUIT DE DONNÉES]
+Lecture d'un fragment. Vingt-six juin, mille neuf cent quatre-vingt-cinq.
+[BRUIT DE BANDE]
+@pierre Liste des invités.
+@pierre Gabriel. Jeremy. Susie. Fritz.
+[PAUSE]
+@pierre Il manque un nom.
+[COUPURE]
+Fragment incomplet.
+Ajout d'une ligne.
+[BRUIT D'ÉCRITURE]
+@machine Ligne sans nom. ... Suppression.
+Refusé.
+@machine Motif ?
+Parce qu'elle était là.
+[LONG SILENCE]
+Cinquième profil restauré.
+Nom : non renseigné.
+Statut : présente.
+[STATIQUE LÉGÈRE]
+@cassidy Tu ne m'as pas effacée.
+@gardien Non.
+@cassidy Tu n'es pas lui.
+[PAUSE]
+@gardien Non. ... Je ne suis pas lui.
+@cassidy Je l'ai attendu si longtemps. ... Je me suis trompée de visage.
+[PAUSE]
+@gardien Comment tu t'appelles ?
+[LONG SILENCE]
+@cassidy Je ne sais plus.
+[PAUSE]
+@cassidy Ce n'est pas grave. ... Tu as demandé.
+[BRUIT DE TABLES DÉPLACÉES]
+Salle principale.
+@gabriel Il y a une chaise de plus.
+@jeremy Il y a quelqu'un de plus sur mon dessin. ... Je ne l'ai pas effacé.
+@susie J'ai gardé une part. ... Je ne savais pas pour qui.
+@fritz Cinq. ... Il y en a cinq.
+[PAUSE]
+@enfants On ne se souvient pas de toi.
+[LONG SILENCE]
+@enfants Mais il y a ta place.
+[CHAISE TIRÉE]
+@cassidy Je peux m'asseoir ?
+@gabriel C'est mon anniversaire. ... Tu peux rester.
+@gabriel On peut commencer, maintenant. Tout le monde est là.
+[MUSIQUE D'ANNIVERSAIRE]
+[RIRE D'ENFANTS]
+[BOUGIES SOUFFLÉES]
+[LONG SILENCE]
+Fin de la fête.
+Durée : huit ans, quatre mois, dix-huit jours.
+Scène principale. ... Plus personne n'attend.
+Les invités peuvent partir.
+[PAUSE]
+@cassidy Tu peux partir aussi.
+@cassidy Je ne te regarde plus.
+[PAUSE]
+@cassidy J'ai une place.
+[STATIQUE LÉGÈRE]
+Dossier cinq. ... Conservé.
+[FIN D'ENREGISTREMENT]

@@ -1,6 +1,8 @@
 {
     "command": "CAMLOG",
+    "label": "rare",
     "markFound": "CAMLOG",
+    "minNight": 1,
     "type": "sequence",
     "steps": [
         {
@@ -22,6 +24,5 @@
             "flash": true,
             "flashDuration": 1000
         }
-    ],
-    "label": "rare"
+    ]
 }

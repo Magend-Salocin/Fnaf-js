@@ -159,7 +159,7 @@ Utiliser le skill `/ecrire-log <COMMANDE>`. Référence : `02 - Lore/CANON_LOGS.
    ```bash
    node ".github/Projet/_editor_log/check_logs.js"
    ```
-4. Si un événement débloque la commande, renseigner son champ `terminal`.
+4. Log de révélation : renseigner `minNight` (nuit d'ouverture, 1 à 5). Log de chaîne ou bonus : le déclarer dans `script/config/rewards_data.json`.
 
 ## 5. Événements cachés
 

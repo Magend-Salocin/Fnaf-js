@@ -17,7 +17,7 @@ Copier la structure d'un événement existant de la même série. Valeurs reconn
 - `triggerStr` : `Observer`, `Observer 8 s`, `Écoute`, `Écoute 10 s`, `Retour caméra`, `Retour écoute`, `Silence`, `Heure` (voir `parseTrigger()`).
 - `hourStr` : `Toute nuit`, `02h00–03h00`, `04h`... (voir `parseHourRange()`).
 - `sound` : un id de `game_sounds.json`. `laugh_girl1` signale un son provisoire.
-- `journal`, `tape`, `terminal` : un code de `journals_data.json`, de `tapes_data.json`, ou une commande de `logs_database.json`. Sinon `null`.
+- `journal`, `tape`, `terminal` : toujours `null`. Un événement ne porte plus sa récompense : il donne la prochaine récompense de la réserve de son enfant, déduit du préfixe de l'id (`script/config/rewards_data.json`, principe dans `.github/Projet/Next/Parcours_Enquete.md`, section 2). Pour qu'un événement termine une chaîne ou en ouvre le log, le déclarer dans `chains` de ce fichier.
 - `realised` : `true` quand l'image existe (ou, sans image, quand le son n'est plus provisoire).
 
 ## Étapes

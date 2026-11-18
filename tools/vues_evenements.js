@@ -27,6 +27,7 @@ const rewards = readJson('script/config/rewards_data.json');
 const tapes = readJson('script/config/tapes_data.json');
 const journals = readJson('script/config/journals_data.json');
 const logFiles = readJson('script/config/logs_database.json').logFiles;
+const logData = Object.fromEntries(logFiles.map(cmd => [cmd, readJson(`ressources/logs/${cmd}.json`)]));
 const soundIds = new Set(readJson('script/config/game_sounds.json').map(s => s.id));
 
 // Une heure de jeu = 60 minutes de 120 ticks à 60 images/s = 120 s réelles.
@@ -231,11 +232,14 @@ function rewardsView() {
       ['Cassette, journal, log bonus', 'Chaque anomalie vue d\'un enfant donne la prochaine récompense de sa réserve, si sa nuit minimale est atteinte'],
       ['Log de chaîne', 'Première anomalie vue de l\'enfant. Cassidy : une des traces du cinquième enfant (`openEvents`)'],
       ['Cassette de fin de chaîne', 'L\'événement de fin de chaîne, une fois le log de chaîne lu'],
-      ['Log de révélation', 'Ouvert par la nuit (champ `minNight` des logs, à coder)'],
-      ['Journal garanti', '`ensureNightJournals()`, qui pioche dans les réserves'],
+      ['Log de révélation', 'Ouvert par la nuit : champ `minNight` du log'],
+      ['Journal garanti', '`ensureNightJournals()`. Les réserves sautent ensuite les journaux déjà donnés'],
     ]),
     '',
   );
+
+  out.push('## Logs de révélation par nuit', '', table(['Nuit', 'Logs ouverts'], [1, 2, 3, 4, 5].map(n =>
+    [n, logFiles.filter(cmd => logData[cmd].minNight === n).join(', ')])), '');
 
   const childIds = Object.keys(rewards.pools);
   out.push('## Anomalies et récompenses par nuit', '', 'Pour chaque enfant : anomalies possibles / récompenses qui deviennent disponibles cette nuit-là.', '');
@@ -268,7 +272,6 @@ function controlView() {
   for (const chain of rewards.chains) {
     if (!chain.finalEvent) add('Critique', `Chaîne ${chain.name} : événement de fin absent`, [chain.log], 'Créer les événements de la chaîne');
     else if (!events.some(e => e.id === chain.finalEvent)) add('Critique', `Chaîne ${chain.name} : ${chain.finalEvent} introuvable`, [chain.finalEvent], 'Corriger rewards_data.json');
-    else if (events.find(e => e.id === chain.finalEvent).tape !== chain.finalTape) add('Critique', `Chaîne ${chain.name} : cassette de fin mal placée`, [chain.finalEvent], `Mettre ${chain.finalTape} dans son champ tape`);
     if (!logFiles.includes(chain.log)) add('Critique', `Log de chaîne inconnu`, [chain.log], 'Corriger rewards_data.json');
     add('Critique', `Chaîne ${chain.name} : porte introuvable`, (chain.openEvents || []).filter(id => !events.some(e => e.id === id)), 'Corriger openEvents dans rewards_data.json');
   }
@@ -283,14 +286,15 @@ function controlView() {
   add('Problème', 'Images dans le dossier d\'une autre salle', events.filter(e => imageStatus(e).state === 'mal rangée').map(e => e.id), 'Refaire l\'image dans la salle de l\'événement (voir Evenements_Production.md)');
 
   const chainLogs = rewards.chains.map(c => c.log);
-  add('Migration', 'Anciens champs de récompense à vider', events.filter(e => !chainByFinalEvent[e.id] && (e.terminal || e.tape || e.journal)).map(e => e.id),
-    'Modèle des réserves : seuls les événements de fin de chaîne gardent tape. À faire avec le code des réserves');
-  add('Migration', 'Logs de révélation sans minNight', logFiles.filter(l => !chainLogs.includes(l) && !pooled.some(r => r.code === l)), 'Ajouter minNight (nuit indiquée dans Parcours_Enquete.md, section 3)');
+  const rewardLogs = new Set([...chainLogs, ...pooled.filter(r => r.kind === 'log').map(r => r.code)]);
+  add('Critique', "Logs que rien n'ouvre", logFiles.filter(l => !rewardLogs.has(l) && typeof logData[l].minNight !== 'number'), 'Ajouter minNight au log, ou le mettre dans rewards_data.json');
+  add('Problème', 'Logs ouverts à la fois par la nuit et par une anomalie', logFiles.filter(l => rewardLogs.has(l) && typeof logData[l].minNight === 'number'), "Retirer minNight : le log reste fermé tant que l'anomalie ne l'a pas donné");
+  add('Problème', 'Champs de récompense ignorés par le moteur', events.filter(e => e.terminal || e.tape || e.journal).map(e => e.id), 'Vider terminal, journal et tape : les récompenses se déclarent dans rewards_data.json');
   add('Problème', 'Événements sans description', events.filter(e => !e.description).map(e => e.id), 'Décrire l\'image dans description et lore');
   add('Problème', 'Image déclarée réalisée mais absente', events.filter(e => e.realised && imageStatus(e).state === 'à produire').map(e => e.id), 'Produire l\'image ou repasser realised à false');
   add('Problème', 'Son inconnu de game_sounds.json', events.filter(e => soundStatus(e) === 'inconnu').map(e => e.id), 'Déclarer le son');
 
-  const out = [header('Événements : contrôle', 'Incohérences entre les données et le plan. Gravités : Critique (ne peut pas marcher), À décider (arbitrage nécessaire), Migration (passage au modèle des réserves), Problème (donnée à corriger).')];
+  const out = [header('Événements : contrôle', 'Incohérences entre les données et le plan. Gravités : Critique (ne peut pas marcher), À décider (arbitrage nécessaire), Problème (donnée à corriger).')];
   out.push(table(['Gravité', 'Sujet', 'Éléments', 'Action'], issues), '');
   out.push(`Images et sons à produire : voir [Evenements_Production.md](Evenements_Production.md).`, '');
   return out.join('\n');

@@ -16,7 +16,7 @@ Argument : le nom de la commande en majuscules (par exemple `LOST_PETS`), et l'i
 4. Rédiger le texte. Appliquer la « règle du doute » du Tome 4 : le document administratif ne dit jamais tout, il laisse le joueur conclure.
 5. Pour une nouvelle commande, ajouter son nom dans `logFiles` de `script/config/logs_database.json`. Le nom respecte `^[A-Z0-9_]+$`.
 6. Lancer `node ".github/Projet/_editor_log/check_logs.js"` et corriger jusqu'à zéro erreur. Ne jamais contourner le validateur : si une règle semble fausse, la signaler à l'utilisateur.
-7. Si un événement de `random_events_data.json` doit débloquer cette commande, renseigner son champ `terminal`, puis vérifier la sortie `[ConfigValidator]` au lancement.
+7. Choisir comment la commande s'ouvre : log de révélation, champ `minNight` (1 à 5) ; log de chaîne ou bonus, l'ajouter à `script/config/rewards_data.json` (une chaîne ou la réserve d'un enfant), sans `minNight`. Les événements ne portent plus de champ `terminal`. Vérifier ensuite la sortie `[ConfigValidator]` au lancement et relancer `node tools/vues_evenements.js`.
 
 ## Résultat attendu
 

@@ -1,7 +1,7 @@
 /**
- * Suivi persistant (localStorage) des cassettes et journaux débloqués
- * par les événements aléatoires (champs `tape`/`journal` de RANDOM_EVENTS,
- * cf. script/core/random_events_engine.js -> triggerEvent()).
+ * Suivi persistant (localStorage) des cassettes, journaux et logs débloqués
+ * par les anomalies (cf. script/core/rewards.js, appelé par triggerEvent()
+ * dans script/core/random_events_engine.js).
  *
  * Contrairement à eventRuntimeState (réinitialisé à chaque nuit, cf.
  * resetRandomEventsForNewNight()), ce qui est débloqué ici reste acquis
@@ -12,7 +12,7 @@ const Collectibles = (() => {
   const STORAGE_KEY = "fnaf_collectibles_v1";
 
   function defaultState() {
-    return { tapes: [], journals: [], listenedTapes: [] };
+    return { tapes: [], journals: [], logs: [], listenedTapes: [] };
   }
 
   function loadState() {
@@ -45,6 +45,17 @@ const Collectibles = (() => {
     if (!code || state.journals.includes(code)) return;
     state.journals.push(code);
     saveState();
+  }
+
+  /** Ouvre un log de chaîne ou un log bonus (cf. Rewards.isLogLocked()). */
+  function unlockLog(code) {
+    if (!code || state.logs.includes(code)) return;
+    state.logs.push(code);
+    saveState();
+  }
+
+  function isLogUnlocked(code) {
+    return state.logs.includes(code);
   }
 
   function isTapeUnlocked(code) {
@@ -82,6 +93,8 @@ const Collectibles = (() => {
   return {
     unlockTape,
     unlockJournal,
+    unlockLog,
+    isLogUnlocked,
     isTapeUnlocked,
     isJournalUnlocked,
     getUnlockedTapes,

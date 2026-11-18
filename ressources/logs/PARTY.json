@@ -1,6 +1,8 @@
 {
     "command": "PARTY",
+    "label": "rare",
     "markFound": "PARTY",
+    "minNight": 2,
     "type": "sequence",
     "steps": [
         {
@@ -16,6 +18,5 @@
             "flash": true,
             "flashDuration": 2000
         }
-    ],
-    "label": "rare"
+    ]
 }

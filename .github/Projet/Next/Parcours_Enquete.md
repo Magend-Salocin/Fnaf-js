@@ -14,12 +14,12 @@ Statut : chaînes validées le 17/11/2026, modèle des récompenses (section 2) 
 | Complément | Journaux (un enfant chacun, sous-entendus) | Oui, au moins N à la fin de la nuit N | Relie l'histoire publique des affiches aux quatre enfants, sans jamais l'énoncer |
 | Enquête | Anomalies aléatoires, récompenses qu'elles donnent, chaînes | Non | Approfondit, compte pour la fin, nourrit la méfiance de Cassidy |
 
-### Ce qui existe déjà dans le moteur
+### Ce qui existe dans le moteur
 
 - Affiches : `camera.js` affiche en CAM 4B l'affiche de la nuit en cours (`images/rooms/4b_east_hall_corner/hidden/{fr,en}/4b_b0_c0_f0_dN`) quand la pièce est vide. C'est le canal de l'histoire publique, celle des coupures de presse de FNAF 1.
 - Journaux : `ensureNightJournals()` (`script/mechanics/journal.js`) garantit au moins N journaux à la fin de la nuit N.
-- Logs : un log cité dans le champ `terminal` d'un événement reste verrouillé tant que l'événement n'a pas été vu. Les autres sont ouverts dès la nuit 1. Le champ `minHour` verrouille un log jusqu'à une heure donnée.
-- Cassettes et journaux : donnés par l'événement qui les cite dans `tape` ou `journal`.
+- Logs : un log de révélation s'ouvre à la nuit de son champ `minNight`. Un log de chaîne ou bonus reste fermé tant qu'une anomalie ne l'a pas donné. Le champ `minHour` verrouille en plus un log jusqu'à une heure donnée (`script/lore/lore_core.js`).
+- Récompenses des anomalies : `script/core/rewards.js`, données dans `script/config/rewards_data.json` (section 2). Ce qui est obtenu est mémorisé d'une partie à l'autre par `Collectibles`.
 
 ## 2. Événements et récompenses
 
@@ -33,7 +33,7 @@ L'événement et ce qu'il rapporte sont séparés. Un événement ne dit plus qu
 | Log de révélation (23) | La nuit : ouvert au début de sa nuit, que le joueur ait vu des anomalies ou non |
 | Log de chaîne (5) | La première anomalie vue de l'enfant, quelle qu'elle soit |
 | Cassette de fin de chaîne (5) | Le maillon 3 de la chaîne, un événement précis (section 5) |
-| Journal garanti | `ensureNightJournals()`, qui pioche dans les mêmes réserves |
+| Journal garanti | `ensureNightJournals()`, inchangé. Les réserves sautent ensuite les journaux déjà donnés (règle 4) |
 
 ### Avant et après
 
@@ -185,7 +185,7 @@ Les deux canaux sont complémentaires.
 - Les affiches de la CAM 4B racontent l'histoire publique : deux enfants, puis cinq, un suspect condamné, la fermeture. Ce sont elles qui disent « disparus ».
 - Les 12 journaux (`ressources/journaux/*.txt` et leurs images) ne le disent jamais. Chacun parle d'un enfant par la bande, son code le désigne (`NEWS_GAB`, `NEWS_JER`, `NEWS_SUS`, `NEWS_FRT`) : une fête qui tourne court, des dessins remplacés, un animal démenti, des jouets réclamés. Le joueur relie lui-même un fait divers à un enfant.
 
-Aucun journal à créer. `ensureNightJournals()` garde sa garantie (au moins N journaux à la fin de la nuit N), mais pioche dans les réserves des enfants (section 2) pour ne jamais donner un journal que la réserve donnerait ensuite.
+Aucun journal à créer. `ensureNightJournals()` garde sa garantie (au moins N journaux à la fin de la nuit N), en commençant par les journaux de la nuit en cours et des précédentes. Un journal ainsi donné n'est jamais redonné : les réserves sautent ce que le joueur possède.
 
 ### Corrections à prévoir
 
@@ -203,13 +203,20 @@ Après chaque nuit de 1 à 4, et avant la fin en nuit 5.
 
 ## 8. Travail technique
 
+Fait le 18/11/2026 :
+
 | Sujet | Fichiers |
 | --- | --- |
-| Champ `minNight` des logs | `script/lore/lore_core.js`, `ressources/logs/*.json`, `_editor_log/README.md` |
-| Réserves de récompenses : données (enfant, ordre, nuit minimale) et distribution à chaque anomalie vue | Nouveau fichier `script/config/rewards_data.json`, `script/core/random_events_engine.js` |
-| Ouverture du log de chaîne à la première anomalie de l'enfant | `script/core/random_events_engine.js`, `script/lore/lore_core.js` |
-| Journaux garantis : passer par les réserves | `script/mechanics/journal.js` |
-| Prérequis « log lu » des maillons 3 | `script/core/random_events_engine.js`, `random_events_data.json` |
-| Vider `terminal`, `tape` et `journal` des événements, sauf les maillons 3 | `random_events_data.json`, `config_validator.js` |
-| Événements de la chaîne de Cassidy à créer, CASSIDY-06 et 07 en nuit 5 | `random_events_data.json` |
-| `secretPool` des nuits 1 à 5 | `script/lore/lore_night1.js` à `lore_night5.js` |
+| Réserves de récompenses, log de chaîne à la première anomalie (ou par `openEvents`), cassette de fin de chaîne | `script/config/rewards_data.json`, `script/loaders/rewards_data.js`, `script/core/rewards.js`, `script/core/random_events_engine.js` |
+| Logs ouverts mémorisés d'une partie à l'autre | `script/core/collectibles.js` |
+| Champ `minNight` des 23 logs de révélation | `ressources/logs/*.json`, `script/lore/lore_core.js`, éditeur de logs, `check_logs.js` |
+| Prérequis « log lu » des événements de fin de chaîne | `script/core/rewards.js` (`canTrigger`) |
+| Champs `terminal`, `tape` et `journal` vidés, signalés par le validateur s'ils reviennent | `random_events_data.json`, `config_validator.js` |
+| Chaîne de Cassidy, CASSIDY-06 et 07 en nuit 5 | `random_events_data.json`, `rewards_data.json` |
+
+Reste :
+
+| Sujet | Fichiers |
+| --- | --- |
+| `secretPool` des nuits 1 à 5 (indices de HELP) | `script/lore/lore_night1.js` à `lore_night5.js` |
+| Appel de la nuit 5 : compter les maillons de chaîne au lieu des cassettes | `script/mechanics/night.js` (`getNight5CallVersion`) |

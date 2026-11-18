@@ -13,9 +13,8 @@
  * fondu, en même temps qu'il coupe la musique du menu principal jouée en
  * fond pendant toute la scène.
  *
- * Les journaux sont débloqués par les événements aléatoires (champ
- * `journal`, cf. Collectibles.unlockJournal() dans random_events_engine.js)
- * et restent acquis pour toute la partie : la scène s'ouvre sur le dernier
+ * Les journaux sont débloqués par les anomalies, via la réserve de chaque
+ * enfant (cf. script/core/rewards.js), et restent acquis pour toute la partie : la scène s'ouvre sur le dernier
  * trouvé, les précédents restent consultables avec les flèches.
  * ensureNightJournals() garantit qu'aucune nuit ne se termine sans au moins
  * une nouvelle lecture.

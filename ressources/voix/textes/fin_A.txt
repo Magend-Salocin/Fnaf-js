@@ -1,0 +1,52 @@
+!mode cassette
+!voix machine
+
+[CARILLON DE SIX HEURES]
+[BRUIT DE SERVEUR]
+Six heures. Fin de service du veilleur.
+Rapport de maintenance. ... Anomalies corrigées.
+Lancement de la stabilisation finale.
+[BRUIT DE DONNÉES]
+Profil un.
+@gabriel On n'a pas encore coupé le gâteau...
+[COUPURE]
+Archive stabilisée.
+Profil deux.
+@jeremy Attends, je n'ai pas fini...
+[COUPURE]
+Archive stabilisée.
+Profil trois.
+@susie Il va revenir, hein ? On lui a gardé à manger...
+[COUPURE]
+Archive stabilisée.
+Profil quatre.
+@fritz_echo Encore...
+[COUPURE]
+Archive stabilisée.
+[LONG SILENCE]
+Cinquième profil. ... Aucun profil.
+Rien à stabiliser.
+[STATIQUE]
+@cassidy Tu as tout effacé.
+@cassidy Comme la première fois.
+[PAUSE]
+@cassidy Tu as cru que je ne te reconnaîtrais pas.
+@cassidy Je t'ai reconnu. ... Et tu pars quand même.
+[BRUIT DE PAS QUI S'ÉLOIGNENT]
+[PORTE QUI SE FERME]
+@cassidy Tu t'en vas. ... Encore.
+[LONG SILENCE]
+@cassidy Je vais rester ici. ... Je sais attendre.
+[STATIQUE LÉGÈRE]
+@pierre Liste des invités.
+@pierre Gabriel. Jeremy. Susie. Fritz.
+[PAUSE]
+@pierre La liste est correcte.
+[MUSIQUE D'ANNIVERSAIRE]
+Musique : désactivée.
+[COUPURE]
+Tables : vides. Chaises : rangées. Dessins : retirés.
+Restaurant prêt pour les prochains visiteurs.
+[LONG SILENCE]
+Système stable.
+[FIN D'ENREGISTREMENT]

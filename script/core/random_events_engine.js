@@ -198,7 +198,7 @@ function rollEventChance(event) {
    DÉCLENCHEMENT / RÉSOLUTION
    ============================================================ */
 function triggerEvent(event) {
-  if (!runCustomHandler(event)) return;
+  if (!Rewards.canTrigger(event) || !runCustomHandler(event)) return;
 
   const state = eventRuntimeState[event.id];
   state.triggered = true;
@@ -208,29 +208,11 @@ function triggerEvent(event) {
     ? Infinity
     : DEFAULT_EVENT_DISPLAY_SECONDS;
 
-  // Débloque la cassette/le journal associés, de façon persistante
-  // (cf. script/core/collectibles.js — contrairement à l'état ci-dessus,
-  // remis à zéro chaque nuit, ce déblocage reste acquis pour la partie).
-  if (typeof Collectibles !== 'undefined') {
-    if (event.tape) Collectibles.unlockTape(event.tape);
-    if (event.journal) Collectibles.unlockJournal(event.journal);
-  }
+  // Récompense de l'anomalie (réserve de l'enfant, log de chaîne, cassette
+  // de fin), acquise pour toute la partie : cf. script/core/rewards.js.
+  Rewards.onEventTriggered(event, getCurrentNight());
 
   //console.log(`[RandomEvents] Déclenché : ${event.id} — ${event.description}`);
-}
-
-function isTerminalCommandUnlocked(commandId) {
-  const normalized = (commandId || '').trim().toUpperCase();
-  if (!normalized || typeof RANDOM_EVENTS === 'undefined') return false;
-
-  const matchingEvents = Object.values(RANDOM_EVENTS).filter(event => {
-    return typeof event.terminal === 'string' && event.terminal.toUpperCase() === normalized;
-  });
-
-  // Commande non liée à un random event : pas de verrouillage par ce moteur.
-  if (matchingEvents.length === 0) return true;
-
-  return matchingEvents.some(event => eventRuntimeState[event.id]?.triggered === true);
 }
 
 function getActiveEventForCamera(cameraId) {
@@ -458,7 +440,6 @@ const RandomEvents = {
   notifyUserInput,
   drawActiveOverlay: drawActiveRandomEventOverlay,
   resetForNewNight: resetRandomEventsForNewNight,
-  isTerminalCommandUnlocked,
   // Debug : RandomEvents.forceTrigger('FRT-001') dans la console DevTools.
   // L'événement reste affiché jusqu'à la fin de la nuit, pour régler un placement.
   forceTrigger: (eventId) => {

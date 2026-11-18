@@ -6,7 +6,7 @@ Textes, réglages et audios générés des voix du jeu. Le générateur est `too
 
 ```bash
 node tools/voix/generer_voix.js                                           # tous les textes
-node tools/voix/generer_voix.js ressources/voix/textes/tape_erreur_08.txt  # un seul
+node tools/voix/generer_voix.js ressources/voix/textes/fin_C.txt  # un seul
 ```
 
 Windows uniquement : la synthèse passe par les voix Windows. Aucune dépendance npm. Les audios générés vont dans `sorties/`.
@@ -25,6 +25,7 @@ Windows uniquement : la synthèse passe par les voix Windows. Aucune dépendance
 | `inconnu` | La voix inconnue (cassette 04) | Paul | Très grave, étouffée |
 | `enfants` | Les quatre enfants ensemble (cassette 06) | Hortense | Chœur de quatre hauteurs |
 | `fritz_echo` | Le « Encore... » de FRT_03 | Hortense | Très grave, étouffée |
+| `gabriel`, `jeremy`, `fritz`, `susie` | Chaque enfant seul (fins) | Hortense | Hauteurs du chœur : 1.08, 1.15, 1.28, 1.4 |
 
 Réglages dans `config.json`, section `voix`. `cassidy`, `machine`, `memoire` et `gardien` sont validés (17/11/2026), les autres sont à l'essai. Qui parle dans quel enregistrement : `.github/Projet/Next/Casting_Voix.md`.
 
@@ -84,10 +85,11 @@ Les bruitages sont reconnus par mot-clé (`STATIQUE`, `PAUSE`, `GOLDEN FREDDY`, 
 | Fichier | Usage |
 | --- | --- |
 | `appel_nuit5_A.txt`, `_B`, `_C` | Appel de la nuit 5, versions Conviction, Doute, Reconnaissance |
-| `tape_*.txt` | Les 21 cassettes (ERREUR 01 à 09, FRT, GAB, JER, SUS 01 à 03) |
+| `tape_*.txt` | Les 19 cassettes (ERREUR 01 à 07, FRT, GAB, JER, SUS 01 à 03) |
+| `fin_A.txt`, `_B`, `_C` | Fins Effacement, Témoin, Reconnaissance (`.github/Projet/Next/Fins.md`) |
 
 Sources : `.github/Projet/Next/Appel_Nuit5.md` pour les appels, `ressources/Tape/TAPE_*.txt` pour les cassettes. Qui parle dans quelle cassette : `.github/Projet/Next/Casting_Voix.md`.
 
 Les textes `tape_*.txt` font désormais foi pour l'audio. Une correction de réplique se fait ici, puis on régénère ; la transcription de `ressources/Tape/` est à reporter si elle sert encore à l'affichage.
 
-Branchement dans le jeu (17/11/2026) : les 19 cassettes déclarées (`index.html`, `game_sounds.json`) lisent `sorties/tape_*.wav`, et l'appel de la nuit 5 en français lit `sorties/appel_nuit5_{A,B,C}.wav` (`call_5_cassidy_*`). TAPE_ERREUR_08 et 09 attendent le système de fins.
+Branchement dans le jeu (17/11/2026) : les 19 cassettes déclarées (`index.html`, `game_sounds.json`) lisent `sorties/tape_*.wav`, et l'appel de la nuit 5 en français lit `sorties/appel_nuit5_{A,B,C}.wav` (`call_5_cassidy_*`). Les fins (`fin_*.wav`, qui remplacent TAPE_ERREUR_08 et 09) attendent le système de fins.

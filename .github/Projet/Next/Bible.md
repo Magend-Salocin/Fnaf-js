@@ -219,6 +219,8 @@ Plusieurs fins, déterminées par l'enquête. Les fins Effacement et Témoin son
 | Témoin | Nuit 5 survécue, enquête incomplète | Le gardien part sans comprendre. « IT'S ME » une dernière fois |
 | Reconnaissance | Chaîne de Cassidy complète, au moins 75 % de l'ensemble des maillons, anomalies majoritairement conservées | « YOU ARE NOT HIM ». Le système restaure un cinquième dossier, toujours sans nom. Cassidy cesse de regarder le gardien |
 
+Textes et enregistrements des trois fins : [Fins.md](Fins.md).
+
 Aucune fin n'explique tout. La fin Reconnaissance reste une tragédie qui s'apaise, pas une victoire.
 
 ## 9. Charlie
