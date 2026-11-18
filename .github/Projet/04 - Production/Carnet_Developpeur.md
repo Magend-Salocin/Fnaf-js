@@ -163,7 +163,7 @@ Utiliser le skill `/ecrire-log <COMMANDE>`. Référence : `02 - Lore/CANON_LOGS.
 
 ## 5. Événements cachés
 
-Utiliser le skill `/evenement-cache <ID>`. Les champs et leurs valeurs sont décrits dans le skill. Garder `random_events_data.json` synchronisé avec le tableau de production (`Tableau_Production_Regroupe_Par_Nuit.*`).
+Utiliser le skill `/evenement-cache <ID>`. Les champs et leurs valeurs sont décrits dans le skill. Après toute modification de `random_events_data.json` ou `rewards_data.json`, régénérer les vues `Evenements_*.md` avec `node tools/vues_evenements.js`.
 
 ## 6. Aide de Claude Code
 

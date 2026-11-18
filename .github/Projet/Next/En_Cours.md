@@ -1,6 +1,6 @@
 # En cours
 
-État de la refonte du lore et des voix au 17/11/2026. À relire en reprenant le projet ; à mettre à jour à la fin de chaque séance.
+État de la refonte du lore et des voix au 18/11/2026. À relire en reprenant le projet ; à mettre à jour à la fin de chaque séance.
 
 ---
 
@@ -18,28 +18,34 @@
 | Atlas découpés : gabriel, jeremy_props, susie, cassidy, restaurant (en plus de foxy) | `images/atlas/` |
 | Cassettes générées branchées dans le jeu, appel de Cassidy en nuit 5 (choix de version provisoire) | `index.html`, `game_sounds.json`, `night.js` |
 | Vérificateur d'images `tools/check_assets.js` | Carnet, section 2 |
+| Modèle des récompenses : l'événement donne la prochaine récompense de la réserve de son enfant, les logs de révélation s'ouvrent par la nuit | [Parcours_Enquete.md](Parcours_Enquete.md), section 2 ; données dans `script/config/rewards_data.json` (pas encore lu par le moteur) |
+| Maillons des chaînes repointés : GAB-001, JER-001, SUS-001, FRT-001 ouvrent leur log de chaîne ; TAPE_*_03 sur GAB-014, JER-015, SUS-027 | `random_events_data.json` |
+| JSON source unique des événements. Ancien tableau de production (.md, .csv, .xls), Anomalie.md et rapport de probabilités supprimés, remplacés par quatre vues générées | `node tools/vues_evenements.js` → `04 - Production/Evenements_*.md` |
+| Chaîne de Cassidy : traces CASSIDY-08 (créé), JER-016, CASSIDY-09 (créé) ouvrent MEMORY ; CASSIDY-07 en fin de chaîne ; CASSIDY-06 et 07 en nuit 5 | Parcours_Enquete.md, section 5 ; `rewards_data.json` |
+| JER-021, 023, 025 restent au West Hall avec JER-022 et 024, déjà dessinés là, pour garder la série des crayons dans une seule salle. Images à refaire, `realised` repassé à `false` | `Evenements_Production.md` |
+| 8 événements legacy gardés (variantes rares, affichées seulement si l'animatronique est dans la salle), `chance` de 0.5 à 0.05 | `random_events_data.json` |
 
 ## 2. À valider
 
 - Écoute des 21 cassettes, en particulier les bruitages approximatifs (porte, tables, interrupteur, musique d'anniversaire) et les profils encore jamais écoutés seuls (`fritz_echo`).
-- Parcours d'enquête, hors chaînes : répartition des 34 logs par nuit, écran de 6 h.
+- Écran de 6 h : sélection des anomalies montrées, lien avec les chaînes (corriger un maillon le casse-t-il ?), calcul des fins, anomalie déjà jugée, ordre en nuit 5.
+- Nuits minimales des cassettes et logs bonus dans les réserves (reprises des anciens événements).
 - Paliers du Director de Cassidy, libellé `CONSERVER`.
 - Niveaux d'IA réduits pour la nuit 5 en version B.
 
 ## 3. À faire, par ordre proposé
 
-1. Commiter `.github/Projet/Next/`, l'index de la doc, la todolist et le correctif de l'affiche de la nuit 5 (toujours en attente).
-2. Brancher les nouveaux audios dans le jeu : chemins de `game_sounds.json`, balises de `index.html`. Les cassettes 08 et 09 attendent le système de fins.
+1. Produire : images de JER-021, 023, 025 au West Hall et de CASSIDY-09, son de CASSIDY-08, descriptions des 8 événements legacy (`Evenements_Production.md`, `Evenements_Controle.md`).
+2. Cassettes 08 et 09 : attendent le système de fins.
 3. Versions anglaises : textes des appels, puis des cassettes, puis génération avec une voix anglaise.
 4. Passage des dates à 1985 et 1993 : CANON_LOGS, les 34 logs, `check_logs.js`. Y intégrer `A-003` (Antoine M.), le Phone Guy en `003` (dernier accès le 04/11/1993), et la disparition des deux premiers enfants un vendredi avant le 26/06/1985.
-5. Moteur : champ `minNight` des logs, prérequis « log lu » des chaînes, réaffectation des champs `terminal`.
+5. Moteur : réserves de récompenses (`rewards_data.json`), log de chaîne à la première anomalie, `minNight` des logs, prérequis « log lu » des maillons 3, journaux garantis via les réserves, puis vider les anciens champs `terminal`, `tape`, `journal` (Parcours_Enquete.md, section 8).
 6. Écran de 6 h (corriger ou conserver), sauvegarde de l'enquête, Director de Cassidy, Golden Freddy.
 7. Nuit 5 selon la version (A, B, C) et ses images de salles.
 8. Chèque de paie au nom de Mike Schmidt, retrait du libellé Custom Night.
 
 ## 4. Questions ouvertes
 
-- JER-021, JER-023, JER-025 : images dessinées sur le Supply Closet (`3_supply_closet/hidden/`), mais événements rattachés au West Hall depuis septembre. Elles ne s'affichent pas. Remettre le `roomLabel` à « Supply Closet », ou refaire les images sur le West Hall ?
 - `rooms_config.json` déclare `images/rooms/the_office/default.png`, absent du disque.
 - 22 images de `images/rooms/` ne sont utilisées nulle part (anciennes images remplacées par l'atlas de Foxy, essais `_event`, `_GF`...) : liste par `node tools/check_assets.js`. À trier : supprimer ou rebrancher.
 - Placement des sprites des nouveaux atlas sur leurs événements (`layers`) : coordonnées à caler salle par salle.

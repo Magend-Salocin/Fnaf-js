@@ -123,10 +123,10 @@ function parseTrigger(str) {
    événement GAB-XXX, pas ce .js (qui ne contient que la logique
    de chargement et de transformation).
 
-   Le JSON est généré depuis
-   ".github/Projet/04 - Production/Tableau_Production_Regroupe_Par_Nuit.csv"
-   (nuits 1 à 5) plus quelques événements "legacy" (night: 0) déjà
-   présents avant la mise en place du tableau de production.
+   Le JSON est la source unique (l'ancien tableau de production CSV dont
+   il dérivait a été retiré ; les vues Markdown sont générées par
+   tools/vues_evenements.js). Les événements "legacy" (night: 0) datent
+   d'avant ce tableau.
    Champs du CSV non repris car absents/toujours vides sur ce fichier :
    "Priority" (colonne inexistante), "Script JS" et "RequiresEvent" (vides
    sur les 111 lignes — seule exception : GAB-008/GAB-007, relation

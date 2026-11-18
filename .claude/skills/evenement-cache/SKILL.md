@@ -22,10 +22,10 @@ Copier la structure d'un événement existant de la même série. Valeurs reconn
 
 ## Étapes
 
-1. Vérifier si l'id existe déjà dans `random_events_data.json` et dans `.github/Projet/04 - Production/Tableau_Production_Regroupe_Par_Nuit.md`. Un id en double écrase silencieusement l'entrée précédente.
+1. Vérifier si l'id existe déjà dans `random_events_data.json`. Un id en double écrase silencieusement l'entrée précédente.
 2. Pour le lore (champ `lore`, description), vérifier la cohérence avec le dossier de l'enfant dans `.github/Projet/02 - Lore/Catalogue Fazbear/`. En cas de doute, déléguer à l'agent `gardien-lore`.
 3. Image : `images/rooms/<dossier>/hidden/<ID>.png`, où le dossier vient de `EVENT_ROOM_MAP`. Si l'image n'existe pas encore, rédiger une fiche de production : salle et caméra, élément ajouté ou modifié, ce que le joueur doit remarquer, niveau de discrétion.
 4. Si l'événement a besoin d'un son absent, laisser `laugh_girl1`, ajouter le son à la section « Sons manquants » de `todolist.md`, et utiliser le skill `ajouter-son` quand le fichier arrive.
 5. Si l'événement débloque un log, utiliser le skill `ecrire-log`.
-6. Mettre à jour le tableau de production et `.github/Projet/04 - Production/Anomalie.md` si l'événement y est listé.
+6. Régénérer les vues : `node tools/vues_evenements.js`, puis lire `Evenements_Controle.md`.
 7. Lancer le jeu et vérifier la sortie `[ConfigValidator]`. Cocher ou ajouter la tâche correspondante dans `todolist.md`.

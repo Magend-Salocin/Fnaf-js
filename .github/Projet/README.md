@@ -16,8 +16,9 @@ de tâches et des notes de travail, pas de la documentation.
 | Le rendu du bureau et le scroll des portes | [01 - Game Design/bureau.md](01%20-%20Game%20Design/bureau.md) |
 | Qui est un enfant, à quel animatronic il est lié | [02 - Lore/Catalogue Fazbear/](02%20-%20Lore/Catalogue%20Fazbear/) |
 | Les règles d'écriture des logs du terminal | [02 - Lore/CANON_LOGS.md](02%20-%20Lore/CANON_LOGS.md) |
-| La liste complète des anomalies à produire | [04 - Production/Anomalie.md](04%20-%20Production/Anomalie.md) |
-| Si un secret est trouvable en pratique | [04 - Production/Rapport_Probabilites_Secrets.md](04%20-%20Production/Rapport_Probabilites_Secrets.md) |
+| Les images et sons d'événements à produire | [04 - Production/Evenements_Production.md](04%20-%20Production/Evenements_Production.md) |
+| Si un secret est trouvable en pratique | [04 - Production/Evenements_Declenchement.md](04%20-%20Production/Evenements_Declenchement.md) |
+| Ce que rapporte une anomalie | [04 - Production/Evenements_Recompenses.md](04%20-%20Production/Evenements_Recompenses.md) |
 | Comment éditer les logs du terminal | [_editor_log/README.md](_editor_log/README.md) |
 | Comment le générateur transforme un texte en voix | [03 - Technique/voix.md](03%20-%20Technique/voix.md) |
 | Comment produire et brancher voix, images, sons, logs | [04 - Production/Carnet_Developpeur.md](04%20-%20Production/Carnet_Developpeur.md) |
@@ -55,8 +56,7 @@ contient les textes de l'appel de Cassidy. [Next/Casting_Voix.md](Next/Casting_V
 dit qui parle, avec quelle voix, dans quel enregistrement.
 [Next/Journal_Voix_Son.md](Next/Journal_Voix_Son.md) garde la trace des choix
 faits sur les voix et le son. [Next/En_Cours.md](Next/En_Cours.md) donne l'état
-d'avancement et la suite, à relire en reprenant le projet. Fichiers prévus : Mécaniques du lore,
-Tableau de production unique.
+d'avancement et la suite, à relire en reprenant le projet. Fichier prévu : Mécaniques du lore.
 
 ### 02 - Lore
 
@@ -87,13 +87,15 @@ Comment le jeu est fait.
 
 Suivi de ce qui est à produire.
 
+Les quatre fichiers `Evenements_*.md` sont générés par `node tools/vues_evenements.js` à partir des JSON de `script/config/` (`random_events_data.json`, `rewards_data.json`). Ils ne s'éditent pas : on modifie le JSON, puis on relance le script.
+
 | Fichier | Contenu |
 |---------|---------|
-| [Anomalie.md](04%20-%20Production/Anomalie.md) | Tableau complet des anomalies : ID, salle, nuit, heure, chance, son, image |
-| [Tableau_Production_Regroupe_Par_Nuit.md](04%20-%20Production/Tableau_Production_Regroupe_Par_Nuit.md) | Le même tableau, regroupé par nuit |
-| `Tableau_Production_Regroupe_Par_Nuit.csv` / `.xls` | Sources éditables du tableau |
+| [Evenements_Production.md](04%20-%20Production/Evenements_Production.md) | Images et sons d'événements à produire, provisoires ou mal rangés |
+| [Evenements_Declenchement.md](04%20-%20Production/Evenements_Declenchement.md) | Nuit, heure, caméra, déclencheur et probabilité réelle de chaque événement |
+| [Evenements_Recompenses.md](04%20-%20Production/Evenements_Recompenses.md) | Réserves de récompenses par enfant et chaînes |
+| [Evenements_Controle.md](04%20-%20Production/Evenements_Controle.md) | Incohérences entre les données et le plan |
 | [Prompts_Images_Cachees.md](04%20-%20Production/Prompts_Images_Cachees.md) | Prompts d'édition d'image pour les images cachées manquantes |
-| [Rapport_Probabilites_Secrets.md](04%20-%20Production/Rapport_Probabilites_Secrets.md) | Analyse du moteur d'événements : quels secrets sont réellement trouvables |
 | [Carnet_Developpeur.md](04%20-%20Production/Carnet_Developpeur.md) | Procédures : générer les voix, produire les images et atlas, brancher sons, journaux, logs et événements |
 
 ### _editor_log

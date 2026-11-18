@@ -2,31 +2,68 @@
 
 Ce que le joueur trouve, nuit par nuit, et ce qu'il doit avoir compris en se levant. Découle de [Bible.md](Bible.md), qui fait foi en cas de désaccord.
 
-Statut : chaînes validées (section 4). Le reste est une proposition à valider.
+Statut : chaînes validées le 17/11/2026, modèle des récompenses (section 2) validé le 18/11/2026. Le reste est une proposition à valider.
 
 ---
 
-## 1. Deux couches
+## 1. Trois couches
 
 | Couche | Contenu | Garanti ? | Rôle |
 | --- | --- | --- | --- |
 | Révélation | Affiche de l'East Hall Corner (CAM 4B), logs du terminal ouverts par nuit, appel téléphonique | Oui | Porte l'histoire principale. Un joueur qui ne voit aucune anomalie comprend quand même |
 | Complément | Journaux (un enfant chacun, sous-entendus) | Oui, au moins N à la fin de la nuit N | Relie l'histoire publique des affiches aux quatre enfants, sans jamais l'énoncer |
-| Enquête | Anomalies aléatoires, logs qu'elles débloquent, cassettes, chaînes | Non | Approfondit, compte pour la fin, nourrit la méfiance de Cassidy |
+| Enquête | Anomalies aléatoires, récompenses qu'elles donnent, chaînes | Non | Approfondit, compte pour la fin, nourrit la méfiance de Cassidy |
 
 ### Ce qui existe déjà dans le moteur
 
 - Affiches : `camera.js` affiche en CAM 4B l'affiche de la nuit en cours (`images/rooms/4b_east_hall_corner/hidden/{fr,en}/4b_b0_c0_f0_dN`) quand la pièce est vide. C'est le canal de l'histoire publique, celle des coupures de presse de FNAF 1.
 - Journaux : `ensureNightJournals()` (`script/mechanics/journal.js`) garantit au moins N journaux à la fin de la nuit N.
 - Logs : un log cité dans le champ `terminal` d'un événement reste verrouillé tant que l'événement n'a pas été vu. Les autres sont ouverts dès la nuit 1. Le champ `minHour` verrouille un log jusqu'à une heure donnée.
-- Cassettes : débloquées uniquement par les événements (champ `tape`).
+- Cassettes et journaux : donnés par l'événement qui les cite dans `tape` ou `journal`.
 
-### Ce qu'il faut ajouter
+## 2. Événements et récompenses
 
-- Un champ `minNight` dans les logs, sur le modèle de `minHour`, pour ouvrir les logs de révélation nuit par nuit.
-- Un prérequis « log lu » pour les chaînes, en plus de `requiresEvent` (le moteur sait déjà marquer un log comme lu avec `markFound`).
+### Principe
 
-## 2. Répartition des 34 logs
+L'événement et ce qu'il rapporte sont séparés. Un événement ne dit plus quelle cassette, quel journal ou quel log il donne : il dit seulement à quel enfant il appartient, par le préfixe de son identifiant (`GAB`, `JER`, `SUS`, `FRT`, `CASSIDY`). Quand le joueur voit une anomalie, il reçoit la prochaine récompense de la réserve de cet enfant.
+
+| Ce que le joueur gagne | Comment il le gagne |
+| --- | --- |
+| Cassette, journal, log bonus | Réserve de l'enfant : une récompense par anomalie vue, dans l'ordre de la réserve |
+| Log de révélation (23) | La nuit : ouvert au début de sa nuit, que le joueur ait vu des anomalies ou non |
+| Log de chaîne (5) | La première anomalie vue de l'enfant, quelle qu'elle soit |
+| Cassette de fin de chaîne (5) | Le maillon 3 de la chaîne, un événement précis (section 5) |
+| Journal garanti | `ensureNightJournals()`, qui pioche dans les mêmes réserves |
+
+### Avant et après
+
+| Sujet | Avant | Après |
+| --- | --- | --- |
+| Où est écrite la récompense | Dans chaque événement (`terminal`, `tape`, `journal`) | Dans la réserve de l'enfant. Les champs de l'événement ne servent plus qu'aux maillons 3 |
+| Plusieurs événements pour une même récompense | Doublons à maintenir à la main (TAPE_JER_02 sur JER-002 et JER-008) | Naturel : toute anomalie de l'enfant y mène |
+| Anomalie ratée | La récompense qu'elle portait est perdue pour la partie | Une autre anomalie du même enfant la donne |
+| Ordre de l'histoire | Dépend des événements vus | Fixé par la réserve |
+| Ajouter un événement | Choisir sa récompense, vérifier les doublons | Choisir son enfant, rien d'autre |
+| Logs de révélation | Verrouillés si un événement les cite, sinon ouverts dès la nuit 1 | Ouverts par la nuit (`minNight`) |
+
+### Règles
+
+1. Ordre fixe. La réserve se vide dans l'ordre du tableau ci-dessous.
+2. Contrainte de nuit. Chaque récompense a une nuit minimale. Si la prochaine récompense n'est pas encore disponible, l'anomalie ne donne rien et la récompense attend.
+3. Une récompense par anomalie vue, jusqu'à épuisement de la réserve. Ensuite, l'anomalie ne donne plus rien, mais elle compte toujours pour l'écran de 6 h et la jauge de Cassidy.
+4. La réserve saute ce que le joueur possède déjà, qu'il l'ait obtenu par un journal garanti ou dans une partie précédente.
+5. Le maillon 3 d'une chaîne donne sa cassette de fin, et rien de la réserve.
+6. Un événement sans enfant (les événements legacy `BONNIE-001`, `CHICA-001`...) ne donne rien.
+
+Exemple : en nuit 1, le joueur voit JER-001 puis JER-002. JER-001 ouvre LOST_ART (première anomalie de Jeremy) et donne TAPE_JER_01. JER-002 donne NEWS_JER_01. Une troisième anomalie de Jeremy cette nuit-là ne donne rien : TAPE_JER_02 attend la nuit 2.
+
+### Réserves
+
+Le contenu des réserves est dans `script/config/rewards_data.json`, et sa vue lisible dans [Evenements_Recompenses.md](../04%20-%20Production/Evenements_Recompenses.md). En résumé : 5 à 8 récompenses par enfant, plus sa cassette de fin de chaîne. La nuit minimale d'un journal vient de `journals_data.json`. Celle d'une cassette ou d'un log bonus reprend la nuit de l'événement qui le donnait avant le 18/11/2026.
+
+Les anomalies de Cassidy restent pilotées par le Director : la réserve fixe seulement ce qu'elles donnent. TAPE_ERREUR_06 passe en nuit 5, puisqu'il n'y a plus de nuit 6.
+
+## 3. Répartition des 34 logs
 
 ### Logs de révélation (23), ouverts par nuit
 
@@ -44,18 +81,18 @@ Un log ouvert une nuit le reste les nuits suivantes. `REPORT_89` sera renommé l
 
 | Log | Débloqué par | Usage |
 | --- | --- | --- |
-| BALLOON | Chaîne Gabriel | Maillon 2 |
-| LOST_ART | Chaîne Jeremy | Maillon 2 |
-| LOST_PETS | Chaîne Susie | Maillon 2 |
-| LOST_TOYS | Chaîne Fritz | Maillon 2 |
-| MEMORY | Chaîne Cassidy | Maillon 2 |
-| PIRATE, MAINT_05, STAGE_PROP | Anomalies de Fritz | Bonus |
-| CHILDREN_ART, SCANNER | Anomalies de Jeremy | Bonus |
-| COOKING | Anomalie de Susie | Bonus |
+| BALLOON | Première anomalie de Gabriel | Chaîne, maillon 2 |
+| LOST_ART | Première anomalie de Jeremy | Chaîne, maillon 2 |
+| LOST_PETS | Première anomalie de Susie | Chaîne, maillon 2 |
+| LOST_TOYS | Première anomalie de Fritz | Chaîne, maillon 2 |
+| MEMORY | Trace du cinquième enfant | Chaîne de Cassidy, maillon 2 |
+| PIRATE, MAINT_05, STAGE_PROP | Réserve de Fritz | Bonus |
+| CHILDREN_ART, SCANNER | Réserve de Jeremy | Bonus |
+| COOKING | Réserve de Susie | Bonus |
 
-Changement par rapport à aujourd'hui : DRAWINGS, PETS, TOYS, PARTY, TABLES, GUESTS, CLEANING, KITCHEN, LOST et REPORT_89 ne sont plus débloqués par une anomalie mais par la nuit. Les événements qui les citent dans `terminal` doivent pointer vers un log d'enquête ou n'en citer aucun.
+Aucun événement ne cite plus un log de révélation. DRAWINGS, PETS, TOYS, PARTY, TABLES, GUESTS, CLEANING, KITCHEN, LOST et REPORT_89, autrefois débloqués par une anomalie, s'ouvrent par la nuit.
 
-## 3. Les cinq nuits
+## 4. Les cinq nuits
 
 ### Nuit 1 — lundi 08/11/1993 : il se passe quelque chose
 
@@ -114,33 +151,41 @@ Le joueur se lève en sachant : les dessins ont été retirés, la salle repeint
 
 Le joueur se lève en sachant : le système ne sait pas qui il est, quelqu'un de l'autre côté croit le reconnaître, et le nom imprimé sur le chèque ne règle rien.
 
-## 4. Les chaînes
+## 5. Les chaînes
 
 Validé le 17/11/2026.
 
-Chaque chaîne a quatre maillons : une anomalie, un log d'enquête qu'elle débloque, une seconde anomalie qui n'apparaît qu'une fois le log lu, puis la cassette que cette seconde anomalie débloque.
+Chaque chaîne a quatre maillons : une anomalie de l'enfant, le log de chaîne qu'elle ouvre, une anomalie précise qui n'apparaît qu'une fois le log lu, puis la cassette de fin que cette anomalie donne.
+
+Depuis le 18/11/2026, le maillon 1 n'est plus un événement précis : toute anomalie de l'enfant le valide et ouvre le log. L'événement indiqué ci-dessous est la porte la plus probable, en nuit 1. Le maillon 3 reste un événement précis.
 
 | Chaîne | Maillon 1 (anomalie) | Maillon 2 (log) | Maillon 3 (anomalie) | Maillon 4 (cassette) |
 | --- | --- | --- | --- | --- |
-| Gabriel | GAB-001 Une chaise est reculée (n1) | BALLOON | GAB-014 Freddy semble regarder un ballon (n4) | TAPE_GAB_03 |
-| Jeremy | JER-001 Une feuille blanche apparaît (n1) | LOST_ART | JER-015 Dessin d'une famille (n4) | TAPE_JER_03 |
-| Susie | SUS-001 Gamelle métallique sous une table (n1) | LOST_PETS | SUS-027 Chica protège le Cupcake (n4) | TAPE_SUS_03 |
-| Fritz | FRT-001 Petite voiture rouge apparaît (n1) | LOST_TOYS | FRT-026 Tour de cubes construite (n4) | TAPE_FRT_03 |
-| Cassidy | Trace du cinquième enfant (n3-4) | MEMORY | « IT'S ME » ou visage d'enfant (n4-5) | TAPE_ERREUR_07 |
+| Gabriel | Toute anomalie GAB, par exemple GAB-001 Une chaise est reculée (n1) | BALLOON | GAB-014 Freddy semble regarder un ballon (n4) | TAPE_GAB_03 |
+| Jeremy | Toute anomalie JER, par exemple JER-001 Une feuille blanche apparaît (n1) | LOST_ART | JER-015 Dessin d'une famille (n4) | TAPE_JER_03 |
+| Susie | Toute anomalie SUS, par exemple SUS-001 Gamelle métallique sous une table (n1) | LOST_PETS | SUS-027 Chica protège le Cupcake (n4) | TAPE_SUS_03 |
+| Fritz | Toute anomalie FRT, par exemple FRT-001 Petite voiture rouge apparaît (n1) | LOST_TOYS | FRT-026 Tour de cubes construite (n4) | TAPE_FRT_03 |
+| Cassidy | Une trace du cinquième enfant : CASSIDY-08 Cinq séries de petits pas (n3), JER-016 Dessin de cinq enfants (n4), CASSIDY-09 Cinq jouets alignés (n4) | MEMORY | CASSIDY-07 Une présence familière se manifeste (n5) | TAPE_ERREUR_07 |
 
 - 5 chaînes de 4 maillons : 20 maillons. La fin Reconnaissance demande la chaîne de Cassidy complète et au moins 15 maillons au total.
 - Grâce à la persistance, une chaîne commencée dans une partie se poursuit dans la suivante.
-- Les autres cassettes restent débloquées par leurs anomalies, en bonus.
-- Trace du cinquième enfant : une des quatre anomalies de la table Cassidy fusionnée (cinquième place à table, cinquième enfant dessiné, cinquième bruit de pas, cinq jouets alignés), au hasard.
+- Les autres cassettes viennent des réserves (section 2).
 
-## 5. Affiches et journaux
+Chaîne de Cassidy, décidée le 18/11/2026 :
+
+- Contrairement aux quatre autres chaînes, MEMORY ne s'ouvre pas à la première anomalie de Cassidy, mais seulement par une trace du cinquième enfant (`openEvents` dans `rewards_data.json`). Sinon CASSIDY-01 l'ouvrirait dès la nuit 1, avant que l'affiche de la nuit 3 parle de cinq enfants.
+- Les traces sont trois des quatre traces de la Bible (section 5). JER-016 existait déjà. CASSIDY-08 et CASSIDY-09 sont créés : son et image à produire. La quatrième trace, la cinquième place à table, est GAB-003 (cinquième assiette). Elle reste une anomalie de Gabriel sans ouvrir MEMORY, parce qu'elle sort en nuit 2.
+- Une trace vue donne aussi la récompense de son enfant : JER-016 avance la réserve de Jeremy, CASSIDY-08 et 09 celle de Cassidy.
+- Le maillon 3 est CASSIDY-07, ramené en nuit 5 avec CASSIDY-06. Il portait déjà TAPE_ERREUR_07 et le handler `cassidy_finale`. « IT'S ME » et le visage d'enfant restent des manifestations du palier 2 du Director, hors chaîne.
+
+## 6. Affiches et journaux
 
 Les deux canaux sont complémentaires.
 
 - Les affiches de la CAM 4B racontent l'histoire publique : deux enfants, puis cinq, un suspect condamné, la fermeture. Ce sont elles qui disent « disparus ».
 - Les 12 journaux (`ressources/journaux/*.txt` et leurs images) ne le disent jamais. Chacun parle d'un enfant par la bande, son code le désigne (`NEWS_GAB`, `NEWS_JER`, `NEWS_SUS`, `NEWS_FRT`) : une fête qui tourne court, des dessins remplacés, un animal démenti, des jouets réclamés. Le joueur relie lui-même un fait divers à un enfant.
 
-Aucun journal à créer. `ensureNightJournals()` reste tel quel.
+Aucun journal à créer. `ensureNightJournals()` garde sa garantie (au moins N journaux à la fin de la nuit N), mais pioche dans les réserves des enfants (section 2) pour ne jamais donner un journal que la réserve donnerait ensuite.
 
 ### Corrections à prévoir
 
@@ -148,7 +193,7 @@ Aucun journal à créer. `ensureNightJournals()` reste tel quel.
 - L'affiche de la nuit 2 situe la disparition des deux premiers enfants « vendredi soir ». L'affiche ne donne aucune date : c'est la chronologie qui s'adapte, pas l'image. Lors du passage des dates à 1985, placer cette disparition un vendredi distinct du 26/06/1985 (un mercredi). Le vendredi 21/06/1985 est libre dans la chronologie actuelle. L'affiche de la nuit 3 (cinq enfants) vient ensuite.
 - Les affiches ne datent rien : elles restent compatibles avec 1985.
 
-## 6. Écran de 6 h
+## 7. Écran de 6 h
 
 Après chaque nuit de 1 à 4, et avant la fin en nuit 5.
 
@@ -156,11 +201,15 @@ Après chaque nuit de 1 à 4, et avant la fin en nuit 5.
 - Pour chacune : `CORRIGER` (« Archive stabilisée. ») ou `CONSERVER`.
 - Le choix est sauvegardé. Il compte pour la fin et pour la jauge de Cassidy.
 
-## 7. Travail technique
+## 8. Travail technique
 
 | Sujet | Fichiers |
 | --- | --- |
 | Champ `minNight` des logs | `script/lore/lore_core.js`, `ressources/logs/*.json`, `_editor_log/README.md` |
-| Prérequis « log lu » | `script/core/random_events_engine.js` (ou équivalent), `random_events_data.json` |
-| Champs `terminal` à réaffecter | `random_events_data.json` |
+| Réserves de récompenses : données (enfant, ordre, nuit minimale) et distribution à chaque anomalie vue | Nouveau fichier `script/config/rewards_data.json`, `script/core/random_events_engine.js` |
+| Ouverture du log de chaîne à la première anomalie de l'enfant | `script/core/random_events_engine.js`, `script/lore/lore_core.js` |
+| Journaux garantis : passer par les réserves | `script/mechanics/journal.js` |
+| Prérequis « log lu » des maillons 3 | `script/core/random_events_engine.js`, `random_events_data.json` |
+| Vider `terminal`, `tape` et `journal` des événements, sauf les maillons 3 | `random_events_data.json`, `config_validator.js` |
+| Événements de la chaîne de Cassidy à créer, CASSIDY-06 et 07 en nuit 5 | `random_events_data.json` |
 | `secretPool` des nuits 1 à 5 | `script/lore/lore_night1.js` à `lore_night5.js` |

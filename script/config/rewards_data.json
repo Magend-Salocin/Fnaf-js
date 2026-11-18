@@ -1,0 +1,220 @@
+{
+  "pools": {
+    "GAB": [
+      {
+        "code": "TAPE_GAB_01",
+        "kind": "tape",
+        "minNight": 1
+      },
+      {
+        "code": "NEWS_GAB_01",
+        "kind": "journal",
+        "minNight": 1
+      },
+      {
+        "code": "TAPE_GAB_02",
+        "kind": "tape",
+        "minNight": 2
+      },
+      {
+        "code": "NEWS_GAB_02",
+        "kind": "journal",
+        "minNight": 3
+      },
+      {
+        "code": "NEWS_GAB_03",
+        "kind": "journal",
+        "minNight": 4
+      }
+    ],
+    "JER": [
+      {
+        "code": "TAPE_JER_01",
+        "kind": "tape",
+        "minNight": 1
+      },
+      {
+        "code": "NEWS_JER_01",
+        "kind": "journal",
+        "minNight": 1
+      },
+      {
+        "code": "TAPE_JER_02",
+        "kind": "tape",
+        "minNight": 2
+      },
+      {
+        "code": "NEWS_JER_02",
+        "kind": "journal",
+        "minNight": 2
+      },
+      {
+        "code": "NEWS_JER_03",
+        "kind": "journal",
+        "minNight": 3
+      },
+      {
+        "code": "CHILDREN_ART",
+        "kind": "log",
+        "minNight": 4
+      },
+      {
+        "code": "SCANNER",
+        "kind": "log",
+        "minNight": 5
+      }
+    ],
+    "SUS": [
+      {
+        "code": "TAPE_SUS_01",
+        "kind": "tape",
+        "minNight": 1
+      },
+      {
+        "code": "NEWS_SUS_01",
+        "kind": "journal",
+        "minNight": 1
+      },
+      {
+        "code": "TAPE_SUS_02",
+        "kind": "tape",
+        "minNight": 2
+      },
+      {
+        "code": "NEWS_SUS_02",
+        "kind": "journal",
+        "minNight": 2
+      },
+      {
+        "code": "NEWS_SUS_03",
+        "kind": "journal",
+        "minNight": 3
+      },
+      {
+        "code": "COOKING",
+        "kind": "log",
+        "minNight": 4
+      }
+    ],
+    "FRT": [
+      {
+        "code": "TAPE_FRT_01",
+        "kind": "tape",
+        "minNight": 1
+      },
+      {
+        "code": "NEWS_FRT_01",
+        "kind": "journal",
+        "minNight": 1
+      },
+      {
+        "code": "PIRATE",
+        "kind": "log",
+        "minNight": 2
+      },
+      {
+        "code": "TAPE_FRT_02",
+        "kind": "tape",
+        "minNight": 3
+      },
+      {
+        "code": "NEWS_FRT_02",
+        "kind": "journal",
+        "minNight": 3
+      },
+      {
+        "code": "NEWS_FRT_03",
+        "kind": "journal",
+        "minNight": 4
+      },
+      {
+        "code": "MAINT_05",
+        "kind": "log",
+        "minNight": 4
+      },
+      {
+        "code": "STAGE_PROP",
+        "kind": "log",
+        "minNight": 5
+      }
+    ],
+    "CASSIDY": [
+      {
+        "code": "TAPE_ERREUR_01",
+        "kind": "tape",
+        "minNight": 1
+      },
+      {
+        "code": "TAPE_ERREUR_02",
+        "kind": "tape",
+        "minNight": 2
+      },
+      {
+        "code": "TAPE_ERREUR_03",
+        "kind": "tape",
+        "minNight": 3
+      },
+      {
+        "code": "TAPE_ERREUR_04",
+        "kind": "tape",
+        "minNight": 4
+      },
+      {
+        "code": "TAPE_ERREUR_05",
+        "kind": "tape",
+        "minNight": 5
+      },
+      {
+        "code": "TAPE_ERREUR_06",
+        "kind": "tape",
+        "minNight": 5
+      }
+    ]
+  },
+  "chains": [
+    {
+      "child": "GAB",
+      "name": "Gabriel",
+      "log": "BALLOON",
+      "openEvents": null,
+      "finalEvent": "GAB-014",
+      "finalTape": "TAPE_GAB_03"
+    },
+    {
+      "child": "JER",
+      "name": "Jeremy",
+      "log": "LOST_ART",
+      "openEvents": null,
+      "finalEvent": "JER-015",
+      "finalTape": "TAPE_JER_03"
+    },
+    {
+      "child": "SUS",
+      "name": "Susie",
+      "log": "LOST_PETS",
+      "openEvents": null,
+      "finalEvent": "SUS-027",
+      "finalTape": "TAPE_SUS_03"
+    },
+    {
+      "child": "FRT",
+      "name": "Fritz",
+      "log": "LOST_TOYS",
+      "openEvents": null,
+      "finalEvent": "FRT-026",
+      "finalTape": "TAPE_FRT_03"
+    },
+    {
+      "child": "CASSIDY",
+      "name": "Cassidy",
+      "log": "MEMORY",
+      "openEvents": [
+        "CASSIDY-08",
+        "JER-016",
+        "CASSIDY-09"
+      ],
+      "finalEvent": "CASSIDY-07",
+      "finalTape": "TAPE_ERREUR_07"
+    }
+  ]
+}
