@@ -1,5 +1,5 @@
 // Convertisseur Markdown vers HTML, limité à ce qu'utilise la documentation du projet :
-// titres, paragraphes, listes (imbriquées), tableaux, blocs de code, citations, séparateurs,
+// titres, paragraphes, listes (imbriquées), tableaux, blocs de code, schémas Mermaid, citations, séparateurs,
 // et en ligne : code, gras, italique (*texte*), liens, images.
 const path = require("path");
 const { pathToFileURL } = require("url");
@@ -67,9 +67,13 @@ function renderMarkdown(source, baseDir) {
     if (!line.trim()) { i++; continue; }
 
     if (line.startsWith("```")) {
+      const isMermaid = line.slice(3).trim() === "mermaid";
       const code = [];
       for (i++; i < lines.length && !lines[i].startsWith("```"); i++) code.push(lines[i]);
-      out.push(`<pre><code>${escapeHtml(code.join("\n"))}</code></pre>`);
+      // Un schéma Mermaid est dessiné à l'impression (voir imprimer_doc.js).
+      out.push(isMermaid
+        ? `<div class="schema"><pre class="mermaid">${escapeHtml(code.join("\n"))}</pre></div>`
+        : `<pre><code>${escapeHtml(code.join("\n"))}</code></pre>`);
       i++;
       continue;
     }
@@ -89,7 +93,11 @@ function renderMarkdown(source, baseDir) {
       const rows = [];
       for (i += 2; i < lines.length && lines[i].trim().startsWith("|"); i++) rows.push(splitRow(lines[i]));
       const cells = (row, tag) => row.map(cell => `<${tag}>${renderInline(cell, baseDir)}</${tag}>`).join("");
-      out.push(`<table><thead><tr>${cells(header, "th")}</tr></thead><tbody>${rows.map(row => `<tr>${cells(row, "td")}</tr>`).join("")}</tbody></table>`);
+      // Tableau court (peu de lignes, peu de texte) : imprimé d'un bloc, pour ne pas laisser
+      // un en-tête seul en bas de page. Un tableau plus lourd se coupe entre deux lignes.
+      const textLength = rows.flat().join("").length;
+      const tableClass = rows.length <= 8 && textLength <= 500 ? ' class="courte"' : "";
+      out.push(`<table${tableClass}><thead><tr>${cells(header, "th")}</tr></thead><tbody>${rows.map(row => `<tr>${cells(row, "td")}</tr>`).join("")}</tbody></table>`);
       continue;
     }
 

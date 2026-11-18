@@ -21,6 +21,7 @@
   "devDependencies": {
     "electron": "^43.4.0",
     "electron-builder": "^26.15.3",
+    "mermaid": "^11.4.1",
     "pngjs": "^7.0.0"
   }
 }

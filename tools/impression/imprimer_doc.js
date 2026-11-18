@@ -10,6 +10,7 @@
 const fs = require("fs");
 const os = require("os");
 const path = require("path");
+const { pathToFileURL } = require("url");
 const { spawnSync } = require("child_process");
 const electron = require("electron");
 const { renderMarkdown, escapeHtml } = require("./markdown");
@@ -30,6 +31,26 @@ const ROOT = path.join(__dirname, "..", "..");
 const DEFAULT_SOURCE = path.join(ROOT, ".github", "Projet", "03 - Technique");
 const OUTPUT_DIR = path.join(ROOT, ".github", "Projet", "_impression");
 const STYLE = fs.readFileSync(path.join(__dirname, "carnet.css"), "utf8");
+const MERMAID_SCRIPT = pathToFileURL(require.resolve("mermaid/dist/mermaid.min.js")).href;
+
+// Schémas Mermaid aux couleurs du carnet : encre sur papier, écriture machine.
+const MERMAID_CONFIG = {
+  startOnLoad: false,
+  theme: "base",
+  themeVariables: {
+    fontFamily: '"Courier New", Courier, monospace',
+    primaryColor: "#efe3cc",
+    primaryBorderColor: "#2b2622",
+    primaryTextColor: "#2b2622",
+    lineColor: "#2b2622",
+    secondaryColor: "#e2d0ad",
+    tertiaryColor: "#f5ecd9",
+    clusterBkg: "#f5ecd9",
+    clusterBorder: "#5c534b",
+    edgeLabelBackground: "#efe3cc",
+  },
+  flowchart: { htmlLabels: true, curve: "basis" },
+};
 
 function listMarkdownFiles(args) {
   const sources = args.length > 0 ? args.map(arg => path.resolve(arg)) : [DEFAULT_SOURCE];
@@ -47,6 +68,7 @@ function buildPage(markdownFile) {
   const title = titleMatch ? titleMatch[1].trim() : path.basename(markdownFile, ".md");
   const body = titleMatch ? source.replace(titleMatch[0], "") : source;
   const relativePath = path.relative(ROOT, markdownFile).split(path.sep).join("/");
+  const mermaidScript = /^```mermaid\s*$/m.test(body) ? `<script src="${MERMAID_SCRIPT}"></script>` : "";
 
   return `<!doctype html>
 <html lang="fr">
@@ -55,6 +77,7 @@ function buildPage(markdownFile) {
 <title>${escapeHtml(title)}</title>
 <style>:root { --texture-papier: url("${paperTexture(7)}"); }
 ${STYLE}</style>
+${mermaidScript}
 </head>
 <body>
 ${INK_FILTER}
@@ -79,10 +102,26 @@ ${renderMarkdown(body, path.dirname(markdownFile))}
 </html>`;
 }
 
+// Dessine les schémas Mermaid de la page avant l'impression. Un schéma invalide reste
+// affiché sous forme de code et le problème est signalé, sans bloquer l'impression.
+async function renderDiagrams(window) {
+  const result = await window.webContents.executeJavaScript(`(async () => {
+    if (!window.mermaid) return null;
+    window.mermaid.initialize(${JSON.stringify(MERMAID_CONFIG)});
+    try { await window.mermaid.run({ querySelector: ".mermaid" }); }
+    catch (e) { return { error: String((e && e.message) || e) }; }
+    return { drawn: document.querySelectorAll(".schema svg").length, total: document.querySelectorAll(".schema").length };
+  })()`);
+  if (!result) return;
+  if (result.error) console.warn(`Schéma Mermaid non dessiné : ${result.error}`);
+  else console.log(`Schémas dessinés : ${result.drawn} sur ${result.total}`);
+}
+
 async function printToPdf(markdownFile, window) {
   const htmlFile = path.join(os.tmpdir(), `impression-${process.pid}.html`);
   fs.writeFileSync(htmlFile, buildPage(markdownFile), "utf8");
   await window.loadFile(htmlFile);
+  await renderDiagrams(window);
   const pdf = await window.webContents.printToPDF({
     pageSize: "A4",
     printBackground: true,

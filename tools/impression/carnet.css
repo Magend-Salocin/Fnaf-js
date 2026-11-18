@@ -215,10 +215,11 @@ h3, h4 {
 
 h3::before { content: "> "; color: var(--rouge); }
 
-p { margin: 0 0 3mm; }
+/* Pas de ligne isolée en bas ou en haut de page. */
+p { margin: 0 0 3mm; orphans: 3; widows: 3; }
 
 ul, ol { margin: 0 0 3mm; padding-left: 7mm; }
-li { margin-bottom: 1mm; }
+li { margin-bottom: 1mm; break-inside: avoid; orphans: 2; widows: 2; }
 ul > li::marker { content: "– "; color: var(--rouge); }
 
 code {
@@ -291,3 +292,15 @@ hr { border: none; border-top: 1px dashed var(--encre-pale); margin: 6mm 0; }
 
 .notes .lignes { margin-top: 6mm; }
 .notes .lignes div { height: 9mm; border-bottom: 1px solid rgba(90, 120, 160, 0.45); }
+
+/* Schémas Mermaid, dessinés par imprimer_doc.js */
+.schema { margin: 4mm 0; text-align: center; break-inside: avoid; }
+.schema pre.mermaid { background: none; border: none; padding: 0; margin: 0; white-space: normal; }
+/* Un schéma ne dépasse pas la moitié de la page : sinon il saute à la page suivante
+   et laisse un grand blanc derrière lui. */
+.schema svg { width: auto !important; max-width: 100% !important; max-height: 95mm; height: auto; }
+
+/* Un tableau court (voir markdown.js) reste entier ; un long se coupe entre deux lignes,
+   avec son en-tête répété. */
+table.courte { break-inside: avoid; }
+thead { display: table-header-group; }

@@ -8,7 +8,7 @@ Tu audites un remake de FNAF 1 en JavaScript. Le jeu de base doit rester fidèle
 
 Sources, dans cet ordre :
 
-1. La documentation du projet : `.github/Projet/01 - Game Design/game.md` (reconstruction de FNAF 1 : états, timers, probabilités), `ia.md`, `batterie.md`, `Foxy/`, et `.github/Projet/03 - Technique/son.md` (section 7 : rôle de référence de chaque son).
+1. La documentation du projet : `.github/Projet/00 - Origine/Origine.md` (FNAF 1 côté code, avec le niveau de fiabilité de chaque valeur), `.github/Projet/01 - Game Design/Foxy/`, et `.github/Projet/03 - Technique/son.md` (section 7 : rôle de référence de chaque son).
 2. Le code concerné, dans `script/mechanics/`, `script/core/sounds.js`, `script/state/game_config.json`.
 3. Le web (wikis FNAF, analyses du code source Clickteam) quand la doc du projet ne répond pas. Les wikis de fans se contredisent : croiser au moins deux sources et dire quand la réponse reste incertaine.
 

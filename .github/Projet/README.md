@@ -10,9 +10,8 @@ de tâches et des notes de travail, pas de la documentation.
 | Je cherche | Fichier |
 |------------|---------|
 | Quel son est joué à quel moment, et pourquoi | [03 - Technique/son.md](03%20-%20Technique/son.md) |
-| Comment se comportent les IA des animatronics | [01 - Game Design/ia.md](01%20-%20Game%20Design/ia.md) |
+| Comment marche FNAF 1, et ce que le remake en a fait | [00 - Origine/Origine.md](00%20-%20Origine/Origine.md) |
 | Les phases de Foxy et leurs seuils | [01 - Game Design/Foxy/](01%20-%20Game%20Design/Foxy/) |
-| Le système de consommation d'énergie | [01 - Game Design/batterie.md](01%20-%20Game%20Design/batterie.md) |
 | Le rendu du bureau et le scroll des portes | [01 - Game Design/bureau.md](01%20-%20Game%20Design/bureau.md) |
 | Qui est un enfant, à quel animatronic il est lié | [02 - Lore/Catalogue Fazbear/](02%20-%20Lore/Catalogue%20Fazbear/) |
 | Les règles d'écriture des logs du terminal | [02 - Lore/CANON_LOGS.md](02%20-%20Lore/CANON_LOGS.md) |
@@ -27,10 +26,14 @@ de tâches et des notes de travail, pas de la documentation.
 
 ## Table des matières
 
-### 00 - Vision
+### 00 - Origine
 
-Vide. La vision du projet est pour l'instant dans
-[02 - Lore/Tome 1 – Vision & Lore.md](02%20-%20Lore/Tome%201%20–%20Vision%20&%20Lore.md).
+Le point de départ : comment marche FNAF 1, et comment le remake le reprend et le réinterprète.
+
+| Fichier | Contenu |
+|---------|---------|
+| [Origine.md](00%20-%20Origine/Origine.md) | FNAF 1 côté code (tirages, niveaux d'IA, Freddy, Foxy, énergie), boucles de gameplay, correspondance avec le code du remake, couches ajoutées |
+| `archives/` | Anciennes notes de reconstruction (`game.md`, `ia.md`, `batterie.md`), valeurs non fiables |
 
 ### 01 - Game Design
 
@@ -38,9 +41,6 @@ Mécaniques de jeu : ce que fait le jeu, et pourquoi.
 
 | Fichier | Contenu |
 |---------|---------|
-| [game.md](01%20-%20Game%20Design/game.md) | Reconstruction du fonctionnement de FNAF 1 : machine à états, timers, probabilités |
-| [ia.md](01%20-%20Game%20Design/ia.md) | Architecture commune aux IA d'animatronics, schémas de décision |
-| [batterie.md](01%20-%20Game%20Design/batterie.md) | Système de consommation d'énergie de FNAF 1, niveaux d'usage |
 | [bureau.md](01%20-%20Game%20Design/bureau.md) | Audit du rendu du bureau : synchronisation des overlays de portes, repères canvas et DOM |
 | [new.md](01%20-%20Game%20Design/new.md) | Pistes de design : Golden Freddy comme indicateur psychologique |
 | [Foxy/FOXY_DEBUG_GUIDE.md](01%20-%20Game%20Design/Foxy/FOXY_DEBUG_GUIDE.md) | Boutons de debug de Foxy, phases et agressivité |
