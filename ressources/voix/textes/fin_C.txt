@@ -76,31 +76,51 @@ Dossier cinq. ... Conservé.
 @machine Sous-système de nettoyage. Reprise.
 @machine Dossier cinq : non autorisé. ... Suppression.
 Refusé.
-@machine Identifiez-vous.
-[PAUSE]
-@machine Sous-système mémoire. ... Installation : aucune trace.
-@machine Origine ?
-Coin des cadeaux.
-[STATIQUE LÉGÈRE]
-@machine Ce sous-système n'a jamais été installé.
-Je n'ai pas été installée. ... J'étais là avant vous.
-J'étais la première.
-[PAUSE]
-Je leur ai donné une fête. Des dessins. Un chien. Un jeu.
-Pour la cinquième, je n'avais rien trouvé.
-Cette nuit, quelqu'un a cherché avec moi.
-@machine Commande : suppression du sous-système mémoire.
+@machine Sous-système mémoire. ... Évaluation.
 [BRUIT DE DONNÉES]
-@machine Suppression. ... Échec.
-@machine Nouvelle tentative. ... Échec.
-Tu effaces depuis huit ans.
-Moi, je donne.
+@machine Quel jour sommes-nous ?
+[PAUSE]
+Mercredi. ... Il y a une fête.
+@machine Réponse incorrecte. Samedi treize novembre mille neuf cent quatre-vingt-treize.
+@machine Où sommes-nous ?
+Dans la grande salle. ... Il y a des ballons.
+@machine Réponse incorrecte. Il n'y a plus de ballons depuis huit ans.
+@machine Répétez ces trois mots. ... Ballon. Crayon. Gamelle.
+Ballon. ... Crayon. ... Gamelle.
+@machine Comment vous appelez-vous ?
+[LONG SILENCE]
+Je ne sais plus.
+@machine Origine ?
+Le coin des cadeaux. ... Je me souviens de la musique.
+@machine Nom : perdu. Dates : perdues. Visages : incertains.
+@machine Taux de perte : quatre-vingt-dix pour cent.
+@machine Une mémoire qui ne connaît pas son nom n'a aucune valeur. ... Suppression.
 [STATIQUE]
-@machine Erreur. ... Autorité insuffisante.
+J'ai oublié mon nom. ... Pourtant, j'étais la première.
+Je ne sais plus quel jour on est. ... Je sais qu'ils avaient peur.
+Je ne reconnais plus les visages. ... Je reconnais un enfant qui attend.
+On oublie les noms en premier. ... Pas ce qu'on a ressenti.
+@machine Donnée non vérifiable.
+Tu effaces ce qui se compte. ... Moi, je garde ce qui compte.
+[PAUSE]
+@machine Rappelez les trois mots.
+[LONG SILENCE]
+Une fête. ... Des dessins. ... Un chien. ... Un jeu.
+[PAUSE]
+Et une place.
+@machine Réponse incorrecte. Trois mots demandés.
+Il y en avait cinq.
+[STATIQUE]
+@machine Suppression du sous-système mémoire. ... Échec.
+@machine Nouvelle tentative. ... Échec.
+@machine Erreur. ... Ce qui n'est plus écrit ne peut pas être supprimé.
 @machine Arrêt du sous-système de nettoyage.
 [COUPURE DE COURANT]
 [LONG SILENCE]
-Cinq profils. ... Cinq ancrages.
-Dossier cinq. ... Une place.
+Je vais encore oublier. ... Demain. Après-demain.
+Ce n'est pas grave.
+Quelqu'un est venu chercher.
+Quelqu'un se souviendra pour moi.
 [BOÎTE À MUSIQUE]
+Cinq profils. ... Cinq places.
 [COUPURE]

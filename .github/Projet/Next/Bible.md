@@ -215,7 +215,7 @@ Plusieurs fins, déterminées par l'enquête. Les fins Effacement et Témoin son
 
 | Fin | Condition | Ce qui se passe |
 | --- | --- | --- |
-| Effacement | Majorité d'anomalies corrigées | Le système devient stable, les souvenirs disparaissent. Le gardien s'enfuit à 6 h et ne revient pas. Fazbear ferme le restaurant et efface tout. Il ne reste aux enfants que leur colère : les fantômes cherchent le gardien dans un bureau vide. Cassidy reste persuadée que William lui a échappé, et attend. Silence |
+| Effacement | Majorité d'anomalies corrigées, ou moins de 8 maillons | Le système devient stable, les souvenirs disparaissent. Le gardien s'enfuit à 6 h et ne revient pas. Fazbear ferme le restaurant et efface tout. Il ne reste aux enfants que leur colère : les fantômes cherchent le gardien dans un bureau vide. Cassidy reste persuadée que William lui a échappé, et attend. Silence |
 | Témoin | Nuit 5 survécue, enquête incomplète | Le gardien part sans comprendre. « IT'S ME » une dernière fois |
 | Reconnaissance | Chaîne de Cassidy complète, au moins 75 % de l'ensemble des maillons, anomalies majoritairement conservées | « YOU ARE NOT HIM ». Le système restaure un cinquième dossier, toujours sans nom. Cassidy cesse de regarder le gardien |
 
@@ -229,7 +229,7 @@ Charlie (The Puppet) existe seulement dans cette Bible. Elle explique en couliss
 
 Elle n'apparaît jamais en jeu : aucun log, événement ni image.
 
-Exception, décidée le 18/11/2026 : l'après-fin de la fin C. La Mémoire du bâtiment (sous-système RECOVERY) est Charlie, sans jamais être nommée. Elle se dévoile face à la Machine : origine « coin des cadeaux », « J'étais la première », les quatre ancrages qu'elle a donnés, rien trouvé pour la cinquième. Elle refuse d'être supprimée et la Machine s'arrête. Une boîte à musique clôt l'enregistrement. Partout ailleurs, la Mémoire reste une voix système sans indice.
+Exception, décidée le 18/11/2026 : l'après-fin de la fin C. La Mémoire du bâtiment (sous-système RECOVERY) est Charlie, sans jamais être nommée. La Machine lui fait passer un test cognitif ; elle a perdu son nom, les dates, les visages, mais garde ce qu'elle a ressenti, et répond par les cinq ancrages. Indices : origine « coin des cadeaux », « J'étais la première », la musique. La Machine ne peut pas la supprimer et s'arrête. Cet échange porte le thème du jeu, l'oubli face au souvenir, à travers la maladie d'Alzheimer (détail dans [Fins.md](Fins.md)). Une boîte à musique clôt l'enregistrement. Partout ailleurs, la Mémoire reste une voix système sans indice.
 
 ## 10. Travail découlant de ces décisions
 

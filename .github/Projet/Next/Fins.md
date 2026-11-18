@@ -26,7 +26,7 @@ Proposition : la fin se calcule après le dernier écran de correction de la nui
 
 Mourir en nuit 5 donne le game over habituel, sans fin.
 
-À trancher : la Bible réserve Effacement aux joueurs qui corrigent. Un joueur qui n'a presque rien trouvé mais n'a rien corrigé tombe ici en A. L'autre option est de l'envoyer en B.
+Décidé le 18/11/2026 : un joueur qui n'a presque rien trouvé (moins de 8 maillons) tombe en A, même s'il n'a rien corrigé. Ne pas chercher, c'est laisser le restaurant effacer.
 
 ## A — Effacement
 
@@ -57,9 +57,33 @@ Voix principale : la Mémoire. Elle rejoue la liste de 1985 et ajoute une ligne 
 
 Dernière phrase de Cassidy : « J'ai une place. » Puis : « Dossier cinq. Conservé. »
 
-Après-fin, après la fin de bande et un long silence : la Machine reprend et veut supprimer le dossier cinq. La Mémoire refuse. Sommée de s'identifier, elle n'a aucune trace d'installation ; son origine est le « coin des cadeaux ». « Je n'ai pas été installée. J'étais là avant vous. J'étais la première. » Elle a donné un ancrage à chacun des quatre, n'avait rien trouvé pour la cinquième, et cette nuit quelqu'un a cherché avec elle. La Machine tente deux fois de la supprimer, échoue (« Tu effaces depuis huit ans. Moi, je donne. »), manque d'autorité et s'arrête. Coupure de courant. « Cinq profils. Cinq ancrages. Dossier cinq. Une place. » Boîte à musique.
+### Après-fin : la Machine et la Mémoire
 
-Le joueur qui connaît FNAF reconnaît la Marionnette (Prize Corner, première victime, « give gifts, give life ») ; les autres entendent seulement que la mémoire gagne sur l'effacement.
+Le thème de tout le jeu, oublier ou se souvenir, dit à travers la maladie d'Alzheimer. La Machine est l'oubli : froide, exacte, elle compte ce qui est perdu. La Mémoire est la malade, et c'est Charlie, jamais nommée : elle perd les noms, les dates, les visages, mais garde ce qu'elle a ressenti. Sa voix se casse et se répète déjà (profil `memoire`) : la maladie s'entend avant d'être dite.
+
+1. Reprise. La Machine veut supprimer le dossier cinq. La Mémoire refuse. La Machine lance une évaluation.
+2. Le test. La Machine pose les questions d'un test cognitif : le jour, le lieu, trois mots à répéter (ballon, crayon, gamelle), le nom. La Mémoire vit encore le mercredi de la fête, voit des ballons qui n'existent plus depuis huit ans, ne sait plus son nom. Elle se souvient seulement d'où elle vient, le coin des cadeaux, et de la musique.
+3. Le diagnostic. « Nom : perdu. Dates : perdues. Visages : incertains. Taux de perte : quatre-vingt-dix pour cent. » Une mémoire qui ne connaît pas son nom n'a aucune valeur : suppression.
+4. La réponse. La Mémoire oppose à chaque perte ce qui reste : son nom oublié, mais « j'étais la première » ; le jour oublié, mais « ils avaient peur » ; les visages oubliés, mais « un enfant qui attend ». « On oublie les noms en premier. Pas ce qu'on a ressenti. » « Tu effaces ce qui se compte. Moi, je garde ce qui compte. »
+5. Le rappel. « Rappelez les trois mots. » Elle répond par les cinq ancrages : une fête, des dessins, un chien, un jeu, et une place. « Trois mots demandés. — Il y en avait cinq. » C'est sa victoire : elle se trompe sur le test et a raison sur l'essentiel.
+6. L'arrêt. La Machine échoue à la supprimer (« Ce qui n'est plus écrit ne peut pas être supprimé ») et s'arrête. Coupure de courant.
+7. La fin. « Je vais encore oublier. Demain. Après-demain. Ce n'est pas grave. Quelqu'un est venu chercher. Quelqu'un se souviendra pour moi. » La musique, ce qui reste en dernier chez les malades, revient : boîte à musique. « Cinq profils. Cinq places. »
+
+La Mémoire ne guérit pas et ne bat pas l'oubli : elle le traverse, et confie au joueur ce qu'elle va perdre.
+
+### Storyboard de l'après-fin
+
+Si la fin devient un montage audio sur images. Règle : on ne voit jamais la Marionnette, seulement ses traces.
+
+| Plan | Audio | Image |
+| --- | --- | --- |
+| 1 | Long silence, serveur | Noir. Un curseur clignote sur un terminal vert |
+| 2 | Le test : jour, lieu, trois mots, nom | Les questions s'impriment ligne à ligne. Entre les réponses, la salle principale en 1985, couleurs chaudes, ballons, puis la même salle vide en 1993 |
+| 3 | Diagnostic, « quatre-vingt-dix pour cent » | Une jauge de perte qui monte. Les photos du terminal se pixellisent une à une |
+| 4 | « On oublie les noms en premier » | Le coin des cadeaux, la grande boîte fermée, dans la pénombre |
+| 5 | « Il y en avait cinq » | Cinq objets posés en ligne : ballon, crayon, gamelle, petite voiture rouge, et une chaise vide |
+| 6 | Arrêt de la Machine, coupure de courant | Les écrans s'éteignent un à un, le terminal en dernier |
+| 7 | « Quelqu'un se souviendra pour moi », boîte à musique | Noir, puis le couvercle de la boîte du coin des cadeaux, entrouvert. Rien ne sort |
 
 À l'écran, pendant ou après : « YOU ARE NOT HIM » (Bible, section 8).
 
@@ -80,12 +104,14 @@ Texte : `ressources/voix/textes/fin_C.txt`.
 | « Parce qu'elle était là » (C) | Ancienne TAPE_ERREUR_08 |
 | « Je me suis trompée de visage » (C) | Appel C |
 | « Plus personne n'attend » (C) | TAPE_GAB_02 et 03, Freddy qui attend sur scène |
-| Coin des cadeaux, « J'étais la première », « Moi, je donne », boîte à musique (après-fin C) | Charlie, Bible section 9 |
+| Coin des cadeaux, « J'étais la première », boîte à musique (après-fin C) | Charlie, Bible section 9 |
+| Test cognitif, « On oublie les noms en premier » (après-fin C) | La maladie d'Alzheimer, thème de l'oubli |
+| « Mercredi. Il y a une fête » (après-fin C) | Le 26/06/1985, un mercredi |
 | Huit ans, quatre mois, dix-huit jours (C) | Du 26/06/1985 au matin du 13/11/1993 |
 
 ## Production audio
 
-Générés le 18/11/2026 avec `tools/voix/generer_voix.js` : `ressources/voix/sorties/fin_{A,B,C}.wav`, environ 4 min 05, 1 min 45 et 4 min 30 (dont 1 min 45 d'après-fin).
+Générés le 18/11/2026 avec `tools/voix/generer_voix.js` : `ressources/voix/sorties/fin_{A,B,C}.wav`, environ 4 min 05, 1 min 45 et 6 min (dont 3 min 15 d'après-fin).
 
 Ajouts dans `ressources/voix/config.json` (à l'essai) :
 

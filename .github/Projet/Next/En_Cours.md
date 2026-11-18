@@ -11,7 +11,7 @@
 | Bible : 14 décisions de lore, personnages, nuits, fins | [Bible.md](Bible.md) |
 | Parcours d'enquête nuit par nuit, chaînes validées | [Parcours_Enquete.md](Parcours_Enquete.md) |
 | Textes de l'appel de Cassidy (A, B, C) | [Appel_Nuit5.md](Appel_Nuit5.md) |
-| Trois fins A, B, C écrites et générées, à la place de TAPE_ERREUR_08 et 09 ; voix seules des quatre enfants | [Fins.md](Fins.md), `ressources/voix/textes/fin_*.txt` |
+| Trois fins A, B, C écrites, générées et validées, à la place de TAPE_ERREUR_08 et 09 : A (fuite, fermeture, fantômes), B (Témoin), C (anniversaire, puis après-fin Machine / Mémoire-Charlie sur l'oubli, avec storyboard) | [Fins.md](Fins.md), `ressources/voix/textes/fin_*.txt` |
 | Casting des voix | [Casting_Voix.md](Casting_Voix.md) |
 | Générateur de voix, 3 appels, 19 cassettes et 3 fins générés | `tools/voix/`, `ressources/voix/`, [Journal_Voix_Son.md](Journal_Voix_Son.md) |
 | Affiche française de la nuit 5 déclarée dans `assets.json` | Non commité |
@@ -28,7 +28,6 @@
 
 ## 2. À valider
 
-- Textes des fins A, B, C, condition de la fin A (joueur qui n'a rien trouvé ni corrigé), écoute de `fin_*.wav` et des voix seules des enfants.
 - Écoute des 19 cassettes, en particulier les bruitages approximatifs (porte, tables, interrupteur, musique d'anniversaire) et les profils encore jamais écoutés seuls (`fritz_echo`).
 - Écran de 6 h : sélection des anomalies montrées, lien avec les chaînes (corriger un maillon le casse-t-il ?), calcul des fins, anomalie déjà jugée, ordre en nuit 5.
 - Nuits minimales des cassettes et logs bonus dans les réserves (reprises des anciens événements).
