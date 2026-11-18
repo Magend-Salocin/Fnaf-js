@@ -1,0 +1,293 @@
+/* Style « carnet de bord » : papier vieilli, cadre rouge, machine à écrire, notes manuscrites.
+   Polices système Windows uniquement, pour fonctionner hors ligne. */
+
+:root {
+  --papier: #efe3cc;
+  --papier-sombre: #d9c39c;
+  --papier-bord: #e2d0ad;
+  --carreau: rgba(110, 130, 150, 0.16);
+  /* Fond d'une page A4 entière (--texture-papier est fourni par imprimer_doc.js).
+     Le même fond est peint dans .papier et dans la bande du numéro de page, décalé
+     pour que les deux se raccordent sans couture. */
+  --fond-images:
+    linear-gradient(to right, rgba(120, 80, 30, 0.18), transparent 8%, transparent 92%, rgba(120, 80, 30, 0.18)),
+    linear-gradient(to bottom, rgba(120, 80, 30, 0.14), transparent 5%),
+    linear-gradient(to right, var(--carreau) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--carreau) 1px, transparent 1px),
+    var(--texture-papier);
+  --fond-tailles: 210mm 297mm, 210mm 297mm, 5mm 5mm, 5mm 5mm, 210mm 297mm;
+  --fond-repetitions: no-repeat, no-repeat, repeat, repeat, no-repeat;
+  --encre: #2b2622;
+  --encre-pale: #5c534b;
+  --rouge: #b3261e;
+  --rouge-pale: rgba(179, 38, 30, 0.55);
+  --machine: "Courier New", Courier, monospace;
+  --titre: "Arial Black", Impact, sans-serif;
+  --main: "Ink Free", "Segoe Print", "Comic Sans MS", cursive;
+}
+
+/* Chromium ne peint pas le fond dans les marges de page. On garde donc une seule marge,
+   en bas (14 mm), pour le numéro de page : une case unique, sur toute la largeur, peinte
+   avec le bas du fond de page. Un double filet rouge marque son bord haut, comme le cadre
+   du carnet : il recouvre la jointure entre la page et la bande.
+   Le retrait haut, gauche et droit est porté par .feuillet. */
+@page {
+  size: A4;
+  margin: 0 0 14mm;
+  background-color: #efe3cc;
+
+  @bottom-center {
+    content: "— " counter(page) " / " counter(pages) " —";
+    width: 210mm;
+    background-color: var(--papier);
+    background-image:
+      linear-gradient(var(--rouge-pale), var(--rouge-pale)),
+      linear-gradient(var(--rouge-pale), var(--rouge-pale)),
+      var(--fond-images);
+    background-size: 174mm 1.2px, 174mm 0.6px, var(--fond-tailles);
+    background-repeat: no-repeat, no-repeat, var(--fond-repetitions);
+    background-position: 18mm 0, 18mm 0.9mm, 0 -283mm, 0 -283mm, 0 -283mm, 0 -283mm, 0 -283mm;
+    font: 8pt "Courier New", monospace;
+    letter-spacing: 0.2em;
+    color: var(--rouge);
+  }
+}
+
+/* Calque de papier : en position fixe, il se répète sur chaque page. */
+.papier {
+  position: fixed;
+  inset: 0 0 -2px; /* déborde d'un rien sur la bande : évite un liseré clair à la jointure */
+  z-index: -1;
+  background-color: var(--papier);
+  background-image: var(--fond-images);
+  background-size: var(--fond-tailles);
+  background-repeat: var(--fond-repetitions);
+  background-position: 0 0;
+}
+
+/* Taches, rond de café et éclaboussures (decor.js). */
+.papier .decor { position: absolute; inset: 0; width: 100%; height: 100%; }
+
+/* Le retrait est répété en haut et en bas de chaque page (box-decoration-break). */
+.feuillet {
+  padding: 18mm 18mm 6mm;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+html {
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+body {
+  margin: 0;
+  color: var(--encre);
+  font: 10.5pt/1.5 var(--machine);
+}
+
+/* ---------- Couverture ---------- */
+
+.couverture {
+  position: relative;
+  height: 255mm;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  border: 1.5px solid var(--rouge-pale);
+  outline: 1px solid var(--rouge-pale);
+  outline-offset: 4px;
+  break-after: page;
+}
+
+.etoile {
+  position: absolute;
+  color: var(--rouge);
+  font-size: 9pt;
+  line-height: 1;
+}
+.etoile.hg { top: -4mm; left: -4mm; }
+.etoile.hd { top: -4mm; right: -4mm; }
+.etoile.bg { bottom: -4mm; left: -4mm; }
+.etoile.bd { bottom: -4mm; right: -4mm; }
+
+/* Encre usée (filtre défini dans decor.js). */
+.couverture .barre, .couverture h1, .tampon { filter: url(#encre-usee); }
+
+.couverture .surtitre {
+  font: 13pt var(--machine);
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: var(--encre-pale);
+}
+
+.couverture .barre {
+  position: relative;
+  margin: 0 0 8mm;
+  font: 34pt var(--titre);
+  letter-spacing: 0.04em;
+  color: #1e1a17;
+}
+
+/* Trait rouge tracé à la main sur le mot barré. */
+.couverture .barre::after {
+  content: "";
+  position: absolute;
+  left: -4%;
+  right: -4%;
+  top: 52%;
+  height: 4px;
+  background: var(--rouge);
+  transform: rotate(-2.5deg);
+  border-radius: 2px;
+}
+
+/* Mot corrigé à la main, qui chevauche le titre barré. */
+.couverture .correction {
+  position: relative;
+  z-index: 1;
+  font: 50pt var(--main);
+  color: var(--rouge);
+  transform: rotate(-7deg);
+  margin: 6mm 70mm -12mm 0;
+  text-shadow: 0 0 1px var(--rouge);
+}
+
+.couverture h1 {
+  font: 30pt/1.15 var(--titre);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin: 6mm 12mm;
+  border: none;
+  padding: 0;
+}
+
+.couverture .source {
+  margin-top: 10mm;
+  font-size: 9pt;
+  color: var(--encre-pale);
+}
+
+.tampon {
+  position: absolute;
+  right: 14mm;
+  bottom: 22mm;
+  padding: 2mm 5mm;
+  border: 3px double var(--rouge);
+  color: var(--rouge);
+  font: 13pt var(--titre);
+  letter-spacing: 0.15em;
+  transform: rotate(-12deg);
+  opacity: 0.7;
+}
+
+/* ---------- Contenu ---------- */
+
+h1 {
+  font: 20pt var(--titre);
+  text-transform: uppercase;
+  border-bottom: 2px solid var(--rouge);
+  padding-bottom: 2mm;
+}
+
+/* Les sections sont présentées comme les consignes encadrées du carnet. */
+h2 {
+  font: bold 12.5pt var(--machine);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin: 9mm 0 4mm;
+  padding: 3mm 4mm;
+  border: 1.5px solid var(--rouge-pale);
+  outline: 1px solid var(--rouge-pale);
+  outline-offset: 2px;
+  background: rgba(255, 250, 238, 0.45);
+  break-after: avoid;
+}
+
+h3, h4 {
+  font: bold 11pt var(--machine);
+  margin: 6mm 0 2mm;
+  break-after: avoid;
+}
+
+h3::before { content: "> "; color: var(--rouge); }
+
+p { margin: 0 0 3mm; }
+
+ul, ol { margin: 0 0 3mm; padding-left: 7mm; }
+li { margin-bottom: 1mm; }
+ul > li::marker { content: "– "; color: var(--rouge); }
+
+code {
+  font-family: var(--machine);
+  font-weight: bold;
+  background: rgba(60, 40, 20, 0.08);
+  padding: 0 1mm;
+}
+
+pre {
+  margin: 0 0 4mm;
+  padding: 3mm 4mm;
+  border-left: 3px solid var(--rouge-pale);
+  background: rgba(255, 250, 238, 0.55);
+  white-space: pre-wrap;
+  font-size: 9pt;
+  break-inside: avoid;
+}
+
+pre code { background: none; padding: 0; font-weight: normal; }
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0 0 4mm;
+  font-size: 9pt;
+}
+
+th {
+  text-align: left;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: 1.5px solid var(--rouge);
+  padding: 1.5mm 2mm;
+}
+
+td {
+  vertical-align: top;
+  border-bottom: 1px solid rgba(90, 120, 160, 0.35);
+  padding: 1.5mm 2mm;
+}
+
+tr { break-inside: avoid; }
+
+blockquote {
+  margin: 0 0 4mm;
+  padding-left: 4mm;
+  border-left: 2px solid var(--rouge);
+  font: 12pt var(--main);
+  color: var(--rouge);
+}
+
+img { max-width: 100%; display: block; margin: 3mm auto; border: 6px solid #fbf6ea; box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3); }
+
+hr { border: none; border-top: 1px dashed var(--encre-pale); margin: 6mm 0; }
+
+.lien { text-decoration: underline; text-decoration-color: var(--rouge-pale); }
+
+/* ---------- Page de notes ---------- */
+
+.notes { break-before: page; }
+
+.notes .consigne {
+  font: 11pt var(--machine);
+  padding: 3mm 4mm;
+  border: 1.5px solid var(--rouge-pale);
+  outline: 1px solid var(--rouge-pale);
+  outline-offset: 2px;
+}
+
+.notes .lignes { margin-top: 6mm; }
+.notes .lignes div { height: 9mm; border-bottom: 1px solid rgba(90, 120, 160, 0.45); }

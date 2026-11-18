@@ -19,6 +19,7 @@ de tâches et des notes de travail, pas de la documentation.
 | La liste complète des anomalies à produire | [04 - Production/Anomalie.md](04%20-%20Production/Anomalie.md) |
 | Si un secret est trouvable en pratique | [04 - Production/Rapport_Probabilites_Secrets.md](04%20-%20Production/Rapport_Probabilites_Secrets.md) |
 | Comment éditer les logs du terminal | [_editor_log/README.md](_editor_log/README.md) |
+| Comment le générateur transforme un texte en voix | [03 - Technique/voix.md](03%20-%20Technique/voix.md) |
 | Comment produire et brancher voix, images, sons, logs | [04 - Production/Carnet_Developpeur.md](04%20-%20Production/Carnet_Developpeur.md) |
 | Où en est le projet | [Next/En_Cours.md](Next/En_Cours.md) |
 | Ce qui reste à faire | [todolist.md](../../todolist.md) (racine du dépôt) |
@@ -79,6 +80,7 @@ Comment le jeu est fait.
 | Fichier | Contenu |
 |---------|---------|
 | [son.md](03%20-%20Technique/son.md) | Catalogue audio, règles de déclenchement, mixer, sons orphelins |
+| [voix.md](03%20-%20Technique/voix.md) | Fonctionnement du générateur de voix : du texte au fichier audio, étape par étape |
 | `diagram_*.png`, `diagram_*.jpg` | Schémas : animatronic, audio, batterie, caméra, scène, IA de surveillance, cycles de peur |
 
 ### 04 - Production
@@ -99,6 +101,14 @@ Suivi de ce qui est à produire.
 Outil, pas documentation. Éditeur HTML des logs du terminal, avec son
 compilateur vers les `lore-nightX.js` chargés par le jeu.
 Voir [_editor_log/README.md](_editor_log/README.md).
+
+### _impression
+
+PDF générés, ne pas éditer. `npm run doc:pdf` imprime les documents de
+`03 - Technique/` au style carnet de bord ; `npm run doc:pdf -- <fichier.md>`
+imprime un document précis. Plus simple : glisser un ou plusieurs `.md` sur
+`tools/impression/imprimer.cmd`, le PDF s'ouvre une fois créé. Outil :
+`tools/impression/`.
 
 ### projet.md
 

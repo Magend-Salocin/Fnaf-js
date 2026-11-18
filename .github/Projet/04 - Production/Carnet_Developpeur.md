@@ -17,7 +17,7 @@ npm run build    # installeur Windows dans dist/
 
 ## 1. Voix
 
-Outil : `tools/voix/generer_voix.js`. Textes, réglages et audios : `ressources/voix/`. Détail du format : `ressources/voix/README.md`. Qui parle où : [Next/Casting_Voix.md](../Next/Casting_Voix.md). Pourquoi ces réglages : [Next/Journal_Voix_Son.md](../Next/Journal_Voix_Son.md).
+Outil : `tools/voix/generer_voix.js`. Textes, réglages et audios : `ressources/voix/`. Détail du format : `ressources/voix/README.md`. Fonctionnement interne : [03 - Technique/voix.md](../03%20-%20Technique/voix.md). Qui parle où : [Next/Casting_Voix.md](../Next/Casting_Voix.md). Pourquoi ces réglages : [Next/Journal_Voix_Son.md](../Next/Journal_Voix_Son.md).
 
 ### Générer
 

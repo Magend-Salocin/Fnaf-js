@@ -8,6 +8,7 @@ Remake de Five Nights at Freddy's 1 en JavaScript, empaqueté avec Electron. Cod
 
 - `npm start` : lance le jeu dans Electron. Les DevTools s'ouvrent automatiquement et les `console.*` du renderer sont recopiés dans le terminal avec le préfixe `[Renderer]`.
 - `npm run build` : installeur Windows (NSIS) dans `dist/`.
+- `npm run doc:pdf -- <fichier.md|dossier>` : imprime la documentation en PDF, style carnet de bord, dans `.github/Projet/_impression/`. Sans argument : tout `03 - Technique/`. Raccourci Windows : glisser des `.md` sur `tools/impression/imprimer.cmd`, le PDF s'ouvre une fois créé.
 - `node ".github/Projet/_editor_log/check_logs.js"` : valide `ressources/logs/*.json` contre le canon. À lancer après toute modification d'un log.
 
 Il n'y a ni tests, ni lint, ni bundler.
@@ -38,7 +39,7 @@ Les règles détaillées sont dans `.claude/rules/` et se chargent selon les fic
 
 Outils du projet :
 
-- Skills : `/ajouter-son`, `/ecrire-log`, `/evenement-cache`.
+- Skills : `/ajouter-son`, `/ecrire-log`, `/evenement-cache`, `/imprimer-doc`.
 - Agents (lecture seule) : `auditeur-fnaf1` pour comparer au jeu d'origine, `gardien-lore` pour vérifier ou collecter le canon narratif.
 
 ## Documentation

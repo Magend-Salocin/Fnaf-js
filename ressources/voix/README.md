@@ -1,6 +1,6 @@
 # Voix
 
-Textes, réglages et audios générés des voix du jeu. Le générateur est `tools/voix/generer_voix.js`.
+Textes, réglages et audios générés des voix du jeu. Le générateur est `tools/voix/generer_voix.js`. Son fonctionnement, étape par étape : `.github/Projet/03 - Technique/voix.md`.
 
 ## Générer
 
