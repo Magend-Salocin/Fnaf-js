@@ -23,15 +23,15 @@ Cassidy est la seule voix qui traverse les trois : elle surgit dans les bandes d
 | Personnage | Canon | Jeu d'acteur | Profil de génération | Enregistrements |
 | --- | --- | --- | --- | --- |
 | Cassidy | `enfant_05`, jamais nommée | Fillette de 7 à 9 ans. Calme, lente, jamais criarde. Elle cherche à être reconnue avant d'accuser | `cassidy` : Hortense, +20 % | Appels nuit 5 (A, B, C), ERREUR 02, 03, 05, 07, fins A, B, C |
-| Les quatre enfants | Gabriel, Jeremy, Susie, Fritz | Ensemble, à l'unisson approximatif. Ils ne savent plus pour qui ils parlent | `enfants` : chœur de quatre hauteurs | ERREUR 06 (« Il manque quelqu'un »), fin C. Seuls : `gabriel`, `jeremy`, `susie`, `fritz` (Hortense, hauteurs du chœur), fins A, B, C |
+| Les quatre enfants | Gabriel, Jeremy, Susie, Fritz | Ensemble, à l'unisson approximatif. Ils ne savent plus pour qui ils parlent | `enfants` : chœur de quatre hauteurs | ERREUR 06 (« Il manque quelqu'un »), fin C. Seuls : `gabriel`, `jeremy`, `susie`, `fritz` (Hortense rapide et aiguë), fins B, C. En fantômes : `fantome`, `fantomes` (mêmes voix d'enfants, légèrement métalliques et hachées), fin A |
 | Fritz, écho | `enfant_04`, Foxy | Une seule syllabe, très basse, comme un jouet qui ralentit | `fritz_echo` : Hortense très grave, étouffée | FRT 03 (« Encore... ») |
 | Michael Afton | Veilleur `004`, embauché sous le nom de Mike Schmidt. Jamais nommé | Homme de 20 à 30 ans. Fatigué, sincère, dépassé. Il ne comprend pas ce qu'on lui reproche | `gardien` : Paul, sans effet | ERREUR 03, 07, fins B, C |
-| Pierre D. | Employé `001`, service | Homme de 30 à 40 ans. Pédagogue dans les formations, puis de plus en plus inquiet | `pierre` : Paul, bande magnétique | FRT 01, 02, GAB 01, 03, JER 01, 03, ERREUR 04, fins A, C |
+| Pierre D. | Employé `001`, service | Homme de 30 à 40 ans. Pédagogue dans les formations, puis de plus en plus inquiet | `pierre` : Paul, bande magnétique | FRT 01, 02, GAB 01, 03, JER 01, 03, ERREUR 04, fin C |
 | Marie L. | Employée `002`, cuisine | Femme de 30 à 50 ans. Pratique, puis troublée, puis prudente face au responsable | `marie` : Julie, bande magnétique | SUS 01, 02, 03 |
 | Le responsable | Superviseur Fazbear, jamais nommé | Homme de 45 à 60 ans. Courtois dans les notes, sec dès qu'il faut faire taire | `responsable` : Paul grave, bande magnétique | GAB 02, 03, JER 02, 03, SUS 03 |
 | La voix inconnue | Jamais identifiée | Grave, posée, presque aimable. Elle ne hausse jamais le ton | `inconnu` : Paul très grave, étouffée | ERREUR 04 |
 | Machine Fazbear | Sous-système de nettoyage | Neutre, administrative. Elle corrige, classe, supprime | `machine` : Paul, numérique 8 kHz, modulation | ERREUR 05, 06 (corrections), fins A, B, C |
-| Mémoire du bâtiment | Sous-système RECOVERY | Neutre, mais elle se casse en parlant | `memoire` : Julie, numérique 7 kHz, coupures | ERREUR 06 (reconstruction), fins B, C |
+| Mémoire du bâtiment | Sous-système RECOVERY. En secret, Charlie : seule l'après-fin de C le laisse entendre | Neutre, mais elle se casse en parlant. Dans l'après-fin de C, plus douce et plus sûre d'elle que la Machine | `memoire` : Julie, numérique 7 kHz, coupures | ERREUR 06 (reconstruction), fins B, C |
 | Phone Guy | Veilleur `003` en 1993 | Enregistrements d'origine de FNAF 1, non regénérés | Aucun | Appels nuits 1 à 4 |
 
 Antoine M. (`A-003`, veilleur de 1985) n'a aucun enregistrement : il n'existe que par son rapport et sa fiche archivée.
@@ -59,7 +59,7 @@ Antoine M. (`A-003`, veilleur de 1985) n'a aucun enregistrement : il n'existe qu
 | TAPE_ERREUR_05 | Machine Fazbear, Cassidy |
 | TAPE_ERREUR_06 | Mémoire du bâtiment, Machine Fazbear, les quatre enfants |
 | TAPE_ERREUR_07 | Michael, Cassidy |
-| Fin A | Machine Fazbear, les quatre enfants, Cassidy, Pierre D. |
+| Fin A | Machine Fazbear, les fantômes, Cassidy |
 | Fin B | Mémoire du bâtiment, Michael, les quatre enfants, Cassidy, Machine Fazbear |
 | Fin C | Mémoire du bâtiment, Pierre D., Machine Fazbear, Michael, Cassidy, les quatre enfants seuls et en chœur |
 | TAPE_FRT_01 | Pierre D. |

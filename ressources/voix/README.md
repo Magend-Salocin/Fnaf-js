@@ -25,7 +25,8 @@ Windows uniquement : la synthèse passe par les voix Windows. Aucune dépendance
 | `inconnu` | La voix inconnue (cassette 04) | Paul | Très grave, étouffée |
 | `enfants` | Les quatre enfants ensemble (cassette 06) | Hortense | Chœur de quatre hauteurs |
 | `fritz_echo` | Le « Encore... » de FRT_03 | Hortense | Très grave, étouffée |
-| `gabriel`, `jeremy`, `fritz`, `susie` | Chaque enfant seul (fins) | Hortense | Hauteurs du chœur : 1.08, 1.15, 1.28, 1.4 |
+| `gabriel`, `jeremy`, `fritz`, `susie` | Chaque enfant seul (fins B, C) | Hortense | Rapide, aigu : 1.35, 1.42, 1.5, 1.6 |
+| `fantome`, `fantomes` | Les enfants devenus fantômes, seul et en chœur (fin A) | Hortense | Voix d'enfants rapides et aiguës, légère modulation métallique, coupures |
 
 Réglages dans `config.json`, section `voix`. `cassidy`, `machine`, `memoire` et `gardien` sont validés (17/11/2026), les autres sont à l'essai. Qui parle dans quel enregistrement : `.github/Projet/Next/Casting_Voix.md`.
 

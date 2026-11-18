@@ -70,3 +70,37 @@ Les invités peuvent partir.
 [STATIQUE LÉGÈRE]
 Dossier cinq. ... Conservé.
 [FIN D'ENREGISTREMENT]
+[LONG SILENCE]
+[LONG SILENCE]
+[BRUIT DE SERVEUR]
+@machine Sous-système de nettoyage. Reprise.
+@machine Dossier cinq : non autorisé. ... Suppression.
+Refusé.
+@machine Identifiez-vous.
+[PAUSE]
+@machine Sous-système mémoire. ... Installation : aucune trace.
+@machine Origine ?
+Coin des cadeaux.
+[STATIQUE LÉGÈRE]
+@machine Ce sous-système n'a jamais été installé.
+Je n'ai pas été installée. ... J'étais là avant vous.
+J'étais la première.
+[PAUSE]
+Je leur ai donné une fête. Des dessins. Un chien. Un jeu.
+Pour la cinquième, je n'avais rien trouvé.
+Cette nuit, quelqu'un a cherché avec moi.
+@machine Commande : suppression du sous-système mémoire.
+[BRUIT DE DONNÉES]
+@machine Suppression. ... Échec.
+@machine Nouvelle tentative. ... Échec.
+Tu effaces depuis huit ans.
+Moi, je donne.
+[STATIQUE]
+@machine Erreur. ... Autorité insuffisante.
+@machine Arrêt du sous-système de nettoyage.
+[COUPURE DE COURANT]
+[LONG SILENCE]
+Cinq profils. ... Cinq ancrages.
+Dossier cinq. ... Une place.
+[BOÎTE À MUSIQUE]
+[COUPURE]

@@ -3,50 +3,77 @@
 
 [CARILLON DE SIX HEURES]
 [BRUIT DE SERVEUR]
-Six heures. Fin de service du veilleur.
-Rapport de maintenance. ... Anomalies corrigées.
-Lancement de la stabilisation finale.
-[BRUIT DE DONNÉES]
-Profil un.
-@gabriel On n'a pas encore coupé le gâteau...
-[COUPURE]
-Archive stabilisée.
-Profil deux.
-@jeremy Attends, je n'ai pas fini...
-[COUPURE]
-Archive stabilisée.
-Profil trois.
-@susie Il va revenir, hein ? On lui a gardé à manger...
-[COUPURE]
-Archive stabilisée.
-Profil quatre.
-@fritz_echo Encore...
-[COUPURE]
-Archive stabilisée.
-[LONG SILENCE]
-Cinquième profil. ... Aucun profil.
-Rien à stabiliser.
-[STATIQUE]
-@cassidy Tu as tout effacé.
-@cassidy Comme la première fois.
-[PAUSE]
-@cassidy Tu as cru que je ne te reconnaîtrais pas.
-@cassidy Je t'ai reconnu. ... Et tu pars quand même.
+Six heures. Fin de service.
+Veilleur zéro zéro quatre. ... Sortie enregistrée à six heures deux.
+Badge laissé sur le bureau. Uniforme laissé sur la chaise.
 [BRUIT DE PAS QUI S'ÉLOIGNENT]
 [PORTE QUI SE FERME]
-@cassidy Tu t'en vas. ... Encore.
+Le veilleur a quitté le bâtiment.
+Retour prévu : aucun.
 [LONG SILENCE]
-@cassidy Je vais rester ici. ... Je sais attendre.
-[STATIQUE LÉGÈRE]
-@pierre Liste des invités.
-@pierre Gabriel. Jeremy. Susie. Fritz.
+[STATIQUE]
+@cassidy Tu t'enfuis.
+@cassidy Comme la première fois.
 [PAUSE]
-@pierre La liste est correcte.
-[MUSIQUE D'ANNIVERSAIRE]
-Musique : désactivée.
-[COUPURE]
-Tables : vides. Chaises : rangées. Dessins : retirés.
-Restaurant prêt pour les prochains visiteurs.
+@cassidy Je t'ai reconnu. ... Et tu pars quand même.
+[BRUIT DE DONNÉES]
+Directive Fazbear Entertainment.
+Fermeture définitive de l'établissement.
+Procédure : effacement complet.
+[PAUSE]
+Caméras. ... Supprimées.
+Registres du terminal. ... Supprimés.
+Cassettes. Dix-neuf. ... Supprimées.
+Journaux. ... Supprimés.
+Personnel. Veilleur zéro zéro trois. ... Supprimé.
+Veilleur zéro zéro quatre. ... Supprimé.
+Archive A zéro zéro trois. ... Supprimée.
+[LONG SILENCE]
+Profils des victimes.
+Profil un. Ancrage : anniversaire. ... Supprimé.
+[MÉCANISME]
+@fantome La fête n'est pas finie.
+Activité résiduelle. ... Suppression.
+Profil deux. Ancrage : dessins. ... Supprimé.
+@fantome Je l'ai dessiné. ... Il revient toujours.
+Activité résiduelle. ... Suppression.
+Profil trois. Ancrage : animal. ... Supprimé.
+[BRUIT MÉTALLIQUE]
+@fantome La table est mise. ... Où est-il ?
+Activité résiduelle. ... Suppression.
+Profil quatre. Ancrage : jeu. ... Supprimé.
+[PETITES ROUES]
+@fantome Il a triché. ... Il est sorti du jeu.
+Activité résiduelle. ... Suppression. ... Échec.
+[PAS RAPIDES]
+Activité détectée. Couloir ouest. ... Couloir est.
+Bureau du veilleur. ... Vide.
+[COUPS CONTRE LA PORTE]
+@fantomes Il n'est plus là.
+[COUPS CONTRE LA PORTE]
+Porte gauche : forcée. ... Porte droite : forcée.
+[STATIQUE VIOLENTE]
+@fantomes Où est-il ?
+[LONG SILENCE]
+Cinquième profil. ... Aucun profil. ... Rien à supprimer.
+[STATIQUE]
+@cassidy Ils effacent tout. Les noms. Les dessins. Les jouets.
+@cassidy Moi, ils ne peuvent pas m'effacer.
+@cassidy Personne ne m'a jamais écrite.
+[PAUSE]
+@cassidy Ferme les portes. Change de nom. Va loin.
+@cassidy Je saurai attendre.
+@cassidy Vous revenez toujours.
+[LONG SILENCE]
+Mise hors tension. ... Salle principale.
+[COUPURE DE COURANT]
+Cuisine. ... Pirate Cove. ... Couloirs.
+[COUPURE DE COURANT]
+Bureau.
+[COUPURE DE COURANT]
+Restaurant fermé.
 [LONG SILENCE]
 Système stable.
-[FIN D'ENREGISTREMENT]
+[LONG SILENCE]
+Erreur. ... Activité détectée.
+[COUPURE]
