@@ -6,11 +6,20 @@
   "scripts": {
     "start": "node tools/start.js",
     "build": "electron-builder",
-    "doc:pdf": "node tools/impression/imprimer_doc.js"
+    "doc:pdf": "node tools/impression/imprimer_doc.js",
+    "web": "node tools/web-server.js",
+    "build-web": "node tools/build-web.js",
+    "key": "node tools/access-key.js"
   },
   "build": {
     "appId": "com.fnaf.remake",
     "productName": "FNAF Remake",
+    "files": [
+      "**/*",
+      "!_site/**",
+      "!*.local.pem",
+      "!*.local.json"
+    ],
     "directories": {
       "output": "dist"
     },

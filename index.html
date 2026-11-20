@@ -2,7 +2,14 @@
 <html lang="fr">
 <head>
 	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- Largeur fixe : sur téléphone, la page de 1280 px est réduite à l'écran (le jeu est conçu pour 1280x720). -->
+	<meta name="viewport" content="width=1280, user-scalable=no">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="apple-mobile-web-app-title" content="FNAF JS">
+	<link rel="apple-touch-icon" href="web/icon-180.png">
+	<link rel="manifest" href="web/manifest.webmanifest">
 	<title>FNAF 1 - Nicolas Berger</title>
 	<link href="https://fonts.googleapis.com/css?family=Press+Start+2P&subset=latin,greek" rel="stylesheet" type="text/css">
 	<link rel="stylesheet" href="style/style.css">
@@ -18,9 +25,13 @@
 	<link rel="stylesheet" href="style/journal.css">
 	<link rel="stylesheet" href="style/ending.css">
 	<link rel="stylesheet" href="style/game_over.css">
+	<link rel="stylesheet" href="style/web.css">
 
 </head>
 <body>
+
+	<!-- rotate-notice : écran tactile en portrait (style/web.css) -->
+	<div class="rotate-notice"><p class="rotate-notice-fr">Tournez l'appareil en paysage</p><p class="rotate-notice-en">Rotate your device to landscape</p></div>
 
 	<!-- language-screen -->
 	<div id="language-screen" class="language-screen">
@@ -55,6 +66,7 @@
 				<h1 id="game-title">Five<br> Night <br>at<br> Freddy's</h1>
                 <a href="#" id="start-game" onclick="Start();">Start Game</a> 
 				<a href=".github/Projet/_editor_log/editor.html" id="log-editor-link">Éditeur des logs</a>
+				<a href="#" id="reset-data">Tout effacer</a>
             </aside>
         </div>
     </div> 
@@ -580,6 +592,14 @@
 
 	<!-- script -->
 	<div id="script">
+		<!-- Version web : mode hors ligne et clé d'activation (inactifs dans Electron et en HTTP) -->
+		<script src="script/web/access_public_key.js"></script>
+		<script src="script/web/revoked_devices.js"></script>
+		<script src="script/web/access_keys.js"></script>
+		<script src="script/web/access_gate.js"></script>
+		<script src="script/web/offline_mode.js"></script>
+		<script src="script/web/preloaded_xhr.js"></script>
+
 		<script src="script/loaders/translations.js"></script>
 		<script src="script/state/game_state.js"></script>
 		<script src="script/loaders/rooms_config.js"></script>
@@ -603,6 +623,7 @@
 		<script src="script/core/gif_player.js"></script>
 		<script src="script/core/sounds.js"></script>
 		<script src="script/core/language.js"></script>
+		<script src="script/core/reset_data.js"></script>
 
 		<script src="script/lore/retro_terminal.js"></script>
 		<script src="script/lore/lore_core.js"></script>

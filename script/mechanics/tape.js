@@ -123,6 +123,11 @@ const TapeScene = (() => {
 
       card.addEventListener("dragstart", onDragStart);
       card.addEventListener("dragend", onDragEnd);
+      // Le glisser-déposer HTML5 ne marche pas au doigt (iPhone) : un toucher
+      // ou un clic sur la cassette l'insère aussi.
+      card.addEventListener("click", () => {
+        if (currentState === STATE.EMPTY) insertTape(tape, card);
+      });
 
       els.rack.appendChild(card);
     });

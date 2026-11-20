@@ -1,12 +1,13 @@
 
 /**
  * Indique si les outils de développement sont disponibles. L'application
- * Electron buildée les désactive (cf. main.js) ; hors Electron, `appInfo`
- * n'existe pas et ils restent disponibles.
+ * Electron buildée les désactive (cf. main.js). Hors Electron, `appInfo`
+ * n'existe pas : ils restent disponibles en local (file://, npm run web)
+ * et sont désactivés sur le site publié (HTTPS).
  * @returns {boolean}
  */
 function isDevToolsEnabled() {
-  return window.appInfo ? window.appInfo.devToolsEnabled : true;
+  return window.appInfo ? window.appInfo.devToolsEnabled : location.protocol !== 'https:';
 }
 
 // Masque le bouton du panneau debug et le lien vers l'éditeur de logs dans

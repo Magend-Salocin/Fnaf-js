@@ -1,0 +1,130 @@
+/*
+ * Version web : écran de clé d'activation (script/web/access_gate.js) et
+ * réglages tactiles (iPhone, iPad).
+ */
+
+/* ---------- Tactile ---------- */
+
+/* Le doigt pilote le regard et les lumières : pas de défilement ni de zoom
+   sur la zone de jeu, pas de menu au toucher long. Les panneaux (terminal,
+   journal) gardent le défilement normal. */
+#gameCanvas,
+.btndoorAndLight {
+    touch-action: none;
+}
+
+body {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+}
+
+#__game,
+.btndoorAndLight,
+.tape-card {
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+}
+
+/* Le jeu se joue en paysage : en portrait sur un écran tactile, on demande
+   de tourner l'appareil (par-dessus tout, écran de clé compris). */
+.rotate-notice {
+    display: none;
+}
+
+@media (pointer: coarse) and (orientation: portrait) {
+    .rotate-notice {
+        position: fixed;
+        inset: 0;
+        z-index: 2147483647;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0 10%;
+        background: #000;
+        color: #fff;
+        font-size: 48px;
+        line-height: 1.6;
+        text-align: center;
+    }
+
+    html[lang="en"] .rotate-notice-fr,
+    html:not([lang="en"]) .rotate-notice-en {
+        display: none;
+    }
+}
+
+/* ---------- Écran « Test en cours » ---------- */
+
+.access-gate {
+    position: fixed;
+    inset: 0;
+    z-index: 2147483646;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    padding: 24px;
+    overflow-y: auto;
+    background: #fff;
+    color: #111;
+    font-family: system-ui, -apple-system, sans-serif;
+    text-align: center;
+}
+
+.access-title {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 32px;
+}
+
+.access-status {
+    font-size: 20px;
+    color: #a00;
+}
+
+.access-text {
+    font-size: 18px;
+}
+
+.access-device {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.access-device-id {
+    font-family: ui-monospace, monospace;
+    font-size: 36px;
+    letter-spacing: 3px;
+}
+
+.access-input {
+    width: min(90%, 760px);
+    padding: 14px;
+    font-family: ui-monospace, monospace;
+    font-size: 18px;
+    border: 2px solid #999;
+}
+
+.access-copy,
+.access-button {
+    padding: 12px 28px;
+    font-size: 18px;
+    color: #fff;
+    background: #111;
+    border: none;
+    cursor: pointer;
+}
+
+.access-error {
+    min-height: 1.4em;
+    font-size: 18px;
+    color: #c00;
+}
+
+.access-notice {
+    max-width: 640px;
+    font-size: 14px;
+    color: #666;
+}

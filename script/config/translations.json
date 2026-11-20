@@ -8,6 +8,9 @@
       "languageEnButton": "English",
       "gameTitle": "Cinq<br> Nuits <br>avec<br> Freddy's",
       "startGame": "Lancer la partie",
+      "resetData": "Tout effacer",
+      "resetConfirm": "Effacer la progression, les options et la clé d'activation de cet appareil ?",
+      "resetConfirmAgain": "Confirmer : tout sera perdu.",
       "powerUsage": "Puissance : 100%",
       "panels": {
         "computerFooter": "CLIQUE POUR INFO",
@@ -87,6 +90,9 @@
       "languageEnButton": "English",
       "gameTitle": "Five<br> Night <br>at<br> Freddy's",
       "startGame": "Start Game",
+      "resetData": "Erase everything",
+      "resetConfirm": "Erase progress, settings and the activation key on this device?",
+      "resetConfirmAgain": "Confirm: everything will be lost.",
       "powerUsage": "Power: 100%",
       "panels": {
         "computerFooter": "CLICK FOR INFO",

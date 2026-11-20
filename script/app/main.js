@@ -91,10 +91,11 @@ function setupEventListeners() {
 
   
 
-  document.addEventListener('mousemove', handleOfficeMouseLook);
+  // pointermove : survol à la souris, glisser au doigt (tactile).
+  document.addEventListener('pointermove', handleOfficeMouseLook);
 
   /*Objets cliquables du bureau (poste de radio...)*/
-  document.addEventListener('mousemove', handleOfficeHotspotPointerMove);
+  document.addEventListener('pointermove', handleOfficeHotspotPointerMove);
   document.addEventListener('mouseleave', handleOfficeHotspotPointerLeave);
   canvas.addEventListener('click', (event) => handleOfficeHotspotClick(event.clientX, event.clientY));
 

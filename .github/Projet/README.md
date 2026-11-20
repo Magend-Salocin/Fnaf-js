@@ -20,6 +20,7 @@ de tâches et des notes de travail, pas de la documentation.
 | Ce que rapporte une anomalie | [04 - Production/Evenements_Recompenses.md](04%20-%20Production/Evenements_Recompenses.md) |
 | Comment éditer les logs du terminal | [_editor_log/README.md](_editor_log/README.md) |
 | Comment le générateur transforme un texte en voix | [03 - Technique/voix.md](03%20-%20Technique/voix.md) |
+| Comment publier le jeu sur le web, jouer sur iPhone, donner une clé à un testeur | [03 - Technique/Version_Web.md](03%20-%20Technique/Version_Web.md) |
 | Comment produire et brancher voix, images, sons, logs | [04 - Production/Carnet_Developpeur.md](04%20-%20Production/Carnet_Developpeur.md) |
 | Où en est le projet | [Next/En_Cours.md](Next/En_Cours.md) |
 | Ce qui reste à faire | [todolist.md](../../todolist.md) (racine du dépôt) |
@@ -81,6 +82,7 @@ Comment le jeu est fait.
 |---------|---------|
 | [son.md](03%20-%20Technique/son.md) | Catalogue audio, règles de déclenchement, mixer, sons orphelins |
 | [voix.md](03%20-%20Technique/voix.md) | Fonctionnement du générateur de voix : du texte au fichier audio, étape par étape |
+| [Version_Web.md](03%20-%20Technique/Version_Web.md) | Version web : GitHub Pages, tactile iPhone, hors ligne, clés d'activation par appareil, Tout effacer |
 | `diagram_*.png`, `diagram_*.jpg` | Schémas : animatronic, audio, batterie, caméra, scène, IA de surveillance, cycles de peur |
 
 ### 04 - Production

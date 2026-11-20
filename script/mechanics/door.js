@@ -52,8 +52,11 @@ function setDoorPanelVisibility(side, isVisible) {
 function setupLightToggle(light) {
     const toggle = document.getElementById(light.toggleId);
 
-    toggle.addEventListener('mousedown', () => {
+    toggle.addEventListener('pointerdown', event => {
         if (light.disabled) return;
+        // Au doigt, le navigateur capture le pointeur : sans libération,
+        // pointerleave n'arrive pas quand le doigt glisse hors du bouton.
+        if (toggle.hasPointerCapture(event.pointerId)) toggle.releasePointerCapture(event.pointerId);
 
         light.value = 1;
         light.on = true;
@@ -68,19 +71,17 @@ function setupLightToggle(light) {
         }
     });
 
-    toggle.addEventListener('mouseup', () => {
+    // Événements pointer : la lumière reste allumée tant que le doigt ou le
+    // bouton de la souris appuie (sur iPhone, mousedown n'arrive qu'au relâché).
+    const switchOff = () => {
         if (light.disabled) return;
         light.value = 0;
         light.on = false;
         processLightActivity(light.value, light.side);
-    });
-
-    toggle.addEventListener('mouseleave', () => {
-        if (light.disabled) return;
-        light.value = 0;
-        light.on = false;
-        processLightActivity(light.value, light.side);
-    });
+    };
+    toggle.addEventListener('pointerup', switchOff);
+    toggle.addEventListener('pointercancel', switchOff);
+    toggle.addEventListener('pointerleave', switchOff);
 }
 
 /**

@@ -10,6 +10,7 @@ function applyLanguage(lang) {
   document.getElementById('lang-en-btn').textContent = t.languageEnButton;
   document.getElementById('game-title').innerHTML = t.gameTitle;
   document.getElementById('start-game').textContent = t.startGame;
+  document.getElementById('reset-data').textContent = t.resetData;
   if (t.transition) {
     document.getElementById('transition-night-label').textContent = t.transition.nightLabel;
   }

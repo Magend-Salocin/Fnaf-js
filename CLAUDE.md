@@ -8,6 +8,7 @@ Remake de Five Nights at Freddy's 1 en JavaScript, empaqueté avec Electron. Cod
 
 - `npm start` : lance le jeu dans Electron. Les DevTools s'ouvrent automatiquement et les `console.*` du renderer sont recopiés dans le terminal avec le préfixe `[Renderer]`.
 - `npm run build` : installeur Windows (NSIS) dans `dist/`.
+- `npm run web` : sert le jeu sur le réseau local pour le tester sur iPhone. `npm run key -- new <ID> "Prénom"` : clé d'activation d'un testeur. Un push sur `develop` publie la version web (GitHub Pages). Détails : `.github/Projet/03 - Technique/Version_Web.md`.
 - `npm run doc:pdf -- <fichier.md|dossier>` : imprime la documentation en PDF, style carnet de bord, dans `.github/Projet/_impression/`. Sans argument : tout `03 - Technique/`. Raccourci Windows : glisser des `.md` sur `tools/impression/imprimer.cmd`, le PDF s'ouvre une fois créé.
 - `node ".github/Projet/_editor_log/check_logs.js"` : valide `ressources/logs/*.json` contre le canon. À lancer après toute modification d'un log.
 
@@ -27,6 +28,7 @@ Ordre des couches : `loaders` → `state` → `core` → `lore` → `app/render.
 - `script/core/unused/` : fonctionnalités complètes mais non chargées.
 - Boucle : `Start` → transition → `startNight` → `setInterval(gameLoop)`, qui appelle énergie, caméra (rendu, événements aléatoires, parasites), horloge, puis `animatronic.move()` et `attack()`.
 - Terminal de lore (`script/lore/`) : chaque commande est pilotée par `ressources/logs/<CMD>.json`, déclarée dans `script/config/logs_database.json`.
+- `script/web/` : version web (écran de clé, mode hors ligne), inactive dans Electron et en HTTP. Le jeu doit rester jouable au doigt : écouter les événements `pointer*` plutôt que `mouse*`, et ne pas réserver une action au glisser-déposer ou au survol.
 - `main.js` et `preload.js` (processus Electron) n'exposent que l'IPC de l'éditeur de logs (`window.logEditor`, `logs:load` et `logs:save`). L'éditeur est `.github/Projet/_editor_log/editor.html`, accessible depuis l'écran d'accueil.
 - Localisation FR/EN : `script/config/translations.json`, appliquée par `applyLanguage()` dans `script/core/language.js`. Tout nouveau texte affiché doit avoir ses deux traductions.
 - `script/debug/` et les boutons debug de `index.html` (forcer une phase de Foxy, gagner la nuit, game over) servent aux tests manuels.
