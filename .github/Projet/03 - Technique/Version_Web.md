@@ -10,7 +10,7 @@ Adresse du site : `https://magend-salocin.github.io/Fnaf-js/`
 | --- | --- |
 | Jouer sur PC | `npm start` |
 | Tester sur iPhone sans publier (même Wi-Fi, HTTP, pas de clé, pas de hors ligne) | `npm run web`, puis ouvrir dans Safari l'adresse affichée |
-| Publier une nouvelle version | `git push` sur `develop` (le workflow Pages déploie seul) |
+| Publier une nouvelle version | Fusionner `develop` dans `main`, puis `git push` de `main` (le workflow Pages déploie seul). GitHub n'autorise que `main` à publier sur Pages |
 | Construire le site en local (contrôle) | `npm run build-web`, résultat dans `_site/` |
 | Donner l'accès à quelqu'un | `npm run key -- new XXXX-XXXX "Prénom"`, envoyer la clé affichée (pas de push) |
 | Revoir les clés données | `npm run key -- list` |
@@ -39,7 +39,7 @@ Installer sur iPhone : Safari > adresse du site > Partager > « Sur l'écran d'a
 
 | Fichier | Rôle |
 | --- | --- |
-| `.github/workflows/pages.yml` | À chaque push sur `develop` (ou à la main, onglet Actions) : `node tools/build-web.js`, puis déploiement |
+| `.github/workflows/pages.yml` | À chaque push sur `main` (ou manuellement, onglet Actions) : `node tools/build-web.js`, puis déploiement |
 | `tools/build-web.js` | Construit `_site/` : `index.html`, les dossiers du jeu sans `script/core/unused/`, `ressources/voix/` (sources des voix) ni `images/atlas/src/`, `web/`, `sw.js` à la racine, et `precache-manifest.js` |
 
 Réglage unique sur GitHub : Settings > Pages > Source : GitHub Actions.

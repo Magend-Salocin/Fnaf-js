@@ -8,7 +8,7 @@ Remake de Five Nights at Freddy's 1 en JavaScript, empaqueté avec Electron. Cod
 
 - `npm start` : lance le jeu dans Electron. Les DevTools s'ouvrent automatiquement et les `console.*` du renderer sont recopiés dans le terminal avec le préfixe `[Renderer]`.
 - `npm run build` : installeur Windows (NSIS) dans `dist/`.
-- `npm run web` : sert le jeu sur le réseau local pour le tester sur iPhone. `npm run key -- new <ID> "Prénom"` : clé d'activation d'un testeur. Un push sur `develop` publie la version web (GitHub Pages). Détails : `.github/Projet/03 - Technique/Version_Web.md`.
+- `npm run web` : sert le jeu sur le réseau local pour le tester sur iPhone. `npm run key -- new <ID> "Prénom"` : clé d'activation d'un testeur. Fusionner `develop` dans `main` et pousser `main` publie la version web (GitHub Pages). Détails : `.github/Projet/03 - Technique/Version_Web.md`.
 - `npm run doc:pdf -- <fichier.md|dossier>` : imprime la documentation en PDF, style carnet de bord, dans `.github/Projet/_impression/`. Sans argument : tout `03 - Technique/`. Raccourci Windows : glisser des `.md` sur `tools/impression/imprimer.cmd`, le PDF s'ouvre une fois créé.
 - `node ".github/Projet/_editor_log/check_logs.js"` : valide `ressources/logs/*.json` contre le canon. À lancer après toute modification d'un log.
 
