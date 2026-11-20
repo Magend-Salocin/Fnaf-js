@@ -133,10 +133,17 @@
       input.blur();
       gate.remove();
       restoreViewport();
+      setPending(false);
+      window.scrollTo(0, 0);
     });
 
     useDeviceViewport();
     document.body.append(gate);
+  }
+
+  /** Masque tout sauf l'écran de clé (style/web.css, html.access-pending). */
+  function setPending(pending) {
+    document.documentElement.classList.toggle('access-pending', pending);
   }
 
   // Le jeu fixe la page à 1280 px de large : en portrait sur iPhone, l'écran
@@ -156,13 +163,14 @@
   async function requireAccessKey() {
     if (window.appInfo || !window.isSecureContext || location.protocol !== 'https:' || !(window.crypto && crypto.subtle)) return;
     // Cache le jeu pendant la vérification (asynchrone) de la clé mémorisée.
-    const cover = element('div', 'access-gate');
-    document.body.append(cover);
+    setPending(true);
     const id = deviceId();
     const stored = read(KEY_STORAGE_KEY);
     const valid = Boolean(stored) && (await AccessKeys.isValidDeviceKey(id, stored));
-    cover.remove();
-    if (valid) return;
+    if (valid) {
+      setPending(false);
+      return;
+    }
     if (stored) write(KEY_STORAGE_KEY, null);
     showGate(id, Boolean(stored));
   }

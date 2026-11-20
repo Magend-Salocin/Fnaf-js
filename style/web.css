@@ -56,20 +56,31 @@ body {
 }
 
 /* ---------- Écran « Test en cours » ----------
-   Affiché à la largeur réelle de l'écran (access_gate.js remplace le
-   viewport de 1280 px le temps de la saisie) : tailles pour téléphone. */
+   Tant que la clé n'est pas validée (html.access-pending, access_gate.js) :
+   tout le reste de la page est masqué et l'écran de clé est une page
+   normale, pas un calque fixe. Sur iPhone, un calque position: fixed avec
+   le clavier ouvert décale les zones tactiles : les boutons ne répondaient
+   plus. La page prend aussi la largeur réelle de l'écran (viewport remplacé
+   le temps de la saisie) : tailles pour téléphone. */
+
+html.access-pending body {
+    overflow: auto;
+    padding: 0;
+}
+
+html.access-pending body > :not(.access-gate) {
+    display: none !important;
+}
 
 .access-gate {
-    position: fixed;
-    inset: 0;
-    z-index: 2147483647;
+    box-sizing: border-box;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: 14px;
     padding: 20px;
-    overflow-y: auto;
     background: #fff;
     color: #111;
     font-family: system-ui, -apple-system, sans-serif;
