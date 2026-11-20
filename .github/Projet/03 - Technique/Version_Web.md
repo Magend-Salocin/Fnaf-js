@@ -116,6 +116,7 @@ Vérifié sous Chromium (Electron servant `_site/` en HTTPS simulé) : écran de
 | Pas de son avec `npm run web` sur iPhone | Serveur sans requêtes partielles | Géré par `tools/web-server.js` ; vérifier que c'est bien lui qui sert |
 | Pas de hors ligne ni de clé avec `npm run web` | Service worker et Web Crypto exigent HTTPS | Normal : ils ne concernent que le site publié |
 | Clé refusée sur iPhone | Identifiant lu dans Safari mais clé collée dans l'icône (ou l'inverse), ou clé retapée à la main | Tout faire depuis l'icône ; copier-coller la clé |
+| Boutons Valider et Copier inactifs sur téléphone | Règle globale `h1` de `style/start-screen.css` (absolu, 500x400 px, blanc) : le titre invisible de l'écran de clé recouvrait les boutons | `.access-title` remet `position`, taille et couleur à zéro (`style/web.css`). Tester au toucher réel (CDP `Input.dispatchTouchEvent`), pas avec `.click()` qui ignore ce qui recouvre |
 | Hors ligne, le jeu s'ouvre sans textes ni salles | XHR synchrones hors service worker | `preloaded_files.js` doit être dans `_site/index.html` : le build s'arrête si la balise `preloaded_xhr.js` manque dans `index.html` |
 | Sons absents avant le premier toucher | Safari bloque le son tant que l'utilisateur n'a pas touché l'écran | Le choix de la langue sert de premier toucher |
 

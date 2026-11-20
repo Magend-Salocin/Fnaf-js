@@ -87,7 +87,15 @@ html.access-pending body > :not(.access-gate) {
     text-align: center;
 }
 
+/* start-screen.css place tous les h1 en absolu (500x400 px, blanc) : sans
+   cette remise à zéro, le titre invisible recouvrait les boutons sur
+   téléphone et captait les touchers. */
 .access-title {
+    position: static;
+    width: auto;
+    height: auto;
+    color: #111;
+    font-weight: 700;
     font-family: 'Press Start 2P', cursive;
     font-size: 22px;
 }
