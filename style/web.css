@@ -133,6 +133,24 @@ html.access-pending body > :not(.access-gate) {
     cursor: pointer;
 }
 
+.access-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-width: 520px;
+    text-align: left;
+}
+
+.access-link {
+    padding: 8px;
+    font-size: 15px;
+    color: #555;
+    text-decoration: underline;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
 .access-error {
     min-height: 1.4em;
     font-size: 18px;

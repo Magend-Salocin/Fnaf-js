@@ -12,6 +12,10 @@
  *   n'existe que dans un contexte sécurisé, et ce serveur ne sert qu'au
  *   réseau de l'organisateur.
  *
+ * Sur téléphone ou tablette dans le navigateur (pas depuis l'icône), un
+ * écran « Installer l'application » passe d'abord : la clé est liée aux
+ * données de l'application installée, séparées de celles du navigateur.
+ *
  * L'écran recouvre la page tant que la clé n'est pas validée. Le jeu se
  * charge dessous mais ne démarre qu'au choix de la langue, inaccessible.
  */
@@ -32,6 +36,21 @@
       invalid: 'Clé invalide pour cet appareil.',
       revoked: 'Cette clé n’est plus valide.',
       notice: 'Projet personnel et non commercial, réalisé à des fins de découverte.',
+      installStatus: 'Installer l’application',
+      installWhy: 'Le jeu se joue depuis son icône, en plein écran. La clé d’activation se saisit dans l’application installée : saisie ici, elle ne marcherait pas dans l’icône.',
+      installIos: [
+        '1. Touchez le bouton Partager (carré avec une flèche vers le haut).',
+        '2. Choisissez « Sur l’écran d’accueil », puis Ajouter.',
+        '3. Ouvrez FNAF JS depuis l’icône.',
+      ],
+      installAndroid: [
+        '1. Ouvrez le menu ⋮ du navigateur.',
+        '2. Choisissez « Installer l’application » ou « Ajouter à l’écran d’accueil ».',
+        '3. Ouvrez FNAF JS depuis l’icône.',
+      ],
+      installButton: 'Installer',
+      installed: 'Application installée : ouvrez FNAF JS depuis l’écran d’accueil.',
+      continueInBrowser: 'Continuer dans le navigateur',
     },
     en: {
       status: 'Testing in progress',
@@ -45,8 +64,45 @@
       invalid: 'Invalid key for this device.',
       revoked: 'This key is no longer valid.',
       notice: 'Personal, non-commercial project made for learning purposes.',
+      installStatus: 'Install the app',
+      installWhy: 'The game is played from its home screen icon, in full screen. The activation key is entered in the installed app: entered here, it would not work in the icon.',
+      installIos: [
+        '1. Tap the Share button (square with an arrow pointing up).',
+        '2. Choose “Add to Home Screen”, then Add.',
+        '3. Open FNAF JS from the icon.',
+      ],
+      installAndroid: [
+        '1. Open the browser menu ⋮.',
+        '2. Choose “Install app” or “Add to Home screen”.',
+        '3. Open FNAF JS from the icon.',
+      ],
+      installButton: 'Install',
+      installed: 'App installed: open FNAF JS from the home screen.',
+      continueInBrowser: 'Continue in the browser',
     },
   };
+
+  // Android (Chrome, Edge, Samsung Internet) propose l'installation par cet
+  // événement : on le garde pour le bouton Installer. Il peut arriver avant
+  // ou après l'affichage de l'écran d'installation.
+  let installPrompt = null;
+  const installPromptListeners = [];
+  window.addEventListener('beforeinstallprompt', event => {
+    event.preventDefault();
+    installPrompt = event;
+    installPromptListeners.forEach(listener => listener());
+  });
+
+  /** Vrai dans l'application installée (icône de l'écran d'accueil). */
+  function isInstalledApp() {
+    return navigator.standalone === true
+      || window.matchMedia('(display-mode: standalone)').matches
+      || window.matchMedia('(display-mode: fullscreen)').matches;
+  }
+
+  const isTouchDevice = () => window.matchMedia('(pointer: coarse)').matches;
+  const isIos = () => /iPhone|iPad|iPod/.test(navigator.userAgent)
+    || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
 
   function read(name) {
     try {
@@ -85,6 +141,58 @@
     if (className) node.className = className;
     if (text) node.textContent = text;
     return node;
+  }
+
+  /**
+   * Écran « Installer l'application », à la place de l'écran de clé, sur
+   * téléphone ou tablette dans le navigateur : la clé est liée aux données
+   * de l'application installée, séparées de celles du navigateur.
+   */
+  function showInstall(onContinue) {
+    const t = texts();
+    const screen = element('div', 'access-gate');
+    const steps = element('div', 'access-steps');
+    for (const line of isIos() ? t.installIos : t.installAndroid) steps.append(element('p', 'access-text', line));
+
+    const installButton = element('button', 'access-button', t.installButton);
+    installButton.type = 'button';
+    installButton.hidden = true;
+    const showInstallButton = () => {
+      installButton.hidden = false;
+      steps.hidden = true;
+    };
+    if (installPrompt) showInstallButton();
+    else installPromptListeners.push(showInstallButton);
+    installButton.addEventListener('click', async () => {
+      if (!installPrompt) return;
+      installPrompt.prompt();
+      const { outcome } = await installPrompt.userChoice;
+      if (outcome === 'accepted') {
+        installPrompt = null;
+        installButton.hidden = true;
+        status.textContent = t.installed;
+      }
+    });
+
+    const status = element('p', 'access-status', t.installStatus);
+    const continueLink = element('button', 'access-link', t.continueInBrowser);
+    continueLink.type = 'button';
+    continueLink.addEventListener('click', () => {
+      screen.remove();
+      onContinue();
+    });
+
+    screen.append(
+      element('h1', 'access-title', 'FNAF JS'),
+      status,
+      element('p', 'access-text', t.installWhy),
+      steps,
+      installButton,
+      continueLink,
+      element('p', 'access-notice', t.notice),
+    );
+    useDeviceViewport();
+    document.body.append(screen);
   }
 
   function showGate(id, revoked) {
@@ -172,7 +280,9 @@
       return;
     }
     if (stored) write(KEY_STORAGE_KEY, null);
-    showGate(id, Boolean(stored));
+    const openGate = () => showGate(id, Boolean(stored));
+    if (isTouchDevice() && !isInstalledApp()) showInstall(openGate);
+    else openGate();
   }
 
   requireAccessKey();

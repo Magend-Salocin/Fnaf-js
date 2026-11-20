@@ -17,7 +17,7 @@ Adresse du site : `https://magend-salocin.github.io/Fnaf-js/`
 | Retirer l'accès | `npm run key -- revoke "Prénom"`, puis commit et push |
 | Repartir de zéro sur un appareil | Écran d'accueil > Tout effacer : un nouvel identifiant apparaît, il faut une nouvelle clé |
 
-Installer sur iPhone : Safari > adresse du site > Partager > « Sur l'écran d'accueil ». Lire l'identifiant et coller la clé depuis l'icône, pas depuis Safari : les deux ont des données séparées.
+Installer : ouvrir l'adresse du site sur le téléphone. Un écran « Installer l'application » guide le testeur : sur iPhone, Partager > « Sur l'écran d'accueil » ; sur Android, bouton Installer (ou menu ⋮ > « Installer l'application »). L'identifiant et la clé se lisent et se saisissent depuis l'icône : navigateur et application installée ont des données séparées.
 
 ## Les briques
 
@@ -82,6 +82,10 @@ Principe : signature numérique. L'organisateur signe l'identifiant de l'apparei
 | `access-devices.local.json` | Qui a quel appareil et quelle clé : jamais versionné, à sauvegarder |
 
 L'écran n'apparaît qu'en HTTPS hors Electron : ni dans `npm start`, ni avec `npm run web`. La clé collée est nettoyée (espaces, retours à la ligne) ; elle est sensible à la casse.
+
+Écran d'installation : sur écran tactile (`pointer: coarse`) hors application installée (`navigator.standalone` sur iPhone, `display-mode: standalone` ou `fullscreen` ailleurs) et sans clé valide, il remplace l'écran de clé. Sur iPhone, il donne la marche à suivre (Safari ne permet pas d'installer par un bouton). Sur Android, il affiche un bouton Installer quand le navigateur envoie `beforeinstallprompt`, sinon la marche à suivre par le menu. Chrome n'envoie cet événement qu'avec un manifeste complet (icônes 192 et 512 px) et un service worker actif ; au tout premier chargement, le bouton peut donc n'apparaître qu'après quelques secondes. Le lien « Continuer dans le navigateur » mène quand même à l'écran de clé. Une clé déjà valide dans le navigateur ne déclenche pas l'écran.
+
+Tant qu'un de ces écrans est affiché, le reste de la page est masqué (`html.access-pending`) et la page prend la largeur réelle de l'écran. L'écran n'est pas un calque `position: fixed` : sur iPhone, un calque fixe avec le clavier ouvert décale les zones tactiles, et les boutons ne répondaient plus.
 
 Le panneau debug et le lien vers l'éditeur de logs sont masqués sur le site publié (`isDevToolsEnabled()`, `script/debug/debug.js`). Ils restent disponibles avec `npm run web`.
 
