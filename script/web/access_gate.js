@@ -130,10 +130,27 @@
         return;
       }
       write(KEY_STORAGE_KEY, key);
+      input.blur();
       gate.remove();
+      restoreViewport();
     });
 
+    useDeviceViewport();
     document.body.append(gate);
+  }
+
+  // Le jeu fixe la page à 1280 px de large : en portrait sur iPhone, l'écran
+  // de clé serait minuscule. Le temps de la saisie, la page prend la largeur
+  // réelle de l'écran ; le viewport du jeu revient une fois la clé validée.
+  const viewport = document.querySelector('meta[name="viewport"]');
+  const gameViewport = viewport && viewport.content;
+
+  function useDeviceViewport() {
+    if (viewport) viewport.content = 'width=device-width, initial-scale=1';
+  }
+
+  function restoreViewport() {
+    if (viewport) viewport.content = gameViewport;
   }
 
   async function requireAccessKey() {

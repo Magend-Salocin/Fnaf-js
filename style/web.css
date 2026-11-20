@@ -27,7 +27,8 @@ body {
 }
 
 /* Le jeu se joue en paysage : en portrait sur un écran tactile, on demande
-   de tourner l'appareil (par-dessus tout, écran de clé compris). */
+   de tourner l'appareil. L'écran de clé passe devant : on saisit la clé
+   en portrait. */
 .rotate-notice {
     display: none;
 }
@@ -36,7 +37,7 @@ body {
     .rotate-notice {
         position: fixed;
         inset: 0;
-        z-index: 2147483647;
+        z-index: 2147483646;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -54,18 +55,20 @@ body {
     }
 }
 
-/* ---------- Écran « Test en cours » ---------- */
+/* ---------- Écran « Test en cours » ----------
+   Affiché à la largeur réelle de l'écran (access_gate.js remplace le
+   viewport de 1280 px le temps de la saisie) : tailles pour téléphone. */
 
 .access-gate {
     position: fixed;
     inset: 0;
-    z-index: 2147483646;
+    z-index: 2147483647;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 18px;
-    padding: 24px;
+    gap: 14px;
+    padding: 20px;
     overflow-y: auto;
     background: #fff;
     color: #111;
@@ -75,42 +78,44 @@ body {
 
 .access-title {
     font-family: 'Press Start 2P', cursive;
-    font-size: 32px;
+    font-size: 22px;
 }
 
 .access-status {
-    font-size: 20px;
+    font-size: 17px;
     color: #a00;
 }
 
 .access-text {
-    font-size: 18px;
+    font-size: 16px;
 }
 
 .access-device {
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: 12px;
 }
 
 .access-device-id {
     font-family: ui-monospace, monospace;
-    font-size: 36px;
-    letter-spacing: 3px;
+    font-size: 26px;
+    letter-spacing: 2px;
 }
 
+/* 16 px minimum : en dessous, Safari zoome sur le champ à la saisie. */
 .access-input {
-    width: min(90%, 760px);
-    padding: 14px;
+    width: min(100%, 640px);
+    box-sizing: border-box;
+    padding: 12px;
     font-family: ui-monospace, monospace;
-    font-size: 18px;
+    font-size: 16px;
     border: 2px solid #999;
 }
 
 .access-copy,
 .access-button {
-    padding: 12px 28px;
-    font-size: 18px;
+    padding: 12px 24px;
+    font-size: 16px;
     color: #fff;
     background: #111;
     border: none;
