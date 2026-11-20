@@ -41,12 +41,28 @@ Installer : ouvrir l'adresse du site sur le téléphone. Un écran « Installer 
 
 | Fichier | Rôle |
 | --- | --- |
-| `.github/workflows/pages.yml` | À chaque push sur `main` (ou manuellement, onglet Actions) : `node tools/build-web.js`, puis déploiement |
-| `tools/build-web.js` | Construit `_site/` : `index.html`, les dossiers du jeu sans `script/core/unused/`, `ressources/voix/` (sources des voix) ni `images/atlas/src/`, `web/`, `sw.js` à la racine, et `precache-manifest.js` |
+| `.github/workflows/pages.yml` | À chaque push sur `main` (ou manuellement, onglet Actions) : `npm ci` (sans le binaire Electron), `node tools/build-web.js`, puis déploiement |
+| `tools/build-web.js` | Construit `_site/` : `index.html`, les dossiers du jeu sans `script/core/unused/`, `images/atlas/src/` ni les sources du générateur de voix (`ressources/voix/textes/`, `config.json`, `README.md`), `web/`, `sw.js` à la racine, et `precache-manifest.js` |
 
 Réglage unique sur GitHub : Settings > Pages > Source : GitHub Actions.
 
-Le site fait environ 450 Mo, sous la limite de 1 Go de Pages.
+#### Allègement des médias au build
+
+Le dépôt garde les originaux (la version PC les utilise) ; seul `_site/` est allégé. Résultat : environ 540 Mo de médias en entrée, 93 Mo publiés, en 15 secondes environ.
+
+| Média | Traitement | Raison |
+| --- | --- | --- |
+| PNG | WebP qualité 80 (`sharp`), transparence conservée | Gain x10 à x40 sur les décors (4,4 Mo -> 0,1 Mo pour le bureau) ; Safari lit le WebP depuis iOS 14 |
+| WAV | MP3 VBR V5 (`ffmpeg-static`) | Gain x8 environ (voix mono : ~65 kb/s) |
+| WAV en boucle courte : `Buzz_Fan_Florescent2`, `circus`, `pirate song2` | Gardés en WAV (`KEEP_AS_WAV`) | Le MP3 ajoute un silence à chaque tour de boucle, audible sur un bourdonnement |
+| GIF | Inchangés | `gif_player.js` décode lui-même les GIF |
+| Icônes de `web/` | Inchangées | iOS exige du PNG pour `apple-touch-icon` |
+
+Les références sont réécrites dans le code publié (`.html`, `.js`, `.css`, `.json`) : `.png` devient `.webp` partout (les chemins construits comme `left_switch_door_${…}.png` sont couverts), chaque WAV converti est remplacé par son nom. Conséquence : toute image PNG ajoutée au jeu est convertie automatiquement ; une nouvelle boucle sonore courte doit être ajoutée à `KEEP_AS_WAV`.
+
+`ressources/voix/sorties/` est publié : `index.html` y lit les voix générées (appels de la nuit 5, cassettes). Les premières versions du site l'excluaient par erreur, ces sons y manquaient.
+
+Fichiers supprimés du dépôt (branche `v2/main`), aucun n'étant référencé : images à nom aléatoire à la racine de `images/` et dans `1c_pirate_cove/hidden/`, `images/localisation/`, `images/game/` (98808, 98809, bonnie_gameover, camera_map, camera_toggle, congratulations, game_over, static.gif), `foxy_run.gif`, la copie `__safe_room_left_light_0_right_light_1.png`, `_GAB-002.png`, `images/_cam/camera_screen.png` et `camera_transition.gif`. Les images d'événements signalées « non utilisées » par `tools/check_assets.js` parce que rangées dans le mauvais dossier (FRT-001, FRT-006, FRT-011, JER-021, JER-023, JER-025) sont gardées : à déplacer, pas à jeter.
 
 ### Mode hors ligne
 
