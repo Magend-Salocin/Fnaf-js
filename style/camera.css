@@ -7,7 +7,11 @@
         gap: 5px;
         z-index: 1000;
         background-color: transparent;
-top: 475px;
+        /* Ancré en bas : le plan est agrandi x1,5 depuis son centre
+           (.map-container) et déborde de 75 px sous la boîte. Avec
+           top: 475px, il sortait de l'écran en 720 px de haut, et plus
+           encore sur téléphone (592 px). */
+        bottom: 91px;
         display: none;
         flex-wrap: wrap;
         gap: 5px;

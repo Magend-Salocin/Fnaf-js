@@ -419,6 +419,11 @@ class RetroTerminal {
             onClose: options.onClose || null
         });
 
+        // .retro-content est en pre-wrap : sans cette classe, les retours à la
+        // ligne du gabarit ci-dessus s'affichaient comme des lignes vides et
+        // poussaient le journal hors du cadre (cf. .retro-shell-content).
+        terminal.content.classList.add("retro-shell-content");
+
         const log = terminal.content.querySelector(".retro-shell-log");
         const input = terminal.content.querySelector(".retro-shell-input");
 

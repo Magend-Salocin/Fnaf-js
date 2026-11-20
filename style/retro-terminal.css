@@ -365,12 +365,22 @@
    SHELL — mode commande texte libre
    ========================================================= */
 
+/* Shell : les lignes du journal gardent leur pre-wrap (.retro-shell-line),
+   pas les blancs du gabarit HTML (RetroTerminal.shell). */
+.retro-content.retro-shell-content{
+    white-space:normal;
+}
+
 .retro-shell-log{
     display:flex;
     flex-direction:column;
     gap:2px;
     margin-bottom:10px;
-    height:500px;
+    /* .retro-screen est limité à 70vh (padding 2 x 20 px) et contient
+       aussi la ligne de saisie (~45 px avec sa marge) : au-delà, l'écran
+       défilait en plus du journal et le texte sortait par le haut (en
+       720 px de haut, et entièrement sur téléphone). */
+    height:min(500px, calc(70vh - 95px));
     overflow-y:auto;
     scrollbar-width:none;
     -ms-overflow-style:none;

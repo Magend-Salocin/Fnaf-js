@@ -25,7 +25,9 @@ Installer : ouvrir l'adresse du site sur le téléphone. Un écran « Installer 
 
 - `index.html` fixe la largeur de la page à 1280 px (`<meta name="viewport" content="width=1280">`) : l'iPhone réduit la page à son écran, le jeu garde la mise en page prévue pour 1280x720. En paysage sur un iPhone récent, la hauteur visible fait environ 590 px, au-dessus du minimum de 540 px. Les navigateurs de bureau et Electron ignorent cette balise.
 - En portrait sur écran tactile, un écran noir demande de tourner l'appareil (`.rotate-notice`, `style/web.css`).
-- Regard dans le bureau : `pointermove` au lieu de `mousemove` (`script/app/main.js`). À la souris rien ne change ; au doigt, on glisse pour regarder.
+- Regard dans le bureau : `pointermove` au lieu de `mousemove` (`script/app/main.js`). À la souris rien ne change ; au doigt, on glisse pour regarder, ou on touche un côté de l'écran (`pointerdown` tactile oriente aussi le regard, un simple toucher n'émettant pas de `pointermove`). Les commandes des portes dépassent du bord au repos : comme dans FNAF, on regarde sur le côté pour les atteindre.
+- Plan des caméras : ancré en bas (`bottom: 91px`, `style/camera.css`) au lieu de `top: 475px`, qui le faisait sortir de l'écran en 720 px de haut et plus encore sur téléphone (592 px). Sur écran tactile, la zone de chaque bouton est élargie de 8 px de chaque côté (`.camera::after`).
+- Terminal : le journal se limite à la hauteur disponible (`.retro-shell-log`) et les blancs du gabarit ne comptent plus (`.retro-shell-content`) ; le texte sortait par le haut, en partie sur PC et entièrement sur téléphone. Sur écran tactile, texte et saisie passent à 22 px et les croix de fermeture à 48 px.
 - Lumières : `pointerdown`, `pointerup`, `pointerleave` et `pointercancel` (`script/mechanics/door.js`). Sur iPhone, `mousedown` n'arrive qu'au relâché : la lumière ne restait pas allumée tant qu'on appuie.
 - Cassettes : un toucher ou un clic sur une cassette l'insère (`script/mechanics/tape.js`). Le glisser-déposer HTML5 ne marche pas au doigt.
 - Terminal : le clavier de l'iPhone s'ouvre en touchant le terminal ; le bouton ✕ remplace Échap.

@@ -91,8 +91,12 @@ function setupEventListeners() {
 
   
 
-  // pointermove : survol à la souris, glisser au doigt (tactile).
+  // pointermove : survol à la souris, glisser au doigt (tactile). Un simple
+  // toucher n'émet pas de pointermove : pointerdown oriente aussi le regard.
   document.addEventListener('pointermove', handleOfficeMouseLook);
+  document.addEventListener('pointerdown', (event) => {
+    if (event.pointerType !== 'mouse') handleOfficeMouseLook(event);
+  });
 
   /*Objets cliquables du bureau (poste de radio...)*/
   document.addEventListener('pointermove', handleOfficeHotspotPointerMove);

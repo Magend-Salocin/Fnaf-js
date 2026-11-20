@@ -26,6 +26,34 @@ body {
     -webkit-touch-callout: none;
 }
 
+/* Boutons du plan des caméras : 14 px (21 px une fois le plan agrandi),
+   soit environ 14 px réels sur iPhone. Zone tactile élargie de 8 px de
+   chaque côté, sans changer l'affichage ; deux caméras voisines (2A/2B)
+   sont à 30 px l'une de l'autre, les zones ne se chevauchent pas. */
+@media (pointer: coarse) {
+    .camera::after {
+        content: "";
+        position: absolute;
+        inset: -8px;
+    }
+
+    /* Terminal : texte et saisie à 16 px dans la page, soit 10 px réels
+       sur iPhone (page de 1280 px réduite d'un tiers). */
+    .retro-content,
+    .retro-shell-input {
+        font-size: 22px;
+    }
+
+    /* Boutons de fermeture (terminal, cassettes) : 30 px dans la page,
+       20 px réels. Portés à environ 32 px réels. */
+    .retro-close,
+    .tape-scene .vx90-close {
+        min-width: 48px;
+        min-height: 48px;
+        font-size: 20px;
+    }
+}
+
 /* Le jeu se joue en paysage : en portrait sur un écran tactile, on demande
    de tourner l'appareil. L'écran de clé passe devant : on saisit la clé
    en portrait. */
