@@ -69,6 +69,8 @@ Une nouvelle version publiée est téléchargée au lancement suivant avec rése
 
 ### Clés d'activation liées à l'appareil
 
+État actuel : désactivées (`ACCESS_KEY_REQUIRED = false` en tête de `script/web/access_gate.js`), le temps de valider le jeu sur iPhone. Le site s'ouvre directement sur le jeu, sans écran d'installation ni écran de clé. Pour réactiver : remettre `true`, puis publier. Les clés déjà données restent valables.
+
 Principe : signature numérique. L'organisateur signe l'identifiant de l'appareil avec une clé privée ; le jeu vérifie la signature avec la clé publique. Le code est public : sans la clé privée, personne ne fabrique de clé valide, et une clé ne marche que pour l'identifiant signé.
 
 | Fichier | Rôle |

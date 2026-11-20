@@ -20,6 +20,11 @@
  * charge dessous mais ne démarre qu'au choix de la langue, inaccessible.
  */
 (function () {
+  // Protection par clé désactivée le temps des premiers tests sur iPhone :
+  // ni écran d'installation, ni écran de clé. Remettre à true pour la
+  // réactiver (les clés déjà données restent valables).
+  const ACCESS_KEY_REQUIRED = false;
+
   const DEVICE_STORAGE_KEY = 'fnaf-device-id';
   const KEY_STORAGE_KEY = 'fnaf-access-key';
 
@@ -269,7 +274,7 @@
   }
 
   async function requireAccessKey() {
-    if (window.appInfo || !window.isSecureContext || location.protocol !== 'https:' || !(window.crypto && crypto.subtle)) return;
+    if (!ACCESS_KEY_REQUIRED || window.appInfo || !window.isSecureContext || location.protocol !== 'https:' || !(window.crypto && crypto.subtle)) return;
     // Cache le jeu pendant la vérification (asynchrone) de la clé mémorisée.
     setPending(true);
     const id = deviceId();
